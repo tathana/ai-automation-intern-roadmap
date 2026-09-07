@@ -83,12 +83,11 @@ Idempotency-Key: req-123
 <p>เมื่อจบ Week ต้อง demo success, invalid, duplicate และ upstream timeout พร้อมไล่ flow จาก client ถึง DB และกลับมาเป็น response ได้</p><a class="back" href="#top">↑ กลับสารบัญ</a></article><article id="lesson-2"><div class="source">01_http_api_foundation.md</div><details class="local-toc"><summary>หัวข้อในบทนี้</summary><a href="#lesson-2-clientserver">Client/Server</a><a href="#lesson-2-request">Request</a><a href="#lesson-2-methods">Methods</a><a href="#lesson-2-status-codes">Status Codes</a><a href="#lesson-2-headers">Headers</a><a href="#lesson-2-webhookpolling">Webhook/Polling</a><a href="#lesson-2-inspect">Inspect</a></details><h1 id="lesson-2-01-http-api-mental-model">01 — HTTP และ API Mental Model</h1>
 <h2 id="lesson-2-clientserver">Client/Server</h2>
 <!-- tutor-rich:## Client/Server -->
-<h3 id="lesson-2-_1">🧑‍🏫 เอาแบบง่ายที่สุดก่อน</h3>
-<p>ได้ครับ ชื่อนี้อาจดูเป็นศัพท์ระบบ แต่แก่นของมันไม่ยากถ้าแยกทีละช่วงครับ 5555</p>
+<h3 id="lesson-2-_1">คำอธิบายแบบเข้าใจง่าย</h3>
 <blockquote>
 <p><strong>Client คือฝ่ายเริ่มถาม ส่วน Server คือฝ่ายรอรับและตอบ โปรแกรมเดียวสลับบทบาทได้</strong></p>
 </blockquote>
-<p>ลองมองเป็น Flow:</p>
+<p>พิจารณา Flow ต่อไปนี้:</p>
 <pre><code class="language-text">n8n เป็น client → FastAPI เป็น server
 FastAPI เรียก AI provider
   ↓
@@ -96,19 +95,14 @@ FastAPI กลายเป็น client → Provider เป็น server
 </code></pre>
 <h4 id="lesson-2-_2">จุดที่มักเข้าใจผิด</h4>
 <p>อย่ายึดว่าโปรแกรมหนึ่งต้องเป็น client หรือ server ตลอด ให้ดูการเชื่อมต่อหนึ่งช่วง</p>
-<h4 id="lesson-2-ai-automation">เกี่ยวกับงาน AI &amp; Automation อย่างไร?</h4>
-<p>เมื่อ FastAPI, n8n, database และ AI provider ต่อกัน ปัญหามักเกิดตรงรอยต่อ หัวข้อนี้ช่วยให้เราระบุได้ว่า error เกิดก่อนรับข้อมูล ระหว่าง business logic หรือที่ dependency ภายนอก แล้วเลือก retry, reject หรือหยุดได้ถูกต้อง</p>
-<h4 id="lesson-2-_3">จำก่อนอ่านศัพท์เทคนิคด้านล่าง</h4>
-<p>ให้ตอบว่า input คืออะไร, state ใดเปลี่ยน, output คืออะไร และถ้าล้ม caller จะรู้ได้อย่างไร ถ้าตอบได้ แปลว่าเข้าใจแก่นแล้วครับ</p>
 <p>เป็นบทบาท ไม่ใช่ชนิดโปรแกรม: <code>n8n → FastAPI → AI provider</code> ทำให้ FastAPI เป็น server ต่อ n8n และเป็น client ต่อ provider</p>
 <h2 id="lesson-2-request">Request</h2>
 <!-- tutor-rich:## Request -->
-<h3 id="lesson-2-_4">🧑‍🏫 เอาแบบง่ายที่สุดก่อน</h3>
-<p>ได้ครับ ชื่อนี้อาจดูเป็นศัพท์ระบบ แต่แก่นของมันไม่ยากถ้าแยกทีละช่วงครับ 5555</p>
+<h3 id="lesson-2-_3">คำอธิบายแบบเข้าใจง่าย</h3>
 <blockquote>
 <p><strong>HTTP request คือซองงานที่มีวิธีทำ ที่อยู่ ข้อมูลกำกับ และข้อมูลข้างใน</strong></p>
 </blockquote>
-<p>ลองมองเป็น Flow:</p>
+<p>พิจารณา Flow ต่อไปนี้:</p>
 <pre><code class="language-text">Method + Path/Query
   ↓
 Headers บอก metadata
@@ -117,12 +111,8 @@ Body ส่ง payload
   ↓
 Server parse และ validate
 </code></pre>
-<h4 id="lesson-2-_5">จุดที่มักเข้าใจผิด</h4>
+<h4 id="lesson-2-_4">จุดที่มักเข้าใจผิด</h4>
 <p>URL ถูกอย่างเดียวไม่พอ Method, Content-Type และ body ต้องตรง contract ด้วย</p>
-<h4 id="lesson-2-ai-automation_1">เกี่ยวกับงาน AI &amp; Automation อย่างไร?</h4>
-<p>เมื่อ FastAPI, n8n, database และ AI provider ต่อกัน ปัญหามักเกิดตรงรอยต่อ หัวข้อนี้ช่วยให้เราระบุได้ว่า error เกิดก่อนรับข้อมูล ระหว่าง business logic หรือที่ dependency ภายนอก แล้วเลือก retry, reject หรือหยุดได้ถูกต้อง</p>
-<h4 id="lesson-2-_6">จำก่อนอ่านศัพท์เทคนิคด้านล่าง</h4>
-<p>ให้ตอบว่า input คืออะไร, state ใดเปลี่ยน, output คืออะไร และถ้าล้ม caller จะรู้ได้อย่างไร ถ้าตอบได้ แปลว่าเข้าใจแก่นแล้วครับ</p>
 <ul>
 <li>method: เจตนา</li>
 <li>path: resource</li>
@@ -135,24 +125,19 @@ Server parse และ validate
 <p>แต่ละขั้นล้มต่างกัน อย่าเรียกทุกอย่างว่า “JSON error”</p>
 <h2 id="lesson-2-methods">Methods</h2>
 <!-- tutor-rich:## Methods -->
-<h3 id="lesson-2-_7">🧑‍🏫 เอาแบบง่ายที่สุดก่อน</h3>
-<p>ได้ครับ ชื่อนี้อาจดูเป็นศัพท์ระบบ แต่แก่นของมันไม่ยากถ้าแยกทีละช่วงครับ 5555</p>
+<h3 id="lesson-2-_5">คำอธิบายแบบเข้าใจง่าย</h3>
 <blockquote>
 <p><strong>HTTP method บอกเจตนา GET อ่าน, POST สร้าง/สั่งงาน, PUT แทนทั้งก้อน, PATCH แก้บางส่วน และ DELETE ลบ</strong></p>
 </blockquote>
-<p>ลองมองเป็น Flow:</p>
+<p>พิจารณา Flow ต่อไปนี้:</p>
 <pre><code class="language-text">Requirement
   ↓ เลือกเจตนา
 HTTP Method
   ↓
 กำหนด side effect และ idempotency
 </code></pre>
-<h4 id="lesson-2-_8">จุดที่มักเข้าใจผิด</h4>
+<h4 id="lesson-2-_6">จุดที่มักเข้าใจผิด</h4>
 <p>Method ไม่ได้ป้องกัน code จากการทำผิดเอง แต่เป็นข้อตกลงที่ client และ server ใช้ร่วมกัน</p>
-<h4 id="lesson-2-ai-automation_2">เกี่ยวกับงาน AI &amp; Automation อย่างไร?</h4>
-<p>เมื่อ FastAPI, n8n, database และ AI provider ต่อกัน ปัญหามักเกิดตรงรอยต่อ หัวข้อนี้ช่วยให้เราระบุได้ว่า error เกิดก่อนรับข้อมูล ระหว่าง business logic หรือที่ dependency ภายนอก แล้วเลือก retry, reject หรือหยุดได้ถูกต้อง</p>
-<h4 id="lesson-2-_9">จำก่อนอ่านศัพท์เทคนิคด้านล่าง</h4>
-<p>ให้ตอบว่า input คืออะไร, state ใดเปลี่ยน, output คืออะไร และถ้าล้ม caller จะรู้ได้อย่างไร ถ้าตอบได้ แปลว่าเข้าใจแก่นแล้วครับ</p>
 <div class="table-scroll"><table>
 <thead>
 <tr>
@@ -192,34 +177,28 @@ HTTP Method
 <p>Idempotent หมายถึง intended state หลังทำซ้ำเหมือนทำครั้งเดียว ไม่ได้แปลว่า log/response ทุกครั้งเหมือนกัน</p>
 <h2 id="lesson-2-status-codes">Status Codes</h2>
 <!-- tutor-rich:## Status Codes -->
-<h3 id="lesson-2-_10">🧑‍🏫 เอาแบบง่ายที่สุดก่อน</h3>
-<p>ได้ครับ ชื่อนี้อาจดูเป็นศัพท์ระบบ แต่แก่นของมันไม่ยากถ้าแยกทีละช่วงครับ 5555</p>
+<h3 id="lesson-2-_7">คำอธิบายแบบเข้าใจง่าย</h3>
 <blockquote>
 <p><strong>Status code คือคำตอบสั้น ๆ ว่า request จบแบบไหน ก่อนที่ client จะอ่านรายละเอียดใน body</strong></p>
 </blockquote>
-<p>ลองมองเป็น Flow:</p>
+<p>พิจารณา Flow ต่อไปนี้:</p>
 <pre><code class="language-text">Request
   ↓ Server ประมวลผล
 เลือกกลุ่ม 2xx / 4xx / 5xx
   ↓
 Client ตัดสิน success, แก้ request หรือ retry
 </code></pre>
-<h4 id="lesson-2-_11">จุดที่มักเข้าใจผิด</h4>
+<h4 id="lesson-2-_8">จุดที่มักเข้าใจผิด</h4>
 <p>401 คือยังยืนยันตัวตนไม่ได้ ส่วน 403 คือรู้ว่าเป็นใครแต่ไม่มีสิทธิ์; 500 ไม่ควรใช้แทน error ทุกชนิด</p>
-<h4 id="lesson-2-ai-automation_3">เกี่ยวกับงาน AI &amp; Automation อย่างไร?</h4>
-<p>เมื่อ FastAPI, n8n, database และ AI provider ต่อกัน ปัญหามักเกิดตรงรอยต่อ หัวข้อนี้ช่วยให้เราระบุได้ว่า error เกิดก่อนรับข้อมูล ระหว่าง business logic หรือที่ dependency ภายนอก แล้วเลือก retry, reject หรือหยุดได้ถูกต้อง</p>
-<h4 id="lesson-2-_12">จำก่อนอ่านศัพท์เทคนิคด้านล่าง</h4>
-<p>ให้ตอบว่า input คืออะไร, state ใดเปลี่ยน, output คืออะไร และถ้าล้ม caller จะรู้ได้อย่างไร ถ้าตอบได้ แปลว่าเข้าใจแก่นแล้วครับ</p>
 <p><code>200</code> สำเร็จ, <code>201</code> สร้างแล้ว, <code>204</code> ไม่มี body, <code>400</code> request ผิด, <code>401</code> ยังยืนยันตัวตนไม่ได้, <code>403</code> ไม่มีสิทธิ์, <code>404</code> ไม่พบ, <code>409</code> state conflict, <code>422</code> validation ไม่ผ่าน, <code>429</code> rate limit, <code>500</code> unexpected server bug, <code>502/503/504</code> upstream/availability/timeout</p>
 <p>Status เป็น contract อย่าตอบ 200 แล้วซ่อน error ทุกชนิดใน body</p>
 <h2 id="lesson-2-headers">Headers</h2>
 <!-- tutor-rich:## Headers -->
-<h3 id="lesson-2-_13">🧑‍🏫 เอาแบบง่ายที่สุดก่อน</h3>
-<p>ได้ครับ ชื่อนี้อาจดูเป็นศัพท์ระบบ แต่แก่นของมันไม่ยากถ้าแยกทีละช่วงครับ 5555</p>
+<h3 id="lesson-2-_9">คำอธิบายแบบเข้าใจง่าย</h3>
 <blockquote>
 <p><strong>Header คือข้อมูลกำกับ request/response เช่นชนิดข้อมูล token และ request ID ไม่ใช่ business payload หลัก</strong></p>
 </blockquote>
-<p>ลองมองเป็น Flow:</p>
+<p>พิจารณา Flow ต่อไปนี้:</p>
 <pre><code class="language-text">Client สร้าง body
   + Headers
   ↓
@@ -227,66 +206,51 @@ Server อ่าน Content-Type/Auth
   ↓
 parse, authenticate และตาม request
 </code></pre>
-<h4 id="lesson-2-_14">จุดที่มักเข้าใจผิด</h4>
+<h4 id="lesson-2-_10">จุดที่มักเข้าใจผิด</h4>
 <p>Authorization header อาจจำเป็นต่อระบบ แต่ห้ามพิมพ์หรือ log token เต็ม ๆ</p>
-<h4 id="lesson-2-ai-automation_4">เกี่ยวกับงาน AI &amp; Automation อย่างไร?</h4>
-<p>เมื่อ FastAPI, n8n, database และ AI provider ต่อกัน ปัญหามักเกิดตรงรอยต่อ หัวข้อนี้ช่วยให้เราระบุได้ว่า error เกิดก่อนรับข้อมูล ระหว่าง business logic หรือที่ dependency ภายนอก แล้วเลือก retry, reject หรือหยุดได้ถูกต้อง</p>
-<h4 id="lesson-2-_15">จำก่อนอ่านศัพท์เทคนิคด้านล่าง</h4>
-<p>ให้ตอบว่า input คืออะไร, state ใดเปลี่ยน, output คืออะไร และถ้าล้ม caller จะรู้ได้อย่างไร ถ้าตอบได้ แปลว่าเข้าใจแก่นแล้วครับ</p>
 <p><code>Content-Type</code> บอกชนิด body ที่ส่ง; <code>Accept</code> บอกชนิด response ที่ต้องการ; <code>Authorization</code> ห้าม log; request/correlation ID ช่วยตามหนึ่ง request ข้ามระบบ</p>
 <h2 id="lesson-2-webhookpolling">Webhook/Polling</h2>
 <!-- tutor-rich:## Webhook/Polling -->
-<h3 id="lesson-2-_16">🧑‍🏫 เอาแบบง่ายที่สุดก่อน</h3>
-<p>ได้ครับ ชื่อนี้อาจดูเป็นศัพท์ระบบ แต่แก่นของมันไม่ยากถ้าแยกทีละช่วงครับ 5555</p>
+<h3 id="lesson-2-_11">คำอธิบายแบบเข้าใจง่าย</h3>
 <blockquote>
 <p><strong>Webhook คือระบบต้นทางเป็นฝ่ายโทรหาเราเมื่อมีเหตุการณ์ จึงไม่ต้องถามซ้ำ ๆ แบบ polling</strong></p>
 </blockquote>
-<p>ลองมองเป็น Flow:</p>
+<p>พิจารณา Flow ต่อไปนี้:</p>
 <pre><code class="language-text">Event เกิดที่ provider
   ↓ POST webhook
 Verify → Deduplicate → Persist
   ↓
 ตอบเร็ว แล้วประมวลผลต่อ
 </code></pre>
-<h4 id="lesson-2-_17">จุดที่มักเข้าใจผิด</h4>
+<h4 id="lesson-2-_12">จุดที่มักเข้าใจผิด</h4>
 <p>Webhook ส่งซ้ำได้ตามปกติ การได้รับซ้ำไม่ใช่ bug และ handler ต้อง idempotent</p>
-<h4 id="lesson-2-ai-automation_5">เกี่ยวกับงาน AI &amp; Automation อย่างไร?</h4>
-<p>เมื่อ FastAPI, n8n, database และ AI provider ต่อกัน ปัญหามักเกิดตรงรอยต่อ หัวข้อนี้ช่วยให้เราระบุได้ว่า error เกิดก่อนรับข้อมูล ระหว่าง business logic หรือที่ dependency ภายนอก แล้วเลือก retry, reject หรือหยุดได้ถูกต้อง</p>
-<h4 id="lesson-2-_18">จำก่อนอ่านศัพท์เทคนิคด้านล่าง</h4>
-<p>ให้ตอบว่า input คืออะไร, state ใดเปลี่ยน, output คืออะไร และถ้าล้ม caller จะรู้ได้อย่างไร ถ้าตอบได้ แปลว่าเข้าใจแก่นแล้วครับ</p>
 <p>Polling คือเราไปถามเป็นระยะ Webhook คือต้นทางเรียกเราเมื่อเกิด event จึงต้องรับมือ duplicate, retry, signature, out-of-order และตอบเร็ว</p>
 <h2 id="lesson-2-inspect">Inspect</h2>
 <!-- tutor-rich:## Inspect -->
-<h3 id="lesson-2-_19">🧑‍🏫 เอาแบบง่ายที่สุดก่อน</h3>
-<p>ได้ครับ ชื่อนี้อาจดูเป็นศัพท์ระบบ แต่แก่นของมันไม่ยากถ้าแยกทีละช่วงครับ 5555</p>
+<h3 id="lesson-2-_13">คำอธิบายแบบเข้าใจง่าย</h3>
 <blockquote>
 <p><strong>หัวข้อนี้อธิบายว่า Inspect อยู่ตรงไหนใน request lifecycle และช่วยให้ระบบถูกต้องอย่างไร</strong></p>
 </blockquote>
-<p>ลองมองเป็น Flow:</p>
+<p>พิจารณา Flow ต่อไปนี้:</p>
 <pre><code class="language-text">Input/Request
   ↓ ใช้แนวคิดของหัวข้อนี้
 State/ข้อมูลถูกตรวจหรือเปลี่ยน
   ↓
 Output หรือ error ตาม contract
 </code></pre>
-<h4 id="lesson-2-_20">จุดที่มักเข้าใจผิด</h4>
+<h4 id="lesson-2-_14">จุดที่มักเข้าใจผิด</h4>
 <p>อย่าจำเฉพาะ syntax ให้ถามว่า input, output, side effect และ failure คืออะไร</p>
-<h4 id="lesson-2-ai-automation_6">เกี่ยวกับงาน AI &amp; Automation อย่างไร?</h4>
-<p>เมื่อ FastAPI, n8n, database และ AI provider ต่อกัน ปัญหามักเกิดตรงรอยต่อ หัวข้อนี้ช่วยให้เราระบุได้ว่า error เกิดก่อนรับข้อมูล ระหว่าง business logic หรือที่ dependency ภายนอก แล้วเลือก retry, reject หรือหยุดได้ถูกต้อง</p>
-<h4 id="lesson-2-_21">จำก่อนอ่านศัพท์เทคนิคด้านล่าง</h4>
-<p>ให้ตอบว่า input คืออะไร, state ใดเปลี่ยน, output คืออะไร และถ้าล้ม caller จะรู้ได้อย่างไร ถ้าตอบได้ แปลว่าเข้าใจแก่นแล้วครับ</p>
 <pre><code class="language-bash">curl -i http://localhost:8000/health
 curl -i -X POST http://localhost:8000/items -H "Content-Type: application/json" -d '{"name":"demo"}'
 </code></pre>
 <p>ดู status, headers และ body แยกกัน อย่าใส่ token จริงใน command history</p><a class="back" href="#top">↑ กลับสารบัญ</a></article><article id="lesson-3"><div class="source">02_reliable_api_client.md</div><details class="local-toc"><summary>หัวข้อในบทนี้</summary><a href="#lesson-3-failure">Failure ที่ต้องคิด</a><a href="#lesson-3-retry">Retry</a><a href="#lesson-3-post-risk">POST Risk</a><a href="#lesson-3-pagination">Pagination</a><a href="#lesson-3-design-for-tests">Design for Tests</a></details><h1 id="lesson-3-02-reliable-api-client">02 — Reliable API Client</h1>
 <h2 id="lesson-3-failure">Failure ที่ต้องคิด</h2>
 <!-- tutor-rich:## Failure ที่ต้องคิด -->
-<h3 id="lesson-3-_1">🧑‍🏫 เอาแบบง่ายที่สุดก่อน</h3>
-<p>ได้ครับ ชื่อนี้อาจดูเป็นศัพท์ระบบ แต่แก่นของมันไม่ยากถ้าแยกทีละช่วงครับ 5555</p>
+<h3 id="lesson-3-_1">คำอธิบายแบบเข้าใจง่าย</h3>
 <blockquote>
 <p><strong>การเรียก API ไม่ได้มีแค่ผ่านกับไม่ผ่าน ต้องแยกว่าเชื่อมไม่ได้ รอนาน status ผิด หรือ body ผิด</strong></p>
 </blockquote>
-<p>ลองมองเป็น Flow:</p>
+<p>พิจารณา Flow ต่อไปนี้:</p>
 <pre><code class="language-text">เรียก API
   ↓
 connect/read timeout หรือ response
@@ -297,10 +261,6 @@ result หรือ error category
 </code></pre>
 <h4 id="lesson-3-_2">จุดที่มักเข้าใจผิด</h4>
 <p>HTTP 200 ยังมี JSON หรือ schema ที่ผิดได้ อย่าใช้ status อย่างเดียวตัดสิน</p>
-<h4 id="lesson-3-ai-automation">เกี่ยวกับงาน AI &amp; Automation อย่างไร?</h4>
-<p>เมื่อ FastAPI, n8n, database และ AI provider ต่อกัน ปัญหามักเกิดตรงรอยต่อ หัวข้อนี้ช่วยให้เราระบุได้ว่า error เกิดก่อนรับข้อมูล ระหว่าง business logic หรือที่ dependency ภายนอก แล้วเลือก retry, reject หรือหยุดได้ถูกต้อง</p>
-<h4 id="lesson-3-_3">จำก่อนอ่านศัพท์เทคนิคด้านล่าง</h4>
-<p>ให้ตอบว่า input คืออะไร, state ใดเปลี่ยน, output คืออะไร และถ้าล้ม caller จะรู้ได้อย่างไร ถ้าตอบได้ แปลว่าเข้าใจแก่นแล้วครับ</p>
 <p>DNS/connect error, connect/read timeout, TLS error, 4xx, 5xx, invalid JSON, schema drift, 429 และ response ช้า</p>
 <pre><code class="language-python">import httpx
 
@@ -317,12 +277,11 @@ def fetch_item(item_id: str) -&gt; dict:
 <p>HTTP 200 ไม่รับประกันว่า body ถูก schema ต้อง validate ก่อนใช้</p>
 <h2 id="lesson-3-retry">Retry</h2>
 <!-- tutor-rich:## Retry -->
-<h3 id="lesson-3-_4">🧑‍🏫 เอาแบบง่ายที่สุดก่อน</h3>
-<p>ได้ครับ ชื่อนี้อาจดูเป็นศัพท์ระบบ แต่แก่นของมันไม่ยากถ้าแยกทีละช่วงครับ 5555</p>
+<h3 id="lesson-3-_3">คำอธิบายแบบเข้าใจง่าย</h3>
 <blockquote>
 <p><strong>Retry คือการลองใหม่เฉพาะความล้มเหลวชั่วคราว ไม่ใช่วนซ้ำทุก error</strong></p>
 </blockquote>
-<p>ลองมองเป็น Flow:</p>
+<p>พิจารณา Flow ต่อไปนี้:</p>
 <pre><code class="language-text">Failure
   ↓ จำแนก retryable?
 ไม่ → report
@@ -330,76 +289,57 @@ def fetch_item(item_id: str) -&gt; dict:
   ↓ จำกัด attempts/deadline
 ลองใหม่
 </code></pre>
-<h4 id="lesson-3-_5">จุดที่มักเข้าใจผิด</h4>
+<h4 id="lesson-3-_4">จุดที่มักเข้าใจผิด</h4>
 <p>Retry POST อาจทำ side effect ซ้ำ ต้องรู้ idempotency ของ operation ก่อน</p>
-<h4 id="lesson-3-ai-automation_1">เกี่ยวกับงาน AI &amp; Automation อย่างไร?</h4>
-<p>เมื่อ FastAPI, n8n, database และ AI provider ต่อกัน ปัญหามักเกิดตรงรอยต่อ หัวข้อนี้ช่วยให้เราระบุได้ว่า error เกิดก่อนรับข้อมูล ระหว่าง business logic หรือที่ dependency ภายนอก แล้วเลือก retry, reject หรือหยุดได้ถูกต้อง</p>
-<h4 id="lesson-3-_6">จำก่อนอ่านศัพท์เทคนิคด้านล่าง</h4>
-<p>ให้ตอบว่า input คืออะไร, state ใดเปลี่ยน, output คืออะไร และถ้าล้ม caller จะรู้ได้อย่างไร ถ้าตอบได้ แปลว่าเข้าใจแก่นแล้วครับ</p>
 <p>มัก retry ได้: transient timeout, 429 ตาม <code>Retry-After</code>, 502/503/504 บางกรณี มักไม่ retry 400/401/403/404/422 โดยไม่แก้ request</p>
 <p>Retry ต้องมี max attempts, exponential backoff, jitter, overall deadline, logging และ idempotency safety ห้าม loop ทันทีไม่จำกัด</p>
 <h2 id="lesson-3-post-risk">POST Risk</h2>
 <!-- tutor-rich:## POST Risk -->
-<h3 id="lesson-3-_7">🧑‍🏫 เอาแบบง่ายที่สุดก่อน</h3>
-<p>ได้ครับ ชื่อนี้อาจดูเป็นศัพท์ระบบ แต่แก่นของมันไม่ยากถ้าแยกทีละช่วงครับ 5555</p>
+<h3 id="lesson-3-_5">คำอธิบายแบบเข้าใจง่าย</h3>
 <blockquote>
 <p><strong>Server อาจทำงานสำเร็จแต่ response หาย Client จึงเห็น timeout ทั้งที่ side effect เกิดแล้ว</strong></p>
 </blockquote>
-<p>ลองมองเป็น Flow:</p>
+<p>พิจารณา Flow ต่อไปนี้:</p>
 <pre><code class="language-text">POST ถึง server
   ↓ สร้างรายการสำเร็จ
 Response หาย/timeout
   ↓ Client retry
 เสี่ยงสร้างซ้ำถ้าไม่มี idempotency key
 </code></pre>
-<h4 id="lesson-3-_8">จุดที่มักเข้าใจผิด</h4>
+<h4 id="lesson-3-_6">จุดที่มักเข้าใจผิด</h4>
 <p>Timeout บอกว่าเราไม่ได้รับคำตอบ ไม่ได้พิสูจน์ว่า server ไม่ได้ทำงาน</p>
-<h4 id="lesson-3-ai-automation_2">เกี่ยวกับงาน AI &amp; Automation อย่างไร?</h4>
-<p>เมื่อ FastAPI, n8n, database และ AI provider ต่อกัน ปัญหามักเกิดตรงรอยต่อ หัวข้อนี้ช่วยให้เราระบุได้ว่า error เกิดก่อนรับข้อมูล ระหว่าง business logic หรือที่ dependency ภายนอก แล้วเลือก retry, reject หรือหยุดได้ถูกต้อง</p>
-<h4 id="lesson-3-_9">จำก่อนอ่านศัพท์เทคนิคด้านล่าง</h4>
-<p>ให้ตอบว่า input คืออะไร, state ใดเปลี่ยน, output คืออะไร และถ้าล้ม caller จะรู้ได้อย่างไร ถ้าตอบได้ แปลว่าเข้าใจแก่นแล้วครับ</p>
 <p>ถ้า server ทำ side effect สำเร็จแต่ response หาย client จะเห็น timeout การ retry อาจทำซ้ำ ต้องใช้ idempotency key ที่ provider รองรับและเก็บผลเดิม</p>
 <h2 id="lesson-3-pagination">Pagination</h2>
 <!-- tutor-rich:## Pagination -->
-<h3 id="lesson-3-_10">🧑‍🏫 เอาแบบง่ายที่สุดก่อน</h3>
-<p>ได้ครับ ชื่อนี้อาจดูเป็นศัพท์ระบบ แต่แก่นของมันไม่ยากถ้าแยกทีละช่วงครับ 5555</p>
+<h3 id="lesson-3-_7">คำอธิบายแบบเข้าใจง่าย</h3>
 <blockquote>
 <p><strong>API มักส่งข้อมูลทีละหน้า หน้าแรกจึงไม่เท่ากับข้อมูลทั้งหมด</strong></p>
 </blockquote>
-<p>ลองมองเป็น Flow:</p>
+<p>พิจารณา Flow ต่อไปนี้:</p>
 <pre><code class="language-text">Request page/cursor แรก
   ↓ รับ items + next
 เก็บ items
   ↓ มี next? วนต่อ
 ไม่มี next → จบ
 </code></pre>
-<h4 id="lesson-3-_11">จุดที่มักเข้าใจผิด</h4>
+<h4 id="lesson-3-_8">จุดที่มักเข้าใจผิด</h4>
 <p>ต้องมี safety limit และตรวจ cursor ไม่เปลี่ยน เพื่อไม่วนไม่รู้จบ</p>
-<h4 id="lesson-3-ai-automation_3">เกี่ยวกับงาน AI &amp; Automation อย่างไร?</h4>
-<p>เมื่อ FastAPI, n8n, database และ AI provider ต่อกัน ปัญหามักเกิดตรงรอยต่อ หัวข้อนี้ช่วยให้เราระบุได้ว่า error เกิดก่อนรับข้อมูล ระหว่าง business logic หรือที่ dependency ภายนอก แล้วเลือก retry, reject หรือหยุดได้ถูกต้อง</p>
-<h4 id="lesson-3-_12">จำก่อนอ่านศัพท์เทคนิคด้านล่าง</h4>
-<p>ให้ตอบว่า input คืออะไร, state ใดเปลี่ยน, output คืออะไร และถ้าล้ม caller จะรู้ได้อย่างไร ถ้าตอบได้ แปลว่าเข้าใจแก่นแล้วครับ</p>
 <p>อ่าน next cursor/page metadata จนจบ พร้อม safety limit อย่าสันนิษฐานว่าหน้าแรกคือข้อมูลทั้งหมด</p>
 <h2 id="lesson-3-design-for-tests">Design for Tests</h2>
 <!-- tutor-rich:## Design for Tests -->
-<h3 id="lesson-3-_13">🧑‍🏫 เอาแบบง่ายที่สุดก่อน</h3>
-<p>ได้ครับ ชื่อนี้อาจดูเป็นศัพท์ระบบ แต่แก่นของมันไม่ยากถ้าแยกทีละช่วงครับ 5555</p>
+<h3 id="lesson-3-_9">คำอธิบายแบบเข้าใจง่าย</h3>
 <blockquote>
 <p><strong>หัวข้อนี้อธิบายว่า Design for Tests อยู่ตรงไหนใน request lifecycle และช่วยให้ระบบถูกต้องอย่างไร</strong></p>
 </blockquote>
-<p>ลองมองเป็น Flow:</p>
+<p>พิจารณา Flow ต่อไปนี้:</p>
 <pre><code class="language-text">Input/Request
   ↓ ใช้แนวคิดของหัวข้อนี้
 State/ข้อมูลถูกตรวจหรือเปลี่ยน
   ↓
 Output หรือ error ตาม contract
 </code></pre>
-<h4 id="lesson-3-_14">จุดที่มักเข้าใจผิด</h4>
+<h4 id="lesson-3-_10">จุดที่มักเข้าใจผิด</h4>
 <p>อย่าจำเฉพาะ syntax ให้ถามว่า input, output, side effect และ failure คืออะไร</p>
-<h4 id="lesson-3-ai-automation_4">เกี่ยวกับงาน AI &amp; Automation อย่างไร?</h4>
-<p>เมื่อ FastAPI, n8n, database และ AI provider ต่อกัน ปัญหามักเกิดตรงรอยต่อ หัวข้อนี้ช่วยให้เราระบุได้ว่า error เกิดก่อนรับข้อมูล ระหว่าง business logic หรือที่ dependency ภายนอก แล้วเลือก retry, reject หรือหยุดได้ถูกต้อง</p>
-<h4 id="lesson-3-_15">จำก่อนอ่านศัพท์เทคนิคด้านล่าง</h4>
-<p>ให้ตอบว่า input คืออะไร, state ใดเปลี่ยน, output คืออะไร และถ้าล้ม caller จะรู้ได้อย่างไร ถ้าตอบได้ แปลว่าเข้าใจแก่นแล้วครับ</p>
 <p>Inject client/interface แทนสร้าง client ลึกใน business function เพื่อ fake timeout/status/body ได้โดยไม่ยิงอินเทอร์เน็ต</p><a class="back" href="#top">↑ กลับสารบัญ</a></article><article id="lesson-4"><div class="source">03_fastapi_pydantic.md</div><details class="local-toc"><summary>หัวข้อในบทนี้</summary><a href="#lesson-4-lifecycle">Lifecycle</a><a href="#lesson-4-sources">Sources</a><a href="#lesson-4-requirednullabledefault">Required/Nullable/Default</a><a href="#lesson-4-schema-vs-business-rule">Schema vs Business Rule</a><a href="#lesson-4-inputoutput-models">Input/Output Models</a><a href="#lesson-4-syncasync">Sync/Async</a><a href="#lesson-4-run">Run</a></details><h1 id="lesson-4-03-fastapi-pydantic">03 — FastAPI และ Pydantic</h1>
 <pre><code class="language-python">from fastapi import FastAPI
 from pydantic import BaseModel, ConfigDict, Field
@@ -425,12 +365,11 @@ def create_transaction(body: TransactionCreate):
 </code></pre>
 <h2 id="lesson-4-lifecycle">Lifecycle</h2>
 <!-- tutor-rich:## Lifecycle -->
-<h3 id="lesson-4-_1">🧑‍🏫 เอาแบบง่ายที่สุดก่อน</h3>
-<p>ได้ครับ ชื่อนี้อาจดูเป็นศัพท์ระบบ แต่แก่นของมันไม่ยากถ้าแยกทีละช่วงครับ 5555</p>
+<h3 id="lesson-4-_1">คำอธิบายแบบเข้าใจง่าย</h3>
 <blockquote>
 <p><strong>หนึ่ง request ผ่านหลายด่านก่อนถึง function และอีกหลายด่านก่อนกลับเป็น response</strong></p>
 </blockquote>
-<p>ลองมองเป็น Flow:</p>
+<p>พิจารณา Flow ต่อไปนี้:</p>
 <pre><code class="language-text">HTTP bytes
   ↓ Route match
 Dependencies + Pydantic validation
@@ -439,42 +378,32 @@ Response validation → HTTP bytes
 </code></pre>
 <h4 id="lesson-4-_2">จุดที่มักเข้าใจผิด</h4>
 <p>422 อาจเกิดก่อน endpoint body รัน จึงอย่า debug service ก่อนอ่าน validation detail</p>
-<h4 id="lesson-4-ai-automation">เกี่ยวกับงาน AI &amp; Automation อย่างไร?</h4>
-<p>เมื่อ FastAPI, n8n, database และ AI provider ต่อกัน ปัญหามักเกิดตรงรอยต่อ หัวข้อนี้ช่วยให้เราระบุได้ว่า error เกิดก่อนรับข้อมูล ระหว่าง business logic หรือที่ dependency ภายนอก แล้วเลือก retry, reject หรือหยุดได้ถูกต้อง</p>
-<h4 id="lesson-4-_3">จำก่อนอ่านศัพท์เทคนิคด้านล่าง</h4>
-<p>ให้ตอบว่า input คืออะไร, state ใดเปลี่ยน, output คืออะไร และถ้าล้ม caller จะรู้ได้อย่างไร ถ้าตอบได้ แปลว่าเข้าใจแก่นแล้วครับ</p>
 <pre><code class="language-text">ASGI รับ bytes → match route → resolve dependencies → parse/validate
 → endpoint → response validation/serialization → HTTP response
 </code></pre>
 <p>422 อาจเกิดก่อน endpoint ทำงาน จึงต้องอ่าน response detail ก่อน debug service</p>
 <h2 id="lesson-4-sources">Sources</h2>
 <!-- tutor-rich:## Sources -->
-<h3 id="lesson-4-_4">🧑‍🏫 เอาแบบง่ายที่สุดก่อน</h3>
-<p>ได้ครับ ชื่อนี้อาจดูเป็นศัพท์ระบบ แต่แก่นของมันไม่ยากถ้าแยกทีละช่วงครับ 5555</p>
+<h3 id="lesson-4-_3">คำอธิบายแบบเข้าใจง่าย</h3>
 <blockquote>
 <p><strong>FastAPI ต้องรู้ว่าค่าแต่ละตัวมาจาก path, query, header หรือ body</strong></p>
 </blockquote>
-<p>ลองมองเป็น Flow:</p>
+<p>พิจารณา Flow ต่อไปนี้:</p>
 <pre><code class="language-text">URL path → path parameter
 ?key=value → query
 Headers → metadata/auth
 JSON body → Pydantic model
 </code></pre>
-<h4 id="lesson-4-_5">จุดที่มักเข้าใจผิด</h4>
+<h4 id="lesson-4-_4">จุดที่มักเข้าใจผิด</h4>
 <p>ชื่อเหมือนกันแต่แหล่งต่างกันมี contract และความเสี่ยงต่างกัน</p>
-<h4 id="lesson-4-ai-automation_1">เกี่ยวกับงาน AI &amp; Automation อย่างไร?</h4>
-<p>เมื่อ FastAPI, n8n, database และ AI provider ต่อกัน ปัญหามักเกิดตรงรอยต่อ หัวข้อนี้ช่วยให้เราระบุได้ว่า error เกิดก่อนรับข้อมูล ระหว่าง business logic หรือที่ dependency ภายนอก แล้วเลือก retry, reject หรือหยุดได้ถูกต้อง</p>
-<h4 id="lesson-4-_6">จำก่อนอ่านศัพท์เทคนิคด้านล่าง</h4>
-<p>ให้ตอบว่า input คืออะไร, state ใดเปลี่ยน, output คืออะไร และถ้าล้ม caller จะรู้ได้อย่างไร ถ้าตอบได้ แปลว่าเข้าใจแก่นแล้วครับ</p>
 <p>ค่าใน <code>{item_id}</code> คือ path parameter, ค่า default ธรรมดาใน GET มักเป็น query, Pydantic model มาจาก JSON body, headers/cookies/dependencies ต้องประกาศชัดเจน</p>
 <h2 id="lesson-4-requirednullabledefault">Required/Nullable/Default</h2>
 <!-- tutor-rich:## Required/Nullable/Default -->
-<h3 id="lesson-4-_7">🧑‍🏫 เอาแบบง่ายที่สุดก่อน</h3>
-<p>ได้ครับ ชื่อนี้อาจดูเป็นศัพท์ระบบ แต่แก่นของมันไม่ยากถ้าแยกทีละช่วงครับ 5555</p>
+<h3 id="lesson-4-_5">คำอธิบายแบบเข้าใจง่าย</h3>
 <blockquote>
 <p><strong>ไม่ส่ง field, ส่ง null และส่งค่าว่างเป็นสามกรณีคนละความหมาย</strong></p>
 </blockquote>
-<p>ลองมองเป็น Flow:</p>
+<p>พิจารณา Flow ต่อไปนี้:</p>
 <pre><code class="language-text">Field
   ├─ missing
   ├─ null → None
@@ -482,107 +411,82 @@ JSON body → Pydantic model
   ↓
 Pydantic + business contract ตัดสิน
 </code></pre>
-<h4 id="lesson-4-_8">จุดที่มักเข้าใจผิด</h4>
+<h4 id="lesson-4-_6">จุดที่มักเข้าใจผิด</h4>
 <p>Optional มักถูกใช้กำกวม ต้องเขียน default/type และ test missing กับ null แยกกัน</p>
-<h4 id="lesson-4-ai-automation_2">เกี่ยวกับงาน AI &amp; Automation อย่างไร?</h4>
-<p>เมื่อ FastAPI, n8n, database และ AI provider ต่อกัน ปัญหามักเกิดตรงรอยต่อ หัวข้อนี้ช่วยให้เราระบุได้ว่า error เกิดก่อนรับข้อมูล ระหว่าง business logic หรือที่ dependency ภายนอก แล้วเลือก retry, reject หรือหยุดได้ถูกต้อง</p>
-<h4 id="lesson-4-_9">จำก่อนอ่านศัพท์เทคนิคด้านล่าง</h4>
-<p>ให้ตอบว่า input คืออะไร, state ใดเปลี่ยน, output คืออะไร และถ้าล้ม caller จะรู้ได้อย่างไร ถ้าตอบได้ แปลว่าเข้าใจแก่นแล้วครับ</p>
 <p><code>name: str</code> ต้องส่งและห้าม null; <code>name: str | None</code> ต้องส่งแต่รับ null ตาม Pydantic version/config; <code>name: str | None = None</code> ไม่ส่งได้และ default null ต้อง test missing กับ explicit null แยกกัน</p>
 <h2 id="lesson-4-schema-vs-business-rule">Schema vs Business Rule</h2>
 <!-- tutor-rich:## Schema vs Business Rule -->
-<h3 id="lesson-4-_10">🧑‍🏫 เอาแบบง่ายที่สุดก่อน</h3>
-<p>ได้ครับ ชื่อนี้อาจดูเป็นศัพท์ระบบ แต่แก่นของมันไม่ยากถ้าแยกทีละช่วงครับ 5555</p>
+<h3 id="lesson-4-_7">คำอธิบายแบบเข้าใจง่าย</h3>
 <blockquote>
 <p><strong>Pydantic ตรวจรูปร่างและกฎใกล้ field ส่วน Service ตรวจความจริงทางธุรกิจที่ต้องดูข้อมูลอื่น</strong></p>
 </blockquote>
-<p>ลองมองเป็น Flow:</p>
+<p>พิจารณา Flow ต่อไปนี้:</p>
 <pre><code class="language-text">JSON
   ↓ Schema validation
 ข้อมูลมีรูปถูกต้อง
   ↓ Business validation
 operation ได้รับอนุญาตและสมเหตุผล
 </code></pre>
-<h4 id="lesson-4-_11">จุดที่มักเข้าใจผิด</h4>
+<h4 id="lesson-4-_8">จุดที่มักเข้าใจผิด</h4>
 <p>amount เป็นเลขบวกไม่ได้แปลว่า account ยังใช้งานหรือวงเงินพอ</p>
-<h4 id="lesson-4-ai-automation_3">เกี่ยวกับงาน AI &amp; Automation อย่างไร?</h4>
-<p>เมื่อ FastAPI, n8n, database และ AI provider ต่อกัน ปัญหามักเกิดตรงรอยต่อ หัวข้อนี้ช่วยให้เราระบุได้ว่า error เกิดก่อนรับข้อมูล ระหว่าง business logic หรือที่ dependency ภายนอก แล้วเลือก retry, reject หรือหยุดได้ถูกต้อง</p>
-<h4 id="lesson-4-_12">จำก่อนอ่านศัพท์เทคนิคด้านล่าง</h4>
-<p>ให้ตอบว่า input คืออะไร, state ใดเปลี่ยน, output คืออะไร และถ้าล้ม caller จะรู้ได้อย่างไร ถ้าตอบได้ แปลว่าเข้าใจแก่นแล้วครับ</p>
 <p>Pydantic ตรวจ shape/type/local constraints ส่วน service ตรวจ rule ที่ต้องใช้ DB/หลาย records เช่น account active หรือ daily limit อย่าใส่ network/DB call ใน validator</p>
 <h2 id="lesson-4-inputoutput-models">Input/Output Models</h2>
 <!-- tutor-rich:## Input/Output Models -->
-<h3 id="lesson-4-_13">🧑‍🏫 เอาแบบง่ายที่สุดก่อน</h3>
-<p>ได้ครับ ชื่อนี้อาจดูเป็นศัพท์ระบบ แต่แก่นของมันไม่ยากถ้าแยกทีละช่วงครับ 5555</p>
+<h3 id="lesson-4-_9">คำอธิบายแบบเข้าใจง่าย</h3>
 <blockquote>
 <p><strong>แยก model ที่ client ส่ง กับ model ที่อนุญาตให้ client เห็น เพื่อไม่ปล่อย field ภายในออกไป</strong></p>
 </blockquote>
-<p>ลองมองเป็น Flow:</p>
+<p>พิจารณา Flow ต่อไปนี้:</p>
 <pre><code class="language-text">Request model
   ↓ Service/Internal model
   ↓ Repository
   ↓ Response model กรอง fields
 JSON กลับ client
 </code></pre>
-<h4 id="lesson-4-_14">จุดที่มักเข้าใจผิด</h4>
+<h4 id="lesson-4-_10">จุดที่มักเข้าใจผิด</h4>
 <p>อย่า return dict/DB row ทั้งก้อนเพราะอาจมี secret หรือ internal note</p>
-<h4 id="lesson-4-ai-automation_4">เกี่ยวกับงาน AI &amp; Automation อย่างไร?</h4>
-<p>เมื่อ FastAPI, n8n, database และ AI provider ต่อกัน ปัญหามักเกิดตรงรอยต่อ หัวข้อนี้ช่วยให้เราระบุได้ว่า error เกิดก่อนรับข้อมูล ระหว่าง business logic หรือที่ dependency ภายนอก แล้วเลือก retry, reject หรือหยุดได้ถูกต้อง</p>
-<h4 id="lesson-4-_15">จำก่อนอ่านศัพท์เทคนิคด้านล่าง</h4>
-<p>ให้ตอบว่า input คืออะไร, state ใดเปลี่ยน, output คืออะไร และถ้าล้ม caller จะรู้ได้อย่างไร ถ้าตอบได้ แปลว่าเข้าใจแก่นแล้วครับ</p>
 <p>แยก create/internal/response เพื่อไม่ให้ internal note, credential หรือ DB fields หลุด ควรใช้ response model เป็น outbound contract</p>
 <h2 id="lesson-4-syncasync">Sync/Async</h2>
 <!-- tutor-rich:## Sync/Async -->
-<h3 id="lesson-4-_16">🧑‍🏫 เอาแบบง่ายที่สุดก่อน</h3>
-<p>ได้ครับ ชื่อนี้อาจดูเป็นศัพท์ระบบ แต่แก่นของมันไม่ยากถ้าแยกทีละช่วงครับ 5555</p>
+<h3 id="lesson-4-_11">คำอธิบายแบบเข้าใจง่าย</h3>
 <blockquote>
 <p><strong>Async ช่วยให้ worker ไปดูแลงานอื่นระหว่างรอ I/O ไม่ได้ทำให้การคำนวณหนักเร็วขึ้นเอง</strong></p>
 </blockquote>
-<p>ลองมองเป็น Flow:</p>
+<p>พิจารณา Flow ต่อไปนี้:</p>
 <pre><code class="language-text">async request
   ↓ await I/O
 event loop ดูแลงานอื่น
   ↓ I/O พร้อม
 กลับมาทำต่อ
 </code></pre>
-<h4 id="lesson-4-_17">จุดที่มักเข้าใจผิด</h4>
+<h4 id="lesson-4-_12">จุดที่มักเข้าใจผิด</h4>
 <p>เรียก blocking library หรือ time.sleep ใน async route ยังบล็อก event loop</p>
-<h4 id="lesson-4-ai-automation_5">เกี่ยวกับงาน AI &amp; Automation อย่างไร?</h4>
-<p>เมื่อ FastAPI, n8n, database และ AI provider ต่อกัน ปัญหามักเกิดตรงรอยต่อ หัวข้อนี้ช่วยให้เราระบุได้ว่า error เกิดก่อนรับข้อมูล ระหว่าง business logic หรือที่ dependency ภายนอก แล้วเลือก retry, reject หรือหยุดได้ถูกต้อง</p>
-<h4 id="lesson-4-_18">จำก่อนอ่านศัพท์เทคนิคด้านล่าง</h4>
-<p>ให้ตอบว่า input คืออะไร, state ใดเปลี่ยน, output คืออะไร และถ้าล้ม caller จะรู้ได้อย่างไร ถ้าตอบได้ แปลว่าเข้าใจแก่นแล้วครับ</p>
 <p><code>async def</code> ช่วยเมื่อรอ async I/O ไม่ทำ CPU work เร็วขึ้น ห้ามเรียก blocking I/O หรือ <code>time.sleep()</code> ใน async route โดยไม่เข้าใจ event loop</p>
 <h2 id="lesson-4-run">Run</h2>
 <!-- tutor-rich:## Run -->
-<h3 id="lesson-4-_19">🧑‍🏫 เอาแบบง่ายที่สุดก่อน</h3>
-<p>ได้ครับ ชื่อนี้อาจดูเป็นศัพท์ระบบ แต่แก่นของมันไม่ยากถ้าแยกทีละช่วงครับ 5555</p>
+<h3 id="lesson-4-_13">คำอธิบายแบบเข้าใจง่าย</h3>
 <blockquote>
 <p><strong>หัวข้อนี้อธิบายว่า Run อยู่ตรงไหนใน request lifecycle และช่วยให้ระบบถูกต้องอย่างไร</strong></p>
 </blockquote>
-<p>ลองมองเป็น Flow:</p>
+<p>พิจารณา Flow ต่อไปนี้:</p>
 <pre><code class="language-text">Input/Request
   ↓ ใช้แนวคิดของหัวข้อนี้
 State/ข้อมูลถูกตรวจหรือเปลี่ยน
   ↓
 Output หรือ error ตาม contract
 </code></pre>
-<h4 id="lesson-4-_20">จุดที่มักเข้าใจผิด</h4>
+<h4 id="lesson-4-_14">จุดที่มักเข้าใจผิด</h4>
 <p>อย่าจำเฉพาะ syntax ให้ถามว่า input, output, side effect และ failure คืออะไร</p>
-<h4 id="lesson-4-ai-automation_6">เกี่ยวกับงาน AI &amp; Automation อย่างไร?</h4>
-<p>เมื่อ FastAPI, n8n, database และ AI provider ต่อกัน ปัญหามักเกิดตรงรอยต่อ หัวข้อนี้ช่วยให้เราระบุได้ว่า error เกิดก่อนรับข้อมูล ระหว่าง business logic หรือที่ dependency ภายนอก แล้วเลือก retry, reject หรือหยุดได้ถูกต้อง</p>
-<h4 id="lesson-4-_21">จำก่อนอ่านศัพท์เทคนิคด้านล่าง</h4>
-<p>ให้ตอบว่า input คืออะไร, state ใดเปลี่ยน, output คืออะไร และถ้าล้ม caller จะรู้ได้อย่างไร ถ้าตอบได้ แปลว่าเข้าใจแก่นแล้วครับ</p>
 <pre><code class="language-bash">uvicorn app.main:app --reload
 </code></pre>
 <p><code>app.main</code> คือ module และ <code>app</code> หลัง colon คือ object; reload เหมาะ development</p><a class="back" href="#top">↑ กลับสารบัญ</a></article><article id="lesson-5"><div class="source">04_architecture_errors_security.md</div><details class="local-toc"><summary>หัวข้อในบทนี้</summary><a href="#lesson-5-layers">Layers</a><a href="#lesson-5-dependency-injection">Dependency Injection</a><a href="#lesson-5-domain-to-http-mapping">Domain to HTTP Mapping</a><a href="#lesson-5-error-body">Error Body</a><a href="#lesson-5-logging">Logging</a><a href="#lesson-5-authenticationauthorization">Authentication/Authorization</a><a href="#lesson-5-configuration">Configuration</a><a href="#lesson-5-health">Health</a></details><h1 id="lesson-5-04-architecture-errors-logging-security">04 — Architecture, Errors, Logging และ Security</h1>
 <h2 id="lesson-5-layers">Layers</h2>
 <!-- tutor-rich:## Layers -->
-<h3 id="lesson-5-_1">🧑‍🏫 เอาแบบง่ายที่สุดก่อน</h3>
-<p>ได้ครับ ชื่อนี้อาจดูเป็นศัพท์ระบบ แต่แก่นของมันไม่ยากถ้าแยกทีละช่วงครับ 5555</p>
+<h3 id="lesson-5-_1">คำอธิบายแบบเข้าใจง่าย</h3>
 <blockquote>
 <p><strong>แบ่ง route, service, repository และ client เพื่อให้แต่ละส่วนรับผิดชอบเหตุผลที่เปลี่ยนคนละแบบ</strong></p>
 </blockquote>
-<p>ลองมองเป็น Flow:</p>
+<p>พิจารณา Flow ต่อไปนี้:</p>
 <pre><code class="language-text">HTTP Route
   ↓ Service/use case
   ↓ Repository หรือ External Client
@@ -591,10 +495,6 @@ Route map กลับเป็น HTTP
 </code></pre>
 <h4 id="lesson-5-_2">จุดที่มักเข้าใจผิด</h4>
 <p>การแยกชั้นไม่ใช่เพิ่มไฟล์ให้ดูใหญ่ แต่ทำให้ test และเปลี่ยน dependency ได้</p>
-<h4 id="lesson-5-ai-automation">เกี่ยวกับงาน AI &amp; Automation อย่างไร?</h4>
-<p>เมื่อ FastAPI, n8n, database และ AI provider ต่อกัน ปัญหามักเกิดตรงรอยต่อ หัวข้อนี้ช่วยให้เราระบุได้ว่า error เกิดก่อนรับข้อมูล ระหว่าง business logic หรือที่ dependency ภายนอก แล้วเลือก retry, reject หรือหยุดได้ถูกต้อง</p>
-<h4 id="lesson-5-_3">จำก่อนอ่านศัพท์เทคนิคด้านล่าง</h4>
-<p>ให้ตอบว่า input คืออะไร, state ใดเปลี่ยน, output คืออะไร และถ้าล้ม caller จะรู้ได้อย่างไร ถ้าตอบได้ แปลว่าเข้าใจแก่นแล้วครับ</p>
 <pre><code class="language-text">Route: HTTP mapping
 Schema: input/output contract
 Service: use case/business rules
@@ -604,77 +504,94 @@ Client: external API boundary
 <p>Route ควร parse dependency, เรียก service และ map result/error ไม่ควรมี SQL และกฎธุรกิจยาว ๆ แยกชั้นเพื่อ test/reuse/change ได้ ไม่ใช่เพื่อสร้างไฟล์เยอะ</p>
 <h2 id="lesson-5-dependency-injection">Dependency Injection</h2>
 <!-- tutor-rich:## Dependency Injection -->
-<h3 id="lesson-5-_4">🧑‍🏫 เอาแบบง่ายที่สุดก่อน</h3>
-<p>ได้ครับ ชื่อนี้อาจดูเป็นศัพท์ระบบ แต่แก่นของมันไม่ยากถ้าแยกทีละช่วงครับ 5555</p>
+<h3 id="lesson-5-_3">คำอธิบายแบบเข้าใจง่าย</h3>
 <blockquote>
 <p><strong>แทนที่ function จะสร้าง DB/client เอง เราส่งสิ่งที่ต้องใช้เข้าไป ทำให้ production ใช้ของจริงและ test ใช้ fake</strong></p>
 </blockquote>
-<p>ลองมองเป็น Flow:</p>
+<p>พิจารณา Flow ต่อไปนี้:</p>
 <pre><code class="language-text">App สร้าง dependency
   ↓ inject เข้า route/service
 ทำงาน
   ↓ lifecycle cleanup
 Test override ด้วย fake
 </code></pre>
-<h4 id="lesson-5-_5">จุดที่มักเข้าใจผิด</h4>
+<h4 id="lesson-5-_4">จุดที่มักเข้าใจผิด</h4>
 <p>DI คือการควบคุมที่มาของ dependency ไม่ใช่แค่ใช้ <code>Depends</code> ตาม syntax</p>
-<h4 id="lesson-5-ai-automation_1">เกี่ยวกับงาน AI &amp; Automation อย่างไร?</h4>
-<p>เมื่อ FastAPI, n8n, database และ AI provider ต่อกัน ปัญหามักเกิดตรงรอยต่อ หัวข้อนี้ช่วยให้เราระบุได้ว่า error เกิดก่อนรับข้อมูล ระหว่าง business logic หรือที่ dependency ภายนอก แล้วเลือก retry, reject หรือหยุดได้ถูกต้อง</p>
-<h4 id="lesson-5-_6">จำก่อนอ่านศัพท์เทคนิคด้านล่าง</h4>
-<p>ให้ตอบว่า input คืออะไร, state ใดเปลี่ยน, output คืออะไร และถ้าล้ม caller จะรู้ได้อย่างไร ถ้าตอบได้ แปลว่าเข้าใจแก่นแล้วครับ</p>
 <p>FastAPI <code>Depends</code> จัด lifecycle ของ DB/auth/service และ override ใน tests ได้ Connection ต้องปิดเสมอและ transaction boundary ต้องอยู่รอบ business operation ไม่ใช่ commit กระจายทุก repository function</p>
 <h2 id="lesson-5-domain-to-http-mapping">Domain to HTTP Mapping</h2>
 <!-- tutor-rich:## Domain to HTTP Mapping -->
-<h3 id="lesson-5-_7">🧑‍🏫 เอาแบบง่ายที่สุดก่อน</h3>
-<p>ได้ครับ ชื่อนี้อาจดูเป็นศัพท์ระบบ แต่แก่นของมันไม่ยากถ้าแยกทีละช่วงครับ 5555</p>
+<h3 id="lesson-5-_5">คำอธิบายแบบเข้าใจง่าย</h3>
 <blockquote>
 <p><strong>Service พูดภาษาธุรกิจ ส่วน route แปลผลเป็น HTTP status</strong></p>
 </blockquote>
-<p>ลองมองเป็น Flow:</p>
+<p>พิจารณา Flow ต่อไปนี้:</p>
 <pre><code class="language-text">Service raise NotFound/Conflict
   ↓ Route/handler แปล
 404/409 + safe error body
   ↓
 Client เข้าใจ contract
 </code></pre>
-<h4 id="lesson-5-_8">จุดที่มักเข้าใจผิด</h4>
+<h4 id="lesson-5-_6">จุดที่มักเข้าใจผิด</h4>
 <p>อย่าให้ domain layer raise HTTPException ทุกที่ เพราะจะผูก logic กับ FastAPI</p>
-<h4 id="lesson-5-ai-automation_2">เกี่ยวกับงาน AI &amp; Automation อย่างไร?</h4>
-<p>เมื่อ FastAPI, n8n, database และ AI provider ต่อกัน ปัญหามักเกิดตรงรอยต่อ หัวข้อนี้ช่วยให้เราระบุได้ว่า error เกิดก่อนรับข้อมูล ระหว่าง business logic หรือที่ dependency ภายนอก แล้วเลือก retry, reject หรือหยุดได้ถูกต้อง</p>
-<h4 id="lesson-5-_9">จำก่อนอ่านศัพท์เทคนิคด้านล่าง</h4>
-<p>ให้ตอบว่า input คืออะไร, state ใดเปลี่ยน, output คืออะไร และถ้าล้ม caller จะรู้ได้อย่างไร ถ้าตอบได้ แปลว่าเข้าใจแก่นแล้วครับ</p>
 <p><code>NotFound → 404</code>, invalid state/duplicate conflict → <code>409</code>, authentication → <code>401</code>, authorization → <code>403</code>, unexpected → <code>500</code> พร้อม request ID อย่าส่ง raw exception/SQL/stack trace ให้ client</p>
 <h2 id="lesson-5-error-body">Error Body</h2>
 <!-- tutor-rich:## Error Body -->
-<h3 id="lesson-5-_10">🧑‍🏫 เอาแบบง่ายที่สุดก่อน</h3>
-<p>ได้ครับ ชื่อนี้อาจดูเป็นศัพท์ระบบ แต่แก่นของมันไม่ยากถ้าแยกทีละช่วงครับ 5555</p>
+<h3 id="lesson-5-_7">คำอธิบายแบบเข้าใจง่าย</h3>
 <blockquote>
 <p><strong>Error body ควรให้ code สำหรับโปรแกรม message สำหรับคน และ request ID สำหรับตาม log</strong></p>
 </blockquote>
-<p>ลองมองเป็น Flow:</p>
+<p>พิจารณา Flow ต่อไปนี้:</p>
 <pre><code class="language-text">เกิด error
   ↓ สร้าง stable error code
 เพิ่ม safe message + request ID
   ↓
 ตอบ client; รายละเอียดลึกอยู่ server log
 </code></pre>
-<h4 id="lesson-5-_11">จุดที่มักเข้าใจผิด</h4>
+<h4 id="lesson-5-_8">จุดที่มักเข้าใจผิด</h4>
 <p>ห้ามส่ง raw traceback, SQL หรือ token เพื่อความสะดวกตอน debug</p>
-<h4 id="lesson-5-ai-automation_3">เกี่ยวกับงาน AI &amp; Automation อย่างไร?</h4>
-<p>เมื่อ FastAPI, n8n, database และ AI provider ต่อกัน ปัญหามักเกิดตรงรอยต่อ หัวข้อนี้ช่วยให้เราระบุได้ว่า error เกิดก่อนรับข้อมูล ระหว่าง business logic หรือที่ dependency ภายนอก แล้วเลือก retry, reject หรือหยุดได้ถูกต้อง</p>
-<h4 id="lesson-5-_12">จำก่อนอ่านศัพท์เทคนิคด้านล่าง</h4>
-<p>ให้ตอบว่า input คืออะไร, state ใดเปลี่ยน, output คืออะไร และถ้าล้ม caller จะรู้ได้อย่างไร ถ้าตอบได้ แปลว่าเข้าใจแก่นแล้วครับ</p>
 <pre><code class="language-json">{"error":{"code":"TRANSACTION_CONFLICT","message":"transaction already exists","request_id":"req-123"}}
 </code></pre>
 <p>code ให้โปรแกรมใช้, message ให้คนอ่าน, request ID ใช้ตาม log รายละเอียดภายในอยู่ server log</p>
 <h2 id="lesson-5-logging">Logging</h2>
 <!-- tutor-rich:## Logging -->
-<h3 id="lesson-5-_13">🧑‍🏫 เอาแบบง่ายที่สุดก่อน</h3>
-<p>ได้ครับ ชื่อนี้อาจดูเป็นศัพท์ระบบ แต่แก่นของมันไม่ยากถ้าแยกทีละช่วงครับ 5555</p>
+<h3 id="lesson-5-_9">คำอธิบายแบบเข้าใจง่าย</h3>
 <blockquote>
 <p><strong>หัวข้อนี้อธิบายว่า Logging อยู่ตรงไหนใน request lifecycle และช่วยให้ระบบถูกต้องอย่างไร</strong></p>
 </blockquote>
-<p>ลองมองเป็น Flow:</p>
+<p>พิจารณา Flow ต่อไปนี้:</p>
+<pre><code class="language-text">Input/Request
+  ↓ ใช้แนวคิดของหัวข้อนี้
+State/ข้อมูลถูกตรวจหรือเปลี่ยน
+  ↓
+Output หรือ error ตาม contract
+</code></pre>
+<h4 id="lesson-5-_10">จุดที่มักเข้าใจผิด</h4>
+<p>อย่าจำเฉพาะ syntax ให้ถามว่า input, output, side effect และ failure คืออะไร</p>
+<p>Log request start/end, method/path template, status, duration, request ID และ identifiers ที่ไม่อ่อนไหว ห้าม log Authorization, password, token, full resume/PII หรือ raw body โดยไม่จำเป็น</p>
+<h2 id="lesson-5-authenticationauthorization">Authentication/Authorization</h2>
+<!-- tutor-rich:## Authentication/Authorization -->
+<h3 id="lesson-5-_11">คำอธิบายแบบเข้าใจง่าย</h3>
+<blockquote>
+<p><strong>Authentication ถามว่าเป็นใคร Authorization ถามว่าคนนี้ทำสิ่งนี้ได้ไหม</strong></p>
+</blockquote>
+<p>พิจารณา Flow ต่อไปนี้:</p>
+<pre><code class="language-text">Credential
+  ↓ verify identity
+ไม่ผ่าน → 401
+  ↓ ผ่าน
+ตรวจ permission
+ไม่ผ่าน → 403 / ผ่าน → ทำงาน
+</code></pre>
+<h4 id="lesson-5-_12">จุดที่มักเข้าใจผิด</h4>
+<p>มี valid token ไม่ได้แปลว่ามีสิทธิ์ทุก resource</p>
+<p>Authentication ตอบ “ใคร” Authorization ตอบ “ทำได้ไหม” การมี valid token ไม่ได้แปลว่าเข้าถึงทุก resource ได้ และ CORS ไม่ใช่ auth</p>
+<h2 id="lesson-5-configuration">Configuration</h2>
+<!-- tutor-rich:## Configuration -->
+<h3 id="lesson-5-_13">คำอธิบายแบบเข้าใจง่าย</h3>
+<blockquote>
+<p><strong>หัวข้อนี้อธิบายว่า Configuration อยู่ตรงไหนใน request lifecycle และช่วยให้ระบบถูกต้องอย่างไร</strong></p>
+</blockquote>
+<p>พิจารณา Flow ต่อไปนี้:</p>
 <pre><code class="language-text">Input/Request
   ↓ ใช้แนวคิดของหัวข้อนี้
 State/ข้อมูลถูกตรวจหรือเปลี่ยน
@@ -683,83 +600,30 @@ Output หรือ error ตาม contract
 </code></pre>
 <h4 id="lesson-5-_14">จุดที่มักเข้าใจผิด</h4>
 <p>อย่าจำเฉพาะ syntax ให้ถามว่า input, output, side effect และ failure คืออะไร</p>
-<h4 id="lesson-5-ai-automation_4">เกี่ยวกับงาน AI &amp; Automation อย่างไร?</h4>
-<p>เมื่อ FastAPI, n8n, database และ AI provider ต่อกัน ปัญหามักเกิดตรงรอยต่อ หัวข้อนี้ช่วยให้เราระบุได้ว่า error เกิดก่อนรับข้อมูล ระหว่าง business logic หรือที่ dependency ภายนอก แล้วเลือก retry, reject หรือหยุดได้ถูกต้อง</p>
-<h4 id="lesson-5-_15">จำก่อนอ่านศัพท์เทคนิคด้านล่าง</h4>
-<p>ให้ตอบว่า input คืออะไร, state ใดเปลี่ยน, output คืออะไร และถ้าล้ม caller จะรู้ได้อย่างไร ถ้าตอบได้ แปลว่าเข้าใจแก่นแล้วครับ</p>
-<p>Log request start/end, method/path template, status, duration, request ID และ identifiers ที่ไม่อ่อนไหว ห้าม log Authorization, password, token, full resume/PII หรือ raw body โดยไม่จำเป็น</p>
-<h2 id="lesson-5-authenticationauthorization">Authentication/Authorization</h2>
-<!-- tutor-rich:## Authentication/Authorization -->
-<h3 id="lesson-5-_16">🧑‍🏫 เอาแบบง่ายที่สุดก่อน</h3>
-<p>ได้ครับ ชื่อนี้อาจดูเป็นศัพท์ระบบ แต่แก่นของมันไม่ยากถ้าแยกทีละช่วงครับ 5555</p>
-<blockquote>
-<p><strong>Authentication ถามว่าเป็นใคร Authorization ถามว่าคนนี้ทำสิ่งนี้ได้ไหม</strong></p>
-</blockquote>
-<p>ลองมองเป็น Flow:</p>
-<pre><code class="language-text">Credential
-  ↓ verify identity
-ไม่ผ่าน → 401
-  ↓ ผ่าน
-ตรวจ permission
-ไม่ผ่าน → 403 / ผ่าน → ทำงาน
-</code></pre>
-<h4 id="lesson-5-_17">จุดที่มักเข้าใจผิด</h4>
-<p>มี valid token ไม่ได้แปลว่ามีสิทธิ์ทุก resource</p>
-<h4 id="lesson-5-ai-automation_5">เกี่ยวกับงาน AI &amp; Automation อย่างไร?</h4>
-<p>เมื่อ FastAPI, n8n, database และ AI provider ต่อกัน ปัญหามักเกิดตรงรอยต่อ หัวข้อนี้ช่วยให้เราระบุได้ว่า error เกิดก่อนรับข้อมูล ระหว่าง business logic หรือที่ dependency ภายนอก แล้วเลือก retry, reject หรือหยุดได้ถูกต้อง</p>
-<h4 id="lesson-5-_18">จำก่อนอ่านศัพท์เทคนิคด้านล่าง</h4>
-<p>ให้ตอบว่า input คืออะไร, state ใดเปลี่ยน, output คืออะไร และถ้าล้ม caller จะรู้ได้อย่างไร ถ้าตอบได้ แปลว่าเข้าใจแก่นแล้วครับ</p>
-<p>Authentication ตอบ “ใคร” Authorization ตอบ “ทำได้ไหม” การมี valid token ไม่ได้แปลว่าเข้าถึงทุก resource ได้ และ CORS ไม่ใช่ auth</p>
-<h2 id="lesson-5-configuration">Configuration</h2>
-<!-- tutor-rich:## Configuration -->
-<h3 id="lesson-5-_19">🧑‍🏫 เอาแบบง่ายที่สุดก่อน</h3>
-<p>ได้ครับ ชื่อนี้อาจดูเป็นศัพท์ระบบ แต่แก่นของมันไม่ยากถ้าแยกทีละช่วงครับ 5555</p>
-<blockquote>
-<p><strong>หัวข้อนี้อธิบายว่า Configuration อยู่ตรงไหนใน request lifecycle และช่วยให้ระบบถูกต้องอย่างไร</strong></p>
-</blockquote>
-<p>ลองมองเป็น Flow:</p>
-<pre><code class="language-text">Input/Request
-  ↓ ใช้แนวคิดของหัวข้อนี้
-State/ข้อมูลถูกตรวจหรือเปลี่ยน
-  ↓
-Output หรือ error ตาม contract
-</code></pre>
-<h4 id="lesson-5-_20">จุดที่มักเข้าใจผิด</h4>
-<p>อย่าจำเฉพาะ syntax ให้ถามว่า input, output, side effect และ failure คืออะไร</p>
-<h4 id="lesson-5-ai-automation_6">เกี่ยวกับงาน AI &amp; Automation อย่างไร?</h4>
-<p>เมื่อ FastAPI, n8n, database และ AI provider ต่อกัน ปัญหามักเกิดตรงรอยต่อ หัวข้อนี้ช่วยให้เราระบุได้ว่า error เกิดก่อนรับข้อมูล ระหว่าง business logic หรือที่ dependency ภายนอก แล้วเลือก retry, reject หรือหยุดได้ถูกต้อง</p>
-<h4 id="lesson-5-_21">จำก่อนอ่านศัพท์เทคนิคด้านล่าง</h4>
-<p>ให้ตอบว่า input คืออะไร, state ใดเปลี่ยน, output คืออะไร และถ้าล้ม caller จะรู้ได้อย่างไร ถ้าตอบได้ แปลว่าเข้าใจแก่นแล้วครับ</p>
 <p>secret อยู่ environment/secret manager มี <code>.env.example</code> เฉพาะชื่อและค่าปลอม validate config ตอน startup และแยก dev/test/prod database</p>
 <h2 id="lesson-5-health">Health</h2>
 <!-- tutor-rich:## Health -->
-<h3 id="lesson-5-_22">🧑‍🏫 เอาแบบง่ายที่สุดก่อน</h3>
-<p>ได้ครับ ชื่อนี้อาจดูเป็นศัพท์ระบบ แต่แก่นของมันไม่ยากถ้าแยกทีละช่วงครับ 5555</p>
+<h3 id="lesson-5-_15">คำอธิบายแบบเข้าใจง่าย</h3>
 <blockquote>
 <p><strong>Health endpoint ให้ระบบภายนอกรู้ว่า process ยังอยู่และพร้อมรับงานหรือไม่</strong></p>
 </blockquote>
-<p>ลองมองเป็น Flow:</p>
+<p>พิจารณา Flow ต่อไปนี้:</p>
 <pre><code class="language-text">Probe เรียก endpoint
   ↓ ตรวจ liveness/readiness
 ตอบสถานะสั้น ๆ
   ↓
 load balancer ส่งหรือหยุด traffic
 </code></pre>
-<h4 id="lesson-5-_23">จุดที่มักเข้าใจผิด</h4>
+<h4 id="lesson-5-_16">จุดที่มักเข้าใจผิด</h4>
 <p>อย่าเปิด version/config/secret หรือ query dependency หนักเกินจำเป็นทุก probe</p>
-<h4 id="lesson-5-ai-automation_7">เกี่ยวกับงาน AI &amp; Automation อย่างไร?</h4>
-<p>เมื่อ FastAPI, n8n, database และ AI provider ต่อกัน ปัญหามักเกิดตรงรอยต่อ หัวข้อนี้ช่วยให้เราระบุได้ว่า error เกิดก่อนรับข้อมูล ระหว่าง business logic หรือที่ dependency ภายนอก แล้วเลือก retry, reject หรือหยุดได้ถูกต้อง</p>
-<h4 id="lesson-5-_24">จำก่อนอ่านศัพท์เทคนิคด้านล่าง</h4>
-<p>ให้ตอบว่า input คืออะไร, state ใดเปลี่ยน, output คืออะไร และถ้าล้ม caller จะรู้ได้อย่างไร ถ้าตอบได้ แปลว่าเข้าใจแก่นแล้วครับ</p>
 <p>Liveness บอก process ยังทำงาน; readiness บอกพร้อมรับ traffic และ dependency สำคัญพร้อม อย่าให้ health endpoint เปิดข้อมูลระบบลึกเกินจำเป็น</p><a class="back" href="#top">↑ กลับสารบัญ</a></article><article id="lesson-6"><div class="source">05_testing_mocking.md</div><details class="local-toc"><summary>หัวข้อในบทนี้</summary><a href="#lesson-6-test-pyramid">Test Pyramid แบบใช้งาน</a><a href="#lesson-6-cases">Cases</a><a href="#lesson-6-dependency-override">Dependency Override</a><a href="#lesson-6-mock-boundary">Mock Boundary</a><a href="#lesson-6-assertions">Assertions</a><a href="#lesson-6-determinism">Determinism</a><a href="#lesson-6-ai-generated-code">AI-generated Code</a></details><h1 id="lesson-6-05-testing-fastapi-mocking">05 — Testing FastAPI และ Mocking</h1>
 <h2 id="lesson-6-test-pyramid">Test Pyramid แบบใช้งาน</h2>
 <!-- tutor-rich:## Test Pyramid แบบใช้งาน -->
-<h3 id="lesson-6-_1">🧑‍🏫 เอาแบบง่ายที่สุดก่อน</h3>
-<p>ได้ครับ ชื่อนี้อาจดูเป็นศัพท์ระบบ แต่แก่นของมันไม่ยากถ้าแยกทีละช่วงครับ 5555</p>
+<h3 id="lesson-6-_1">คำอธิบายแบบเข้าใจง่าย</h3>
 <blockquote>
 <p><strong>มี unit tests จำนวนมากเพื่อ logic, integration tests สำหรับการประกอบ และ end-to-end น้อยแต่ครอบทางสำคัญ</strong></p>
 </blockquote>
-<p>ลองมองเป็น Flow:</p>
+<p>พิจารณา Flow ต่อไปนี้:</p>
 <pre><code class="language-text">Business rule → unit
 Route+DB → integration
 ระบบเต็ม → E2E
@@ -768,10 +632,6 @@ Route+DB → integration
 </code></pre>
 <h4 id="lesson-6-_2">จุดที่มักเข้าใจผิด</h4>
 <p>มีแต่ E2E จะช้าและหาต้นเหตุยาก มีแต่ unit จะไม่พิสูจน์ wiring</p>
-<h4 id="lesson-6-ai-automation">เกี่ยวกับงาน AI &amp; Automation อย่างไร?</h4>
-<p>เมื่อ FastAPI, n8n, database และ AI provider ต่อกัน ปัญหามักเกิดตรงรอยต่อ หัวข้อนี้ช่วยให้เราระบุได้ว่า error เกิดก่อนรับข้อมูล ระหว่าง business logic หรือที่ dependency ภายนอก แล้วเลือก retry, reject หรือหยุดได้ถูกต้อง</p>
-<h4 id="lesson-6-_3">จำก่อนอ่านศัพท์เทคนิคด้านล่าง</h4>
-<p>ให้ตอบว่า input คืออะไร, state ใดเปลี่ยน, output คืออะไร และถ้าล้ม caller จะรู้ได้อย่างไร ถ้าตอบได้ แปลว่าเข้าใจแก่นแล้วครับ</p>
 <ul>
 <li>unit: pure service/validators เร็วและระบุต้นเหตุง่าย</li>
 <li>integration: route + dependency + test DB</li>
@@ -790,75 +650,91 @@ def test_health():
 </code></pre>
 <h2 id="lesson-6-cases">Cases</h2>
 <!-- tutor-rich:## Cases -->
-<h3 id="lesson-6-_4">🧑‍🏫 เอาแบบง่ายที่สุดก่อน</h3>
-<p>ได้ครับ ชื่อนี้อาจดูเป็นศัพท์ระบบ แต่แก่นของมันไม่ยากถ้าแยกทีละช่วงครับ 5555</p>
+<h3 id="lesson-6-_3">คำอธิบายแบบเข้าใจง่าย</h3>
 <blockquote>
 <p><strong>หัวข้อนี้อธิบายว่า Cases อยู่ตรงไหนใน request lifecycle และช่วยให้ระบบถูกต้องอย่างไร</strong></p>
 </blockquote>
-<p>ลองมองเป็น Flow:</p>
+<p>พิจารณา Flow ต่อไปนี้:</p>
 <pre><code class="language-text">Input/Request
   ↓ ใช้แนวคิดของหัวข้อนี้
 State/ข้อมูลถูกตรวจหรือเปลี่ยน
   ↓
 Output หรือ error ตาม contract
 </code></pre>
-<h4 id="lesson-6-_5">จุดที่มักเข้าใจผิด</h4>
+<h4 id="lesson-6-_4">จุดที่มักเข้าใจผิด</h4>
 <p>อย่าจำเฉพาะ syntax ให้ถามว่า input, output, side effect และ failure คืออะไร</p>
-<h4 id="lesson-6-ai-automation_1">เกี่ยวกับงาน AI &amp; Automation อย่างไร?</h4>
-<p>เมื่อ FastAPI, n8n, database และ AI provider ต่อกัน ปัญหามักเกิดตรงรอยต่อ หัวข้อนี้ช่วยให้เราระบุได้ว่า error เกิดก่อนรับข้อมูล ระหว่าง business logic หรือที่ dependency ภายนอก แล้วเลือก retry, reject หรือหยุดได้ถูกต้อง</p>
-<h4 id="lesson-6-_6">จำก่อนอ่านศัพท์เทคนิคด้านล่าง</h4>
-<p>ให้ตอบว่า input คืออะไร, state ใดเปลี่ยน, output คืออะไร และถ้าล้ม caller จะรู้ได้อย่างไร ถ้าตอบได้ แปลว่าเข้าใจแก่นแล้วครับ</p>
 <p>ทุก endpoint คิด normal, boundary, invalid, missing, not found, duplicate/conflict, unauthorized, dependency timeout และ unexpected failure ตามความเสี่ยง</p>
 <h2 id="lesson-6-dependency-override">Dependency Override</h2>
 <!-- tutor-rich:## Dependency Override -->
-<h3 id="lesson-6-_7">🧑‍🏫 เอาแบบง่ายที่สุดก่อน</h3>
-<p>ได้ครับ ชื่อนี้อาจดูเป็นศัพท์ระบบ แต่แก่นของมันไม่ยากถ้าแยกทีละช่วงครับ 5555</p>
+<h3 id="lesson-6-_5">คำอธิบายแบบเข้าใจง่าย</h3>
 <blockquote>
 <p><strong>ระหว่าง test เราสลับ DB/service จริงเป็น test DB/fake ผ่านจุด dependency เดียว</strong></p>
 </blockquote>
-<p>ลองมองเป็น Flow:</p>
+<p>พิจารณา Flow ต่อไปนี้:</p>
 <pre><code class="language-text">Test เตรียม fake/test DB
   ↓ override dependency
 เรียก API ผ่าน TestClient
   ↓ assert response + state
 คืน override
 </code></pre>
-<h4 id="lesson-6-_8">จุดที่มักเข้าใจผิด</h4>
+<h4 id="lesson-6-_6">จุดที่มักเข้าใจผิด</h4>
 <p>ต้อง cleanup override ไม่ให้รั่วไป test ถัดไป</p>
-<h4 id="lesson-6-ai-automation_2">เกี่ยวกับงาน AI &amp; Automation อย่างไร?</h4>
-<p>เมื่อ FastAPI, n8n, database และ AI provider ต่อกัน ปัญหามักเกิดตรงรอยต่อ หัวข้อนี้ช่วยให้เราระบุได้ว่า error เกิดก่อนรับข้อมูล ระหว่าง business logic หรือที่ dependency ภายนอก แล้วเลือก retry, reject หรือหยุดได้ถูกต้อง</p>
-<h4 id="lesson-6-_9">จำก่อนอ่านศัพท์เทคนิคด้านล่าง</h4>
-<p>ให้ตอบว่า input คืออะไร, state ใดเปลี่ยน, output คืออะไร และถ้าล้ม caller จะรู้ได้อย่างไร ถ้าตอบได้ แปลว่าเข้าใจแก่นแล้วครับ</p>
 <p>Override DB/service dependency ให้ใช้ isolated temporary DB/fake แล้วคืนค่า override หลัง test ป้องกัน state รั่วระหว่าง tests ห้ามชี้ test ไป production URL/DB</p>
 <h2 id="lesson-6-mock-boundary">Mock Boundary</h2>
 <!-- tutor-rich:## Mock Boundary -->
-<h3 id="lesson-6-_10">🧑‍🏫 เอาแบบง่ายที่สุดก่อน</h3>
-<p>ได้ครับ ชื่อนี้อาจดูเป็นศัพท์ระบบ แต่แก่นของมันไม่ยากถ้าแยกทีละช่วงครับ 5555</p>
+<h3 id="lesson-6-_7">คำอธิบายแบบเข้าใจง่าย</h3>
 <blockquote>
 <p><strong>Mock สิ่งที่อยู่นอกการควบคุม เช่น network เวลา และ email ไม่ mock logic ที่กำลังต้องการพิสูจน์</strong></p>
 </blockquote>
-<p>ลองมองเป็น Flow:</p>
+<p>พิจารณา Flow ต่อไปนี้:</p>
 <pre><code class="language-text">Code ถึง boundary
   ↓ fake คืน success/timeout/error
 Service ใช้ policy
   ↓
 Test ตรวจ observable behavior
 </code></pre>
-<h4 id="lesson-6-_11">จุดที่มักเข้าใจผิด</h4>
+<h4 id="lesson-6-_8">จุดที่มักเข้าใจผิด</h4>
 <p>Mock มากเกินไปทำให้ test ผ่านเพราะเราสั่ง mock ไม่ใช่เพราะระบบถูก</p>
-<h4 id="lesson-6-ai-automation_3">เกี่ยวกับงาน AI &amp; Automation อย่างไร?</h4>
-<p>เมื่อ FastAPI, n8n, database และ AI provider ต่อกัน ปัญหามักเกิดตรงรอยต่อ หัวข้อนี้ช่วยให้เราระบุได้ว่า error เกิดก่อนรับข้อมูล ระหว่าง business logic หรือที่ dependency ภายนอก แล้วเลือก retry, reject หรือหยุดได้ถูกต้อง</p>
-<h4 id="lesson-6-_12">จำก่อนอ่านศัพท์เทคนิคด้านล่าง</h4>
-<p>ให้ตอบว่า input คืออะไร, state ใดเปลี่ยน, output คืออะไร และถ้าล้ม caller จะรู้ได้อย่างไร ถ้าตอบได้ แปลว่าเข้าใจแก่นแล้วครับ</p>
 <p>Mock network, clock, random, email หรือ provider ไม่ควร mock pure internal helpers ทุกตัวจน test เพียงยืนยัน implementation calls</p>
 <h2 id="lesson-6-assertions">Assertions</h2>
 <!-- tutor-rich:## Assertions -->
-<h3 id="lesson-6-_13">🧑‍🏫 เอาแบบง่ายที่สุดก่อน</h3>
-<p>ได้ครับ ชื่อนี้อาจดูเป็นศัพท์ระบบ แต่แก่นของมันไม่ยากถ้าแยกทีละช่วงครับ 5555</p>
+<h3 id="lesson-6-_9">คำอธิบายแบบเข้าใจง่าย</h3>
 <blockquote>
 <p><strong>หัวข้อนี้อธิบายว่า Assertions อยู่ตรงไหนใน request lifecycle และช่วยให้ระบบถูกต้องอย่างไร</strong></p>
 </blockquote>
-<p>ลองมองเป็น Flow:</p>
+<p>พิจารณา Flow ต่อไปนี้:</p>
+<pre><code class="language-text">Input/Request
+  ↓ ใช้แนวคิดของหัวข้อนี้
+State/ข้อมูลถูกตรวจหรือเปลี่ยน
+  ↓
+Output หรือ error ตาม contract
+</code></pre>
+<h4 id="lesson-6-_10">จุดที่มักเข้าใจผิด</h4>
+<p>อย่าจำเฉพาะ syntax ให้ถามว่า input, output, side effect และ failure คืออะไร</p>
+<p>ตรวจ status + body contract + side effect จริง เช่น DB row count ไม่ใช่แค่ “ไม่ exception” สำหรับ error ตรวจว่าไม่มี stack trace/secret หลุด</p>
+<h2 id="lesson-6-determinism">Determinism</h2>
+<!-- tutor-rich:## Determinism -->
+<h3 id="lesson-6-_11">คำอธิบายแบบเข้าใจง่าย</h3>
+<blockquote>
+<p><strong>หัวข้อนี้อธิบายว่า Determinism อยู่ตรงไหนใน request lifecycle และช่วยให้ระบบถูกต้องอย่างไร</strong></p>
+</blockquote>
+<p>พิจารณา Flow ต่อไปนี้:</p>
+<pre><code class="language-text">Input/Request
+  ↓ ใช้แนวคิดของหัวข้อนี้
+State/ข้อมูลถูกตรวจหรือเปลี่ยน
+  ↓
+Output หรือ error ตาม contract
+</code></pre>
+<h4 id="lesson-6-_12">จุดที่มักเข้าใจผิด</h4>
+<p>อย่าจำเฉพาะ syntax ให้ถามว่า input, output, side effect และ failure คืออะไร</p>
+<p>ใช้ <code>tmp_path</code>, fixed clock, fake provider และ fresh DB; test ต้องผ่านเดี่ยวและผ่านทั้ง suite โดยไม่ขึ้นกับลำดับ</p>
+<h2 id="lesson-6-ai-generated-code">AI-generated Code</h2>
+<!-- tutor-rich:## AI-generated Code -->
+<h3 id="lesson-6-_13">คำอธิบายแบบเข้าใจง่าย</h3>
+<blockquote>
+<p><strong>หัวข้อนี้อธิบายว่า AI-generated Code อยู่ตรงไหนใน request lifecycle และช่วยให้ระบบถูกต้องอย่างไร</strong></p>
+</blockquote>
+<p>พิจารณา Flow ต่อไปนี้:</p>
 <pre><code class="language-text">Input/Request
   ↓ ใช้แนวคิดของหัวข้อนี้
 State/ข้อมูลถูกตรวจหรือเปลี่ยน
@@ -867,61 +743,14 @@ Output หรือ error ตาม contract
 </code></pre>
 <h4 id="lesson-6-_14">จุดที่มักเข้าใจผิด</h4>
 <p>อย่าจำเฉพาะ syntax ให้ถามว่า input, output, side effect และ failure คืออะไร</p>
-<h4 id="lesson-6-ai-automation_4">เกี่ยวกับงาน AI &amp; Automation อย่างไร?</h4>
-<p>เมื่อ FastAPI, n8n, database และ AI provider ต่อกัน ปัญหามักเกิดตรงรอยต่อ หัวข้อนี้ช่วยให้เราระบุได้ว่า error เกิดก่อนรับข้อมูล ระหว่าง business logic หรือที่ dependency ภายนอก แล้วเลือก retry, reject หรือหยุดได้ถูกต้อง</p>
-<h4 id="lesson-6-_15">จำก่อนอ่านศัพท์เทคนิคด้านล่าง</h4>
-<p>ให้ตอบว่า input คืออะไร, state ใดเปลี่ยน, output คืออะไร และถ้าล้ม caller จะรู้ได้อย่างไร ถ้าตอบได้ แปลว่าเข้าใจแก่นแล้วครับ</p>
-<p>ตรวจ status + body contract + side effect จริง เช่น DB row count ไม่ใช่แค่ “ไม่ exception” สำหรับ error ตรวจว่าไม่มี stack trace/secret หลุด</p>
-<h2 id="lesson-6-determinism">Determinism</h2>
-<!-- tutor-rich:## Determinism -->
-<h3 id="lesson-6-_16">🧑‍🏫 เอาแบบง่ายที่สุดก่อน</h3>
-<p>ได้ครับ ชื่อนี้อาจดูเป็นศัพท์ระบบ แต่แก่นของมันไม่ยากถ้าแยกทีละช่วงครับ 5555</p>
-<blockquote>
-<p><strong>หัวข้อนี้อธิบายว่า Determinism อยู่ตรงไหนใน request lifecycle และช่วยให้ระบบถูกต้องอย่างไร</strong></p>
-</blockquote>
-<p>ลองมองเป็น Flow:</p>
-<pre><code class="language-text">Input/Request
-  ↓ ใช้แนวคิดของหัวข้อนี้
-State/ข้อมูลถูกตรวจหรือเปลี่ยน
-  ↓
-Output หรือ error ตาม contract
-</code></pre>
-<h4 id="lesson-6-_17">จุดที่มักเข้าใจผิด</h4>
-<p>อย่าจำเฉพาะ syntax ให้ถามว่า input, output, side effect และ failure คืออะไร</p>
-<h4 id="lesson-6-ai-automation_5">เกี่ยวกับงาน AI &amp; Automation อย่างไร?</h4>
-<p>เมื่อ FastAPI, n8n, database และ AI provider ต่อกัน ปัญหามักเกิดตรงรอยต่อ หัวข้อนี้ช่วยให้เราระบุได้ว่า error เกิดก่อนรับข้อมูล ระหว่าง business logic หรือที่ dependency ภายนอก แล้วเลือก retry, reject หรือหยุดได้ถูกต้อง</p>
-<h4 id="lesson-6-_18">จำก่อนอ่านศัพท์เทคนิคด้านล่าง</h4>
-<p>ให้ตอบว่า input คืออะไร, state ใดเปลี่ยน, output คืออะไร และถ้าล้ม caller จะรู้ได้อย่างไร ถ้าตอบได้ แปลว่าเข้าใจแก่นแล้วครับ</p>
-<p>ใช้ <code>tmp_path</code>, fixed clock, fake provider และ fresh DB; test ต้องผ่านเดี่ยวและผ่านทั้ง suite โดยไม่ขึ้นกับลำดับ</p>
-<h2 id="lesson-6-ai-generated-code">AI-generated Code</h2>
-<!-- tutor-rich:## AI-generated Code -->
-<h3 id="lesson-6-_19">🧑‍🏫 เอาแบบง่ายที่สุดก่อน</h3>
-<p>ได้ครับ ชื่อนี้อาจดูเป็นศัพท์ระบบ แต่แก่นของมันไม่ยากถ้าแยกทีละช่วงครับ 5555</p>
-<blockquote>
-<p><strong>หัวข้อนี้อธิบายว่า AI-generated Code อยู่ตรงไหนใน request lifecycle และช่วยให้ระบบถูกต้องอย่างไร</strong></p>
-</blockquote>
-<p>ลองมองเป็น Flow:</p>
-<pre><code class="language-text">Input/Request
-  ↓ ใช้แนวคิดของหัวข้อนี้
-State/ข้อมูลถูกตรวจหรือเปลี่ยน
-  ↓
-Output หรือ error ตาม contract
-</code></pre>
-<h4 id="lesson-6-_20">จุดที่มักเข้าใจผิด</h4>
-<p>อย่าจำเฉพาะ syntax ให้ถามว่า input, output, side effect และ failure คืออะไร</p>
-<h4 id="lesson-6-ai-automation_6">เกี่ยวกับงาน AI &amp; Automation อย่างไร?</h4>
-<p>เมื่อ FastAPI, n8n, database และ AI provider ต่อกัน ปัญหามักเกิดตรงรอยต่อ หัวข้อนี้ช่วยให้เราระบุได้ว่า error เกิดก่อนรับข้อมูล ระหว่าง business logic หรือที่ dependency ภายนอก แล้วเลือก retry, reject หรือหยุดได้ถูกต้อง</p>
-<h4 id="lesson-6-_21">จำก่อนอ่านศัพท์เทคนิคด้านล่าง</h4>
-<p>ให้ตอบว่า input คืออะไร, state ใดเปลี่ยน, output คืออะไร และถ้าล้ม caller จะรู้ได้อย่างไร ถ้าตอบได้ แปลว่าเข้าใจแก่นแล้วครับ</p>
 <p>เพิ่ม adversarial cases: unknown field, bool ใน integer, empty string, huge body, duplicate key, timeout หลัง side effect, invalid upstream JSON และ malformed auth header</p><a class="back" href="#top">↑ กลับสารบัญ</a></article><article id="lesson-7"><div class="source">06_webhooks_idempotency.md</div><details class="local-toc"><summary>หัวข้อในบทนี้</summary><a href="#lesson-7-webhook-reality">Webhook Reality</a><a href="#lesson-7-signature">Signature</a><a href="#lesson-7-idempotency">Idempotency</a><a href="#lesson-7-race-condition">Race Condition</a><a href="#lesson-7-fast-acknowledge">Fast Acknowledge</a><a href="#lesson-7-status-machine">Status Machine</a><a href="#lesson-7-tests">Tests</a></details><h1 id="lesson-7-06-webhooks-idempotency">06 — Webhooks และ Idempotency</h1>
 <h2 id="lesson-7-webhook-reality">Webhook Reality</h2>
 <!-- tutor-rich:## Webhook Reality -->
-<h3 id="lesson-7-_1">🧑‍🏫 เอาแบบง่ายที่สุดก่อน</h3>
-<p>ได้ครับ ชื่อนี้อาจดูเป็นศัพท์ระบบ แต่แก่นของมันไม่ยากถ้าแยกทีละช่วงครับ 5555</p>
+<h3 id="lesson-7-_1">คำอธิบายแบบเข้าใจง่าย</h3>
 <blockquote>
 <p><strong>Webhook คือระบบต้นทางเป็นฝ่ายโทรหาเราเมื่อมีเหตุการณ์ จึงไม่ต้องถามซ้ำ ๆ แบบ polling</strong></p>
 </blockquote>
-<p>ลองมองเป็น Flow:</p>
+<p>พิจารณา Flow ต่อไปนี้:</p>
 <pre><code class="language-text">Event เกิดที่ provider
   ↓ POST webhook
 Verify → Deduplicate → Persist
@@ -930,51 +759,37 @@ Verify → Deduplicate → Persist
 </code></pre>
 <h4 id="lesson-7-_2">จุดที่มักเข้าใจผิด</h4>
 <p>Webhook ส่งซ้ำได้ตามปกติ การได้รับซ้ำไม่ใช่ bug และ handler ต้อง idempotent</p>
-<h4 id="lesson-7-ai-automation">เกี่ยวกับงาน AI &amp; Automation อย่างไร?</h4>
-<p>เมื่อ FastAPI, n8n, database และ AI provider ต่อกัน ปัญหามักเกิดตรงรอยต่อ หัวข้อนี้ช่วยให้เราระบุได้ว่า error เกิดก่อนรับข้อมูล ระหว่าง business logic หรือที่ dependency ภายนอก แล้วเลือก retry, reject หรือหยุดได้ถูกต้อง</p>
-<h4 id="lesson-7-_3">จำก่อนอ่านศัพท์เทคนิคด้านล่าง</h4>
-<p>ให้ตอบว่า input คืออะไร, state ใดเปลี่ยน, output คืออะไร และถ้าล้ม caller จะรู้ได้อย่างไร ถ้าตอบได้ แปลว่าเข้าใจแก่นแล้วครับ</p>
 <p>Provider อาจ retry เมื่อไม่ได้ 2xx, ส่งซ้ำ, ส่งช้า, out-of-order หรือปลอม request ได้ Endpoint จึงต้อง verify → deduplicate → persist → enqueue/process → acknowledge ตาม contract</p>
 <h2 id="lesson-7-signature">Signature</h2>
 <!-- tutor-rich:## Signature -->
-<h3 id="lesson-7-_4">🧑‍🏫 เอาแบบง่ายที่สุดก่อน</h3>
-<p>ได้ครับ ชื่อนี้อาจดูเป็นศัพท์ระบบ แต่แก่นของมันไม่ยากถ้าแยกทีละช่วงครับ 5555</p>
+<h3 id="lesson-7-_3">คำอธิบายแบบเข้าใจง่าย</h3>
 <blockquote>
 <p><strong>Signature ช่วยตรวจว่า webhook body มาจากผู้ถือ secret และไม่ถูกแก้ระหว่างทาง</strong></p>
 </blockquote>
-<p>ลองมองเป็น Flow:</p>
+<p>พิจารณา Flow ต่อไปนี้:</p>
 <pre><code class="language-text">Raw body + timestamp
   ↓ คำนวณ/verify signature
 ไม่ผ่าน → reject
 ผ่าน → parse และ process
 </code></pre>
-<h4 id="lesson-7-_5">จุดที่มักเข้าใจผิด</h4>
+<h4 id="lesson-7-_4">จุดที่มักเข้าใจผิด</h4>
 <p>ต้อง verify raw bytes ก่อนเปลี่ยนรูปข้อความและใช้ algorithm ตาม provider</p>
-<h4 id="lesson-7-ai-automation_1">เกี่ยวกับงาน AI &amp; Automation อย่างไร?</h4>
-<p>เมื่อ FastAPI, n8n, database และ AI provider ต่อกัน ปัญหามักเกิดตรงรอยต่อ หัวข้อนี้ช่วยให้เราระบุได้ว่า error เกิดก่อนรับข้อมูล ระหว่าง business logic หรือที่ dependency ภายนอก แล้วเลือก retry, reject หรือหยุดได้ถูกต้อง</p>
-<h4 id="lesson-7-_6">จำก่อนอ่านศัพท์เทคนิคด้านล่าง</h4>
-<p>ให้ตอบว่า input คืออะไร, state ใดเปลี่ยน, output คืออะไร และถ้าล้ม caller จะรู้ได้อย่างไร ถ้าตอบได้ แปลว่าเข้าใจแก่นแล้วครับ</p>
 <p>ตรวจ signature จาก raw request bytes ก่อน parse/เปลี่ยน whitespace ใช้ shared secret/public-key scheme ตาม provider, constant-time comparison และ timestamp tolerance ป้องกัน replay ห้ามคิด algorithm เอง</p>
 <h2 id="lesson-7-idempotency">Idempotency</h2>
 <!-- tutor-rich:## Idempotency -->
-<h3 id="lesson-7-_7">🧑‍🏫 เอาแบบง่ายที่สุดก่อน</h3>
-<p>ได้ครับ ชื่อนี้อาจดูเป็นศัพท์ระบบ แต่แก่นของมันไม่ยากถ้าแยกทีละช่วงครับ 5555</p>
+<h3 id="lesson-7-_5">คำอธิบายแบบเข้าใจง่าย</h3>
 <blockquote>
 <p><strong>หัวข้อนี้อธิบายว่า Idempotency อยู่ตรงไหนใน request lifecycle และช่วยให้ระบบถูกต้องอย่างไร</strong></p>
 </blockquote>
-<p>ลองมองเป็น Flow:</p>
+<p>พิจารณา Flow ต่อไปนี้:</p>
 <pre><code class="language-text">Input/Request
   ↓ ใช้แนวคิดของหัวข้อนี้
 State/ข้อมูลถูกตรวจหรือเปลี่ยน
   ↓
 Output หรือ error ตาม contract
 </code></pre>
-<h4 id="lesson-7-_8">จุดที่มักเข้าใจผิด</h4>
+<h4 id="lesson-7-_6">จุดที่มักเข้าใจผิด</h4>
 <p>อย่าจำเฉพาะ syntax ให้ถามว่า input, output, side effect และ failure คืออะไร</p>
-<h4 id="lesson-7-ai-automation_2">เกี่ยวกับงาน AI &amp; Automation อย่างไร?</h4>
-<p>เมื่อ FastAPI, n8n, database และ AI provider ต่อกัน ปัญหามักเกิดตรงรอยต่อ หัวข้อนี้ช่วยให้เราระบุได้ว่า error เกิดก่อนรับข้อมูล ระหว่าง business logic หรือที่ dependency ภายนอก แล้วเลือก retry, reject หรือหยุดได้ถูกต้อง</p>
-<h4 id="lesson-7-_9">จำก่อนอ่านศัพท์เทคนิคด้านล่าง</h4>
-<p>ให้ตอบว่า input คืออะไร, state ใดเปลี่ยน, output คืออะไร และถ้าล้ม caller จะรู้ได้อย่างไร ถ้าตอบได้ แปลว่าเข้าใจแก่นแล้วครับ</p>
 <p>ใช้ provider event ID หรือ stable idempotency key พร้อม unique constraint:</p>
 <pre><code class="language-sql">CREATE TABLE webhook_events (
   event_id TEXT PRIMARY KEY,
@@ -986,99 +801,78 @@ Output หรือ error ตาม contract
 <p>ID เดิม hash เหมือน → คืนผลตาม contract; ID เดิม hash ต่าง → conflict/security signal; ห้าม deduplicate ด้วย timestamp อย่างเดียว</p>
 <h2 id="lesson-7-race-condition">Race Condition</h2>
 <!-- tutor-rich:## Race Condition -->
-<h3 id="lesson-7-_10">🧑‍🏫 เอาแบบง่ายที่สุดก่อน</h3>
-<p>ได้ครับ ชื่อนี้อาจดูเป็นศัพท์ระบบ แต่แก่นของมันไม่ยากถ้าแยกทีละช่วงครับ 5555</p>
+<h3 id="lesson-7-_7">คำอธิบายแบบเข้าใจง่าย</h3>
 <blockquote>
 <p><strong>สอง worker อาจตรวจว่าไม่มีข้อมูลพร้อมกันแล้ว insert พร้อมกัน Unique constraint จึงเป็นกรรมการสุดท้าย</strong></p>
 </blockquote>
-<p>ลองมองเป็น Flow:</p>
+<p>พิจารณา Flow ต่อไปนี้:</p>
 <pre><code class="language-text">Worker A/B: SELECT ไม่พบ
   ↓ ทั้งคู่ INSERT
 DB unique constraint
   ↓ หนึ่งสำเร็จ
 อีกหนึ่ง duplicate/conflict
 </code></pre>
-<h4 id="lesson-7-_11">จุดที่มักเข้าใจผิด</h4>
+<h4 id="lesson-7-_8">จุดที่มักเข้าใจผิด</h4>
 <p>check-before-insert อย่างเดียวไม่ปลอดภัยภายใต้ concurrency</p>
-<h4 id="lesson-7-ai-automation_3">เกี่ยวกับงาน AI &amp; Automation อย่างไร?</h4>
-<p>เมื่อ FastAPI, n8n, database และ AI provider ต่อกัน ปัญหามักเกิดตรงรอยต่อ หัวข้อนี้ช่วยให้เราระบุได้ว่า error เกิดก่อนรับข้อมูล ระหว่าง business logic หรือที่ dependency ภายนอก แล้วเลือก retry, reject หรือหยุดได้ถูกต้อง</p>
-<h4 id="lesson-7-_12">จำก่อนอ่านศัพท์เทคนิคด้านล่าง</h4>
-<p>ให้ตอบว่า input คืออะไร, state ใดเปลี่ยน, output คืออะไร และถ้าล้ม caller จะรู้ได้อย่างไร ถ้าตอบได้ แปลว่าเข้าใจแก่นแล้วครับ</p>
 <p>“SELECT ก่อน INSERT” สอง worker อาจเห็นว่าไม่มีพร้อมกัน ให้ DB unique constraint เป็น safety net และจัดการ conflict อย่างตั้งใจ</p>
 <h2 id="lesson-7-fast-acknowledge">Fast Acknowledge</h2>
 <!-- tutor-rich:## Fast Acknowledge -->
-<h3 id="lesson-7-_13">🧑‍🏫 เอาแบบง่ายที่สุดก่อน</h3>
-<p>ได้ครับ ชื่อนี้อาจดูเป็นศัพท์ระบบ แต่แก่นของมันไม่ยากถ้าแยกทีละช่วงครับ 5555</p>
+<h3 id="lesson-7-_9">คำอธิบายแบบเข้าใจง่าย</h3>
 <blockquote>
 <p><strong>Webhook ควรยืนยันรับเร็วแล้วโยนงานยาวไป queue เพื่อลด timeout และการส่งซ้ำ</strong></p>
 </blockquote>
-<p>ลองมองเป็น Flow:</p>
+<p>พิจารณา Flow ต่อไปนี้:</p>
 <pre><code class="language-text">Verify + persist event
   ↓ enqueue durable work
 ตอบ 2xx เร็ว
   ↓ worker ทำ AI/OCR
 บันทึก outcome
 </code></pre>
-<h4 id="lesson-7-_14">จุดที่มักเข้าใจผิด</h4>
+<h4 id="lesson-7-_10">จุดที่มักเข้าใจผิด</h4>
 <p>ตอบก่อน persist/enqueue สำเร็จอาจทำ event หาย</p>
-<h4 id="lesson-7-ai-automation_4">เกี่ยวกับงาน AI &amp; Automation อย่างไร?</h4>
-<p>เมื่อ FastAPI, n8n, database และ AI provider ต่อกัน ปัญหามักเกิดตรงรอยต่อ หัวข้อนี้ช่วยให้เราระบุได้ว่า error เกิดก่อนรับข้อมูล ระหว่าง business logic หรือที่ dependency ภายนอก แล้วเลือก retry, reject หรือหยุดได้ถูกต้อง</p>
-<h4 id="lesson-7-_15">จำก่อนอ่านศัพท์เทคนิคด้านล่าง</h4>
-<p>ให้ตอบว่า input คืออะไร, state ใดเปลี่ยน, output คืออะไร และถ้าล้ม caller จะรู้ได้อย่างไร ถ้าตอบได้ แปลว่าเข้าใจแก่นแล้วครับ</p>
 <p>งานยาวควร persist/enqueue แล้วตอบเร็ว หากทำ AI/OCR ก่อนตอบ provider อาจ timeout และ retry เพิ่ม duplicate load แต่ต้องแน่ใจว่า queue handoff ไม่ทำ event หาย</p>
 <h2 id="lesson-7-status-machine">Status Machine</h2>
 <!-- tutor-rich:## Status Machine -->
-<h3 id="lesson-7-_16">🧑‍🏫 เอาแบบง่ายที่สุดก่อน</h3>
-<p>ได้ครับ ชื่อนี้อาจดูเป็นศัพท์ระบบ แต่แก่นของมันไม่ยากถ้าแยกทีละช่วงครับ 5555</p>
+<h3 id="lesson-7-_11">คำอธิบายแบบเข้าใจง่าย</h3>
 <blockquote>
 <p><strong>แทน boolean done ใช้สถานะหลายขั้นเพื่อรู้ว่าค้าง ล้มแบบ retry ได้ หรือรอคนตรวจ</strong></p>
 </blockquote>
-<p>ลองมองเป็น Flow:</p>
+<p>พิจารณา Flow ต่อไปนี้:</p>
 <pre><code class="language-text">received → processing
   ├→ completed
   ├→ failed_retryable → retry
   └→ manual_review
 </code></pre>
-<h4 id="lesson-7-_17">จุดที่มักเข้าใจผิด</h4>
+<h4 id="lesson-7-_12">จุดที่มักเข้าใจผิด</h4>
 <p>กำหนด transition ที่อนุญาตและ audit ทุกการเปลี่ยน</p>
-<h4 id="lesson-7-ai-automation_5">เกี่ยวกับงาน AI &amp; Automation อย่างไร?</h4>
-<p>เมื่อ FastAPI, n8n, database และ AI provider ต่อกัน ปัญหามักเกิดตรงรอยต่อ หัวข้อนี้ช่วยให้เราระบุได้ว่า error เกิดก่อนรับข้อมูล ระหว่าง business logic หรือที่ dependency ภายนอก แล้วเลือก retry, reject หรือหยุดได้ถูกต้อง</p>
-<h4 id="lesson-7-_18">จำก่อนอ่านศัพท์เทคนิคด้านล่าง</h4>
-<p>ให้ตอบว่า input คืออะไร, state ใดเปลี่ยน, output คืออะไร และถ้าล้ม caller จะรู้ได้อย่างไร ถ้าตอบได้ แปลว่าเข้าใจแก่นแล้วครับ</p>
 <p><code>received → processing → completed</code> หรือ <code>failed_retryable/failed_permanent/manual_review</code> ช่วย resume หลัง crash และ audit ได้ อย่าใช้ boolean <code>done</code> เมื่อสถานการณ์มากกว่าสองแบบ</p>
 <h2 id="lesson-7-tests">Tests</h2>
 <!-- tutor-rich:## Tests -->
-<h3 id="lesson-7-_19">🧑‍🏫 เอาแบบง่ายที่สุดก่อน</h3>
-<p>ได้ครับ ชื่อนี้อาจดูเป็นศัพท์ระบบ แต่แก่นของมันไม่ยากถ้าแยกทีละช่วงครับ 5555</p>
+<h3 id="lesson-7-_13">คำอธิบายแบบเข้าใจง่าย</h3>
 <blockquote>
 <p><strong>หัวข้อนี้อธิบายว่า Tests อยู่ตรงไหนใน request lifecycle และช่วยให้ระบบถูกต้องอย่างไร</strong></p>
 </blockquote>
-<p>ลองมองเป็น Flow:</p>
+<p>พิจารณา Flow ต่อไปนี้:</p>
 <pre><code class="language-text">Input/Request
   ↓ ใช้แนวคิดของหัวข้อนี้
 State/ข้อมูลถูกตรวจหรือเปลี่ยน
   ↓
 Output หรือ error ตาม contract
 </code></pre>
-<h4 id="lesson-7-_20">จุดที่มักเข้าใจผิด</h4>
+<h4 id="lesson-7-_14">จุดที่มักเข้าใจผิด</h4>
 <p>อย่าจำเฉพาะ syntax ให้ถามว่า input, output, side effect และ failure คืออะไร</p>
-<h4 id="lesson-7-ai-automation_6">เกี่ยวกับงาน AI &amp; Automation อย่างไร?</h4>
-<p>เมื่อ FastAPI, n8n, database และ AI provider ต่อกัน ปัญหามักเกิดตรงรอยต่อ หัวข้อนี้ช่วยให้เราระบุได้ว่า error เกิดก่อนรับข้อมูล ระหว่าง business logic หรือที่ dependency ภายนอก แล้วเลือก retry, reject หรือหยุดได้ถูกต้อง</p>
-<h4 id="lesson-7-_21">จำก่อนอ่านศัพท์เทคนิคด้านล่าง</h4>
-<p>ให้ตอบว่า input คืออะไร, state ใดเปลี่ยน, output คืออะไร และถ้าล้ม caller จะรู้ได้อย่างไร ถ้าตอบได้ แปลว่าเข้าใจแก่นแล้วครับ</p>
-<p>valid signature, invalid signature, expired timestamp, duplicate same payload, duplicate changed payload, out-of-order, handler crash และ retry หลัง timeout</p><a class="back" href="#top">↑ กลับสารบัญ</a></article><article id="lesson-8"><div class="source">07_cheat_sheet.md</div><details class="local-toc"><summary>หัวข้อในบทนี้</summary><a href="#lesson-8-endpoint">ก่อนสร้าง Endpoint</a><a href="#lesson-8-external-call">ก่อน External Call</a><a href="#lesson-8-debug-order">Debug Order</a><a href="#lesson-8-status">Status</a><a href="#lesson-8-_13">หยุดก่อน</a></details><h1 id="lesson-8-07-week-2-cheat-sheet">07 — Week 2 Cheat Sheet</h1>
+<p>valid signature, invalid signature, expired timestamp, duplicate same payload, duplicate changed payload, out-of-order, handler crash และ retry หลัง timeout</p><a class="back" href="#top">↑ กลับสารบัญ</a></article><article id="lesson-8"><div class="source">07_cheat_sheet.md</div><details class="local-toc"><summary>หัวข้อในบทนี้</summary><a href="#lesson-8-endpoint">ก่อนสร้าง Endpoint</a><a href="#lesson-8-external-call">ก่อน External Call</a><a href="#lesson-8-debug-order">Debug Order</a><a href="#lesson-8-status">Status</a><a href="#lesson-8-_9">หยุดก่อน</a></details><h1 id="lesson-8-07-week-2-cheat-sheet">07 — Week 2 Cheat Sheet</h1>
 <pre><code class="language-bash">uvicorn app.main:app --reload
 curl -i http://localhost:8000/health
 pytest -q
 </code></pre>
 <h2 id="lesson-8-endpoint">ก่อนสร้าง Endpoint</h2>
 <!-- tutor-rich:## ก่อนสร้าง Endpoint -->
-<h3 id="lesson-8-_1">🧑‍🏫 เอาแบบง่ายที่สุดก่อน</h3>
-<p>ได้ครับ ชื่อนี้อาจดูเป็นศัพท์ระบบ แต่แก่นของมันไม่ยากถ้าแยกทีละช่วงครับ 5555</p>
+<h3 id="lesson-8-_1">คำอธิบายแบบเข้าใจง่าย</h3>
 <blockquote>
 <p><strong>หัวข้อนี้อธิบายว่า ก่อนสร้าง Endpoint อยู่ตรงไหนใน request lifecycle และช่วยให้ระบบถูกต้องอย่างไร</strong></p>
 </blockquote>
-<p>ลองมองเป็น Flow:</p>
+<p>พิจารณา Flow ต่อไปนี้:</p>
 <pre><code class="language-text">Input/Request
   ↓ ใช้แนวคิดของหัวข้อนี้
 State/ข้อมูลถูกตรวจหรือเปลี่ยน
@@ -1087,40 +881,46 @@ Output หรือ error ตาม contract
 </code></pre>
 <h4 id="lesson-8-_2">จุดที่มักเข้าใจผิด</h4>
 <p>อย่าจำเฉพาะ syntax ให้ถามว่า input, output, side effect และ failure คืออะไร</p>
-<h4 id="lesson-8-ai-automation">เกี่ยวกับงาน AI &amp; Automation อย่างไร?</h4>
-<p>เมื่อ FastAPI, n8n, database และ AI provider ต่อกัน ปัญหามักเกิดตรงรอยต่อ หัวข้อนี้ช่วยให้เราระบุได้ว่า error เกิดก่อนรับข้อมูล ระหว่าง business logic หรือที่ dependency ภายนอก แล้วเลือก retry, reject หรือหยุดได้ถูกต้อง</p>
-<h4 id="lesson-8-_3">จำก่อนอ่านศัพท์เทคนิคด้านล่าง</h4>
-<p>ให้ตอบว่า input คืออะไร, state ใดเปลี่ยน, output คืออะไร และถ้าล้ม caller จะรู้ได้อย่างไร ถ้าตอบได้ แปลว่าเข้าใจแก่นแล้วครับ</p>
 <p>กำหนด method/path/auth/input/output/status/side effect/idempotency/failures ก่อนเขียน route</p>
 <h2 id="lesson-8-external-call">ก่อน External Call</h2>
 <!-- tutor-rich:## ก่อน External Call -->
-<h3 id="lesson-8-_4">🧑‍🏫 เอาแบบง่ายที่สุดก่อน</h3>
-<p>ได้ครับ ชื่อนี้อาจดูเป็นศัพท์ระบบ แต่แก่นของมันไม่ยากถ้าแยกทีละช่วงครับ 5555</p>
+<h3 id="lesson-8-_3">คำอธิบายแบบเข้าใจง่าย</h3>
 <blockquote>
 <p><strong>หัวข้อนี้อธิบายว่า ก่อน External Call อยู่ตรงไหนใน request lifecycle และช่วยให้ระบบถูกต้องอย่างไร</strong></p>
 </blockquote>
-<p>ลองมองเป็น Flow:</p>
+<p>พิจารณา Flow ต่อไปนี้:</p>
 <pre><code class="language-text">Input/Request
   ↓ ใช้แนวคิดของหัวข้อนี้
 State/ข้อมูลถูกตรวจหรือเปลี่ยน
   ↓
 Output หรือ error ตาม contract
 </code></pre>
-<h4 id="lesson-8-_5">จุดที่มักเข้าใจผิด</h4>
+<h4 id="lesson-8-_4">จุดที่มักเข้าใจผิด</h4>
 <p>อย่าจำเฉพาะ syntax ให้ถามว่า input, output, side effect และ failure คืออะไร</p>
-<h4 id="lesson-8-ai-automation_1">เกี่ยวกับงาน AI &amp; Automation อย่างไร?</h4>
-<p>เมื่อ FastAPI, n8n, database และ AI provider ต่อกัน ปัญหามักเกิดตรงรอยต่อ หัวข้อนี้ช่วยให้เราระบุได้ว่า error เกิดก่อนรับข้อมูล ระหว่าง business logic หรือที่ dependency ภายนอก แล้วเลือก retry, reject หรือหยุดได้ถูกต้อง</p>
-<h4 id="lesson-8-_6">จำก่อนอ่านศัพท์เทคนิคด้านล่าง</h4>
-<p>ให้ตอบว่า input คืออะไร, state ใดเปลี่ยน, output คืออะไร และถ้าล้ม caller จะรู้ได้อย่างไร ถ้าตอบได้ แปลว่าเข้าใจแก่นแล้วครับ</p>
 <p>กำหนด timeout, accepted statuses, response schema, retryable cases, max retries, backoff และ fake สำหรับ tests</p>
 <h2 id="lesson-8-debug-order">Debug Order</h2>
 <!-- tutor-rich:## Debug Order -->
-<h3 id="lesson-8-_7">🧑‍🏫 เอาแบบง่ายที่สุดก่อน</h3>
-<p>ได้ครับ ชื่อนี้อาจดูเป็นศัพท์ระบบ แต่แก่นของมันไม่ยากถ้าแยกทีละช่วงครับ 5555</p>
+<h3 id="lesson-8-_5">คำอธิบายแบบเข้าใจง่าย</h3>
 <blockquote>
 <p><strong>หัวข้อนี้อธิบายว่า Debug Order อยู่ตรงไหนใน request lifecycle และช่วยให้ระบบถูกต้องอย่างไร</strong></p>
 </blockquote>
-<p>ลองมองเป็น Flow:</p>
+<p>พิจารณา Flow ต่อไปนี้:</p>
+<pre><code class="language-text">Input/Request
+  ↓ ใช้แนวคิดของหัวข้อนี้
+State/ข้อมูลถูกตรวจหรือเปลี่ยน
+  ↓
+Output หรือ error ตาม contract
+</code></pre>
+<h4 id="lesson-8-_6">จุดที่มักเข้าใจผิด</h4>
+<p>อย่าจำเฉพาะ syntax ให้ถามว่า input, output, side effect และ failure คืออะไร</p>
+<p>request URL/method → headers/content type → raw response status/body → Pydantic validation → service → repository/DB → external dependency</p>
+<h2 id="lesson-8-status">Status</h2>
+<!-- tutor-rich:## Status -->
+<h3 id="lesson-8-_7">คำอธิบายแบบเข้าใจง่าย</h3>
+<blockquote>
+<p><strong>หัวข้อนี้อธิบายว่า Status อยู่ตรงไหนใน request lifecycle และช่วยให้ระบบถูกต้องอย่างไร</strong></p>
+</blockquote>
+<p>พิจารณา Flow ต่อไปนี้:</p>
 <pre><code class="language-text">Input/Request
   ↓ ใช้แนวคิดของหัวข้อนี้
 State/ข้อมูลถูกตรวจหรือเปลี่ยน
@@ -1129,19 +929,14 @@ Output หรือ error ตาม contract
 </code></pre>
 <h4 id="lesson-8-_8">จุดที่มักเข้าใจผิด</h4>
 <p>อย่าจำเฉพาะ syntax ให้ถามว่า input, output, side effect และ failure คืออะไร</p>
-<h4 id="lesson-8-ai-automation_2">เกี่ยวกับงาน AI &amp; Automation อย่างไร?</h4>
-<p>เมื่อ FastAPI, n8n, database และ AI provider ต่อกัน ปัญหามักเกิดตรงรอยต่อ หัวข้อนี้ช่วยให้เราระบุได้ว่า error เกิดก่อนรับข้อมูล ระหว่าง business logic หรือที่ dependency ภายนอก แล้วเลือก retry, reject หรือหยุดได้ถูกต้อง</p>
-<h4 id="lesson-8-_9">จำก่อนอ่านศัพท์เทคนิคด้านล่าง</h4>
-<p>ให้ตอบว่า input คืออะไร, state ใดเปลี่ยน, output คืออะไร และถ้าล้ม caller จะรู้ได้อย่างไร ถ้าตอบได้ แปลว่าเข้าใจแก่นแล้วครับ</p>
-<p>request URL/method → headers/content type → raw response status/body → Pydantic validation → service → repository/DB → external dependency</p>
-<h2 id="lesson-8-status">Status</h2>
-<!-- tutor-rich:## Status -->
-<h3 id="lesson-8-_10">🧑‍🏫 เอาแบบง่ายที่สุดก่อน</h3>
-<p>ได้ครับ ชื่อนี้อาจดูเป็นศัพท์ระบบ แต่แก่นของมันไม่ยากถ้าแยกทีละช่วงครับ 5555</p>
+<p>201 created; 400 malformed/general bad request; 401 unauthenticated; 403 forbidden; 404 missing; 409 conflict; 422 validation; 429 rate limit; 500 bug; 502/503/504 upstream/availability/timeout</p>
+<h2 id="lesson-8-_9">หยุดก่อน</h2>
+<!-- tutor-rich:## หยุดก่อน -->
+<h3 id="lesson-8-_10">คำอธิบายแบบเข้าใจง่าย</h3>
 <blockquote>
-<p><strong>หัวข้อนี้อธิบายว่า Status อยู่ตรงไหนใน request lifecycle และช่วยให้ระบบถูกต้องอย่างไร</strong></p>
+<p><strong>หัวข้อนี้อธิบายว่า หยุดก่อน อยู่ตรงไหนใน request lifecycle และช่วยให้ระบบถูกต้องอย่างไร</strong></p>
 </blockquote>
-<p>ลองมองเป็น Flow:</p>
+<p>พิจารณา Flow ต่อไปนี้:</p>
 <pre><code class="language-text">Input/Request
   ↓ ใช้แนวคิดของหัวข้อนี้
 State/ข้อมูลถูกตรวจหรือเปลี่ยน
@@ -1150,40 +945,14 @@ Output หรือ error ตาม contract
 </code></pre>
 <h4 id="lesson-8-_11">จุดที่มักเข้าใจผิด</h4>
 <p>อย่าจำเฉพาะ syntax ให้ถามว่า input, output, side effect และ failure คืออะไร</p>
-<h4 id="lesson-8-ai-automation_3">เกี่ยวกับงาน AI &amp; Automation อย่างไร?</h4>
-<p>เมื่อ FastAPI, n8n, database และ AI provider ต่อกัน ปัญหามักเกิดตรงรอยต่อ หัวข้อนี้ช่วยให้เราระบุได้ว่า error เกิดก่อนรับข้อมูล ระหว่าง business logic หรือที่ dependency ภายนอก แล้วเลือก retry, reject หรือหยุดได้ถูกต้อง</p>
-<h4 id="lesson-8-_12">จำก่อนอ่านศัพท์เทคนิคด้านล่าง</h4>
-<p>ให้ตอบว่า input คืออะไร, state ใดเปลี่ยน, output คืออะไร และถ้าล้ม caller จะรู้ได้อย่างไร ถ้าตอบได้ แปลว่าเข้าใจแก่นแล้วครับ</p>
-<p>201 created; 400 malformed/general bad request; 401 unauthenticated; 403 forbidden; 404 missing; 409 conflict; 422 validation; 429 rate limit; 500 bug; 502/503/504 upstream/availability/timeout</p>
-<h2 id="lesson-8-_13">หยุดก่อน</h2>
-<!-- tutor-rich:## หยุดก่อน -->
-<h3 id="lesson-8-_14">🧑‍🏫 เอาแบบง่ายที่สุดก่อน</h3>
-<p>ได้ครับ ชื่อนี้อาจดูเป็นศัพท์ระบบ แต่แก่นของมันไม่ยากถ้าแยกทีละช่วงครับ 5555</p>
-<blockquote>
-<p><strong>หัวข้อนี้อธิบายว่า หยุดก่อน อยู่ตรงไหนใน request lifecycle และช่วยให้ระบบถูกต้องอย่างไร</strong></p>
-</blockquote>
-<p>ลองมองเป็น Flow:</p>
-<pre><code class="language-text">Input/Request
-  ↓ ใช้แนวคิดของหัวข้อนี้
-State/ข้อมูลถูกตรวจหรือเปลี่ยน
-  ↓
-Output หรือ error ตาม contract
-</code></pre>
-<h4 id="lesson-8-_15">จุดที่มักเข้าใจผิด</h4>
-<p>อย่าจำเฉพาะ syntax ให้ถามว่า input, output, side effect และ failure คืออะไร</p>
-<h4 id="lesson-8-ai-automation_4">เกี่ยวกับงาน AI &amp; Automation อย่างไร?</h4>
-<p>เมื่อ FastAPI, n8n, database และ AI provider ต่อกัน ปัญหามักเกิดตรงรอยต่อ หัวข้อนี้ช่วยให้เราระบุได้ว่า error เกิดก่อนรับข้อมูล ระหว่าง business logic หรือที่ dependency ภายนอก แล้วเลือก retry, reject หรือหยุดได้ถูกต้อง</p>
-<h4 id="lesson-8-_16">จำก่อนอ่านศัพท์เทคนิคด้านล่าง</h4>
-<p>ให้ตอบว่า input คืออะไร, state ใดเปลี่ยน, output คืออะไร และถ้าล้ม caller จะรู้ได้อย่างไร ถ้าตอบได้ แปลว่าเข้าใจแก่นแล้วครับ</p>
-<p>ห้าม log token/body อ่อนไหว, ยิง provider จริงใน unit test, retry ไม่จำกัด, catch <code>Exception</code> แล้วตอบ 200, return raw DB model หรือใช้ production DB ใน tests</p><a class="back" href="#top">↑ กลับสารบัญ</a></article><article id="lesson-9"><div class="source">08_deep_practical_companion.md</div><details class="local-toc"><summary>หัวข้อในบทนี้</summary><a href="#lesson-9-request">ไล่ Request จริง</a><a href="#lesson-9-_4">จุดสับสนสำคัญ</a><a href="#lesson-9-thin-route-example">Thin Route Example</a><a href="#lesson-9-reliable-client-decision-table">Reliable Client Decision Table</a><a href="#lesson-9-diagnostic-template">Diagnostic Template</a><a href="#lesson-9-challenge">ก่อน Challenge</a></details><h1 id="lesson-9-08-deep-practical-companion">08 — Deep Practical Companion</h1>
+<p>ห้าม log token/body อ่อนไหว, ยิง provider จริงใน unit test, retry ไม่จำกัด, catch <code>Exception</code> แล้วตอบ 200, return raw DB model หรือใช้ production DB ใน tests</p><a class="back" href="#top">↑ กลับสารบัญ</a></article><article id="lesson-9"><div class="source">08_deep_practical_companion.md</div><details class="local-toc"><summary>หัวข้อในบทนี้</summary><a href="#lesson-9-request">ไล่ Request จริง</a><a href="#lesson-9-_3">จุดสับสนสำคัญ</a><a href="#lesson-9-thin-route-example">Thin Route Example</a><a href="#lesson-9-reliable-client-decision-table">Reliable Client Decision Table</a><a href="#lesson-9-diagnostic-template">Diagnostic Template</a><a href="#lesson-9-challenge">ก่อน Challenge</a></details><h1 id="lesson-9-08-deep-practical-companion">08 — Deep Practical Companion</h1>
 <h2 id="lesson-9-request">ไล่ Request จริง</h2>
 <!-- tutor-rich:## ไล่ Request จริง -->
-<h3 id="lesson-9-_1">🧑‍🏫 เอาแบบง่ายที่สุดก่อน</h3>
-<p>ได้ครับ ชื่อนี้อาจดูเป็นศัพท์ระบบ แต่แก่นของมันไม่ยากถ้าแยกทีละช่วงครับ 5555</p>
+<h3 id="lesson-9-_1">คำอธิบายแบบเข้าใจง่าย</h3>
 <blockquote>
 <p><strong>HTTP request คือซองงานที่มีวิธีทำ ที่อยู่ ข้อมูลกำกับ และข้อมูลข้างใน</strong></p>
 </blockquote>
-<p>ลองมองเป็น Flow:</p>
+<p>พิจารณา Flow ต่อไปนี้:</p>
 <pre><code class="language-text">Method + Path/Query
   ↓
 Headers บอก metadata
@@ -1194,10 +963,6 @@ Server parse และ validate
 </code></pre>
 <h4 id="lesson-9-_2">จุดที่มักเข้าใจผิด</h4>
 <p>URL ถูกอย่างเดียวไม่พอ Method, Content-Type และ body ต้องตรง contract ด้วย</p>
-<h4 id="lesson-9-ai-automation">เกี่ยวกับงาน AI &amp; Automation อย่างไร?</h4>
-<p>เมื่อ FastAPI, n8n, database และ AI provider ต่อกัน ปัญหามักเกิดตรงรอยต่อ หัวข้อนี้ช่วยให้เราระบุได้ว่า error เกิดก่อนรับข้อมูล ระหว่าง business logic หรือที่ dependency ภายนอก แล้วเลือก retry, reject หรือหยุดได้ถูกต้อง</p>
-<h4 id="lesson-9-_3">จำก่อนอ่านศัพท์เทคนิคด้านล่าง</h4>
-<p>ให้ตอบว่า input คืออะไร, state ใดเปลี่ยน, output คืออะไร และถ้าล้ม caller จะรู้ได้อย่างไร ถ้าตอบได้ แปลว่าเข้าใจแก่นแล้วครับ</p>
 <pre><code class="language-http">POST /api/v1/transactions HTTP/1.1
 Content-Type: application/json
 Idempotency-Key: tx-001
@@ -1216,26 +981,21 @@ Idempotency-Key: tx-001
 <li>route map เป็น response model + status</li>
 <li>middleware/log บันทึก duration/request ID โดยไม่เผย secret</li>
 </ol>
-<h2 id="lesson-9-_4">จุดสับสนสำคัญ</h2>
+<h2 id="lesson-9-_3">จุดสับสนสำคัญ</h2>
 <!-- tutor-rich:## จุดสับสนสำคัญ -->
-<h3 id="lesson-9-_5">🧑‍🏫 เอาแบบง่ายที่สุดก่อน</h3>
-<p>ได้ครับ ชื่อนี้อาจดูเป็นศัพท์ระบบ แต่แก่นของมันไม่ยากถ้าแยกทีละช่วงครับ 5555</p>
+<h3 id="lesson-9-_4">คำอธิบายแบบเข้าใจง่าย</h3>
 <blockquote>
 <p><strong>หัวข้อนี้อธิบายว่า จุดสับสนสำคัญ อยู่ตรงไหนใน request lifecycle และช่วยให้ระบบถูกต้องอย่างไร</strong></p>
 </blockquote>
-<p>ลองมองเป็น Flow:</p>
+<p>พิจารณา Flow ต่อไปนี้:</p>
 <pre><code class="language-text">Input/Request
   ↓ ใช้แนวคิดของหัวข้อนี้
 State/ข้อมูลถูกตรวจหรือเปลี่ยน
   ↓
 Output หรือ error ตาม contract
 </code></pre>
-<h4 id="lesson-9-_6">จุดที่มักเข้าใจผิด</h4>
+<h4 id="lesson-9-_5">จุดที่มักเข้าใจผิด</h4>
 <p>อย่าจำเฉพาะ syntax ให้ถามว่า input, output, side effect และ failure คืออะไร</p>
-<h4 id="lesson-9-ai-automation_1">เกี่ยวกับงาน AI &amp; Automation อย่างไร?</h4>
-<p>เมื่อ FastAPI, n8n, database และ AI provider ต่อกัน ปัญหามักเกิดตรงรอยต่อ หัวข้อนี้ช่วยให้เราระบุได้ว่า error เกิดก่อนรับข้อมูล ระหว่าง business logic หรือที่ dependency ภายนอก แล้วเลือก retry, reject หรือหยุดได้ถูกต้อง</p>
-<h4 id="lesson-9-_7">จำก่อนอ่านศัพท์เทคนิคด้านล่าง</h4>
-<p>ให้ตอบว่า input คืออะไร, state ใดเปลี่ยน, output คืออะไร และถ้าล้ม caller จะรู้ได้อย่างไร ถ้าตอบได้ แปลว่าเข้าใจแก่นแล้วครับ</p>
 <h3 id="lesson-9-400-422">400 กับ 422</h3>
 <p>อย่าท่องอย่างเดียว ให้ยึด API contract ของทีม: malformed transport/JSON และ semantic/schema validation อาจถูก map ต่างกัน FastAPI default มักคืน 422 สำหรับ request validation</p>
 <h3 id="lesson-9-401-403">401 กับ 403</h3>
@@ -1248,24 +1008,19 @@ Output หรือ error ตาม contract
 <p>Async เพิ่ม concurrency สำหรับ waiting I/O แต่ CPU-heavy parsing ยังบล็อก event loop และ blocking library ใน async route ทำให้ request อื่นรอ</p>
 <h2 id="lesson-9-thin-route-example">Thin Route Example</h2>
 <!-- tutor-rich:## Thin Route Example -->
-<h3 id="lesson-9-_8">🧑‍🏫 เอาแบบง่ายที่สุดก่อน</h3>
-<p>ได้ครับ ชื่อนี้อาจดูเป็นศัพท์ระบบ แต่แก่นของมันไม่ยากถ้าแยกทีละช่วงครับ 5555</p>
+<h3 id="lesson-9-_6">คำอธิบายแบบเข้าใจง่าย</h3>
 <blockquote>
 <p><strong>หัวข้อนี้อธิบายว่า Thin Route Example อยู่ตรงไหนใน request lifecycle และช่วยให้ระบบถูกต้องอย่างไร</strong></p>
 </blockquote>
-<p>ลองมองเป็น Flow:</p>
+<p>พิจารณา Flow ต่อไปนี้:</p>
 <pre><code class="language-text">Input/Request
   ↓ ใช้แนวคิดของหัวข้อนี้
 State/ข้อมูลถูกตรวจหรือเปลี่ยน
   ↓
 Output หรือ error ตาม contract
 </code></pre>
-<h4 id="lesson-9-_9">จุดที่มักเข้าใจผิด</h4>
+<h4 id="lesson-9-_7">จุดที่มักเข้าใจผิด</h4>
 <p>อย่าจำเฉพาะ syntax ให้ถามว่า input, output, side effect และ failure คืออะไร</p>
-<h4 id="lesson-9-ai-automation_2">เกี่ยวกับงาน AI &amp; Automation อย่างไร?</h4>
-<p>เมื่อ FastAPI, n8n, database และ AI provider ต่อกัน ปัญหามักเกิดตรงรอยต่อ หัวข้อนี้ช่วยให้เราระบุได้ว่า error เกิดก่อนรับข้อมูล ระหว่าง business logic หรือที่ dependency ภายนอก แล้วเลือก retry, reject หรือหยุดได้ถูกต้อง</p>
-<h4 id="lesson-9-_10">จำก่อนอ่านศัพท์เทคนิคด้านล่าง</h4>
-<p>ให้ตอบว่า input คืออะไร, state ใดเปลี่ยน, output คืออะไร และถ้าล้ม caller จะรู้ได้อย่างไร ถ้าตอบได้ แปลว่าเข้าใจแก่นแล้วครับ</p>
 <pre><code class="language-python">@router.post("/transactions", response_model=TransactionResponse, status_code=201)
 def create(body: TransactionCreate, service: TransactionService = Depends(get_service)):
     try:
@@ -1277,24 +1032,19 @@ def create(body: TransactionCreate, service: TransactionService = Depends(get_se
 <p>Route รู้ HTTP ส่วน service ไม่ควรรู้ <code>HTTPException</code> จึง reuse จาก CLI/worker ได้</p>
 <h2 id="lesson-9-reliable-client-decision-table">Reliable Client Decision Table</h2>
 <!-- tutor-rich:## Reliable Client Decision Table -->
-<h3 id="lesson-9-_11">🧑‍🏫 เอาแบบง่ายที่สุดก่อน</h3>
-<p>ได้ครับ ชื่อนี้อาจดูเป็นศัพท์ระบบ แต่แก่นของมันไม่ยากถ้าแยกทีละช่วงครับ 5555</p>
+<h3 id="lesson-9-_8">คำอธิบายแบบเข้าใจง่าย</h3>
 <blockquote>
 <p><strong>หัวข้อนี้อธิบายว่า Reliable Client Decision Table อยู่ตรงไหนใน request lifecycle และช่วยให้ระบบถูกต้องอย่างไร</strong></p>
 </blockquote>
-<p>ลองมองเป็น Flow:</p>
+<p>พิจารณา Flow ต่อไปนี้:</p>
 <pre><code class="language-text">Input/Request
   ↓ ใช้แนวคิดของหัวข้อนี้
 State/ข้อมูลถูกตรวจหรือเปลี่ยน
   ↓
 Output หรือ error ตาม contract
 </code></pre>
-<h4 id="lesson-9-_12">จุดที่มักเข้าใจผิด</h4>
+<h4 id="lesson-9-_9">จุดที่มักเข้าใจผิด</h4>
 <p>อย่าจำเฉพาะ syntax ให้ถามว่า input, output, side effect และ failure คืออะไร</p>
-<h4 id="lesson-9-ai-automation_3">เกี่ยวกับงาน AI &amp; Automation อย่างไร?</h4>
-<p>เมื่อ FastAPI, n8n, database และ AI provider ต่อกัน ปัญหามักเกิดตรงรอยต่อ หัวข้อนี้ช่วยให้เราระบุได้ว่า error เกิดก่อนรับข้อมูล ระหว่าง business logic หรือที่ dependency ภายนอก แล้วเลือก retry, reject หรือหยุดได้ถูกต้อง</p>
-<h4 id="lesson-9-_13">จำก่อนอ่านศัพท์เทคนิคด้านล่าง</h4>
-<p>ให้ตอบว่า input คืออะไร, state ใดเปลี่ยน, output คืออะไร และถ้าล้ม caller จะรู้ได้อย่างไร ถ้าตอบได้ แปลว่าเข้าใจแก่นแล้วครับ</p>
 <div class="table-scroll"><table>
 <thead>
 <tr>
@@ -1343,45 +1093,35 @@ Output หรือ error ตาม contract
 </table></div>
 <h2 id="lesson-9-diagnostic-template">Diagnostic Template</h2>
 <!-- tutor-rich:## Diagnostic Template -->
-<h3 id="lesson-9-_14">🧑‍🏫 เอาแบบง่ายที่สุดก่อน</h3>
-<p>ได้ครับ ชื่อนี้อาจดูเป็นศัพท์ระบบ แต่แก่นของมันไม่ยากถ้าแยกทีละช่วงครับ 5555</p>
+<h3 id="lesson-9-_10">คำอธิบายแบบเข้าใจง่าย</h3>
 <blockquote>
 <p><strong>หัวข้อนี้อธิบายว่า Diagnostic Template อยู่ตรงไหนใน request lifecycle และช่วยให้ระบบถูกต้องอย่างไร</strong></p>
 </blockquote>
-<p>ลองมองเป็น Flow:</p>
+<p>พิจารณา Flow ต่อไปนี้:</p>
 <pre><code class="language-text">Input/Request
   ↓ ใช้แนวคิดของหัวข้อนี้
 State/ข้อมูลถูกตรวจหรือเปลี่ยน
   ↓
 Output หรือ error ตาม contract
 </code></pre>
-<h4 id="lesson-9-_15">จุดที่มักเข้าใจผิด</h4>
+<h4 id="lesson-9-_11">จุดที่มักเข้าใจผิด</h4>
 <p>อย่าจำเฉพาะ syntax ให้ถามว่า input, output, side effect และ failure คืออะไร</p>
-<h4 id="lesson-9-ai-automation_4">เกี่ยวกับงาน AI &amp; Automation อย่างไร?</h4>
-<p>เมื่อ FastAPI, n8n, database และ AI provider ต่อกัน ปัญหามักเกิดตรงรอยต่อ หัวข้อนี้ช่วยให้เราระบุได้ว่า error เกิดก่อนรับข้อมูล ระหว่าง business logic หรือที่ dependency ภายนอก แล้วเลือก retry, reject หรือหยุดได้ถูกต้อง</p>
-<h4 id="lesson-9-_16">จำก่อนอ่านศัพท์เทคนิคด้านล่าง</h4>
-<p>ให้ตอบว่า input คืออะไร, state ใดเปลี่ยน, output คืออะไร และถ้าล้ม caller จะรู้ได้อย่างไร ถ้าตอบได้ แปลว่าเข้าใจแก่นแล้วครับ</p>
 <p>ส่ง method, sanitized URL, sanitized headers, request shape, status, response body ที่ตัด PII, full traceback ฝั่ง local, expected behavior และ minimal reproduction ห้ามส่ง token/cookie/raw resume</p>
 <h2 id="lesson-9-challenge">ก่อน Challenge</h2>
 <!-- tutor-rich:## ก่อน Challenge -->
-<h3 id="lesson-9-_17">🧑‍🏫 เอาแบบง่ายที่สุดก่อน</h3>
-<p>ได้ครับ ชื่อนี้อาจดูเป็นศัพท์ระบบ แต่แก่นของมันไม่ยากถ้าแยกทีละช่วงครับ 5555</p>
+<h3 id="lesson-9-_12">คำอธิบายแบบเข้าใจง่าย</h3>
 <blockquote>
 <p><strong>หัวข้อนี้อธิบายว่า ก่อน Challenge อยู่ตรงไหนใน request lifecycle และช่วยให้ระบบถูกต้องอย่างไร</strong></p>
 </blockquote>
-<p>ลองมองเป็น Flow:</p>
+<p>พิจารณา Flow ต่อไปนี้:</p>
 <pre><code class="language-text">Input/Request
   ↓ ใช้แนวคิดของหัวข้อนี้
 State/ข้อมูลถูกตรวจหรือเปลี่ยน
   ↓
 Output หรือ error ตาม contract
 </code></pre>
-<h4 id="lesson-9-_18">จุดที่มักเข้าใจผิด</h4>
+<h4 id="lesson-9-_13">จุดที่มักเข้าใจผิด</h4>
 <p>อย่าจำเฉพาะ syntax ให้ถามว่า input, output, side effect และ failure คืออะไร</p>
-<h4 id="lesson-9-ai-automation_5">เกี่ยวกับงาน AI &amp; Automation อย่างไร?</h4>
-<p>เมื่อ FastAPI, n8n, database และ AI provider ต่อกัน ปัญหามักเกิดตรงรอยต่อ หัวข้อนี้ช่วยให้เราระบุได้ว่า error เกิดก่อนรับข้อมูล ระหว่าง business logic หรือที่ dependency ภายนอก แล้วเลือก retry, reject หรือหยุดได้ถูกต้อง</p>
-<h4 id="lesson-9-_19">จำก่อนอ่านศัพท์เทคนิคด้านล่าง</h4>
-<p>ให้ตอบว่า input คืออะไร, state ใดเปลี่ยน, output คืออะไร และถ้าล้ม caller จะรู้ได้อย่างไร ถ้าตอบได้ แปลว่าเข้าใจแก่นแล้วครับ</p>
 <p>อธิบายให้ได้: request lifecycle, schema vs business validation, response model ป้องกันอะไร, dependency override ทำให้ test ปลอดภัยอย่างไร, retry POST เสี่ยงอะไร, unique constraint ป้องกัน race อย่างไร และ webhook signature ต้องใช้ raw body เพราะอะไร</p><a class="back" href="#top">↑ กลับสารบัญ</a></article><article id="lesson-10"><div class="source">drills/README.md</div><details class="local-toc"><summary>หัวข้อในบทนี้</summary></details><h1 id="lesson-10-week-2-drills">Week 2 Drills</h1>
 <p>ทำใน repo ทดลองและ commit แยก drill: 01 อ่าน HTTP, 02 reliable client, 03 FastAPI contract, 04 failure tests</p><a class="back" href="#top">↑ กลับสารบัญ</a></article><article id="lesson-11"><div class="source">drills/drill_01_http_detective.md</div><details class="local-toc"><summary>หัวข้อในบทนี้</summary></details><h1 id="lesson-11-drill-01-http-detective">Drill 01 — HTTP Detective</h1>
 <p>ใช้ curl กับ API ทดลอง 6 requests: GET success, POST success, malformed JSON, missing field, unknown resource และ wrong content type บันทึก method/path/query/headers/body/status และอธิบายว่า failure เกิดก่อนหรือหลัง endpoint</p><a class="back" href="#top">↑ กลับสารบัญ</a></article><article id="lesson-12"><div class="source">drills/drill_02_reliable_client.md</div><details class="local-toc"><summary>หัวข้อในบทนี้</summary></details><h1 id="lesson-12-drill-02-reliable-client">Drill 02 — Reliable Client</h1>
