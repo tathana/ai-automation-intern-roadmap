@@ -1123,7 +1123,158 @@ first = transactions[0]
 last = transactions[-1]
 subset = transactions[:2]
 </code></pre>
-<h3 id="lesson-3-list">ระวังการแก้ List ระหว่างวน</h3>
+<h3 id="lesson-3-for-loop">การเขียน <code>for</code> Loop ตั้งแต่พื้นฐาน</h3>
+<p><code>for</code> loop ใช้เมื่อเราต้องการหยิบสมาชิกจาก collection มาทำงานทีละตัว รูปแบบพื้นฐานคือ:</p>
+<pre><code class="language-python">for item in collection:
+    # งานที่ต้องทำกับ item
+</code></pre>
+<p>ตัวอย่าง:</p>
+<pre><code class="language-python">amounts = [100, 200, 300]
+
+for amount in amounts:
+    print(amount)
+</code></pre>
+<p>Python ทำงานประมาณนี้:</p>
+<pre><code class="language-text">amounts = [100, 200, 300]
+          ↓ หยิบตัวแรก
+amount = 100 → print(100)
+          ↓ หยิบตัวถัดไป
+amount = 200 → print(200)
+          ↓
+amount = 300 → print(300)
+          ↓ ไม่มีสมาชิกเหลือ
+จบ loop
+</code></pre>
+<p>ชื่อ <code>amount</code> ไม่ได้มีความหมายพิเศษ เราตั้งให้สื่อว่าสมาชิกหนึ่งตัวคืออะไร เช่น <code>event</code>, <code>transaction</code> หรือ <code>candidate</code> จะอ่านง่ายกว่า <code>x</code></p>
+<h4 id="lesson-3-indentation">Indentation คือส่วนหนึ่งของโครงสร้าง</h4>
+<p>บรรทัดที่เยื้องอยู่ใต้ <code>for</code> จะถูกรันทุกครั้ง:</p>
+<pre><code class="language-python">for amount in amounts:
+    tax = amount * 7 / 100
+    print(amount, tax)
+
+print("finished")
+</code></pre>
+<p><code>print("finished")</code> ไม่เยื้อง จึงรันครั้งเดียวหลัง loop จบ หากเยื้องผิด โปรแกรมอาจไม่ error แต่ behavior ผิดจากที่ตั้งใจ</p>
+<h3 id="lesson-3-if-loop">การใช้ <code>if</code> ภายใน Loop</h3>
+<p>สมมติต้องการเฉพาะรายการที่สำเร็จ:</p>
+<pre><code class="language-python">transactions = [
+    {"id": "T001", "status": "SUCCESS", "amount": 100},
+    {"id": "T002", "status": "FAILED", "amount": 200},
+    {"id": "T003", "status": "SUCCESS", "amount": 300},
+]
+
+for transaction in transactions:
+    if transaction["status"] == "SUCCESS":
+        print(transaction["id"])
+</code></pre>
+<p>Flow ของหนึ่งรอบคือ:</p>
+<pre><code class="language-text">หยิบ transaction หนึ่งรายการ
+        ↓
+อ่านค่า status
+        ↓
+status == "SUCCESS" ?
+   ├─ ใช่ → print id
+   └─ ไม่ใช่ → ข้าม
+        ↓
+ไป transaction ถัดไป
+</code></pre>
+<h3 id="lesson-3-loop">การสะสมผลลัพธ์ด้วย Loop</h3>
+<p>Loop มักไม่ได้ใช้แค่ <code>print</code> แต่ใช้สร้างผลลัพธ์ใหม่ ตัวอย่างรวมยอด:</p>
+<pre><code class="language-python">total = 0
+
+for transaction in transactions:
+    if transaction["status"] == "SUCCESS":
+        total = total + transaction["amount"]
+
+print(total)  # 400
+</code></pre>
+<p>Trace ค่า <code>total</code>:</p>
+<div class="table-scroll"><table>
+<thead>
+<tr>
+<th style="text-align: right;">รอบ</th>
+<th>รายการ</th>
+<th>สิ่งที่เกิดขึ้น</th>
+<th style="text-align: right;"><code>total</code> หลังรอบ</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align: right;">เริ่ม</td>
+<td>—</td>
+<td>กำหนดค่าเริ่มต้น</td>
+<td style="text-align: right;">0</td>
+</tr>
+<tr>
+<td style="text-align: right;">1</td>
+<td>T001</td>
+<td><code>0 + 100</code></td>
+<td style="text-align: right;">100</td>
+</tr>
+<tr>
+<td style="text-align: right;">2</td>
+<td>T002</td>
+<td>status ไม่ผ่าน จึงไม่บวก</td>
+<td style="text-align: right;">100</td>
+</tr>
+<tr>
+<td style="text-align: right;">3</td>
+<td>T003</td>
+<td><code>100 + 300</code></td>
+<td style="text-align: right;">400</td>
+</tr>
+</tbody>
+</table></div>
+<p>ตัวแปรสะสมต้องสร้าง <strong>ก่อน loop</strong> หากวาง <code>total = 0</code> ข้างใน loop ค่าจะถูกเริ่มใหม่ทุกรอบ</p>
+<h3 id="lesson-3-list">การสร้าง List ผลลัพธ์ใหม่</h3>
+<pre><code class="language-python">successful = []
+
+for transaction in transactions:
+    if transaction["status"] == "SUCCESS":
+        successful.append(transaction)
+</code></pre>
+<p>คิดเป็นสามส่วน:</p>
+<pre><code class="language-text">สร้าง list ผลลัพธ์ว่าง
+        ↓
+วนอ่าน input ทีละรายการ
+        ↓
+รายการผ่านเงื่อนไข → append
+        ↓
+ได้ list ใหม่โดยไม่แก้ input เดิม
+</code></pre>
+<p>รูปนี้เหมาะสำหรับเริ่มต้นและ debug ง่าย เมื่อเข้าใจแล้วจึงย่อเป็น list comprehension ได้</p>
+<h3 id="lesson-3-continue-break-enumerate"><code>continue</code>, <code>break</code> และ <code>enumerate</code></h3>
+<p><code>continue</code> ข้ามงานที่เหลือของรอบปัจจุบัน:</p>
+<pre><code class="language-python">for transaction in transactions:
+    if transaction["status"] != "SUCCESS":
+        continue
+    print(transaction["id"])
+</code></pre>
+<p><code>break</code> จบ loop ทั้งหมดทันทีเมื่อพบสิ่งที่ต้องการ:</p>
+<pre><code class="language-python">for transaction in transactions:
+    if transaction["id"] == "T002":
+        found = transaction
+        break
+</code></pre>
+<p><code>enumerate</code> ให้ทั้งลำดับและสมาชิก เหมาะกับการรายงานว่า input แถวใดผิด:</p>
+<pre><code class="language-python">for index, transaction in enumerate(transactions, start=1):
+    print(index, transaction["id"])
+</code></pre>
+<p>อย่าใช้ <code>break</code> หากต้องประมวลผลทุกรายการ และอย่าใช้ <code>continue</code> หลายชั้นจน flow อ่านยาก</p>
+<h3 id="lesson-3-while-loop"><code>while</code> Loop ใช้เมื่อไร</h3>
+<p><code>for</code> เหมาะเมื่อวน collection ส่วน <code>while</code> เหมาะเมื่อทำต่อจนกว่าเงื่อนไขจะเปลี่ยน เช่นอ่าน API ทีละหน้าจนไม่มี <code>next_cursor</code>:</p>
+<pre><code class="language-python">cursor = None
+
+while True:
+    page = fetch_page(cursor)
+    process(page["items"])
+
+    cursor = page.get("next_cursor")
+    if cursor is None:
+        break
+</code></pre>
+<p><code>while</code> มีความเสี่ยง infinite loop จึงต้องตอบให้ได้ว่าเงื่อนไขใดทำให้จบ และควรมี page/attempt limit ในงานจริง</p>
+<h3 id="lesson-3-list_1">ระวังการแก้ List ระหว่างวน</h3>
 <p>ไม่ควร:</p>
 <pre><code class="language-python">for item in items:
     if invalid(item):
@@ -1269,7 +1420,7 @@ for record in records:
 <hr/>
 <h2 id="lesson-3-6-complexity">6. Complexity แบบที่ต้องรู้</h2>
 <p>ไม่ต้องท่องทุก Big O ให้จำ pattern:</p>
-<h3 id="lesson-3-list_1">ค้นใน List</h3>
+<h3 id="lesson-3-list_2">ค้นใน List</h3>
 <pre><code class="language-python">user_id in user_ids_list
 </code></pre>
 <p>อาจต้องไล่ตั้งแต่ต้นถึงท้าย: โดยเฉลี่ย <code>O(n)</code></p>
@@ -1495,6 +1646,105 @@ Database/report shape
 <h3 id="lesson-3-database-row">Database Row</h3>
 <pre><code class="language-python">("E001", 1250.50, "SUCCESS")
 </code></pre>
+<h3 id="lesson-3-function-data-structure">การเขียน Function ที่รับและคืน Data Structure</h3>
+<p>เริ่มจากเขียน contract เป็นประโยคก่อน:</p>
+<blockquote>
+<p>รับ transaction หนึ่งรายการในรูป dict และคืน dict ใหม่ที่ปรับ ID กับ status แล้ว โดยไม่แก้ input เดิม</p>
+</blockquote>
+<p>จากนั้นจึงเขียน signature:</p>
+<pre><code class="language-python">def normalize_transaction(raw: dict) -&gt; dict:
+    ...
+</code></pre>
+<p>แล้วเติมทีละขั้น:</p>
+<pre><code class="language-python">def normalize_transaction(raw: dict) -&gt; dict:
+    transaction_id = str(raw["id"]).strip()
+    status = str(raw["status"]).strip().upper()
+    amount = int(raw["amount"])
+
+    return {
+        "transaction_id": transaction_id,
+        "status": status,
+        "amount": amount,
+    }
+</code></pre>
+<p>ลอง trace:</p>
+<pre><code class="language-text">raw = {"id": " T001 ", "status": "success", "amount": "100"}
+        ↓ อ่านและแปลงแต่ละ field
+transaction_id = "T001"
+status = "SUCCESS"
+amount = 100
+        ↓ ประกอบ dict ใหม่
+return {"transaction_id": "T001", "status": "SUCCESS", "amount": 100}
+</code></pre>
+<p>Function นี้ไม่ได้แก้ <code>raw</code> แต่สร้าง dict ใหม่ ทำให้ caller ยังเก็บ raw input ไว้ตรวจสอบได้</p>
+<h3 id="lesson-3-function-records">Function ที่ประมวลผลหลาย Records</h3>
+<p>นำ function สำหรับหนึ่ง record มาใช้ใน loop:</p>
+<pre><code class="language-python">def normalize_transactions(rows: list[dict]) -&gt; list[dict]:
+    normalized_rows = []
+
+    for row in rows:
+        normalized = normalize_transaction(row)
+        normalized_rows.append(normalized)
+
+    return normalized_rows
+</code></pre>
+<p>อ่าน flow จากในออกนอก:</p>
+<pre><code class="language-text">หนึ่ง row
+  ↓ normalize_transaction(row)
+หนึ่ง normalized dict
+  ↓ append
+normalized_rows
+  ↓ ทำซ้ำทุก row
+return list ใหม่
+</code></pre>
+<p>การแยก function หนึ่ง record ออกจาก function หลาย records ช่วยให้ unit test ง่าย เพราะเราทดสอบ transformation ด้วย input เพียงก้อนเดียวก่อน</p>
+<h3 id="lesson-3-function-accepted-rejected-results">Function ที่มีทั้ง Accepted และ Rejected Results</h3>
+<p>งานจริงไม่ควรปล่อยให้ row ผิดหนึ่งตัวทำ batch หายทั้งหมดเสมอไป ตัวอย่างพื้นฐาน:</p>
+<pre><code class="language-python">def process_rows(rows: list[dict]) -&gt; tuple[list[dict], list[dict]]:
+    accepted = []
+    rejected = []
+
+    for index, row in enumerate(rows, start=1):
+        try:
+            normalized = normalize_transaction(row)
+        except (KeyError, TypeError, ValueError) as exc:
+            rejected.append({
+                "row_number": index,
+                "reason": str(exc),
+            })
+            continue
+
+        accepted.append(normalized)
+
+    return accepted, rejected
+</code></pre>
+<p>ลำดับการคิด:</p>
+<pre><code class="language-text">รับ rows
+  ↓ สร้าง accepted/rejected ว่าง
+วนทีละ row
+  ↓
+normalize สำเร็จ? ── ใช่ → accepted
+        │
+        ไม่ใช่
+        ↓
+เก็บ row number + reason → rejected
+  ↓
+return ผลลัพธ์ทั้งสองกลุ่ม
+</code></pre>
+<p>ตัวอย่างนี้จับเฉพาะ exception ที่คาดจากข้อมูล หาก database หรือระบบหลักล่ม ไม่ควรจับรวมแล้วเรียกว่า rejected row โดยอัตโนมัติ</p>
+<h3 id="lesson-3-function">วิธีเริ่มเขียน Function เมื่อยังคิดไม่ออก</h3>
+<p>ใช้ลำดับนี้:</p>
+<ol>
+<li>เขียน input ตัวอย่างจริง</li>
+<li>เขียน output ที่ต้องการ</li>
+<li>ตั้งชื่อ function ด้วยคำกริยา</li>
+<li>เขียน signature และ <code>return</code> แบบง่ายก่อน</li>
+<li>เติม transformation ทีละ field</li>
+<li>ทดลอง normal input หนึ่งก้อน</li>
+<li>เพิ่ม missing, empty และ invalid input</li>
+<li>ค่อยนำ function ไปใส่ใน loop</li>
+</ol>
+<p>อย่าเริ่มจาก function ใหญ่ที่อ่านไฟล์ ตรวจข้อมูล เขียน DB และสร้าง report พร้อมกัน เพราะเมื่อพังจะไม่รู้ว่าขั้นใดเป็นต้นเหตุ</p>
 <p>กำหนด shape แต่ละ boundary ให้ชัด ลดการใช้ index/key ผิด</p>
 <hr/>
 <h2 id="lesson-3-12-validation-result-pattern">12. Validation Result Pattern</h2>
