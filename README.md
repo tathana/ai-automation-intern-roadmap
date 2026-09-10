@@ -1,12 +1,15 @@
 # AI & Automation Internship Learning Portal
 
-Static learning portal containing the generated Week 1 and Week 2 HTML books.
+Static learning portal containing the generated Week 1, Week 2 and Week 3 HTML books.
 
 ## Files
 
 - `index.html` — landing page
 - `week-1.html` — Week 1 learning book
 - `week-2.html` — Week 2 learning book
+- `week-3.html` — Week 3 n8n learning book, drills, FlowGuard and HR Intake
+- `week-3-materials.zip` — Week 3 Markdown, local mock API/tests and workflow examples
+- `week-3-assets/workflows/` — individual downloadable workflow JSON files
 - `vercel.json` — clean static deployment configuration
 
 ## Preview locally
@@ -28,3 +31,5 @@ Then open `http://localhost:8080`.
 5. Use the repository root as the Root Directory and deploy.
 
 The generated Week HTML files should be refreshed from their source folders whenever the Markdown curriculum changes.
+
+Week 3's mock API is **local-only**. This portal hosts the book and downloadable source, not a live API or n8n instance. Workflow examples contain synthetic data and no credentials. Read Verification in the Week 3 book for the exact test coverage and limitations.
