@@ -1412,6 +1412,184 @@ print(data)  # ('T001', ['new', 'reviewed'])
 <li>ใช้ dict/model เมื่อแต่ละ field ต้องอ่านด้วยชื่อ มี optional fields หรือส่งต่อหลายชั้น</li>
 <li>หาก tuple มีหลายตำแหน่งจนต้องจำว่า index 5 คืออะไร ให้เปลี่ยนเป็น dataclass, NamedTuple หรือ Pydantic model</li>
 </ul>
+<h3 id="lesson-3-tuple-model-field">จาก Tuple ไปสู่ Model ที่มีชื่อ Field</h3>
+<p>สมมติเราเริ่มจาก tuple:</p>
+<pre><code class="language-python">transaction = ("T001", "U001", 500, "SUCCESS")
+</code></pre>
+<p>ปัญหาคือคนอ่านต้องจำเองว่าแต่ละตำแหน่งคืออะไร:</p>
+<pre><code class="language-python">transaction[0]  # transaction_id
+transaction[2]  # amount หรืออย่างอื่น?
+</code></pre>
+<p>เมื่อจำนวน field เพิ่มขึ้น เราควรเปลี่ยนจากการจำตำแหน่งเป็นการอ่านด้วยชื่อ:</p>
+<pre><code class="language-text">tuple index เริ่มจำยาก
+        ↓
+ต้องการชื่อ field
+        ↓
+เลือก NamedTuple / dataclass / TypedDict / Pydantic
+        ↓
+เลือกตามแหล่งข้อมูลและหน้าที่ของ object
+</code></pre>
+<h4 id="lesson-3-namedtuple-tuple-field"><code>NamedTuple</code>: ยังเป็น Tuple แต่มีชื่อ Field</h4>
+<pre><code class="language-python">from typing import NamedTuple
+
+class TransactionRow(NamedTuple):
+    transaction_id: str
+    account_id: str
+    amount_satangs: int
+    status: str
+
+transaction = TransactionRow(
+    transaction_id="T001",
+    account_id="U001",
+    amount_satangs=500,
+    status="SUCCESS",
+)
+
+print(transaction.amount_satangs)  # 500
+print(transaction[2])              # 500 — ยังใช้ index ได้
+</code></pre>
+<p>เหมาะเมื่อข้อมูลมีลำดับคงที่ ต้องการ immutable tuple และยังต้องใช้กับ code ที่คาดหวัง tuple แต่ต้องการให้คนอ่านเห็นชื่อ field</p>
+<p>ข้อควรระวัง: <code>NamedTuple</code> ไม่ได้ validate runtime ว่า <code>amount_satangs</code> เป็น integer จริง Type hints ช่วยเครื่องมือและคนอ่านเป็นหลัก</p>
+<h4 id="lesson-3-dataclass-model"><code>dataclass</code>: Model ภายในโปรแกรม</h4>
+<pre><code class="language-python">from dataclasses import dataclass
+
+@dataclass(frozen=True)
+class Transaction:
+    transaction_id: str
+    account_id: str
+    amount_satangs: int
+    status: str
+
+transaction = Transaction(
+    transaction_id="T001",
+    account_id="U001",
+    amount_satangs=500,
+    status="SUCCESS",
+)
+
+print(transaction.amount_satangs)
+</code></pre>
+<p><code>@dataclass</code> ช่วยสร้าง methods พื้นฐาน เช่น <code>__init__</code>, <code>__repr__</code> และ <code>__eq__</code> เหมาะกับ config, validation result และ domain object ภายในโปรแกรม</p>
+<p><code>frozen=True</code> ป้องกันการ assign field ใหม่โดยตรง:</p>
+<pre><code class="language-python">transaction.status = "FAILED"  # FrozenInstanceError
+</code></pre>
+<p>แต่ถ้า field ข้างในเป็น list ตัว list ยังอาจ mutate ได้ ดังนั้น frozen ไม่ได้หมายถึง deep immutable</p>
+<h4 id="lesson-3-typeddict-dict-shape-type-checker"><code>TypedDict</code>: Dict เดิม แต่บอก Shape ให้ Type Checker</h4>
+<pre><code class="language-python">from typing import TypedDict
+
+class TransactionData(TypedDict):
+    transaction_id: str
+    account_id: str
+    amount_satangs: int
+    status: str
+
+transaction: TransactionData = {
+    "transaction_id": "T001",
+    "account_id": "U001",
+    "amount_satangs": 500,
+    "status": "SUCCESS",
+}
+</code></pre>
+<p>ตอน runtime ค่านี้ยังเป็น dict ปกติ:</p>
+<pre><code class="language-python">isinstance(transaction, dict)  # True
+</code></pre>
+<p><code>TypedDict</code> เหมาะเมื่อ API ภายใน code ยังต้องการ dict แต่ต้องการอธิบาย keys/types ให้ IDE และ static type checker เข้าใจ ไม่ได้ทำ runtime validation เอง</p>
+<h4 id="lesson-3-pydantic-model-validate-runtime"><code>Pydantic Model</code>: รับข้อมูลภายนอกและ Validate ตอน Runtime</h4>
+<pre><code class="language-python">from pydantic import BaseModel, Field
+
+class TransactionInput(BaseModel):
+    transaction_id: str
+    account_id: str
+    amount_satangs: int = Field(ge=0)
+    status: str
+
+transaction = TransactionInput.model_validate({
+    "transaction_id": "T001",
+    "account_id": "U001",
+    "amount_satangs": 500,
+    "status": "SUCCESS",
+})
+</code></pre>
+<p>Pydantic อ่านข้อมูลจาก dict/JSON ตรวจ fields, types และ constraints ตอน runtime หากไม่ผ่านจะเกิด validation error จึงเหมาะกับ API request/response, webhook และ external data boundary</p>
+<p>รายละเอียด Pydantic เรียนต่อใน Week 2 หัวข้อ FastAPI และ Pydantic ตอนนี้ให้จำเพียงว่ามันทำงานมากกว่า type hint เพราะมี runtime parsing/validation</p>
+<h3 id="lesson-3-_5">ตารางเลือกใช้</h3>
+<div class="table-scroll"><table>
+<thead>
+<tr>
+<th>เครื่องมือ</th>
+<th>Runtime เป็นอะไร</th>
+<th style="text-align: right;">แก้ค่าได้</th>
+<th style="text-align: right;">Validate runtime</th>
+<th>เหมาะกับ</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>tuple</code></td>
+<td>tuple</td>
+<td style="text-align: right;">ไม่ได้</td>
+<td style="text-align: right;">ไม่</td>
+<td>ค่าสั้น ลำดับชัด, composite key</td>
+</tr>
+<tr>
+<td><code>NamedTuple</code></td>
+<td>tuple subclass</td>
+<td style="text-align: right;">ไม่ได้</td>
+<td style="text-align: right;">ไม่</td>
+<td>tuple ที่ต้องการชื่อ field</td>
+</tr>
+<tr>
+<td><code>dict</code></td>
+<td>dict</td>
+<td style="text-align: right;">ได้</td>
+<td style="text-align: right;">ไม่</td>
+<td>JSON ดิบ, ข้อมูลยืดหยุ่น</td>
+</tr>
+<tr>
+<td><code>TypedDict</code></td>
+<td>dict</td>
+<td style="text-align: right;">ได้</td>
+<td style="text-align: right;">ไม่</td>
+<td>dict ที่ต้องการ static type shape</td>
+</tr>
+<tr>
+<td><code>dataclass</code></td>
+<td>class instance</td>
+<td style="text-align: right;">แล้วแต่ <code>frozen</code></td>
+<td style="text-align: right;">ไม่อัตโนมัติ</td>
+<td>model/config/domain object ภายใน</td>
+</tr>
+<tr>
+<td>Pydantic model</td>
+<td>model instance</td>
+<td style="text-align: right;">ตาม config</td>
+<td style="text-align: right;">ได้</td>
+<td>API, webhook และข้อมูลภายนอก</td>
+</tr>
+</tbody>
+</table></div>
+<h3 id="lesson-3-flow">ตัวอย่าง Flow ในระบบจริง</h3>
+<pre><code class="language-text">JSON จาก API / Webhook
+        ↓ parse เป็น dict
+Pydantic Model
+        ↓ ตรวจ shape, type, constraints
+dataclass หรือ Domain Object
+        ↓ ทำ business logic ภายใน
+tuple
+        ↓ ส่งเป็น SQL parameters
+Database
+</code></pre>
+<p>ไม่จำเป็นต้องใช้ครบทุกชนิดในระบบเดียว หาก dict กับ Pydantic เพียงพอ ไม่ควรเพิ่ม model หลายชั้นโดยไม่มีประโยชน์ การเลือกที่ดีคือโครงสร้างที่ทำให้ contract ชัด โดยมีความซับซ้อนน้อยที่สุด</p>
+<h3 id="lesson-3-_6">ตรวจความเข้าใจ</h3>
+<p>ลองเลือกเครื่องมือให้แต่ละกรณี:</p>
+<ol>
+<li>Coordinate <code>(x, y)</code> ที่ไม่แก้ค่า — <code>tuple</code></li>
+<li>SQL row ที่ต้องใช้ index ได้แต่ต้องการชื่อ field — <code>NamedTuple</code></li>
+<li>Config ภายในโปรแกรม — <code>dataclass</code></li>
+<li>JSON request จาก client — Pydantic model</li>
+<li>Dict ที่ส่งระหว่าง functions และอยากให้ type checker รู้ keys — <code>TypedDict</code></li>
+</ol>
+<p>จุดสำคัญไม่ใช่จำว่าเครื่องมือใด “ดีที่สุด” แต่ต้องอธิบายได้ว่าข้อมูลมาจากไหน ใครเป็นผู้ใช้ ต้องแก้ไขหรือ validate ตอน runtime หรือไม่</p>
 <hr/>
 <h2 id="lesson-3-4-dict">4. Dict</h2>
 <!-- tutor:## 4. Dict -->
@@ -1427,7 +1605,7 @@ value ที่สัมพันธ์
 อ่าน/เพิ่ม/แก้ record ตาม key
 </code></pre>
 <p>แต่ละลูกศรคือการเปลี่ยนหนึ่งขั้น หากยังไม่ชัด ให้จดเพียงค่าก่อนหน้า operation และค่าหลังจากนั้น</p>
-<h4 id="lesson-3-_5">ตรวจความเข้าใจก่อนอ่านต่อ</h4>
+<h4 id="lesson-3-_7">ตรวจความเข้าใจก่อนอ่านต่อ</h4>
 <p>ปิดตัวอย่าง แล้วอธิบายด้วยภาษาตัวเองหนึ่งประโยค จากนั้นเปลี่ยน input หนึ่งค่าและทายผลก่อนรัน หากคำตอบยังไม่ตรง ให้ย้อนตามลูกศรและรันตัวอย่างทีละบรรทัด โดยจดค่าก่อนและหลังแต่ละขั้น</p>
 <p>Dict เก็บ key → value:</p>
 <pre><code class="language-python">user = {
@@ -1551,7 +1729,7 @@ email = candidate["contact"]["email"]
 ตรวจ membership/deduplicate
 </code></pre>
 <p>แต่ละลูกศรคือการเปลี่ยนหนึ่งขั้น หากยังไม่ชัด ให้จดเพียงค่าก่อนหน้า operation และค่าหลังจากนั้น</p>
-<h4 id="lesson-3-_6">ตรวจความเข้าใจก่อนอ่านต่อ</h4>
+<h4 id="lesson-3-_8">ตรวจความเข้าใจก่อนอ่านต่อ</h4>
 <p>ปิดตัวอย่าง แล้วอธิบายด้วยภาษาตัวเองหนึ่งประโยค จากนั้นเปลี่ยน input หนึ่งค่าและทายผลก่อนรัน หากคำตอบยังไม่ตรง ให้ย้อนตามลูกศรและรันตัวอย่างทีละบรรทัด โดยจดค่าก่อนและหลังแต่ละขั้น</p>
 <p>Set:</p>
 <ul>
@@ -1584,7 +1762,7 @@ empty_set = set()  # ถูกต้อง
 empty_dict = {}    # นี่คือ dict ไม่ใช่ set
 </code></pre>
 <p>Set ไม่รับประกันลำดับสำหรับการใช้งานเชิงความหมาย จึงไม่ควรใช้เมื่อต้องแสดงผลตามลำดับเดิม หากต้องการผลเรียงให้ใช้ <code>sorted(currencies)</code> ซึ่งคืน list</p>
-<h3 id="lesson-3-_7">เพิ่มและลบสมาชิก</h3>
+<h3 id="lesson-3-_9">เพิ่มและลบสมาชิก</h3>
 <pre><code class="language-python">currencies.add("SGD")
 currencies.update(["JPY", "EUR"])
 
@@ -1667,7 +1845,7 @@ users_by_id.get(user_id)
 สร้าง collection ใหม่
 </code></pre>
 <p>แต่ละลูกศรคือการเปลี่ยนหนึ่งขั้น หากยังไม่ชัด ให้จดเพียงค่าก่อนหน้า operation และค่าหลังจากนั้น</p>
-<h4 id="lesson-3-_8">ตรวจความเข้าใจก่อนอ่านต่อ</h4>
+<h4 id="lesson-3-_10">ตรวจความเข้าใจก่อนอ่านต่อ</h4>
 <p>ปิดตัวอย่าง แล้วอธิบายด้วยภาษาตัวเองหนึ่งประโยค จากนั้นเปลี่ยน input หนึ่งค่าและทายผลก่อนรัน หากคำตอบยังไม่ตรง ให้ย้อนตามลูกศรและรันตัวอย่างทีละบรรทัด โดยจดค่าก่อนและหลังแต่ละขั้น</p>
 <p>Comprehension เป็นรูปย่อของ loop ที่ “สร้าง collection ใหม่” เหมาะเมื่อ transformation/filter อ่านเป็นประโยคเดียวได้ ไม่ได้ทำให้ logic ซับซ้อนกลายเป็น logic ที่ดีขึ้น</p>
 <pre><code class="language-python">amounts = [100, -20, 300]
@@ -1713,7 +1891,7 @@ None / 0 / ค่าว่าง → False
 ถ้าความหมายต่าง ต้องเช็กตรง ๆ
 </code></pre>
 <p>แต่ละลูกศรคือการเปลี่ยนหนึ่งขั้น หากยังไม่ชัด ให้จดเพียงค่าก่อนหน้า operation และค่าหลังจากนั้น</p>
-<h4 id="lesson-3-_9">ตรวจความเข้าใจก่อนอ่านต่อ</h4>
+<h4 id="lesson-3-_11">ตรวจความเข้าใจก่อนอ่านต่อ</h4>
 <p>ปิดตัวอย่าง แล้วอธิบายด้วยภาษาตัวเองหนึ่งประโยค จากนั้นเปลี่ยน input หนึ่งค่าและทายผลก่อนรัน หากคำตอบยังไม่ตรง ให้ย้อนตามลูกศรและรันตัวอย่างทีละบรรทัด โดยจดค่าก่อนและหลังแต่ละขั้น</p>
 <p>Python อนุญาตให้ใช้ค่าเป็นเงื่อนไขโดยแปลงเป็น boolean โดยปริยาย ค่าเช่น <code>None</code>, <code>False</code>, เลขศูนย์ และ collection/string ว่างเป็น falsy แต่ไม่ได้มีความหมายทางธุรกิจเหมือนกัน</p>
 <pre><code class="language-python">if not amount:
@@ -1760,7 +1938,7 @@ field ชั้นถัดไป
 ค่าปลายทางที่เชื่อถือได้
 </code></pre>
 <p>แต่ละลูกศรคือการเปลี่ยนหนึ่งขั้น หากยังไม่ชัด ให้จดเพียงค่าก่อนหน้า operation และค่าหลังจากนั้น</p>
-<h4 id="lesson-3-_10">ตรวจความเข้าใจก่อนอ่านต่อ</h4>
+<h4 id="lesson-3-_12">ตรวจความเข้าใจก่อนอ่านต่อ</h4>
 <p>ปิดตัวอย่าง แล้วอธิบายด้วยภาษาตัวเองหนึ่งประโยค จากนั้นเปลี่ยน input หนึ่งค่าและทายผลก่อนรัน หากคำตอบยังไม่ตรง ให้ย้อนตามลูกศรและรันตัวอย่างทีละบรรทัด โดยจดค่าก่อนและหลังแต่ละขั้น</p>
 <p>Nested JSON คือ dict/list ซ้อนกัน การเข้าถึงแต่ละชั้นเป็น operation ที่พังได้เอง:</p>
 <pre><code class="language-python">payload = {"candidate": {"skills": ["Python", "SQL"]}}
@@ -1804,7 +1982,7 @@ country = profile.get("country")
 ยอมรับหรือ reject
 </code></pre>
 <p>แต่ละลูกศรคือการเปลี่ยนหนึ่งขั้น หากยังไม่ชัด ให้จดเพียงค่าก่อนหน้า operation และค่าหลังจากนั้น</p>
-<h4 id="lesson-3-_11">ตรวจความเข้าใจก่อนอ่านต่อ</h4>
+<h4 id="lesson-3-_13">ตรวจความเข้าใจก่อนอ่านต่อ</h4>
 <p>ปิดตัวอย่าง แล้วอธิบายด้วยภาษาตัวเองหนึ่งประโยค จากนั้นเปลี่ยน input หนึ่งค่าและทายผลก่อนรัน หากคำตอบยังไม่ตรง ให้ย้อนตามลูกศรและรันตัวอย่างทีละบรรทัด โดยจดค่าก่อนและหลังแต่ละขั้น</p>
 <p>Input ภายนอกอาจมี:</p>
 <pre><code class="language-python">" success "
@@ -1840,7 +2018,7 @@ Normalized shape
 Database/report shape
 </code></pre>
 <p>แต่ละลูกศรคือการเปลี่ยนหนึ่งขั้น หากยังไม่ชัด ให้จดเพียงค่าก่อนหน้า operation และค่าหลังจากนั้น</p>
-<h4 id="lesson-3-_12">ตรวจความเข้าใจก่อนอ่านต่อ</h4>
+<h4 id="lesson-3-_14">ตรวจความเข้าใจก่อนอ่านต่อ</h4>
 <p>ปิดตัวอย่าง แล้วอธิบายด้วยภาษาตัวเองหนึ่งประโยค จากนั้นเปลี่ยน input หนึ่งค่าและทายผลก่อนรัน หากคำตอบยังไม่ตรง ให้ย้อนตามลูกศรและรันตัวอย่างทีละบรรทัด โดยจดค่าก่อนและหลังแต่ละขั้น</p>
 <p>Shape คือคำอธิบายโครงสร้างละเอียดกว่าแค่ <code>dict</code> เช่น “dict ที่มี event_id เป็น non-empty string และ amount เป็น integer หน่วยสตางค์” ใน pipeline เดียวข้อมูลอาจเปลี่ยน shape หลายครั้ง การตั้งชื่อ <code>raw_event</code>, <code>normalized_event</code>, <code>db_row</code> ช่วยไม่ให้ใช้ค่าก่อน validate</p>
 <p>ทุกลูกศรควรตอบว่า input contract, output contract และ rejected case คืออะไร หากอธิบายไม่ได้ transformation สองขั้นอาจควรถูกแยกเป็น functions เพื่อทดสอบทีละส่วน</p>
@@ -1995,7 +2173,7 @@ return ผลลัพธ์ทั้งสองกลุ่ม
 summary ต่อกลุ่ม
 </code></pre>
 <p>แต่ละลูกศรคือการเปลี่ยนหนึ่งขั้น หากยังไม่ชัด ให้จดเพียงค่าก่อนหน้า operation และค่าหลังจากนั้น</p>
-<h4 id="lesson-3-_13">ตรวจความเข้าใจก่อนอ่านต่อ</h4>
+<h4 id="lesson-3-_15">ตรวจความเข้าใจก่อนอ่านต่อ</h4>
 <p>ปิดตัวอย่าง แล้วอธิบายด้วยภาษาตัวเองหนึ่งประโยค จากนั้นเปลี่ยน input หนึ่งค่าและทายผลก่อนรัน หากคำตอบยังไม่ตรง ให้ย้อนตามลูกศรและรันตัวอย่างทีละบรรทัด โดยจดค่าก่อนและหลังแต่ละขั้น</p>
 <pre><code class="language-python">totals_by_user: dict[str, float] = {}
 
