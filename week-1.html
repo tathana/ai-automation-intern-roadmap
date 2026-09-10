@@ -1123,6 +1123,63 @@ first = transactions[0]
 last = transactions[-1]
 subset = transactions[:2]
 </code></pre>
+<h4 id="lesson-3-list-index">สร้าง List และอ่านค่าด้วย Index</h4>
+<pre><code class="language-python">empty = []
+names = ["Ann", "Bob", "Mena"]
+mixed = ["T001", 100, True]  # ทำได้ แต่ควรมีเหตุผลที่ชัดเจน
+</code></pre>
+<p>Index เริ่มที่ <code>0</code>:</p>
+<pre><code class="language-text">ค่า       "Ann"   "Bob"   "Mena"
+index       0       1        2
+negative   -3      -2       -1
+</code></pre>
+<pre><code class="language-python">names[0]   # "Ann"
+names[-1]  # "Mena"
+</code></pre>
+<p>ถ้า index เกินขนาดจะเกิด <code>IndexError</code> จึงไม่ควรใช้ <code>names[0]</code> ก่อนแน่ใจว่า list ไม่ว่าง</p>
+<h4 id="lesson-3-slice-list">Slice: ตัดบางช่วงโดยสร้าง List ใหม่</h4>
+<pre><code class="language-python">names[0:2]  # ["Ann", "Bob"] — ตำแหน่ง 2 ไม่ถูกรวม
+names[:2]   # สองตัวแรก
+names[1:]   # ตั้งแต่ index 1 ถึงท้าย
+names[::2]  # ข้ามทีละ 2 ตำแหน่ง
+</code></pre>
+<p>จำว่า slice ใช้รูป <code>[start:stop:step]</code> และ <code>stop</code> เป็นขอบที่ไม่รวมอยู่ในผลลัพธ์</p>
+<h4 id="lesson-3-_2">เพิ่ม แก้ และลบสมาชิก</h4>
+<pre><code class="language-python">names.append("Kai")              # เพิ่มหนึ่ง object ต่อท้าย
+names.extend(["May", "Nok"])    # เพิ่มสมาชิกจาก iterable หลายตัว
+names.insert(1, "New")           # แทรกที่ index 1
+names[0] = "Anna"                # แก้สมาชิกตำแหน่ง 0
+
+removed = names.pop()             # ลบตัวท้ายและคืนค่าที่ลบ
+names.remove("Bob")               # ลบค่าที่พบครั้งแรก
+del names[0]                       # ลบตามตำแหน่ง
+</code></pre>
+<p>จุดที่มักสับสน:</p>
+<pre><code class="language-python">values = [1, 2]
+values.append([3, 4])  # [1, 2, [3, 4]]
+
+values = [1, 2]
+values.extend([3, 4])  # [1, 2, 3, 4]
+</code></pre>
+<p><code>append</code> ใส่สิ่งที่ส่งมาเป็นสมาชิกหนึ่งก้อน ส่วน <code>extend</code> วนสมาชิกจาก iterable แล้วเพิ่มทีละตัว</p>
+<h4 id="lesson-3-_3">ตรวจสมาชิกและความยาว</h4>
+<pre><code class="language-python">len(names)
+"Ann" in names
+"Unknown" not in names
+</code></pre>
+<p>การค้นด้วย <code>in</code> ใน list ต้องไล่สมาชิกโดยเฉลี่ย หากตรวจซ้ำจำนวนมากและไม่สนลำดับ ให้พิจารณา set</p>
+<h4 id="lesson-3-copy-list">การ Copy List</h4>
+<pre><code class="language-python">original = [1, 2]
+alias = original
+copied = original.copy()
+
+alias.append(3)
+print(original)  # [1, 2, 3] เพราะ alias ชี้ list เดิม
+
+copied.append(4)
+print(original)  # ยังเป็น [1, 2, 3]
+</code></pre>
+<p><code>copy()</code> เป็น shallow copy หากสมาชิกข้างในเป็น dict/list object ชั้นในยังอาจถูกใช้ร่วมกัน ซึ่งจะอธิบายต่อในหัวข้อ Shallow Copy</p>
 <h3 id="lesson-3-for-loop">การเขียน <code>for</code> Loop ตั้งแต่พื้นฐาน</h3>
 <p><code>for</code> loop ใช้เมื่อเราต้องการหยิบสมาชิกจาก collection มาทำงานทีละตัว รูปแบบพื้นฐานคือ:</p>
 <pre><code class="language-python">for item in collection:
@@ -1300,7 +1357,7 @@ while True:
 แก้สมาชิกโดยตรงไม่ได้
 </code></pre>
 <p>แต่ละลูกศรคือการเปลี่ยนหนึ่งขั้น หากยังไม่ชัด ให้จดเพียงค่าก่อนหน้า operation และค่าหลังจากนั้น</p>
-<h4 id="lesson-3-_2">ตรวจความเข้าใจก่อนอ่านต่อ</h4>
+<h4 id="lesson-3-_4">ตรวจความเข้าใจก่อนอ่านต่อ</h4>
 <p>ปิดตัวอย่าง แล้วอธิบายด้วยภาษาตัวเองหนึ่งประโยค จากนั้นเปลี่ยน input หนึ่งค่าและทายผลก่อนรัน หากคำตอบยังไม่ตรง ให้ย้อนตามลูกศรและรันตัวอย่างทีละบรรทัด โดยจดค่าก่อนและหลังแต่ละขั้น</p>
 <p>Tuple:</p>
 <ul>
@@ -1320,6 +1377,41 @@ while True:
 daily_counts[key] = daily_counts.get(key, 0) + 1
 </code></pre>
 <p>ข้อเสียคือ <code>row[2]</code> อ่านยากกว่า <code>record["amount"]</code> จึงควรใช้ Tuple ตอน boundary ที่ลำดับชัด เช่นส่งเข้า SQLite ไม่จำเป็นต้องใช้เป็น model หลักทุกที่</p>
+<h3 id="lesson-3-tuple">การสร้าง Tuple และกรณีสมาชิกหนึ่งตัว</h3>
+<pre><code class="language-python">point = (10, 20)
+statuses = ("SUCCESS", "FAILED")
+single = ("THB",)  # comma ทำให้เป็น tuple
+not_tuple = ("THB")  # เป็น str
+empty = ()
+</code></pre>
+<p>วงเล็บช่วยให้อ่านง่าย แต่ comma เป็นสิ่งที่สร้าง tuple จริง ๆ</p>
+<h3 id="lesson-3-tuple-unpacking">Tuple Unpacking</h3>
+<pre><code class="language-python">transaction = ("T001", 500, "SUCCESS")
+transaction_id, amount, status = transaction
+</code></pre>
+<p>Flow:</p>
+<pre><code class="language-text">("T001", 500, "SUCCESS")
+       ↓ จับคู่ตามตำแหน่ง
+transaction_id = "T001"
+amount = 500
+status = "SUCCESS"
+</code></pre>
+<p>จำนวนตัวแปรต้องตรงกับจำนวนสมาชิก มิฉะนั้นเกิด <code>ValueError</code> สามารถใช้ <code>*rest</code> รับส่วนที่เหลือ:</p>
+<pre><code class="language-python">first, *middle, last = (1, 2, 3, 4)
+# first=1, middle=[2, 3], last=4
+</code></pre>
+<h3 id="lesson-3-tuple_1">Tuple แก้สมาชิกไม่ได้ แต่ของที่ซ้อนอยู่อาจแก้ได้</h3>
+<pre><code class="language-python">data = ("T001", ["new"])
+data[1].append("reviewed")
+print(data)  # ('T001', ['new', 'reviewed'])
+</code></pre>
+<p>เราไม่ได้เปลี่ยนสมาชิกตำแหน่ง 1 ให้ชี้ object ใหม่ แต่ mutate list ก้อนเดิมที่ tuple ชี้อยู่ ดังนั้น “tuple immutable” ไม่ได้แปลว่าทุก object ข้างในถูกแช่แข็ง</p>
+<h3 id="lesson-3-tuple-dict">ใช้ Tuple หรือ Dict ดี?</h3>
+<ul>
+<li>ใช้ tuple เมื่อจำนวน/ลำดับตำแหน่งชัดและสั้น เช่น coordinate หรือ composite key</li>
+<li>ใช้ dict/model เมื่อแต่ละ field ต้องอ่านด้วยชื่อ มี optional fields หรือส่งต่อหลายชั้น</li>
+<li>หาก tuple มีหลายตำแหน่งจนต้องจำว่า index 5 คืออะไร ให้เปลี่ยนเป็น dataclass, NamedTuple หรือ Pydantic model</li>
+</ul>
 <hr/>
 <h2 id="lesson-3-4-dict">4. Dict</h2>
 <!-- tutor:## 4. Dict -->
@@ -1335,7 +1427,7 @@ value ที่สัมพันธ์
 อ่าน/เพิ่ม/แก้ record ตาม key
 </code></pre>
 <p>แต่ละลูกศรคือการเปลี่ยนหนึ่งขั้น หากยังไม่ชัด ให้จดเพียงค่าก่อนหน้า operation และค่าหลังจากนั้น</p>
-<h4 id="lesson-3-_3">ตรวจความเข้าใจก่อนอ่านต่อ</h4>
+<h4 id="lesson-3-_5">ตรวจความเข้าใจก่อนอ่านต่อ</h4>
 <p>ปิดตัวอย่าง แล้วอธิบายด้วยภาษาตัวเองหนึ่งประโยค จากนั้นเปลี่ยน input หนึ่งค่าและทายผลก่อนรัน หากคำตอบยังไม่ตรง ให้ย้อนตามลูกศรและรันตัวอย่างทีละบรรทัด โดยจดค่าก่อนและหลังแต่ละขั้น</p>
 <p>Dict เก็บ key → value:</p>
 <pre><code class="language-python">user = {
@@ -1375,6 +1467,73 @@ value ที่สัมพันธ์
 <pre><code class="language-python">user = users_by_id.get(transaction["user_id"])
 </code></pre>
 <p>เร็วและอ่านง่ายกว่าวน users ทุก transaction</p>
+<h3 id="lesson-3-key">เพิ่ม แก้ และลบ Key</h3>
+<pre><code class="language-python">user["country"] = "TH"          # เพิ่มหรือเขียนทับ
+user["membership"] = "PLATINUM"
+removed = user.pop("country")   # ลบและคืน value
+del user["membership"]          # ลบ key; ไม่มี key จะ KeyError
+</code></pre>
+<p>ถ้าไม่ต้องการให้ missing key พัง:</p>
+<pre><code class="language-python">removed = user.pop("country", None)
+</code></pre>
+<p>การ assign key เดิมไม่ได้เพิ่ม record ใหม่ แต่เขียนทับ value เดิม จึงควรระวังเมื่อรวมข้อมูลหลายแหล่ง</p>
+<h3 id="lesson-3-dict">วนอ่าน Dict</h3>
+<pre><code class="language-python">for key in user:
+    print(key)
+
+for value in user.values():
+    print(value)
+
+for key, value in user.items():
+    print(key, value)
+</code></pre>
+<p>โดยปกติรูป <code>.items()</code> อ่านง่ายเมื่อใช้ทั้ง key และ value</p>
+<pre><code class="language-text">user.items()
+   ↓
+("user_id", "U001")
+("country", "TH")
+   ↓ unpack แต่ละคู่
+key, value
+</code></pre>
+<h3 id="lesson-3-key-value">ตรวจ Key กับตรวจ Value</h3>
+<pre><code class="language-python">"country" in user           # ตรวจ key
+"TH" in user.values()       # ตรวจ value
+</code></pre>
+<p><code>"TH" in user</code> ไม่ได้ตรวจ values แต่ตรวจว่ามี key ชื่อ <code>"TH"</code> หรือไม่</p>
+<h3 id="lesson-3-update-merge">Update และ Merge</h3>
+<pre><code class="language-python">profile = {"name": "Ann", "role": "Intern"}
+updates = {"role": "Engineer", "country": "TH"}
+
+profile.update(updates)
+# {'name': 'Ann', 'role': 'Engineer', 'country': 'TH'}
+</code></pre>
+<p>หรือสร้าง dict ใหม่โดยไม่ mutate ตัวเดิม:</p>
+<pre><code class="language-python">merged = {**profile, **updates}
+</code></pre>
+<p>เมื่อ key ซ้ำ ค่าจาก dict ที่อยู่ทีหลังชนะ ต้องแน่ใจว่านี่คือ precedence policy ที่ต้องการ</p>
+<h3 id="lesson-3-counting-pattern-dict">Counting Pattern ด้วย Dict</h3>
+<pre><code class="language-python">statuses = ["SUCCESS", "FAILED", "SUCCESS"]
+counts: dict[str, int] = {}
+
+for status in statuses:
+    counts[status] = counts.get(status, 0) + 1
+</code></pre>
+<p>Trace:</p>
+<pre><code class="language-text">SUCCESS → ไม่มี key → 0 + 1 → {'SUCCESS': 1}
+FAILED  → ไม่มี key → 0 + 1 → {'SUCCESS': 1, 'FAILED': 1}
+SUCCESS → มีค่า 1  → 1 + 1 → {'SUCCESS': 2, 'FAILED': 1}
+</code></pre>
+<h3 id="lesson-3-nested-dict">Nested Dict</h3>
+<pre><code class="language-python">candidate = {
+    "name": "Ann",
+    "contact": {
+        "email": "ann@example.com",
+    },
+}
+
+email = candidate["contact"]["email"]
+</code></pre>
+<p>ทุกชั้นมีโอกาส missing หรือผิด type จึงควร validate shape ก่อน ไม่ควรต่อ <code>.get()</code> ยาวจนได้ <code>None</code> แล้วพังไกลจาก input boundary</p>
 <hr/>
 <h2 id="lesson-3-5-set">5. Set</h2>
 <!-- tutor:## 5. Set -->
@@ -1392,7 +1551,7 @@ value ที่สัมพันธ์
 ตรวจ membership/deduplicate
 </code></pre>
 <p>แต่ละลูกศรคือการเปลี่ยนหนึ่งขั้น หากยังไม่ชัด ให้จดเพียงค่าก่อนหน้า operation และค่าหลังจากนั้น</p>
-<h4 id="lesson-3-_4">ตรวจความเข้าใจก่อนอ่านต่อ</h4>
+<h4 id="lesson-3-_6">ตรวจความเข้าใจก่อนอ่านต่อ</h4>
 <p>ปิดตัวอย่าง แล้วอธิบายด้วยภาษาตัวเองหนึ่งประโยค จากนั้นเปลี่ยน input หนึ่งค่าและทายผลก่อนรัน หากคำตอบยังไม่ตรง ให้ย้อนตามลูกศรและรันตัวอย่างทีละบรรทัด โดยจดค่าก่อนและหลังแต่ละขั้น</p>
 <p>Set:</p>
 <ul>
@@ -1417,6 +1576,63 @@ for record in records:
     seen_ids.add(record_id)
 </code></pre>
 <p>Set เหมาะกับ “เคยเห็นหรือยัง” แต่หากต้องเก็บรายละเอียด record ให้ใช้ Dict</p>
+<h3 id="lesson-3-set">การสร้าง Set</h3>
+<pre><code class="language-python">currencies = {"THB", "USD", "THB"}
+print(currencies)  # มี THB เพียงครั้งเดียว
+
+empty_set = set()  # ถูกต้อง
+empty_dict = {}    # นี่คือ dict ไม่ใช่ set
+</code></pre>
+<p>Set ไม่รับประกันลำดับสำหรับการใช้งานเชิงความหมาย จึงไม่ควรใช้เมื่อต้องแสดงผลตามลำดับเดิม หากต้องการผลเรียงให้ใช้ <code>sorted(currencies)</code> ซึ่งคืน list</p>
+<h3 id="lesson-3-_7">เพิ่มและลบสมาชิก</h3>
+<pre><code class="language-python">currencies.add("SGD")
+currencies.update(["JPY", "EUR"])
+
+currencies.remove("USD")   # ไม่มีค่าจะ KeyError
+currencies.discard("USD")  # ไม่มีค่าก็ไม่ error
+</code></pre>
+<p>ใช้ <code>remove</code> เมื่อต้องการให้ missing value เป็นสัญญาณผิดปกติ ใช้ <code>discard</code> เมื่อการไม่มีค่านั้นยอมรับได้</p>
+<h3 id="lesson-3-set-operations">Set Operations</h3>
+<pre><code class="language-python">required = {"Python", "SQL", "Git"}
+candidate = {"Python", "Docker", "Git"}
+
+matched = required &amp; candidate       # intersection: {'Python', 'Git'}
+missing = required - candidate       # difference: {'SQL'}
+all_skills = required | candidate    # union
+only_one_side = required ^ candidate # symmetric difference
+</code></pre>
+<p>Flow การจับคู่ทักษะ:</p>
+<pre><code class="language-text">required skills + candidate skills
+        ↓ intersection (&amp;)
+ทักษะที่พบทั้งสองฝั่ง
+
+required skills - candidate skills
+        ↓ difference (-)
+ทักษะที่ยังไม่พบหลักฐาน
+</code></pre>
+<p>คำว่า “ไม่พบใน set” ในงาน Resume หมายถึงไม่พบหลักฐานในข้อมูลที่รับมา ไม่ได้พิสูจน์ว่าผู้สมัครไม่มีทักษะนั้น</p>
+<h3 id="lesson-3-subset-superset">Subset และ Superset</h3>
+<pre><code class="language-python">required &lt;= candidate  # required เป็น subset หรือไม่
+candidate &gt;= required  # candidate ครบ required หรือไม่
+</code></pre>
+<p>เหมาะกับการตรวจว่า permission หรือ capabilities ครบชุดที่ต้องการหรือไม่</p>
+<h3 id="lesson-3-set-hashable">สมาชิกของ Set ต้อง Hashable</h3>
+<p>ค่าทั่วไปอย่าง str, int และ tuple ที่ประกอบจากค่า hashable ใส่ set ได้ แต่ list/dict ใส่ไม่ได้:</p>
+<pre><code class="language-python">{("user-1", "2026-09-10")}  # ได้
+{["user-1", "2026-09-10"]}  # TypeError
+</code></pre>
+<p>เหตุผลคือ set ใช้ hash เพื่อหาสมาชิกอย่างรวดเร็ว สมาชิกจึงต้องมี identity เชิงค่าที่ไม่เปลี่ยนระหว่างอยู่ใน set</p>
+<h3 id="lesson-3-set-input">Set กับการรักษาลำดับ Input</h3>
+<p>การเขียน <code>list(set(values))</code> ลบค่าซ้ำได้ แต่ทำลำดับไม่ชัด หากต้องรักษาลำดับ:</p>
+<pre><code class="language-python">seen = set()
+unique = []
+
+for value in values:
+    if value in seen:
+        continue
+    seen.add(value)
+    unique.append(value)
+</code></pre>
 <hr/>
 <h2 id="lesson-3-6-complexity">6. Complexity แบบที่ต้องรู้</h2>
 <p>ไม่ต้องท่องทุก Big O ให้จำ pattern:</p>
@@ -1451,7 +1667,7 @@ users_by_id.get(user_id)
 สร้าง collection ใหม่
 </code></pre>
 <p>แต่ละลูกศรคือการเปลี่ยนหนึ่งขั้น หากยังไม่ชัด ให้จดเพียงค่าก่อนหน้า operation และค่าหลังจากนั้น</p>
-<h4 id="lesson-3-_5">ตรวจความเข้าใจก่อนอ่านต่อ</h4>
+<h4 id="lesson-3-_8">ตรวจความเข้าใจก่อนอ่านต่อ</h4>
 <p>ปิดตัวอย่าง แล้วอธิบายด้วยภาษาตัวเองหนึ่งประโยค จากนั้นเปลี่ยน input หนึ่งค่าและทายผลก่อนรัน หากคำตอบยังไม่ตรง ให้ย้อนตามลูกศรและรันตัวอย่างทีละบรรทัด โดยจดค่าก่อนและหลังแต่ละขั้น</p>
 <p>Comprehension เป็นรูปย่อของ loop ที่ “สร้าง collection ใหม่” เหมาะเมื่อ transformation/filter อ่านเป็นประโยคเดียวได้ ไม่ได้ทำให้ logic ซับซ้อนกลายเป็น logic ที่ดีขึ้น</p>
 <pre><code class="language-python">amounts = [100, -20, 300]
@@ -1497,7 +1713,7 @@ None / 0 / ค่าว่าง → False
 ถ้าความหมายต่าง ต้องเช็กตรง ๆ
 </code></pre>
 <p>แต่ละลูกศรคือการเปลี่ยนหนึ่งขั้น หากยังไม่ชัด ให้จดเพียงค่าก่อนหน้า operation และค่าหลังจากนั้น</p>
-<h4 id="lesson-3-_6">ตรวจความเข้าใจก่อนอ่านต่อ</h4>
+<h4 id="lesson-3-_9">ตรวจความเข้าใจก่อนอ่านต่อ</h4>
 <p>ปิดตัวอย่าง แล้วอธิบายด้วยภาษาตัวเองหนึ่งประโยค จากนั้นเปลี่ยน input หนึ่งค่าและทายผลก่อนรัน หากคำตอบยังไม่ตรง ให้ย้อนตามลูกศรและรันตัวอย่างทีละบรรทัด โดยจดค่าก่อนและหลังแต่ละขั้น</p>
 <p>Python อนุญาตให้ใช้ค่าเป็นเงื่อนไขโดยแปลงเป็น boolean โดยปริยาย ค่าเช่น <code>None</code>, <code>False</code>, เลขศูนย์ และ collection/string ว่างเป็น falsy แต่ไม่ได้มีความหมายทางธุรกิจเหมือนกัน</p>
 <pre><code class="language-python">if not amount:
@@ -1544,7 +1760,7 @@ field ชั้นถัดไป
 ค่าปลายทางที่เชื่อถือได้
 </code></pre>
 <p>แต่ละลูกศรคือการเปลี่ยนหนึ่งขั้น หากยังไม่ชัด ให้จดเพียงค่าก่อนหน้า operation และค่าหลังจากนั้น</p>
-<h4 id="lesson-3-_7">ตรวจความเข้าใจก่อนอ่านต่อ</h4>
+<h4 id="lesson-3-_10">ตรวจความเข้าใจก่อนอ่านต่อ</h4>
 <p>ปิดตัวอย่าง แล้วอธิบายด้วยภาษาตัวเองหนึ่งประโยค จากนั้นเปลี่ยน input หนึ่งค่าและทายผลก่อนรัน หากคำตอบยังไม่ตรง ให้ย้อนตามลูกศรและรันตัวอย่างทีละบรรทัด โดยจดค่าก่อนและหลังแต่ละขั้น</p>
 <p>Nested JSON คือ dict/list ซ้อนกัน การเข้าถึงแต่ละชั้นเป็น operation ที่พังได้เอง:</p>
 <pre><code class="language-python">payload = {"candidate": {"skills": ["Python", "SQL"]}}
@@ -1588,7 +1804,7 @@ country = profile.get("country")
 ยอมรับหรือ reject
 </code></pre>
 <p>แต่ละลูกศรคือการเปลี่ยนหนึ่งขั้น หากยังไม่ชัด ให้จดเพียงค่าก่อนหน้า operation และค่าหลังจากนั้น</p>
-<h4 id="lesson-3-_8">ตรวจความเข้าใจก่อนอ่านต่อ</h4>
+<h4 id="lesson-3-_11">ตรวจความเข้าใจก่อนอ่านต่อ</h4>
 <p>ปิดตัวอย่าง แล้วอธิบายด้วยภาษาตัวเองหนึ่งประโยค จากนั้นเปลี่ยน input หนึ่งค่าและทายผลก่อนรัน หากคำตอบยังไม่ตรง ให้ย้อนตามลูกศรและรันตัวอย่างทีละบรรทัด โดยจดค่าก่อนและหลังแต่ละขั้น</p>
 <p>Input ภายนอกอาจมี:</p>
 <pre><code class="language-python">" success "
@@ -1624,7 +1840,7 @@ Normalized shape
 Database/report shape
 </code></pre>
 <p>แต่ละลูกศรคือการเปลี่ยนหนึ่งขั้น หากยังไม่ชัด ให้จดเพียงค่าก่อนหน้า operation และค่าหลังจากนั้น</p>
-<h4 id="lesson-3-_9">ตรวจความเข้าใจก่อนอ่านต่อ</h4>
+<h4 id="lesson-3-_12">ตรวจความเข้าใจก่อนอ่านต่อ</h4>
 <p>ปิดตัวอย่าง แล้วอธิบายด้วยภาษาตัวเองหนึ่งประโยค จากนั้นเปลี่ยน input หนึ่งค่าและทายผลก่อนรัน หากคำตอบยังไม่ตรง ให้ย้อนตามลูกศรและรันตัวอย่างทีละบรรทัด โดยจดค่าก่อนและหลังแต่ละขั้น</p>
 <p>Shape คือคำอธิบายโครงสร้างละเอียดกว่าแค่ <code>dict</code> เช่น “dict ที่มี event_id เป็น non-empty string และ amount เป็น integer หน่วยสตางค์” ใน pipeline เดียวข้อมูลอาจเปลี่ยน shape หลายครั้ง การตั้งชื่อ <code>raw_event</code>, <code>normalized_event</code>, <code>db_row</code> ช่วยไม่ให้ใช้ค่าก่อน validate</p>
 <p>ทุกลูกศรควรตอบว่า input contract, output contract และ rejected case คืออะไร หากอธิบายไม่ได้ transformation สองขั้นอาจควรถูกแยกเป็น functions เพื่อทดสอบทีละส่วน</p>
@@ -1779,7 +1995,7 @@ return ผลลัพธ์ทั้งสองกลุ่ม
 summary ต่อกลุ่ม
 </code></pre>
 <p>แต่ละลูกศรคือการเปลี่ยนหนึ่งขั้น หากยังไม่ชัด ให้จดเพียงค่าก่อนหน้า operation และค่าหลังจากนั้น</p>
-<h4 id="lesson-3-_10">ตรวจความเข้าใจก่อนอ่านต่อ</h4>
+<h4 id="lesson-3-_13">ตรวจความเข้าใจก่อนอ่านต่อ</h4>
 <p>ปิดตัวอย่าง แล้วอธิบายด้วยภาษาตัวเองหนึ่งประโยค จากนั้นเปลี่ยน input หนึ่งค่าและทายผลก่อนรัน หากคำตอบยังไม่ตรง ให้ย้อนตามลูกศรและรันตัวอย่างทีละบรรทัด โดยจดค่าก่อนและหลังแต่ละขั้น</p>
 <pre><code class="language-python">totals_by_user: dict[str, float] = {}
 
