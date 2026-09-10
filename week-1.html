@@ -1623,28 +1623,280 @@ value ที่สัมพันธ์
 <li>record ที่ field มีชื่อ</li>
 </ul>
 <h3 id="lesson-3-direct-access-safe-access">Direct Access กับ Safe Access</h3>
+<p>สมมติว่า <code>user</code> เป็น dict หนึ่ง record:</p>
+<pre><code class="language-python">user = {
+    "user_id": "U001",
+    "name": "Ann",
+    "country": "TH",
+}
+</code></pre>
+<p>การอ่านค่าใน dict ต้องส่ง <strong>key</strong> เข้าไป แล้ว dict จะคืน <strong>value</strong> ที่สัมพันธ์กัน:</p>
+<pre><code class="language-text">user["user_id"]
+       ↓ ใช้ "user_id" เป็น key
+ค้นใน dict
+       ↓ พบ
+คืนค่า "U001"
+</code></pre>
+<h4 id="lesson-3-direct-access">Direct Access ด้วย <code>[]</code></h4>
 <pre><code class="language-python">user_id = user["user_id"]
 </code></pre>
-<p>ใช้เมื่อ field จำเป็น ถ้าไม่มีควรเกิด <code>KeyError</code></p>
+<p>ใช้เมื่อ field นี้เป็นข้อมูลจำเป็นตาม contract หากไม่มี field ดังกล่าว แสดงว่า record ผิดรูปแบบและควรหยุดให้เห็นปัญหาชัดเจน</p>
+<pre><code class="language-python">user["email"]
+</code></pre>
+<p>ถ้าไม่มี key <code>"email"</code> จะเกิด:</p>
+<pre><code class="language-text">KeyError: 'email'
+</code></pre>
+<p><code>KeyError</code> ไม่ได้แปลว่า dict พัง แต่หมายถึงโปรแกรมขอ key ที่ไม่มีอยู่ อาจเกิดจาก:</p>
+<ul>
+<li>input ขาด field ที่จำเป็น</li>
+<li>สะกดชื่อ key ผิด เช่น <code>"userId"</code> กับ <code>"user_id"</code></li>
+<li>ใช้ข้อมูลคนละ shape</li>
+<li>อ่าน field ก่อนผ่าน validation</li>
+</ul>
+<p>ดังนั้น direct access เหมาะเมื่อ missing key เป็น <strong>ข้อผิดพลาดที่เราอยากรู้ทันที</strong></p>
+<h4 id="lesson-3-safe-access-get">Safe Access ด้วย <code>.get()</code></h4>
 <pre><code class="language-python">country = user.get("country")
 </code></pre>
-<p>ใช้เมื่อ field optional</p>
+<p>ใช้เมื่อ field เป็น optional หรือเราต้องการตัดสินใจเองหากไม่มี key ถ้าหาไม่พบ <code>.get()</code> จะคืน <code>None</code> แทนการ raise <code>KeyError</code></p>
+<pre><code class="language-python">email = user.get("email")
+print(email)  # None
+</code></pre>
+<p>Flow:</p>
+<pre><code class="language-text">user.get("email")
+        ↓
+มี key "email" หรือไม่?
+   ├─ มี → คืน value ของ key
+   └─ ไม่มี → คืน None
+</code></pre>
+<p>จากนั้น caller ต้องจัดการ <code>None</code> อย่างชัดเจน:</p>
+<pre><code class="language-python">email = user.get("email")
+
+if email is None:
+    print("user has no email")
+else:
+    send_email(email)
+</code></pre>
+<p>คำว่า “safe” ในที่นี้หมายถึงไม่เกิด <code>KeyError</code> ไม่ได้แปลว่าค่าที่ได้พร้อมใช้งานเสมอ หากส่ง <code>None</code> เข้า <code>send_email()</code> โดยไม่ตรวจ โปรแกรมอาจไปพังในจุดที่ไกลจากต้นเหตุ</p>
+<h4 id="lesson-3-get-default-value"><code>.get()</code> พร้อม Default Value</h4>
 <pre><code class="language-python">country = user.get("country", "UNKNOWN")
+</code></pre>
+<p>อ่านว่า:</p>
+<blockquote>
+<p>ขอค่าของ <code>country</code> ถ้าไม่มี <strong>key นี้</strong> ให้ใช้ข้อความ <code>"UNKNOWN"</code></p>
+</blockquote>
+<pre><code class="language-text">user.get("country", "UNKNOWN")
+        ↓
+มี key "country" หรือไม่?
+   ├─ มี → คืน value ที่เก็บไว้
+   └─ ไม่มี → คืน "UNKNOWN"
 </code></pre>
 <p>ข้อควรจำ:</p>
 <pre><code class="language-python">{"country": None}.get("country", "UNKNOWN")  # None
 </code></pre>
 <p>default ทำงานเฉพาะตอน key ไม่มี ไม่ใช่ตอน value เป็น <code>None</code></p>
+<p>ตารางนี้ช่วยแยกทั้งสามกรณี:</p>
+<div class="table-scroll"><table>
+<thead>
+<tr>
+<th>Dict</th>
+<th><code>data.get("country")</code></th>
+<th><code>data.get("country", "UNKNOWN")</code></th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>{"country": "TH"}</code></td>
+<td><code>"TH"</code></td>
+<td><code>"TH"</code></td>
+</tr>
+<tr>
+<td><code>{}</code></td>
+<td><code>None</code></td>
+<td><code>"UNKNOWN"</code></td>
+</tr>
+<tr>
+<td><code>{"country": None}</code></td>
+<td><code>None</code></td>
+<td><code>None</code></td>
+</tr>
+</tbody>
+</table></div>
+<p>กรณีสุดท้าย dict <strong>มี key แล้ว</strong> Python จึงคืน value ที่เก็บไว้ แม้ value นั้นเป็น <code>None</code></p>
+<p>หาก business rule ต้องการให้ทั้ง missing และ <code>None</code> กลายเป็น <code>"UNKNOWN"</code> สามารถเขียน:</p>
+<pre><code class="language-python">country = user.get("country")
+
+if country is None:
+    country = "UNKNOWN"
+</code></pre>
+<p>บางครั้งจะเห็นรูปสั้น:</p>
+<pre><code class="language-python">country = user.get("country") or "UNKNOWN"
+</code></pre>
+<p>แต่รูปนี้แทนค่า <code>""</code>, <code>0</code> และ <code>False</code> ด้วย เพราะทั้งหมดเป็น falsy จึงควรใช้เฉพาะเมื่อเราตั้งใจมองค่าพวกนั้นว่า “ไม่มีค่า” เหมือนกัน</p>
+<h4 id="lesson-3-get">จะเลือก <code>[]</code> หรือ <code>.get()</code> อย่างไร?</h4>
+<pre><code class="language-text">field จำเป็นตาม contract?
+   ├─ ใช่ → validate ก่อน แล้วใช้ data["field"]
+   └─ ไม่ใช่ → ใช้ data.get("field")
+                    ↓
+              ต้องมี default หรือไม่?
+                 ├─ ใช่ → .get("field", default)
+                 └─ ไม่ → รับ None แล้วจัดการ
+</code></pre>
+<p>ตัวอย่าง:</p>
+<pre><code class="language-python">user_id = user["user_id"]          # จำเป็น ขาดแล้ว record ผิด
+nickname = user.get("nickname")    # optional; None ยอมรับได้
+language = user.get("language", "th")  # ไม่มี key ให้ใช้ th
+</code></pre>
+<p>อย่าใช้ <code>.get()</code> กับทุก field เพียงเพื่อไม่ให้โปรแกรม error เพราะอาจซ่อน input ที่ผิด แล้วปล่อย <code>None</code> ไปสร้างปัญหาในขั้นถัดไป</p>
 <h3 id="lesson-3-lookup-map">Lookup Map</h3>
+<p>สมมติมี users หลายคน:</p>
+<pre><code class="language-python">users = [
+    {"user_id": "U001", "name": "Ann"},
+    {"user_id": "U002", "name": "Bob"},
+    {"user_id": "U003", "name": "Mena"},
+]
+</code></pre>
+<p>และมี transaction ที่เก็บเพียง <code>user_id</code>:</p>
+<pre><code class="language-python">transaction = {
+    "transaction_id": "T001",
+    "user_id": "U002",
+    "amount": 500,
+}
+</code></pre>
+<p>ถ้ายังไม่มี Lookup Map เราอาจวนค้นทุกครั้ง:</p>
+<pre><code class="language-python">matched_user = None
+
+for user in users:
+    if user["user_id"] == transaction["user_id"]:
+        matched_user = user
+        break
+</code></pre>
+<p>Flow:</p>
+<pre><code class="language-text">ต้องการ U002
+   ↓ ตรวจ U001 → ไม่ตรง
+ตรวจ U002 → ตรง
+   ↓
+เก็บ user แล้ว break
+</code></pre>
+<p>วิธีนี้ใช้ได้และเหมาะสำหรับเริ่มทำความเข้าใจ แต่ถ้ามี transaction 10,000 รายการ เราอาจต้องเริ่มวน users ใหม่หลายพันครั้ง</p>
+<h4 id="lesson-3-lookup-map-loop">สร้าง Lookup Map ด้วย Loop แบบเต็ม</h4>
+<p>เราสามารถจัด users ใหม่ให้ใช้ <code>user_id</code> เป็น key:</p>
+<pre><code class="language-python">users_by_id = {}
+
+for user in users:
+    user_id = user["user_id"]
+    users_by_id[user_id] = user
+</code></pre>
+<p>Trace:</p>
+<pre><code class="language-text">เริ่ม: {}
+  ↓ U001
+{"U001": {"user_id": "U001", "name": "Ann"}}
+  ↓ U002
+เพิ่ม key "U002"
+  ↓ U003
+เพิ่ม key "U003"
+</code></pre>
+<p>ผลลัพธ์คือ:</p>
+<pre><code class="language-python">users_by_id = {
+    "U001": {"user_id": "U001", "name": "Ann"},
+    "U002": {"user_id": "U002", "name": "Bob"},
+    "U003": {"user_id": "U003", "name": "Mena"},
+}
+</code></pre>
+<p>ตอนนี้ค้นด้วย ID ได้โดยตรง:</p>
+<pre><code class="language-python">matched_user = users_by_id["U002"]
+print(matched_user["name"])  # Bob
+</code></pre>
+<h4 id="lesson-3-dict-comprehension">ย่อเป็น Dict Comprehension</h4>
 <pre><code class="language-python">users_by_id = {
     user["user_id"]: user
     for user in users
 }
 </code></pre>
+<p>อ่านเป็นประโยคว่า:</p>
+<blockquote>
+<p>สำหรับ user ทุกคนใน users ให้สร้างหนึ่งคู่ โดยใช้ <code>user["user_id"]</code> เป็น key และใช้ user ทั้งก้อนเป็น value</p>
+</blockquote>
+<pre><code class="language-text">for user in users
+        ↓
+key   = user["user_id"]
+value = user
+        ↓
+users_by_id[key] = value
+</code></pre>
+<p>Loop แบบเต็มและ comprehension ด้านบนให้ผลเหมือนกัน หาก comprehension ยังอ่านไม่ออก ให้ใช้ loop แบบเต็มก่อน ความสั้นไม่สำคัญกว่าความเข้าใจ</p>
 <p>จากนั้น:</p>
 <pre><code class="language-python">user = users_by_id.get(transaction["user_id"])
 </code></pre>
 <p>เร็วและอ่านง่ายกว่าวน users ทุก transaction</p>
+<p>บรรทัดนี้ทำสองขั้น:</p>
+<pre><code class="language-text">transaction["user_id"]
+        ↓
+ได้ "U002"
+        ↓
+users_by_id.get("U002")
+        ↓
+ได้ dict ของ Bob
+</code></pre>
+<h4 id="lesson-3-user">ถ้าหา User ไม่พบ</h4>
+<p>เพราะใช้ <code>.get()</code> ผลอาจเป็น <code>None</code>:</p>
+<pre><code class="language-python">user = users_by_id.get(transaction["user_id"])
+
+if user is None:
+    raise ValueError(
+        f"unknown user_id: {transaction['user_id']}"
+    )
+</code></pre>
+<p>หรือใน batch processing อาจบันทึก transaction นี้ไว้ใน rejected list แทนการหยุดทั้ง batch ขึ้นกับ error policy ของระบบ</p>
+<h4 id="lesson-3-user_id-map">ถ้ามี <code>user_id</code> ซ้ำตอนสร้าง Map</h4>
+<pre><code class="language-python">users = [
+    {"user_id": "U001", "name": "Ann"},
+    {"user_id": "U001", "name": "Another Ann"},
+]
+</code></pre>
+<p>เมื่อ assign key เดิม value ใหม่จะเขียนทับ value เก่า:</p>
+<pre><code class="language-text">U001 → Ann
+  ↓ เจอ U001 อีกครั้ง
+U001 → Another Ann
+</code></pre>
+<p>หาก ID ต้อง unique ควรตรวจ duplicate ก่อนสร้าง map:</p>
+<pre><code class="language-python">users_by_id = {}
+
+for user in users:
+    user_id = user["user_id"]
+
+    if user_id in users_by_id:
+        raise ValueError(f"duplicate user_id: {user_id}")
+
+    users_by_id[user_id] = user
+</code></pre>
+<h4 id="lesson-3-lookup-map_1">ทำไม Lookup Map เร็วกว่า?</h4>
+<p>การค้นใน list ต้องตรวจทีละ record จึงเป็น linear scan หรือโดยย่อ <code>O(n)</code> ต่อการค้นหนึ่งครั้ง ส่วน dict lookup ใช้ hash table จึงเฉลี่ยประมาณ <code>O(1)</code></p>
+<p>ไม่จำเป็นต้องท่อง Big-O ก่อน ให้จำภาพนี้:</p>
+<pre><code class="language-text">List
+U001 → U002 → U003 → ... → U999
+ต้องเดินหา
+
+Dict
+"U999" → ไปที่ value โดยใช้ key
+</code></pre>
+<p>เรายอมเสียเวลาสร้าง map หนึ่งรอบและใช้หน่วยความจำเพิ่ม เพื่อให้การค้นซ้ำจำนวนมากเร็วและอ่านง่ายขึ้น</p>
+<h4 id="lesson-3-lookup-map_2">Lookup Map ใช้กับงานจริงตรงไหน?</h4>
+<ul>
+<li>จับ transaction เข้ากับ account/user</li>
+<li>จับ candidate เข้ากับ resume metadata</li>
+<li>จับ product ID เข้ากับราคา</li>
+<li>จับ status code เข้ากับคำอธิบาย</li>
+<li>จับ configuration name เข้ากับค่า</li>
+</ul>
+<p>สรุป:</p>
+<pre><code class="language-text">มี records หลายรายการ
+        ↓
+ต้องค้นด้วย ID ซ้ำบ่อย
+        ↓
+สร้าง Dict: ID → Record
+        ↓
+ค้นเร็วขึ้นและ code อ่านตรงเจตนา
+</code></pre>
 <h3 id="lesson-3-key">เพิ่ม แก้ และลบ Key</h3>
 <pre><code class="language-python">user["country"] = "TH"          # เพิ่มหรือเขียนทับ
 user["membership"] = "PLATINUM"
@@ -1858,7 +2110,7 @@ positive = [amount for amount in amounts if amount &gt;= 0]
     if tx.get("status") == "SUCCESS"
 ]
 </code></pre>
-<h3 id="lesson-3-dict-comprehension">Dict Comprehension</h3>
+<h3 id="lesson-3-dict-comprehension_1">Dict Comprehension</h3>
 <pre><code class="language-python">users_by_id = {
     user["user_id"]: user
     for user in users
