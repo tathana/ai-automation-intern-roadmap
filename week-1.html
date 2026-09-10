@@ -2237,20 +2237,180 @@ for value in values:
 <hr/>
 <h2 id="lesson-3-6-complexity">6. Complexity แบบที่ต้องรู้</h2>
 <p>ไม่ต้องท่องทุก Big O ให้จำ pattern:</p>
+<p>Complexity คือวิธีอธิบายว่า เมื่อ input โตขึ้น เวลาและหน่วยความจำที่ algorithm ใช้โตตามอย่างไร เราไม่ได้ใช้ Big-O เพื่อจับเวลาจริงเป็นวินาที แต่ใช้เปรียบเทียบแนวโน้มของวิธีแก้ปัญหา</p>
+<pre><code class="language-text">ข้อมูล 10 รายการ → ทั้งสองวิธีอาจดูเร็ว
+ข้อมูล 10,000 รายการ → ความต่างเริ่มชัด
+ข้อมูล 1,000,000 รายการ → วิธีที่วนซ้ำเกินจำเป็นอาจใช้งานไม่ได้
+</code></pre>
+<h3 id="lesson-3-_14">สัญลักษณ์ที่ควรรู้ก่อน</h3>
+<p><code>n</code> หมายถึงจำนวนข้อมูล เช่นจำนวน users หรือ transactions</p>
+<div class="table-scroll"><table>
+<thead>
+<tr>
+<th>Complexity</th>
+<th>ภาพจำ</th>
+<th>ตัวอย่าง</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>O(1)</code></td>
+<td>ทำงานใกล้เคียงเดิมแม้ข้อมูลเพิ่ม</td>
+<td>dict/set lookup โดยเฉลี่ย</td>
+</tr>
+<tr>
+<td><code>O(n)</code></td>
+<td>ข้อมูลเพิ่มสองเท่า งานประมาณสองเท่า</td>
+<td>วน list หนึ่งรอบ</td>
+</tr>
+<tr>
+<td><code>O(n log n)</code></td>
+<td>มากกว่า loop หนึ่งรอบ แต่น้อยกว่า loop ซ้อนเต็ม</td>
+<td>sorting ทั่วไป</td>
+</tr>
+<tr>
+<td><code>O(n²)</code></td>
+<td>ข้อมูลเพิ่มสองเท่า งานอาจประมาณสี่เท่า</td>
+<td>loop ทุก user ภายในทุก transaction</td>
+</tr>
+</tbody>
+</table></div>
+<p>Big-O ไม่ได้บอกว่าคำสั่งหนึ่งเร็ว “เสมอ” เพราะขนาดข้อมูล ค่าใช้จ่ายภายใน และหน่วยความจำมีผลด้วย แต่ช่วยเห็นปัญหาเชิงโครงสร้างก่อนระบบช้า</p>
 <h3 id="lesson-3-list_2">ค้นใน List</h3>
 <pre><code class="language-python">user_id in user_ids_list
 </code></pre>
 <p>อาจต้องไล่ตั้งแต่ต้นถึงท้าย: โดยเฉลี่ย <code>O(n)</code></p>
+<p>Flow หากค่าที่ต้องการอยู่ท้าย list:</p>
+<pre><code class="language-text">หา U999
+  ↓ ตรวจ U001
+ไม่ใช่ → ตรวจ U002
+ไม่ใช่ → ตรวจ U003
+  ↓ ...
+พบ U999
+</code></pre>
+<p>ยิ่ง list ยาว จำนวนครั้งที่อาจต้องตรวจยิ่งเพิ่ม</p>
 <h3 id="lesson-3-setdict">ค้นใน Set/Dict</h3>
 <pre><code class="language-python">user_id in valid_user_ids
 users_by_id.get(user_id)
 </code></pre>
 <p>โดยเฉลี่ย <code>O(1)</code></p>
+<p>Dict และ Set ใช้ hash เพื่อไปยังตำแหน่งที่น่าจะเก็บ key/value โดยตรงในค่าเฉลี่ย:</p>
+<pre><code class="language-text">หา "U999"
+  ↓ คำนวณ hash
+ไปยังตำแหน่งที่เกี่ยวข้อง
+  ↓
+พบหรือไม่พบ
+</code></pre>
+<p>คำว่า <code>O(1)</code> เป็น average-case model ไม่ได้แปลว่าใช้เวลาเป็นศูนย์หรือไม่มีกรณีช้าลง</p>
 <p>หากมี users 10,000 คน และ transactions 100,000 รายการ:</p>
 <pre><code class="language-text">วน users ทุก transaction → งานจำนวนมหาศาล
 สร้าง lookup หนึ่งครั้ง → ค้นเร็วทุก transaction
 </code></pre>
 <p>อย่า optimize ทุกอย่างก่อนจำเป็น แต่ lookup map เป็น pattern ที่ทั้งง่ายและมีประโยชน์</p>
+<h3 id="lesson-3-loop-on">Loop หนึ่งชั้น: <code>O(n)</code></h3>
+<pre><code class="language-python">total = 0
+
+for transaction in transactions:
+    total += transaction["amount"]
+</code></pre>
+<p>แต่ละ transaction ถูกอ่านหนึ่งครั้ง ถ้ามี 1,000 รายการ loop ทำงานประมาณ 1,000 รอบ</p>
+<h3 id="lesson-3-loop-on-m-on2">Loop ซ้อน: อาจเป็น <code>O(n × m)</code> หรือ <code>O(n²)</code></h3>
+<pre><code class="language-python">for transaction in transactions:
+    for user in users:
+        if user["user_id"] == transaction["user_id"]:
+            ...
+</code></pre>
+<p>ถ้ามี transactions <code>n</code> รายการ และ users <code>m</code> คน งานสูงสุดใกล้ <code>n × m</code> หากทั้งสองมีขนาดใกล้กันมักเรียกโดยย่อว่า quadratic หรือ <code>O(n²)</code></p>
+<p>แก้ด้วย Lookup Map:</p>
+<pre><code class="language-python">users_by_id = {
+    user["user_id"]: user
+    for user in users
+}
+
+for transaction in transactions:
+    user = users_by_id.get(transaction["user_id"])
+</code></pre>
+<pre><code class="language-text">สร้าง users_by_id หนึ่งรอบ → O(m)
+        ↓
+วน transactions หนึ่งรอบ → O(n)
+        ↓
+รวมโดยประมาณ O(m + n)
+</code></pre>
+<p>เราใช้หน่วยความจำเพิ่มเพื่อแลกกับการค้นที่เร็วขึ้น นี่เรียกว่า time–space trade-off</p>
+<h3 id="lesson-3-complexity-operations">Complexity ของ Operations ที่ใช้บ่อย</h3>
+<p>ตารางนี้เป็นค่าเฉลี่ย/ภาพรวมสำหรับการตัดสินใจเบื้องต้น:</p>
+<div class="table-scroll"><table>
+<thead>
+<tr>
+<th>Operation</th>
+<th style="text-align: right;">List</th>
+<th style="text-align: right;">Dict</th>
+<th style="text-align: right;">Set</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>อ่านด้วย index</td>
+<td style="text-align: right;"><code>O(1)</code></td>
+<td style="text-align: right;">—</td>
+<td style="text-align: right;">—</td>
+</tr>
+<tr>
+<td>ค้น value/member</td>
+<td style="text-align: right;"><code>O(n)</code></td>
+<td style="text-align: right;">key lookup <code>O(1)</code> เฉลี่ย</td>
+<td style="text-align: right;"><code>O(1)</code> เฉลี่ย</td>
+</tr>
+<tr>
+<td>append ต่อท้าย</td>
+<td style="text-align: right;"><code>O(1)</code> amortized</td>
+<td style="text-align: right;">—</td>
+<td style="text-align: right;">—</td>
+</tr>
+<tr>
+<td>insert/remove กลาง list</td>
+<td style="text-align: right;"><code>O(n)</code></td>
+<td style="text-align: right;">—</td>
+<td style="text-align: right;">—</td>
+</tr>
+<tr>
+<td>เพิ่ม/แก้ key</td>
+<td style="text-align: right;">—</td>
+<td style="text-align: right;"><code>O(1)</code> เฉลี่ย</td>
+<td style="text-align: right;">—</td>
+</tr>
+<tr>
+<td>add member</td>
+<td style="text-align: right;">—</td>
+<td style="text-align: right;">—</td>
+<td style="text-align: right;"><code>O(1)</code> เฉลี่ย</td>
+</tr>
+<tr>
+<td>sort</td>
+<td style="text-align: right;"><code>O(n log n)</code></td>
+<td style="text-align: right;">มัก sort keys/items เป็น list</td>
+<td style="text-align: right;">มัก sort เป็น list</td>
+</tr>
+</tbody>
+</table></div>
+<p><code>amortized</code> หมายถึงบางครั้ง list ต้องขยายพื้นที่ซึ่งช้ากว่า แต่เมื่อเฉลี่ยหลาย append แล้วยังใกล้ <code>O(1)</code></p>
+<h3 id="lesson-3-optimize">ไม่ควร Optimize เร็วเกินไป</h3>
+<p>ถ้าข้อมูลมี 20 รายการ loop ที่อ่านง่ายอาจเหมาะกว่าการสร้างโครงสร้างซับซ้อน ให้ optimize เมื่อ:</p>
+<ul>
+<li>เห็น loop ซ้อนบนข้อมูลจำนวนมาก</li>
+<li>lookup เดิมเกิดซ้ำหลายครั้ง</li>
+<li>มี measurement/profiling ยืนยันว่าเป็นคอขวด</li>
+<li>โครงสร้างใหม่ยังรักษาความถูกต้องและอ่านได้</li>
+</ul>
+<p>ลำดับที่ควรยึด:</p>
+<pre><code class="language-text">เขียนให้ถูก
+  ↓
+เขียนให้อ่านออก
+  ↓
+วัดเมื่อข้อมูลจริงเริ่มมาก
+  ↓
+ปรับจุดที่เป็นคอขวด
+</code></pre>
 <hr/>
 <h2 id="lesson-3-7-comprehension">7. Comprehension</h2>
 <!-- tutor:## 7. Comprehension -->
@@ -2268,18 +2428,73 @@ users_by_id.get(user_id)
 สร้าง collection ใหม่
 </code></pre>
 <p>แต่ละลูกศรคือการเปลี่ยนหนึ่งขั้น หากยังไม่ชัด ให้จดเพียงค่าก่อนหน้า operation และค่าหลังจากนั้น</p>
-<h4 id="lesson-3-_14">ตรวจความเข้าใจก่อนอ่านต่อ</h4>
+<h4 id="lesson-3-_15">ตรวจความเข้าใจก่อนอ่านต่อ</h4>
 <p>ปิดตัวอย่าง แล้วอธิบายด้วยภาษาตัวเองหนึ่งประโยค จากนั้นเปลี่ยน input หนึ่งค่าและทายผลก่อนรัน หากคำตอบยังไม่ตรง ให้ย้อนตามลูกศรและรันตัวอย่างทีละบรรทัด โดยจดค่าก่อนและหลังแต่ละขั้น</p>
 <p>Comprehension เป็นรูปย่อของ loop ที่ “สร้าง collection ใหม่” เหมาะเมื่อ transformation/filter อ่านเป็นประโยคเดียวได้ ไม่ได้ทำให้ logic ซับซ้อนกลายเป็น logic ที่ดีขึ้น</p>
 <pre><code class="language-python">amounts = [100, -20, 300]
 positive = [amount for amount in amounts if amount &gt;= 0]
 </code></pre>
 <p>อ่านจากซ้าย: “สร้าง list ของ <code>amount</code> สำหรับทุก amount ใน amounts ถ้า amount ไม่ติดลบ” เทียบกับ loop ปกติแล้วผลเหมือนกัน ถ้ามีหลายเงื่อนไข, exception handling หรือ side effect ให้ใช้ loop เพื่อ debug ง่ายกว่า</p>
+<h3 id="lesson-3-comprehension">โครงสร้างของ Comprehension</h3>
+<p>รูปแบบพื้นฐาน:</p>
+<pre><code class="language-python">[output_expression for item in source if condition]
+</code></pre>
+<p>อ่านตามลำดับความคิดนี้:</p>
+<pre><code class="language-text">source มีอะไรบ้าง?
+        ↓
+for หยิบ item ทีละตัว
+        ↓
+มี if หรือไม่? ถ้ามีให้กรอง
+        ↓
+คำนวณ output_expression
+        ↓
+เพิ่มผลลง collection ใหม่
+</code></pre>
+<p>แม้ <code>output_expression</code> จะเขียนอยู่ซ้ายสุด แต่เวลาทำความเข้าใจควรเริ่มอ่านจาก <code>for</code> ก่อน:</p>
+<pre><code class="language-python">squares = [number * number for number in numbers if number &gt; 0]
+</code></pre>
+<p>อ่านว่า:</p>
+<blockquote>
+<p>สำหรับ <code>number</code> แต่ละตัวใน <code>numbers</code> ถ้า number มากกว่า 0 ให้นำ <code>number * number</code> ไปเก็บใน list ใหม่</p>
+</blockquote>
+<h3 id="lesson-3-loop_1">เริ่มจาก Loop แล้วค่อยย่อ</h3>
+<p>Loop แบบเต็ม:</p>
+<pre><code class="language-python">positive = []
+
+for amount in amounts:
+    if amount &gt;= 0:
+        positive.append(amount)
+</code></pre>
+<p>ย่อเป็น comprehension:</p>
+<pre><code class="language-python">positive = [amount for amount in amounts if amount &gt;= 0]
+</code></pre>
+<p>Mapping ระหว่างสองแบบ:</p>
+<pre><code class="language-text">positive = []                 → [ ... ] สร้าง list ใหม่
+for amount in amounts         → for amount in amounts
+if amount &gt;= 0                → if amount &gt;= 0
+positive.append(amount)       → amount อยู่ซ้ายสุด
+</code></pre>
+<p>ถ้ายังเขียน comprehension ไม่คล่อง ให้เขียน loop ที่ถูกก่อน แล้วจึงย่อทีละส่วน</p>
 <h3 id="lesson-3-list-comprehension">List Comprehension</h3>
 <pre><code class="language-python">successful = [
     tx for tx in transactions
     if tx.get("status") == "SUCCESS"
 ]
+</code></pre>
+<p>ตัวอย่างที่มี transformation และ filter:</p>
+<pre><code class="language-python">successful_amounts = [
+    tx["amount"]
+    for tx in transactions
+    if tx["status"] == "SUCCESS"
+]
+</code></pre>
+<p>ตรงนี้ไม่ได้เก็บ transaction ทั้งก้อน แต่เก็บเฉพาะ <code>amount</code> ของรายการที่ผ่านเงื่อนไข</p>
+<pre><code class="language-text">transaction หนึ่งก้อน
+  ↓ status เป็น SUCCESS?
+ใช่ → ดึง amount
+ไม่ → ข้าม
+  ↓
+สร้าง list ของ amounts
 </code></pre>
 <h3 id="lesson-3-dict-comprehension_1">Dict Comprehension</h3>
 <pre><code class="language-python">users_by_id = {
@@ -2287,6 +2502,10 @@ positive = [amount for amount in amounts if amount &gt;= 0]
     for user in users
 }
 </code></pre>
+<p>รูปแบบคือ:</p>
+<pre><code class="language-python">{key_expression: value_expression for item in source}
+</code></pre>
+<p>ตัวอย่างนี้ใช้ ID เป็น key และ user record เป็น value หาก ID ซ้ำ record ที่มาทีหลังจะเขียนทับ record ก่อน จึงต้อง validate uniqueness หากการซ้ำเป็นข้อผิดพลาด</p>
 <h3 id="lesson-3-set-comprehension">Set Comprehension</h3>
 <pre><code class="language-python">countries = {
     user["country"]
@@ -2294,6 +2513,71 @@ positive = [amount for amount in amounts if amount &gt;= 0]
     if user.get("country")
 }
 </code></pre>
+<p>ใช้เมื่อผลลัพธ์ต้องไม่ซ้ำ ตัวอย่าง users หลายคนอยู่ประเทศเดียวกันจะได้ country เพียงครั้งเดียว</p>
+<p>หาก <code>country</code> เป็น <code>None</code> หรือค่าว่าง เงื่อนไข <code>if user.get("country")</code> จะข้ามทั้งสองแบบ ต้องแน่ใจว่า policy ต้องการรวมสองกรณีนี้จริง</p>
+<h3 id="lesson-3-comprehension-if">Comprehension ที่ไม่มี <code>if</code></h3>
+<p>ใช้เพื่อแปลงทุกสมาชิก:</p>
+<pre><code class="language-python">normalized_names = [name.strip().title() for name in names]
+</code></pre>
+<pre><code class="language-text">"  ann " → strip → "ann" → title → "Ann"
+"BOB"    → strip → "BOB" → title → "Bob"
+</code></pre>
+<h3 id="lesson-3-if-conditional-expression"><code>if</code> ด้านท้ายกับ Conditional Expression ต่างกัน</h3>
+<p>กรองสมาชิกออก:</p>
+<pre><code class="language-python">positive = [x for x in numbers if x &gt;= 0]
+</code></pre>
+<p>ทุก input ยังให้ output หนึ่งค่า แต่เลือกค่าคนละแบบ:</p>
+<pre><code class="language-python">labels = ["positive" if x &gt;= 0 else "negative" for x in numbers]
+</code></pre>
+<p>จำตำแหน่ง:</p>
+<pre><code class="language-text">[value for x in data if condition]
+                      ↑ filter: บางตัวไม่เข้าผลลัพธ์
+
+[value_if_true if condition else value_if_false for x in data]
+               ↑ conditional expression: ทุกตัวมีผลลัพธ์
+</code></pre>
+<h3 id="lesson-3-nested-comprehension">Nested Comprehension</h3>
+<p>สามารถเขียน loop ซ้อนได้:</p>
+<pre><code class="language-python">pairs = [(x, y) for x in xs for y in ys]
+</code></pre>
+<p>แต่ลำดับอ่านยากและอาจสร้างข้อมูลจำนวน <code>len(xs) × len(ys)</code> หากยังต้องหยุดแปล syntax ให้ใช้ loop ซ้อนแบบเต็มก่อน</p>
+<h3 id="lesson-3-side-effect-comprehension">Side Effect ไม่ควรอยู่ใน Comprehension</h3>
+<p>ไม่ควรใช้ comprehension เพียงเพื่อเรียก function ที่เขียนไฟล์หรือส่ง network:</p>
+<pre><code class="language-python"># ไม่ควร: สร้าง list ของ None ที่ไม่ได้ใช้ และซ่อน side effect
+[send_email(user) for user in users]
+</code></pre>
+<p>ใช้ loop เพื่อสื่อเจตนา:</p>
+<pre><code class="language-python">for user in users:
+    send_email(user)
+</code></pre>
+<p>Comprehension เหมาะกับการ <strong>สร้าง collection ใหม่</strong> ไม่ใช่ทำ side effects หลายครั้ง</p>
+<h3 id="lesson-3-performance">เรื่อง Performance ที่ควรรู้</h3>
+<p>Comprehension มักกระชับและอาจเร็วกว่า loop เล็กน้อย แต่ยังต้องวนข้อมูลทุกตัว จึงยังเป็น <code>O(n)</code> สำหรับหนึ่ง loop และไม่ได้แก้ปัญหา algorithm ที่เป็น loop ซ้อน</p>
+<pre><code class="language-python">matches = [
+    (tx, user)
+    for tx in transactions
+    for user in users
+    if tx["user_id"] == user["user_id"]
+]
+</code></pre>
+<p>แม้เขียนบรรทัดน้อย แต่งานยังใกล้ <code>O(n × m)</code> การสร้าง <code>users_by_id</code> แล้วย้อน lookup ยังเหมาะกว่าเมื่อข้อมูลมาก</p>
+<h3 id="lesson-3-checklist-comprehension">Checklist ก่อนใช้ Comprehension</h3>
+<p>ใช้เมื่อ:</p>
+<ul>
+<li>สร้าง list/dict/set ใหม่</li>
+<li>มี transformation สั้นและชัด</li>
+<li>มี filter ไม่ซับซ้อน</li>
+<li>ไม่มี side effect</li>
+<li>อ่านแล้วอธิบายได้ในหนึ่งประโยค</li>
+</ul>
+<p>กลับไปใช้ loop เมื่อ:</p>
+<ul>
+<li>ต้องใช้ <code>try/except</code></li>
+<li>ต้อง log/reject หลายกรณี</li>
+<li>มี <code>break</code> หรือ <code>continue</code> หลายจุด</li>
+<li>มีเงื่อนไขซ้อนจนอ่านยาก</li>
+<li>ต้องตรวจค่าระหว่างทางตอน debug</li>
+</ul>
 <p>อย่าอัด logic ซับซ้อนเกินไป:</p>
 <pre><code class="language-python"># อ่านยาก
 result = [transform(x) for x in data if valid(x) and condition(x) and other(x)]
@@ -2314,7 +2598,7 @@ None / 0 / ค่าว่าง → False
 ถ้าความหมายต่าง ต้องเช็กตรง ๆ
 </code></pre>
 <p>แต่ละลูกศรคือการเปลี่ยนหนึ่งขั้น หากยังไม่ชัด ให้จดเพียงค่าก่อนหน้า operation และค่าหลังจากนั้น</p>
-<h4 id="lesson-3-_15">ตรวจความเข้าใจก่อนอ่านต่อ</h4>
+<h4 id="lesson-3-_16">ตรวจความเข้าใจก่อนอ่านต่อ</h4>
 <p>ปิดตัวอย่าง แล้วอธิบายด้วยภาษาตัวเองหนึ่งประโยค จากนั้นเปลี่ยน input หนึ่งค่าและทายผลก่อนรัน หากคำตอบยังไม่ตรง ให้ย้อนตามลูกศรและรันตัวอย่างทีละบรรทัด โดยจดค่าก่อนและหลังแต่ละขั้น</p>
 <p>Python อนุญาตให้ใช้ค่าเป็นเงื่อนไขโดยแปลงเป็น boolean โดยปริยาย ค่าเช่น <code>None</code>, <code>False</code>, เลขศูนย์ และ collection/string ว่างเป็น falsy แต่ไม่ได้มีความหมายทางธุรกิจเหมือนกัน</p>
 <pre><code class="language-python">if not amount:
@@ -2361,7 +2645,7 @@ field ชั้นถัดไป
 ค่าปลายทางที่เชื่อถือได้
 </code></pre>
 <p>แต่ละลูกศรคือการเปลี่ยนหนึ่งขั้น หากยังไม่ชัด ให้จดเพียงค่าก่อนหน้า operation และค่าหลังจากนั้น</p>
-<h4 id="lesson-3-_16">ตรวจความเข้าใจก่อนอ่านต่อ</h4>
+<h4 id="lesson-3-_17">ตรวจความเข้าใจก่อนอ่านต่อ</h4>
 <p>ปิดตัวอย่าง แล้วอธิบายด้วยภาษาตัวเองหนึ่งประโยค จากนั้นเปลี่ยน input หนึ่งค่าและทายผลก่อนรัน หากคำตอบยังไม่ตรง ให้ย้อนตามลูกศรและรันตัวอย่างทีละบรรทัด โดยจดค่าก่อนและหลังแต่ละขั้น</p>
 <p>Nested JSON คือ dict/list ซ้อนกัน การเข้าถึงแต่ละชั้นเป็น operation ที่พังได้เอง:</p>
 <pre><code class="language-python">payload = {"candidate": {"skills": ["Python", "SQL"]}}
@@ -2405,7 +2689,7 @@ country = profile.get("country")
 ยอมรับหรือ reject
 </code></pre>
 <p>แต่ละลูกศรคือการเปลี่ยนหนึ่งขั้น หากยังไม่ชัด ให้จดเพียงค่าก่อนหน้า operation และค่าหลังจากนั้น</p>
-<h4 id="lesson-3-_17">ตรวจความเข้าใจก่อนอ่านต่อ</h4>
+<h4 id="lesson-3-_18">ตรวจความเข้าใจก่อนอ่านต่อ</h4>
 <p>ปิดตัวอย่าง แล้วอธิบายด้วยภาษาตัวเองหนึ่งประโยค จากนั้นเปลี่ยน input หนึ่งค่าและทายผลก่อนรัน หากคำตอบยังไม่ตรง ให้ย้อนตามลูกศรและรันตัวอย่างทีละบรรทัด โดยจดค่าก่อนและหลังแต่ละขั้น</p>
 <p>Input ภายนอกอาจมี:</p>
 <pre><code class="language-python">" success "
@@ -2441,7 +2725,7 @@ Normalized shape
 Database/report shape
 </code></pre>
 <p>แต่ละลูกศรคือการเปลี่ยนหนึ่งขั้น หากยังไม่ชัด ให้จดเพียงค่าก่อนหน้า operation และค่าหลังจากนั้น</p>
-<h4 id="lesson-3-_18">ตรวจความเข้าใจก่อนอ่านต่อ</h4>
+<h4 id="lesson-3-_19">ตรวจความเข้าใจก่อนอ่านต่อ</h4>
 <p>ปิดตัวอย่าง แล้วอธิบายด้วยภาษาตัวเองหนึ่งประโยค จากนั้นเปลี่ยน input หนึ่งค่าและทายผลก่อนรัน หากคำตอบยังไม่ตรง ให้ย้อนตามลูกศรและรันตัวอย่างทีละบรรทัด โดยจดค่าก่อนและหลังแต่ละขั้น</p>
 <p>Shape คือคำอธิบายโครงสร้างละเอียดกว่าแค่ <code>dict</code> เช่น “dict ที่มี event_id เป็น non-empty string และ amount เป็น integer หน่วยสตางค์” ใน pipeline เดียวข้อมูลอาจเปลี่ยน shape หลายครั้ง การตั้งชื่อ <code>raw_event</code>, <code>normalized_event</code>, <code>db_row</code> ช่วยไม่ให้ใช้ค่าก่อน validate</p>
 <p>ทุกลูกศรควรตอบว่า input contract, output contract และ rejected case คืออะไร หากอธิบายไม่ได้ transformation สองขั้นอาจควรถูกแยกเป็น functions เพื่อทดสอบทีละส่วน</p>
@@ -2596,7 +2880,7 @@ return ผลลัพธ์ทั้งสองกลุ่ม
 summary ต่อกลุ่ม
 </code></pre>
 <p>แต่ละลูกศรคือการเปลี่ยนหนึ่งขั้น หากยังไม่ชัด ให้จดเพียงค่าก่อนหน้า operation และค่าหลังจากนั้น</p>
-<h4 id="lesson-3-_19">ตรวจความเข้าใจก่อนอ่านต่อ</h4>
+<h4 id="lesson-3-_20">ตรวจความเข้าใจก่อนอ่านต่อ</h4>
 <p>ปิดตัวอย่าง แล้วอธิบายด้วยภาษาตัวเองหนึ่งประโยค จากนั้นเปลี่ยน input หนึ่งค่าและทายผลก่อนรัน หากคำตอบยังไม่ตรง ให้ย้อนตามลูกศรและรันตัวอย่างทีละบรรทัด โดยจดค่าก่อนและหลังแต่ละขั้น</p>
 <pre><code class="language-python">totals_by_user: dict[str, float] = {}
 
