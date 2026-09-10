@@ -2042,10 +2042,181 @@ required skills - candidate skills
 </code></pre>
 <p>คำว่า “ไม่พบใน set” ในงาน Resume หมายถึงไม่พบหลักฐานในข้อมูลที่รับมา ไม่ได้พิสูจน์ว่าผู้สมัครไม่มีทักษะนั้น</p>
 <h3 id="lesson-3-subset-superset">Subset และ Superset</h3>
+<p>คำว่า <strong>Subset</strong> และ <strong>Superset</strong> พูดถึงความสัมพันธ์ว่า “สมาชิกของชุดหนึ่งอยู่ในอีกชุดครบหรือไม่” ไม่ได้เปรียบเทียบว่าจำนวนสมาชิกฝั่งไหนมากกว่าเพียงอย่างเดียว</p>
+<p>สมมติระบบกำหนดทักษะที่จำเป็น:</p>
+<pre><code class="language-python">required = {"Python", "SQL"}
+candidate = {"Python", "SQL", "Git"}
+</code></pre>
+<p>มองเป็นภาพ:</p>
+<pre><code class="language-text">candidate
+┌──────────────────────────┐
+│ Python    SQL       Git  │
+│ └──── required ────┘     │
+└──────────────────────────┘
+</code></pre>
+<p>สมาชิกทุกตัวของ <code>required</code> ได้แก่ Python และ SQL อยู่ใน <code>candidate</code> ครบ ดังนั้น <code>required</code> เป็น <strong>subset</strong> ของ <code>candidate</code></p>
 <pre><code class="language-python">required &lt;= candidate  # required เป็น subset หรือไม่
 candidate &gt;= required  # candidate ครบ required หรือไม่
 </code></pre>
-<p>เหมาะกับการตรวจว่า permission หรือ capabilities ครบชุดที่ต้องการหรือไม่</p>
+<p>ทั้งสองบรรทัดถามเรื่องเดียวกัน แต่มองคนละฝั่ง:</p>
+<pre><code class="language-text">required &lt;= candidate
+“ของที่ต้องการ อยู่ในของที่ candidate มีครบหรือไม่?”
+
+candidate &gt;= required
+“ของที่ candidate มี ครอบคลุมของที่ต้องการหรือไม่?”
+</code></pre>
+<p>ผลลัพธ์:</p>
+<pre><code class="language-python">print(required &lt;= candidate)  # True
+print(candidate &gt;= required)  # True
+</code></pre>
+<h4 id="lesson-3-_10">ไล่ตรวจทีละสมาชิก</h4>
+<p>Python คิดเชิงความหมายประมาณนี้:</p>
+<pre><code class="language-text">required = {Python, SQL}
+        ↓
+Python อยู่ใน candidate หรือไม่? → อยู่
+SQL อยู่ใน candidate หรือไม่?    → อยู่
+        ↓
+อยู่ครบทุกตัว
+        ↓
+required &lt;= candidate เป็น True
+</code></pre>
+<p>ถ้าขาดเพียงหนึ่งรายการจะเป็น <code>False</code>:</p>
+<pre><code class="language-python">required = {"Python", "SQL"}
+candidate = {"Python", "Git"}
+
+print(required &lt;= candidate)  # False เพราะไม่มี SQL
+</code></pre>
+<pre><code class="language-text">Python → พบ
+SQL    → ไม่พบ
+        ↓
+ไม่ครบ required
+        ↓
+False
+</code></pre>
+<h4 id="lesson-3-_11">ตารางตัวอย่าง</h4>
+<div class="table-scroll"><table>
+<thead>
+<tr>
+<th><code>required</code></th>
+<th><code>candidate</code></th>
+<th style="text-align: right;"><code>required &lt;= candidate</code></th>
+<th>เหตุผล</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>{Python, SQL}</code></td>
+<td><code>{Python, SQL, Git}</code></td>
+<td style="text-align: right;"><code>True</code></td>
+<td>มี required ครบและมี Git เพิ่มได้</td>
+</tr>
+<tr>
+<td><code>{Python, SQL}</code></td>
+<td><code>{Python}</code></td>
+<td style="text-align: right;"><code>False</code></td>
+<td>ขาด SQL</td>
+</tr>
+<tr>
+<td><code>{Python, SQL}</code></td>
+<td><code>{Python, SQL}</code></td>
+<td style="text-align: right;"><code>True</code></td>
+<td>สองชุดเท่ากันก็ถือเป็น subset</td>
+</tr>
+<tr>
+<td><code>{}</code></td>
+<td><code>{Python}</code></td>
+<td style="text-align: right;"><code>True</code></td>
+<td>ชุดว่างไม่มีสมาชิกที่ขาด</td>
+</tr>
+</tbody>
+</table></div>
+<p>จุดสำคัญคือ candidate มีสมาชิกเกินจาก required ได้ ไม่ทำให้ผลเป็น <code>False</code> เราสนใจเพียงว่า required อยู่ครบหรือไม่</p>
+<h4 id="lesson-3-method">เขียนด้วย Method ก็ได้</h4>
+<p>สองรูปนี้มีความหมายเหมือนกัน:</p>
+<pre><code class="language-python">required &lt;= candidate
+required.issubset(candidate)
+</code></pre>
+<p>และ:</p>
+<pre><code class="language-python">candidate &gt;= required
+candidate.issuperset(required)
+</code></pre>
+<p>สำหรับคนที่ยังไม่คุ้นเครื่องหมาย method อาจอ่านตรงกว่า:</p>
+<pre><code class="language-python">has_all_required_skills = required.issubset(candidate)
+</code></pre>
+<p>อ่านว่า “required เป็น subset ของ candidate หรือไม่”</p>
+<h4 id="lesson-3-_12"><code>&lt;=</code> กับ <code>&lt;</code> ต่างกันอย่างไร?</h4>
+<p><code>&lt;=</code> ยอมให้สองชุดเท่ากัน:</p>
+<pre><code class="language-python">{"Python", "SQL"} &lt;= {"Python", "SQL"}  # True
+</code></pre>
+<p><code>&lt;</code> หมายถึง <strong>proper subset</strong>: สมาชิกต้องอยู่ครบ และอีกฝั่งต้องมีสมาชิกเพิ่มอย่างน้อยหนึ่งตัว</p>
+<pre><code class="language-python">{"Python", "SQL"} &lt; {"Python", "SQL", "Git"}  # True
+{"Python", "SQL"} &lt; {"Python", "SQL"}         # False
+</code></pre>
+<p>ฝั่ง Superset ก็เหมือนกัน:</p>
+<pre><code class="language-python">candidate &gt;= required  # ยอมให้เท่ากัน
+candidate &gt; required   # ต้องครอบคลุมและมีสมาชิกเพิ่ม
+</code></pre>
+<p>งานทั่วไปที่ถามว่า “มี permissions/skills ครบขั้นต่ำไหม” มักใช้ <code>&lt;=</code>, <code>&gt;=</code>, <code>issubset()</code> หรือ <code>issuperset()</code> ไม่จำเป็นต้องใช้ strict <code>&lt;</code>/<code>&gt;</code></p>
+<h4 id="lesson-3-permission">ตัวอย่าง Permission</h4>
+<pre><code class="language-python">required_permissions = {"resume:read", "resume:score"}
+user_permissions = {
+    "resume:read",
+    "resume:score",
+    "resume:export",
+}
+
+if required_permissions &lt;= user_permissions:
+    print("allowed")
+else:
+    print("forbidden")
+</code></pre>
+<p>Flow:</p>
+<pre><code class="language-text">Permissions ที่ operation ต้องใช้
+        ↓
+อยู่ใน permissions ของ user ครบหรือไม่?
+   ├─ ครบ → อนุญาต
+   └─ ขาด → ปฏิเสธ
+</code></pre>
+<p>หา permissions ที่ขาดได้ด้วย difference:</p>
+<pre><code class="language-python">missing_permissions = required_permissions - user_permissions
+
+if missing_permissions:
+    print("missing:", missing_permissions)
+</code></pre>
+<h4 id="lesson-3-candidate-skills">ตัวอย่าง Candidate Skills</h4>
+<pre><code class="language-python">required_skills = {"Python", "SQL", "Git"}
+candidate_skills = {"Python", "Git", "Docker"}
+
+has_all_skills = required_skills &lt;= candidate_skills
+missing_skills = required_skills - candidate_skills
+
+print(has_all_skills)   # False
+print(missing_skills)   # {'SQL'}
+</code></pre>
+<p>สำหรับ Resume Automation ต้องใช้ถ้อยคำอย่างระมัดระวัง: <code>SQL</code> อยู่ใน <code>missing_skills</code> หมายถึง <strong>ระบบยังไม่พบหลักฐาน SQL ในข้อมูลที่สกัดได้</strong> ไม่ได้พิสูจน์ว่าผู้สมัครไม่มีทักษะ SQL</p>
+<h4 id="lesson-3-_13">สิ่งที่มักเข้าใจผิด</h4>
+<ol>
+<li><code>&lt;=</code> ไม่ได้ถามว่า <code>len(required) &lt;= len(candidate)</code> อย่างเดียว สมาชิกต้องตรงกันจริง</li>
+<li>Set ไม่สนลำดับ <code>{Python, SQL}</code> กับ <code>{SQL, Python}</code> ถือว่าเท่ากัน</li>
+<li>การมีจำนวนสมาชิกเท่ากันไม่ได้แปลว่าเป็น subset หากเป็นคนละค่า</li>
+<li>ชื่อตัวแปรควรบอกทิศทาง เช่น <code>required &lt;= available</code> อ่านง่ายกว่า <code>a &lt;= b</code></li>
+</ol>
+<p>ตัวอย่างที่จำนวนเท่ากันแต่ไม่ครอบคลุม:</p>
+<pre><code class="language-python">required = {"Python", "SQL"}
+candidate = {"Python", "Docker"}
+
+len(required) == len(candidate)  # True
+required &lt;= candidate            # False เพราะ SQL ไม่อยู่ใน candidate
+</code></pre>
+<p>สรุปให้จำสั้น ๆ:</p>
+<pre><code class="language-text">A &lt;= B
+  ↓
+สมาชิกทุกตัวของ A อยู่ใน B หรือไม่?
+
+A &gt;= B
+  ↓
+A มีสมาชิกของ B ครบหรือไม่?
+</code></pre>
 <h3 id="lesson-3-set-hashable">สมาชิกของ Set ต้อง Hashable</h3>
 <p>ค่าทั่วไปอย่าง str, int และ tuple ที่ประกอบจากค่า hashable ใส่ set ได้ แต่ list/dict ใส่ไม่ได้:</p>
 <pre><code class="language-python">{("user-1", "2026-09-10")}  # ได้
@@ -2097,7 +2268,7 @@ users_by_id.get(user_id)
 สร้าง collection ใหม่
 </code></pre>
 <p>แต่ละลูกศรคือการเปลี่ยนหนึ่งขั้น หากยังไม่ชัด ให้จดเพียงค่าก่อนหน้า operation และค่าหลังจากนั้น</p>
-<h4 id="lesson-3-_10">ตรวจความเข้าใจก่อนอ่านต่อ</h4>
+<h4 id="lesson-3-_14">ตรวจความเข้าใจก่อนอ่านต่อ</h4>
 <p>ปิดตัวอย่าง แล้วอธิบายด้วยภาษาตัวเองหนึ่งประโยค จากนั้นเปลี่ยน input หนึ่งค่าและทายผลก่อนรัน หากคำตอบยังไม่ตรง ให้ย้อนตามลูกศรและรันตัวอย่างทีละบรรทัด โดยจดค่าก่อนและหลังแต่ละขั้น</p>
 <p>Comprehension เป็นรูปย่อของ loop ที่ “สร้าง collection ใหม่” เหมาะเมื่อ transformation/filter อ่านเป็นประโยคเดียวได้ ไม่ได้ทำให้ logic ซับซ้อนกลายเป็น logic ที่ดีขึ้น</p>
 <pre><code class="language-python">amounts = [100, -20, 300]
@@ -2143,7 +2314,7 @@ None / 0 / ค่าว่าง → False
 ถ้าความหมายต่าง ต้องเช็กตรง ๆ
 </code></pre>
 <p>แต่ละลูกศรคือการเปลี่ยนหนึ่งขั้น หากยังไม่ชัด ให้จดเพียงค่าก่อนหน้า operation และค่าหลังจากนั้น</p>
-<h4 id="lesson-3-_11">ตรวจความเข้าใจก่อนอ่านต่อ</h4>
+<h4 id="lesson-3-_15">ตรวจความเข้าใจก่อนอ่านต่อ</h4>
 <p>ปิดตัวอย่าง แล้วอธิบายด้วยภาษาตัวเองหนึ่งประโยค จากนั้นเปลี่ยน input หนึ่งค่าและทายผลก่อนรัน หากคำตอบยังไม่ตรง ให้ย้อนตามลูกศรและรันตัวอย่างทีละบรรทัด โดยจดค่าก่อนและหลังแต่ละขั้น</p>
 <p>Python อนุญาตให้ใช้ค่าเป็นเงื่อนไขโดยแปลงเป็น boolean โดยปริยาย ค่าเช่น <code>None</code>, <code>False</code>, เลขศูนย์ และ collection/string ว่างเป็น falsy แต่ไม่ได้มีความหมายทางธุรกิจเหมือนกัน</p>
 <pre><code class="language-python">if not amount:
@@ -2190,7 +2361,7 @@ field ชั้นถัดไป
 ค่าปลายทางที่เชื่อถือได้
 </code></pre>
 <p>แต่ละลูกศรคือการเปลี่ยนหนึ่งขั้น หากยังไม่ชัด ให้จดเพียงค่าก่อนหน้า operation และค่าหลังจากนั้น</p>
-<h4 id="lesson-3-_12">ตรวจความเข้าใจก่อนอ่านต่อ</h4>
+<h4 id="lesson-3-_16">ตรวจความเข้าใจก่อนอ่านต่อ</h4>
 <p>ปิดตัวอย่าง แล้วอธิบายด้วยภาษาตัวเองหนึ่งประโยค จากนั้นเปลี่ยน input หนึ่งค่าและทายผลก่อนรัน หากคำตอบยังไม่ตรง ให้ย้อนตามลูกศรและรันตัวอย่างทีละบรรทัด โดยจดค่าก่อนและหลังแต่ละขั้น</p>
 <p>Nested JSON คือ dict/list ซ้อนกัน การเข้าถึงแต่ละชั้นเป็น operation ที่พังได้เอง:</p>
 <pre><code class="language-python">payload = {"candidate": {"skills": ["Python", "SQL"]}}
@@ -2234,7 +2405,7 @@ country = profile.get("country")
 ยอมรับหรือ reject
 </code></pre>
 <p>แต่ละลูกศรคือการเปลี่ยนหนึ่งขั้น หากยังไม่ชัด ให้จดเพียงค่าก่อนหน้า operation และค่าหลังจากนั้น</p>
-<h4 id="lesson-3-_13">ตรวจความเข้าใจก่อนอ่านต่อ</h4>
+<h4 id="lesson-3-_17">ตรวจความเข้าใจก่อนอ่านต่อ</h4>
 <p>ปิดตัวอย่าง แล้วอธิบายด้วยภาษาตัวเองหนึ่งประโยค จากนั้นเปลี่ยน input หนึ่งค่าและทายผลก่อนรัน หากคำตอบยังไม่ตรง ให้ย้อนตามลูกศรและรันตัวอย่างทีละบรรทัด โดยจดค่าก่อนและหลังแต่ละขั้น</p>
 <p>Input ภายนอกอาจมี:</p>
 <pre><code class="language-python">" success "
@@ -2270,7 +2441,7 @@ Normalized shape
 Database/report shape
 </code></pre>
 <p>แต่ละลูกศรคือการเปลี่ยนหนึ่งขั้น หากยังไม่ชัด ให้จดเพียงค่าก่อนหน้า operation และค่าหลังจากนั้น</p>
-<h4 id="lesson-3-_14">ตรวจความเข้าใจก่อนอ่านต่อ</h4>
+<h4 id="lesson-3-_18">ตรวจความเข้าใจก่อนอ่านต่อ</h4>
 <p>ปิดตัวอย่าง แล้วอธิบายด้วยภาษาตัวเองหนึ่งประโยค จากนั้นเปลี่ยน input หนึ่งค่าและทายผลก่อนรัน หากคำตอบยังไม่ตรง ให้ย้อนตามลูกศรและรันตัวอย่างทีละบรรทัด โดยจดค่าก่อนและหลังแต่ละขั้น</p>
 <p>Shape คือคำอธิบายโครงสร้างละเอียดกว่าแค่ <code>dict</code> เช่น “dict ที่มี event_id เป็น non-empty string และ amount เป็น integer หน่วยสตางค์” ใน pipeline เดียวข้อมูลอาจเปลี่ยน shape หลายครั้ง การตั้งชื่อ <code>raw_event</code>, <code>normalized_event</code>, <code>db_row</code> ช่วยไม่ให้ใช้ค่าก่อน validate</p>
 <p>ทุกลูกศรควรตอบว่า input contract, output contract และ rejected case คืออะไร หากอธิบายไม่ได้ transformation สองขั้นอาจควรถูกแยกเป็น functions เพื่อทดสอบทีละส่วน</p>
@@ -2425,7 +2596,7 @@ return ผลลัพธ์ทั้งสองกลุ่ม
 summary ต่อกลุ่ม
 </code></pre>
 <p>แต่ละลูกศรคือการเปลี่ยนหนึ่งขั้น หากยังไม่ชัด ให้จดเพียงค่าก่อนหน้า operation และค่าหลังจากนั้น</p>
-<h4 id="lesson-3-_15">ตรวจความเข้าใจก่อนอ่านต่อ</h4>
+<h4 id="lesson-3-_19">ตรวจความเข้าใจก่อนอ่านต่อ</h4>
 <p>ปิดตัวอย่าง แล้วอธิบายด้วยภาษาตัวเองหนึ่งประโยค จากนั้นเปลี่ยน input หนึ่งค่าและทายผลก่อนรัน หากคำตอบยังไม่ตรง ให้ย้อนตามลูกศรและรันตัวอย่างทีละบรรทัด โดยจดค่าก่อนและหลังแต่ละขั้น</p>
 <pre><code class="language-python">totals_by_user: dict[str, float] = {}
 
