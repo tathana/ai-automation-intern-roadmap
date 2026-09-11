@@ -1,6 +1,6 @@
 # AI & Automation Internship Learning Portal
 
-Static learning portal containing the generated Week 1, Week 2 and Week 3 HTML books.
+Static learning portal containing the generated Week 1 through Week 4 HTML books.
 
 ## Files
 
@@ -10,6 +10,9 @@ Static learning portal containing the generated Week 1, Week 2 and Week 3 HTML b
 - `week-3.html` — Week 3 n8n learning book, drills, FlowGuard and HR Intake
 - `week-3-materials.zip` — Week 3 Markdown, local mock API/tests and workflow examples
 - `week-3-assets/workflows/` — individual downloadable workflow JSON files
+- `week-4.html` — Week 4 LLM and AI integration book
+- `week-4-materials.zip` — Week 4 source lessons, mock AI lab, tests and synthetic PDF fixtures
+- `week-4-assets/` — individual source and fixture downloads linked from the book
 - `vercel.json` — clean static deployment configuration
 
 ## Preview locally
@@ -33,3 +36,5 @@ Then open `http://localhost:8080`.
 The generated Week HTML files should be refreshed from their source folders whenever the Markdown curriculum changes.
 
 Week 3's mock API is **local-only**. This portal hosts the book and downloadable source, not a live API or n8n instance. Workflow examples contain synthetic data and no credentials. Read Verification in the Week 3 book for the exact test coverage and limitations.
+
+Week 4 also runs with a local-only mock provider by default. The optional paid-provider example is not enabled by the portal or the lab API. Read the Week 4 Verification section: mock regression results are not real-model accuracy, and DOCX parser tests do not certify a rendered DOCX sample.

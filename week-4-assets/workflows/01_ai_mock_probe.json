@@ -1,0 +1,112 @@
+{
+  "name": "W4 - normal Mock Probe",
+  "nodes": [
+    {
+      "id": "manual",
+      "name": "Manual Trigger",
+      "type": "n8n-nodes-base.manualTrigger",
+      "typeVersion": 1,
+      "position": [
+        0,
+        240
+      ],
+      "parameters": {}
+    },
+    {
+      "id": "seed",
+      "name": "Seed Request",
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        240,
+        240
+      ],
+      "parameters": {
+        "mode": "runOnceForAllItems",
+        "jsCode": "return [{json:{\"candidate_id\": \"C1\", \"segments\": {\"p1\": \"Built a Python ETL project.\"}, \"scenario\": \"normal\"}}];"
+      }
+    },
+    {
+      "id": "http",
+      "name": "Analyze API",
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.2,
+      "position": [
+        480,
+        240
+      ],
+      "parameters": {
+        "method": "POST",
+        "url": "http://127.0.0.1:8014/analyze",
+        "sendBody": true,
+        "specifyBody": "json",
+        "jsonBody": "={{ $json }}",
+        "options": {
+          "timeout": 5000,
+          "response": {
+            "response": {
+              "fullResponse": true,
+              "neverError": true,
+              "responseFormat": "json"
+            }
+          }
+        }
+      }
+    },
+    {
+      "id": "inspect",
+      "name": "Inspect Result",
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        720,
+        240
+      ],
+      "parameters": {
+        "mode": "runOnceForAllItems",
+        "jsCode": "return $input.all().map((item,i) => ({json:{http_status:item.json.statusCode, business_status:item.json.body.status ?? 'http_error', needs_human_review:item.json.body.needs_human_review ?? true, reasons:item.json.body.reasons ?? ['inspect_http_error'], profile:item.json.body.profile ?? null}, pairedItem:{item:i}}));"
+      }
+    }
+  ],
+  "connections": {
+    "Manual Trigger": {
+      "main": [
+        [
+          {
+            "node": "Seed Request",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Seed Request": {
+      "main": [
+        [
+          {
+            "node": "Analyze API",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Analyze API": {
+      "main": [
+        [
+          {
+            "node": "Inspect Result",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  },
+  "active": false,
+  "settings": {
+    "executionOrder": "v1",
+    "timezone": "Asia/Bangkok"
+  },
+  "pinData": {}
+}
