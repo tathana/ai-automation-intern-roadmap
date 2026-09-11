@@ -91,7 +91,7 @@ worker → claim งาน → mock AI → validate output
 <p><strong>Stretch:</strong> real provider ที่องค์กรอนุมัติ, OCR, production database, authentication หลายผู้ใช้, outbox และระบบแจ้งเตือนจริง อย่าเปลี่ยนชื่อ stretch เป็น “ทำเสร็จแล้ว” เพียงเพราะมีภาพ architecture</p>
 <h2 id="lesson-1-definition-of-done">Definition of Done คืออะไร</h2>
 <p>คือข้อตกลงว่าอะไรต้องเป็นจริงจึงเรียกงานว่าเสร็จ เช่น “ส่ง event เดิมสองครั้งได้ task เดียว แม้เปิด Store ใหม่” ชัดกว่าคำว่า “รองรับ duplicate” เพราะคนอื่นเขียน test ตามได้</p>
-<p>ลองเขียนสามข้อของตัวเองก่อนอ่านบทถัดไป โดยใช้รูปแบบ <strong>สถานการณ์ → สิ่งที่ทำ → ผลที่ตรวจได้</strong> ตัวอย่าง: worker ได้งานแล้วหยุด → รอ lease หมด → worker ใหม่รับงานได้ และ worker เก่าเขียนทับไม่ได้</p><a class="back" href="#top">↑ กลับสารบัญ</a></article><article id="lesson-2"><div class="source">01_project_structure_clean_code.md</div><details class="local-toc"><summary>หัวข้อในบทนี้</summary><a href="#lesson-2-_1">แบ่งไฟล์ตามหน้าที่ ไม่ใช่ตามจำนวนบรรทัด</a><a href="#lesson-2-signature">อ่าน signature ก่อนอ่านเนื้อฟังก์ชัน</a><a href="#lesson-2-_2">ชื่อที่ดีช่วยลดคำอธิบาย</a><a href="#lesson-2-_3">เมื่อใดควรแยกฟังก์ชัน</a></details><h1 id="lesson-2-01-project-structure-clean-code">01 — Project Structure และ Clean Code ที่ช่วยให้แก้งานง่าย</h1>
+<p>ลองเขียนสามข้อของตัวเองก่อนอ่านบทถัดไป โดยใช้รูปแบบ <strong>สถานการณ์ → สิ่งที่ทำ → ผลที่ตรวจได้</strong> ตัวอย่าง: worker ได้งานแล้วหยุด → รอ lease หมด → worker ใหม่รับงานได้ และ worker เก่าเขียนทับไม่ได้</p><a class="back" href="#top">↑ กลับสารบัญ</a></article><article id="lesson-2"><div class="source">01_project_structure_clean_code.md</div><details class="local-toc"><summary>หัวข้อในบทนี้</summary><a href="#lesson-2-_1">แบ่งไฟล์ตามหน้าที่ ไม่ใช่ตามจำนวนบรรทัด</a><a href="#lesson-2-signature">อ่าน signature ก่อนอ่านเนื้อฟังก์ชัน</a><a href="#lesson-2-_2">ชื่อที่ดีช่วยลดคำอธิบาย</a><a href="#lesson-2-_3">เมื่อใดควรแยกฟังก์ชัน</a><a href="#lesson-2-workshop">Workshop — จากสคริปต์ไฟล์เดียวสู่โปรเจกต์ที่เป็นระบบ</a></details><h1 id="lesson-2-01-project-structure-clean-code">01 — Project Structure และ Clean Code ที่ช่วยให้แก้งานง่าย</h1>
 <h2 id="lesson-2-_1">แบ่งไฟล์ตามหน้าที่ ไม่ใช่ตามจำนวนบรรทัด</h2>
 <p>ให้นึกว่า API เป็นจุดรับเรื่อง ไม่ใช่คนที่ต้องทำทุกอย่างเอง <code>api.py</code> อ่าน request และคืน response, <code>models.py</code> บอกข้อมูลที่ยอมรับ, <code>repository.py</code> ติดต่อฐานข้อมูล, <code>service.py</code> ประมวลผลงาน ส่วน <code>worker.py</code> เรียกงานต่อเนื่อง</p>
 <pre><code class="language-text">api.py ─────→ models.py  ตรวจรูปแบบ input
@@ -114,7 +114,253 @@ service.py ← worker.py  ประมวลผลเบื้องหลัง
 <p>โค้ดตัวอย่างใน lab ยังมีส่วนเขียนกระชับเพื่อให้อ่านไฟล์ครบได้ Drill 1 ให้แยก query/constant และเพิ่ม type hints ตามความเหมาะสม โดย tests ต้องผ่านเหมือนเดิม นี่คือ <strong>refactoring</strong>: เปลี่ยนโครงสร้างโดยรักษาพฤติกรรมที่สังเกตได้</p>
 <h2 id="lesson-2-_3">เมื่อใดควรแยกฟังก์ชัน</h2>
 <p>แยกเมื่อมีหน้าที่ตั้งชื่อได้ชัด ทดสอบแยกได้ หรือถูกใช้ซ้ำ อย่าแยกทุกบรรทัดจนต้องเปิดสิบไฟล์เพื่อเข้าใจการบวกหนึ่งครั้ง เริ่มจาก pure function สำหรับกฎที่รับ input แล้วคืน output โดยไม่เขียน DB; ปล่อย transaction boundary ไว้ใน repository เพื่อไม่ให้ atomicity แตกโดยไม่ตั้งใจ</p>
-<p>สรุป: clean code ไม่ใช่โค้ดที่สั้นที่สุด แต่เป็นโค้ดที่ผู้รับช่วงต่ออธิบายได้ว่าเปลี่ยนตรงไหนแล้วกระทบอะไร</p><a class="back" href="#top">↑ กลับสารบัญ</a></article><article id="lesson-3"><div class="source">02_git_team_workflow.md</div><details class="local-toc"><summary>หัวข้อในบทนี้</summary><a href="#lesson-3-git">ใช้พื้นฐานเดิม ไม่ต้องเรียน Git ใหม่ทั้งหมด</a><a href="#lesson-3-_1">ทำงานหนึ่งเรื่องให้จบหนึ่งชุด</a><a href="#lesson-3-pull-request">Pull Request ควรเล่าอะไร</a><a href="#lesson-3-conflict">เมื่อเกิด conflict</a><a href="#lesson-3-_2">ย้อนการเปลี่ยนแปลงอย่างปลอดภัย</a></details><h1 id="lesson-3-02-git-team-workflow">02 — Git Team Workflow: จากงานส่วนตัวสู่การส่งให้ทีมตรวจ</h1>
+<p>สรุป: clean code ไม่ใช่โค้ดที่สั้นที่สุด แต่เป็นโค้ดที่ผู้รับช่วงต่ออธิบายได้ว่าเปลี่ยนตรงไหนแล้วกระทบอะไร</p>
+<h2 id="lesson-2-workshop">Workshop — จากสคริปต์ไฟล์เดียวสู่โปรเจกต์ที่เป็นระบบ</h2>
+<p>ส่วนนี้เพิ่มจากคำอธิบายเดิม เพื่อฝึกตอบว่า <strong>“โค้ดชิ้นนี้ควรอยู่ไฟล์ไหน และทำไม?”</strong> ไม่ต้องจำต้นไม้โฟลเดอร์ทั้งหมดก่อนเริ่มเขียน และไม่ต้องย้าย Capstone เดิมตามตัวอย่างนี้ เรามีชุดเล็กแยกให้ลองใน <code>examples/project_structure/</code> ภายใน ZIP</p>
+<h3 id="lesson-2-1">1. สิ่งนี้เรียกว่าอะไร</h3>
+<p><strong>Folder Structure</strong> คือการจัดโฟลเดอร์และไฟล์ ส่วน <strong>Project Structure / Project Layout</strong> รวมการจัด source, tests, configuration และเอกสารด้วย ถ้าคุยถึงหน้าที่และความสัมพันธ์ของส่วนต่าง ๆ เช่น API รับเรื่องแล้วส่งให้ service นั่นเริ่มเป็นเรื่อง <strong>Software Architecture</strong> ซึ่งกว้างกว่าตำแหน่งไฟล์</p>
+<pre><code class="language-text">Layout:       rules.py อยู่ใน demo_app/
+Responsibility: rules.py ตรวจเกณฑ์จำนวนเงิน
+Architecture: main เรียก rules โดย rules ไม่ต้องรู้จัก main
+</code></pre>
+<p>สร้าง folder ชื่อ <code>services/</code> ไม่ได้ทำให้โค้ดแยกหน้าที่โดยอัตโนมัติ ถ้าข้างในยังรับ HTTP, query DB และเขียนไฟล์ปนกันทั้งหมด ต้องดูสิ่งที่โค้ดทำจริงประกอบด้วย</p>
+<h3 id="lesson-2-2">2. เริ่มเล็กได้: หนึ่งไฟล์ไม่ใช่ความผิด</h3>
+<p>เมื่อโจทย์ยังเล็ก เช่นอ่านจำนวนเงินแล้วบอกว่าเข้าเกณฑ์ตรวจหรือไม่ เริ่มจากไฟล์เดียวช่วยให้เห็น flow ครบ เปิด <a href="week-5-assets/examples/project_structure/single_file/main.py">ตัวอย่าง single_file/main.py</a>:</p>
+<pre><code class="language-python">def needs_review(amount_minor: int) -&gt; bool:
+    return amount_minor &gt;= 100_000
+
+
+def main():
+    amounts = [500, 150_000]
+    for amount in amounts:
+        print(amount, needs_review(amount))
+
+
+if __name__ == "__main__":
+    main()
+</code></pre>
+<p><code>needs_review()</code> รับเงินหน่วยสตางค์และคืน boolean ไม่พิมพ์เอง ส่วน <code>main()</code> เตรียมตัวอย่าง วน loop แล้วแสดงผล การแยกหน้าที่เริ่มได้ด้วย <strong>ฟังก์ชัน</strong> ก่อนแยกเป็นโฟลเดอร์</p>
+<pre><code class="language-text">amount = 500    → ตรวจ &gt;= 100000 → False → แสดงผล
+amount = 150000 → ตรวจ &gt;= 100000 → True  → แสดงผล
+</code></pre>
+<p>เกณฑ์นี้เป็นตัวเลขฝึก ไม่ใช่นโยบายธุรกรรมจริง ตัวอย่างสมมติว่า input เป็น integer ที่ถูกต้องแล้ว เพื่อให้โฟกัสเรื่อง layout; type hint ไม่ได้ตรวจ input ขณะรันให้เอง</p>
+<h3 id="lesson-2-3-module">3. เมื่อมีเหตุผล จึงย้ายกฎไปอีก module</h3>
+<p>สมมติ API, worker และ tests ต่างต้องใช้กฎเดียวกัน การ copy ฟังก์ชันไปสามแห่งทำให้แก้ threshold แล้วตกหล่นได้ เราจึงเก็บกฎไว้จุดเดียว แล้วให้ผู้ใช้กฎ import ไปเรียก</p>
+<pre><code class="language-text">split_package/                  ← project root ของตัวอย่างนี้
+├── demo_app/                    ← Python package ของเรา
+│   ├── __init__.py              ← เริ่มด้วยไฟล์ว่างได้
+│   ├── rules.py                 ← กฎที่ใช้ซ้ำ
+│   └── main.py                  ← จุดเริ่มรันตัวอย่าง
+└── tests/
+    └── test_rules.py            ← ตรวจผลของกฎ
+</code></pre>
+<p>ไฟล์ <code>.py</code> ที่ import ได้เรียกว่า <strong>module</strong>; กลุ่ม modules ในตัวอย่างนี้จัดเป็น regular <strong>package</strong> ด้วย <code>__init__.py</code> ไฟล์นี้ไม่จำเป็นต้องมี logic และไม่ควรแอบเริ่ม worker หรือเชื่อมบริการภายนอกตอน import ส่วน namespace package ที่ไม่มี <code>__init__.py</code> เป็นอีกรูปแบบหนึ่ง ยังไม่จำเป็นสำหรับ workshop นี้ <a href="https://docs.python.org/3/tutorial/modules.html">Python modules และ packages</a></p>
+<p>ใน <a href="week-5-assets/examples/project_structure/split_package/demo_app/rules.py">rules.py</a> เหลือเฉพาะกฎ:</p>
+<pre><code class="language-python">def needs_review(amount_minor: int) -&gt; bool:
+    return amount_minor &gt;= 100_000
+</code></pre>
+<p>ใน <a href="week-5-assets/examples/project_structure/split_package/demo_app/main.py">main.py</a> เปลี่ยนจากประกาศกฎเองเป็น import:</p>
+<pre><code class="language-python">from demo_app.rules import needs_review
+
+
+def main():
+    amounts = [500, 150_000]
+    for amount in amounts:
+        print(amount, needs_review(amount))
+
+
+if __name__ == "__main__":
+    main()
+</code></pre>
+<p>อ่านบรรทัดแรกว่า “จาก module <code>rules</code> ใน package <code>demo_app</code> นำชื่อ <code>needs_review</code> มาใช้” มันไม่ได้เรียกฟังก์ชันทันที; การเรียกอยู่ที่ <code>needs_review(amount)</code> ใน loop</p>
+<pre><code class="language-text">main.py ─── import ──→ rules.py
+tests   ─── import ──→ rules.py
+                         ↓
+                 กฎมีต้นฉบับจุดเดียว
+</code></pre>
+<h3 id="lesson-2-4-folder-m">4. รันจาก folder ไหน และ <code>-m</code> คืออะไร</h3>
+<p>หลังแตก ZIP เปิด terminal ใน <code>examples/project_structure</code> แล้วรัน:</p>
+<pre><code class="language-powershell">python single_file/main.py
+cd split_package
+python -m demo_app.main
+python -m pytest tests -q
+</code></pre>
+<p>สามคำสั่งท้ายอยู่ใน <code>split_package</code> ซึ่งเป็น directory ที่มองเห็น <code>demo_app/</code> อยู่ข้างใน ใช้ Python environment ที่มี pytest แล้ว เช่น environment ที่ใช้กับ Capstone หากยังไม่มี ให้ติดตั้ง pytest ใน environment ฝึกก่อน</p>
+<p>ทั้ง single-file และ split-package ต้องแสดงผลเหมือนกัน:</p>
+<pre><code class="language-text">500 False
+150000 True
+</code></pre>
+<p><code>python -m demo_app.main</code> ขอให้ Python ค้นหา module แล้วรันเป็นจุดเริ่มโปรแกรม จึงใช้จุดคั่นชื่อและไม่ใส่ <code>.py</code> ส่วน <code>python demo_app/main.py</code> เป็นการรันด้วย path ไฟล์โดยตรง ซึ่งทำให้บริบทการค้นหา imports ต่างกัน สำหรับ layout นี้ให้ใช้รูปแบบ <code>-m</code> จาก root ตามตัวอย่าง</p>
+<pre><code class="language-text">terminal อยู่ split_package/
+           ↓ python -m demo_app.main
+เห็น package demo_app → โหลด main → import rules → เรียก main()
+</code></pre>
+<p><code>if __name__ == "__main__"</code> ทำให้เรียก <code>main()</code> เมื่อ module นี้เป็นจุดเริ่มรัน แต่ไม่เรียกเพียงเพราะไฟล์อื่น import มัน อย่างไรก็ตามคำสั่งระดับบนอื่น ๆ ของ module ยังทำงานตอน import ครั้งแรก ไม่ใช่ว่า import จะไม่รันโค้ดใดเลย</p>
+<h3 id="lesson-2-5-absolute-import-relative-import">5. Absolute import กับ Relative import</h3>
+<p>ตัวอย่างใช้ <strong>absolute import</strong> ระบุชื่อจาก package:</p>
+<pre><code class="language-python">from demo_app.rules import needs_review
+</code></pre>
+<p>ภายใน <code>demo_app/main.py</code> จะเขียนแบบ <strong>relative import</strong> ได้เช่นกัน:</p>
+<pre><code class="language-python">from .rules import needs_review
+</code></pre>
+<p>จุดหน้า <code>rules</code> หมายถึง package ปัจจุบัน ไม่ใช่ folder ที่ terminal ยืนอยู่ เลือกใช้รูปแบบใดรูปแบบหนึ่งในตัวอย่าง ไม่ต้องเพิ่มซ้ำทั้งสองบรรทัด และยังรันด้วย <code>python -m demo_app.main</code> เพื่อให้มี package context</p>
+<p>หากพบ <code>ModuleNotFoundError</code> ให้ตรวจ interpreter, directory ที่รัน และชื่อ package ก่อน ไม่รีบแก้ด้วย <code>sys.path.append(...)</code> กระจายทุกไฟล์ เพราะอาจซ่อนปัญหาที่กลับมาเกิดบนเครื่องเพื่อน อย่าตั้งชื่อไฟล์ว่า <code>json.py</code>, <code>typing.py</code> หรือ <code>pytest.py</code> โดยไม่ตั้งใจ เพราะอาจบัง library ที่ต้องการ import</p>
+<h3 id="lesson-2-6-app-course-src">6. <code>app/</code>, <code>course/</code> และ <code>src/</code> ต่างกันอย่างไร</h3>
+<p>ชื่อ <code>app</code> หรือ <code>course</code> ไม่ใช่คำสงวนของ Python เป็นชื่อ package ที่ผู้เขียนเลือก Capstone ของเราใช้ <code>course/</code> ตัวอย่างเล็กใช้ <code>demo_app/</code> ไม่ต้องสร้างทั้งสองชื่อในโปรเจกต์เดียวเพียงเพื่อให้ดูครบ</p>
+<div class="table-scroll"><table>
+<thead>
+<tr>
+<th>Layout</th>
+<th>ตัวอย่าง</th>
+<th>สิ่งที่ต้องรู้</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Flat layout</td>
+<td><code>project/demo_app/main.py</code></td>
+<td>package อยู่ใต้ project root แบบ workshop นี้</td>
+</tr>
+<tr>
+<td>Src layout</td>
+<td><code>project/src/demo_app/main.py</code></td>
+<td>แยก source ใต้ <code>src/</code>; โดยทั่วไปต้องติดตั้ง package ใน environment ก่อนใช้</td>
+</tr>
+</tbody>
+</table></div>
+<pre><code class="language-text">src ไม่ใช่ชื่อที่ใช้ import โดยอัตโนมัติ
+project/src/demo_app/rules.py
+                     ↓ ตั้งค่า packaging และติดตั้งถูกต้อง
+from demo_app.rules import needs_review
+</code></pre>
+<p>ใน src layout มักใช้ editable install ระหว่างพัฒนา เช่น <code>python -m pip install -e .</code> <strong>หลังจากมี packaging configuration ที่ถูกต้องแล้ว</strong> การสร้าง <code>src/</code> เปล่า ๆ แล้วรันคำสั่งนี้ไม่พอ ชุด workshop นี้ยังเป็น flat layout และไม่ได้มี configuration สำหรับขั้นตอนนั้น จึงไม่ต้องย้ายไฟล์หรือลองติดตั้งแบบ editable ตามบทนี้ <a href="https://packaging.python.org/en/latest/discussions/src-layout-vs-flat-layout/">Python Packaging: src vs flat layout</a></p>
+<h3 id="lesson-2-7">7. ถ้าโปรเจกต์โตขึ้น ค่อยแยกตามหน้าที่</h3>
+<p>ต้นไม้ต่อไปนี้เป็น <strong>ตัวอย่างการต่อยอด ไม่ใช่ไฟล์ที่มีครบใน Capstone ปัจจุบัน</strong> ไม่ต้องสร้างโฟลเดอร์ว่างทั้งหมดก่อนลงมือ:</p>
+<pre><code class="language-text">project/
+├── app/
+│   ├── __init__.py
+│   ├── main.py                # ประกอบ application / ลงทะเบียน routes
+│   ├── api/                   # endpoints แยกตามกลุ่มงาน
+│   │   ├── __init__.py
+│   │   ├── transactions.py
+│   │   └── resumes.py
+│   ├── schemas.py             # รูปแบบ input/output ของ API
+│   ├── services/              # ขั้นตอนใช้งานและ business logic
+│   │   └── __init__.py
+│   ├── repositories/          # อ่าน/เขียนฐานข้อมูล
+│   │   └── __init__.py
+│   └── config.py              # อ่านและตรวจ configuration
+├── tests/                     # test code
+├── docs/                      # architecture / runbook เมื่อเอกสารเริ่มมาก
+├── scripts/                   # คำสั่งช่วยงานเฉพาะ เช่น import ข้อมูลฝึก
+├── data/                      # runtime data; ไม่ commit ข้อมูลจริง
+├── .env.example
+├── .gitignore
+└── README.md
+</code></pre>
+<p>เริ่มด้วย <code>api.py</code> ได้ก่อน พอมี endpoints หลายกลุ่มที่อ่านรวมกันยาก จึงแยกเป็น <code>api/transactions.py</code> และ <code>api/resumes.py</code> พร้อมให้จุดประกอบ application ลงทะเบียน routes การย้ายไฟล์อย่างเดียวไม่ได้ทำให้ framework รู้จัก endpoint ใหม่เอง และไม่ควรเก็บ <code>api.py</code> กับ package <code>api/</code> ชื่อเดียวกันคู่กันจนสับสน</p>
+<p>ความหมายของชื่อที่พบบ่อย:</p>
+<ul>
+<li><strong>Schemas:</strong> ข้อมูลที่ยอมรับ/ส่งออก เช่น request ต้องมีจำนวนเงินมากกว่า 0</li>
+<li><strong>Models:</strong> ความหมายขึ้นกับโปรเจกต์ อาจเป็น Pydantic models, domain objects หรือ ORM models ที่แทนตาราง ต้องดู import และหน้าที่จริง ของเรา <code>models.py</code> เป็น Pydantic ไม่ใช่ ORM</li>
+<li><strong>Services:</strong> กำกับขั้นตอนและกฎ เช่นตรวจผล AI ก่อนบันทึก ไม่ควรต้องรู้รายละเอียด HTTP headers ทุกจุด</li>
+<li><strong>Repositories:</strong> จัดการการเก็บข้อมูล/query ให้ส่วนอื่นเรียกผ่านหน้าที่ที่ชัดเจน ไม่จำเป็นต้องมี ORM จึงจะใช้ชื่อนี้ได้</li>
+</ul>
+<p>สำหรับ Capstone ที่มี worker เส้นทางคือ API → repository เพื่อรับงาน แล้ว worker → service → repository เพื่อทำงาน ไม่ใช่ทุกระบบต้องมี flow API → service → repository แบบ synchronous เสมอไป</p>
+<h3 id="lesson-2-8-source">8. ไฟล์ข้างนอก source มีไว้ทำอะไร</h3>
+<div class="table-scroll"><table>
+<thead>
+<tr>
+<th>ตำแหน่ง/ไฟล์</th>
+<th>หน้าที่</th>
+<th>เก็บใน Git หรือไม่</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>tests/</code></td>
+<td>ตรวจพฤติกรรม ไม่ใช่เก็บผลรันทุกรอบ</td>
+<td>เก็บ test code</td>
+</tr>
+<tr>
+<td><code>fixtures/</code></td>
+<td>input ตัวอย่างที่ควบคุมได้</td>
+<td>เก็บเฉพาะที่อนุญาต เช่น synthetic</td>
+</tr>
+<tr>
+<td><code>requirements.txt</code></td>
+<td>รายการ dependency สำหรับ pip</td>
+<td>เก็บ</td>
+</tr>
+<tr>
+<td><code>pyproject.toml</code></td>
+<td>project/build metadata และ/หรือ tool configuration ตามที่กำหนด</td>
+<td>เก็บเมื่อโปรเจกต์ใช้; lab นี้ยังไม่ใช้</td>
+</tr>
+<tr>
+<td><code>README.md</code> / <code>RUNBOOK.md</code></td>
+<td>เริ่มใช้ / รับมือเหตุขัดข้อง</td>
+<td>เก็บ</td>
+</tr>
+<tr>
+<td><code>Dockerfile</code> / <code>compose.yaml</code></td>
+<td>build image / จัด services</td>
+<td>เก็บ โดยไม่มี secret จริง</td>
+</tr>
+<tr>
+<td><code>.env.example</code></td>
+<td>ชื่อค่าที่ต้องตั้ง พร้อม placeholder</td>
+<td>เก็บ</td>
+</tr>
+<tr>
+<td><code>.env</code> / <code>.venv/</code></td>
+<td>ค่าของเครื่อง / environment ที่สร้างใหม่ได้</td>
+<td>โดยทั่วไปไม่เก็บ</td>
+</tr>
+<tr>
+<td><code>data/</code>, logs, caches</td>
+<td>ข้อมูลขณะระบบรัน</td>
+<td>กันออกตามนโยบาย; ไม่รวมข้อมูลจริงใน repo ฝึก</td>
+</tr>
+<tr>
+<td><code>.github/workflows/</code></td>
+<td>CI configuration บน GitHub</td>
+<td>เก็บเมื่อ repo ใช้งาน</td>
+</tr>
+</tbody>
+</table></div>
+<p>อย่าใช้โฟลเดอร์ <code>utils/</code> เป็นที่รวมทุกอย่างที่ยังคิดชื่อไม่ออก ถ้าฟังก์ชันอ่าน CSV ให้ชื่อ module ที่บอกหน้าที่ เช่น <code>csv_reader.py</code> จะค้นง่ายกว่า <code>utils2.py</code> ส่วน <code>src/</code> กับ <code>scripts/</code> ก็ไม่เหมือนกัน: source หลักต้องให้ส่วนอื่นใช้ต่อได้ ส่วน scripts เป็น entry point ช่วยงานเฉพาะที่ควรเรียกใช้ logic หลักอีกที</p>
+<h3 id="lesson-2-9-project-root-current-working-directory">9. Project root ไม่เท่ากับ Current Working Directory เสมอ</h3>
+<p><strong>Project root</strong> คือ directory หลักที่เรากำหนดให้โปรเจกต์ เช่น <code>capstone/</code> ซึ่งมี README และ requirements ส่วน <strong>Current Working Directory (CWD)</strong> คือ directory ที่ process กำลังทำงานอยู่ เปลี่ยนได้ด้วย <code>cd</code> ก่อนรัน และ Python ไม่ได้ย้าย CWD ไปตามที่ตั้งไฟล์ <code>.py</code> ให้อัตโนมัติ</p>
+<pre><code class="language-python">from pathlib import Path
+
+print(Path.cwd())
+print(Path("data/capstone.sqlite3").resolve())
+</code></pre>
+<p>ลองจาก terminal สองตำแหน่งจะเห็นว่า relative DB path ชี้คนละไฟล์ได้ นี่คือเหตุผลที่ API กับ worker อาจไม่เห็นงานกันแม้ตั้ง string <code>data/capstone.sqlite3</code> เหมือนกัน</p>
+<pre><code class="language-text">CWD A + data/capstone.sqlite3 → ไฟล์ A
+CWD B + data/capstone.sqlite3 → ไฟล์ B
+</code></pre>
+<p>สำหรับ resource ที่อยู่คู่ source อาจใช้ <code>Path(__file__).resolve().parent</code> เป็นฐานใน module ปกติ แต่ไม่ควรเขียน runtime data ลง package โดยอัตโนมัติ เพราะ package อาจติดตั้งในที่เขียนไม่ได้ งานที่ต้องเลือก storage ให้ใช้ config/path ที่ระบุชัดตาม README แทน</p>
+<h3 id="lesson-2-10-circular-import">10. เลี่ยง Circular Import ตั้งแต่เริ่ม</h3>
+<pre><code class="language-text">main.py import rules.py
+rules.py import main.py
+        ↺ พึ่งพากันเป็นวง
+</code></pre>
+<p>บางรูปแบบทำให้ module ยังสร้างชื่อไม่ครบตอนอีกไฟล์นำไปใช้ วิธีคิดคือกฎไม่ควรต้อง import จุดเริ่มโปรแกรม ถ้าทั้งสองไฟล์ใช้ข้อมูลชนิดเดียวกัน ให้แยก contract ไป module ที่ทั้งคู่พึ่งพาได้ ไม่แก้ด้วยการย้าย import ไปมาจน error หายแต่ยังอธิบายความสัมพันธ์ไม่ได้</p>
+<pre><code class="language-text">main.py ──→ rules.py
+    └─────→ schemas.py ←── rules.py
+</code></pre>
+<h3 id="lesson-2-11">11. ลำดับสร้างโปรเจกต์ใหม่แบบไม่เยอะเกินไป</h3>
+<p>เริ่มจาก README สั้น ๆ บอก input/output และคำสั่งรัน → ทำหนึ่ง happy path ในไฟล์เดียว → แยก pure function ที่ทดสอบได้ → เพิ่ม tests → เมื่อมีผู้ใช้ logic มากกว่าหนึ่งจุดจึงแยก module/package → เพิ่ม API/DB/config ตามโจทย์ → เพิ่ม Docker/CI เมื่อมีขั้นตอนที่ต้องรันซ้ำและส่งต่อ</p>
+<p>ไม่จำเป็นต้องรอจนไฟล์ยาวมากจึงแยก และไม่มีจำนวนบรรทัดตายตัว ให้ดูว่า “เปลี่ยนหนึ่งเรื่องแล้วต้องแตะหลายหน้าที่ที่ไม่เกี่ยวกันหรือไม่” กับ “เพื่อนหาโค้ดส่วนนี้เจอหรือไม่” เป็นสัญญาณประกอบ</p>
+<h3 id="lesson-2-12-mini-challenge">12. Mini Challenge — ลองจัดเองหนึ่งรอบ</h3>
+<p>ใช้สำเนา <code>split_package</code> ไม่แก้ Capstone หลัก เพิ่มกฎ <code>is_small_amount()</code> ใน <code>rules.py</code> ซึ่งรับ integer หน่วยสตางค์และคืน True เมื่อ <code>0 &lt; amount_minor &lt; 1_000</code> เรียกจาก <code>main.py</code> แล้วเพิ่ม tests โดย import กฎจาก module ไม่ copy implementation ไปไว้ใน test</p>
+<pre><code class="language-text">input: 0, 500, 1000
+expected: False, True, False
+</code></pre>
+<p>อ่าน <a href="week-5-assets/examples/project_structure/split_package/tests/test_rules.py">test_rules.py</a> เป็นตัวอย่าง ชุดเดิมตรวจต่ำกว่า threshold, เท่ากับ threshold และสูงกว่า threshold ของ <code>needs_review()</code> รวม 3 tests หลังเพิ่มโจทย์ให้มี tests ใหม่ของคุณด้วย</p>
+<p>ถือว่าเข้าใจเมื่ออธิบายได้ว่าไฟล์ไหนเป็น entry point, ไฟล์ไหนเป็นกฎ, import เดินทางใด, ต้องรันจาก directory ไหน และทำไมยังไม่ต้องมี <code>services/</code> หรือ <code>repositories/</code> ในตัวอย่างที่ไม่มี API/DB นี้</p><a class="back" href="#top">↑ กลับสารบัญ</a></article><article id="lesson-3"><div class="source">02_git_team_workflow.md</div><details class="local-toc"><summary>หัวข้อในบทนี้</summary><a href="#lesson-3-git">ใช้พื้นฐานเดิม ไม่ต้องเรียน Git ใหม่ทั้งหมด</a><a href="#lesson-3-_1">ทำงานหนึ่งเรื่องให้จบหนึ่งชุด</a><a href="#lesson-3-pull-request">Pull Request ควรเล่าอะไร</a><a href="#lesson-3-conflict">เมื่อเกิด conflict</a><a href="#lesson-3-_2">ย้อนการเปลี่ยนแปลงอย่างปลอดภัย</a></details><h1 id="lesson-3-02-git-team-workflow">02 — Git Team Workflow: จากงานส่วนตัวสู่การส่งให้ทีมตรวจ</h1>
 <h2 id="lesson-3-git">ใช้พื้นฐานเดิม ไม่ต้องเรียน Git ใหม่ทั้งหมด</h2>
 <p>ถ้ายังสับสน working tree, staging และ commit ให้เปิด Special Track 00 ที่เคยเรียนก่อน บทนี้เพิ่มเส้นทางทำงานเป็นทีม: รับงาน → branch → เปลี่ยนแปลงเล็ก → tests → review → merge โดยตัวอย่างให้ทำใน repository ฝึกแยก ไม่ทดลองกับ repository บริษัท</p>
 <pre><code class="language-text">main ที่สะอาด
