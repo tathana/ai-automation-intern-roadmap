@@ -1,0 +1,47 @@
+name: week5-capstone
+services:
+  api:
+    build: .
+    ports:
+      - "127.0.0.1:8015:8015"
+    environment:
+      CAPSTONE_DB: /data/capstone.sqlite3
+      REVIEW_TOKEN: ${REVIEW_TOKEN:-}
+    volumes:
+      - capstone_data:/data
+    healthcheck:
+      test: ["CMD", "python", "-c", "import urllib.request; urllib.request.urlopen('http://127.0.0.1:8015/health', timeout=2)"]
+      interval: 5s
+      timeout: 3s
+      retries: 10
+      start_period: 10s
+    restart: unless-stopped
+  worker:
+    build: .
+    command: ["python", "-m", "course.worker"]
+    environment:
+      CAPSTONE_DB: /data/capstone.sqlite3
+    volumes:
+      - capstone_data:/data
+    depends_on:
+      api:
+        condition: service_healthy
+    restart: unless-stopped
+  n8n:
+    image: ${N8N_IMAGE:-n8nio/n8n:1.115.3}
+    profiles: ["automation"]
+    ports:
+      - "127.0.0.1:5678:5678"
+    environment:
+      GENERIC_TIMEZONE: Asia/Bangkok
+      TZ: Asia/Bangkok
+      N8N_DIAGNOSTICS_ENABLED: "false"
+    volumes:
+      - n8n_data:/home/node/.n8n
+    depends_on:
+      api:
+        condition: service_healthy
+    restart: unless-stopped
+volumes:
+  capstone_data:
+  n8n_data:

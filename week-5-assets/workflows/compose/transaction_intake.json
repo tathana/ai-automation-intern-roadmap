@@ -1,0 +1,112 @@
+{
+  "name": "W5 - transaction Intake",
+  "nodes": [
+    {
+      "id": "manual",
+      "name": "Manual Trigger",
+      "type": "n8n-nodes-base.manualTrigger",
+      "typeVersion": 1,
+      "position": [
+        0,
+        240
+      ],
+      "parameters": {}
+    },
+    {
+      "id": "seed",
+      "name": "Seed Request",
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        240,
+        240
+      ],
+      "parameters": {
+        "mode": "runOnceForAllItems",
+        "jsCode": "return [{json:{\"event_id\": \"W5-n8n-transaction\", \"user_id\": \"W5-U1\", \"amount_minor\": 150000}}];"
+      }
+    },
+    {
+      "id": "http",
+      "name": "Intake API",
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.2,
+      "position": [
+        480,
+        240
+      ],
+      "parameters": {
+        "method": "POST",
+        "url": "http://api:8015/transactions",
+        "sendBody": true,
+        "specifyBody": "json",
+        "jsonBody": "={{ $json }}",
+        "options": {
+          "timeout": 5000,
+          "response": {
+            "response": {
+              "fullResponse": true,
+              "neverError": true,
+              "responseFormat": "json"
+            }
+          }
+        }
+      }
+    },
+    {
+      "id": "inspect",
+      "name": "Inspect Accepted",
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        720,
+        240
+      ],
+      "parameters": {
+        "mode": "runOnceForAllItems",
+        "jsCode": "return $input.all().map((item,i)=>({json:{http_status:item.json.statusCode,accepted:item.json.statusCode===202,task_id:item.json.body.task_id ?? null,duplicate:item.json.body.duplicate ?? null,state:item.json.body.state ?? 'http_error',completed:false},pairedItem:{item:i}}));"
+      }
+    }
+  ],
+  "connections": {
+    "Manual Trigger": {
+      "main": [
+        [
+          {
+            "node": "Seed Request",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Seed Request": {
+      "main": [
+        [
+          {
+            "node": "Intake API",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Intake API": {
+      "main": [
+        [
+          {
+            "node": "Inspect Accepted",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  },
+  "active": false,
+  "settings": {
+    "executionOrder": "v1",
+    "timezone": "Asia/Bangkok"
+  },
+  "pinData": {}
+}

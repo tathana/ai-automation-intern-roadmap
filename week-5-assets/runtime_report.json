@@ -1,0 +1,83 @@
+[
+  {
+    "native_demo": "transaction",
+    "mode": "normal",
+    "expected": "succeeded",
+    "passed": true
+  },
+  {
+    "native_demo": "hr",
+    "mode": "normal",
+    "expected": "succeeded",
+    "passed": true
+  },
+  {
+    "native_demo": "transaction",
+    "mode": "transient",
+    "expected": "succeeded",
+    "passed": true
+  },
+  {
+    "native_demo": "hr",
+    "mode": "hallucination",
+    "expected": "needs_review",
+    "passed": true
+  },
+  {
+    "native_demo": "transaction",
+    "mode": "timeout",
+    "expected": "failed",
+    "passed": true
+  },
+  {
+    "native_api_restart_dedup": true
+  },
+  {
+    "workflow": "W5 - resume Intake",
+    "observed": {
+      "http_status": 202,
+      "accepted": true,
+      "task_id": 13,
+      "duplicate": false,
+      "state": "queued",
+      "completed": false
+    },
+    "passed": true
+  },
+  {
+    "workflow": "W5 - resume Intake",
+    "observed": {
+      "http_status": 202,
+      "accepted": true,
+      "task_id": 13,
+      "duplicate": true,
+      "state": "succeeded",
+      "completed": false
+    },
+    "passed": true
+  },
+  {
+    "workflow": "W5 - transaction Intake",
+    "observed": {
+      "http_status": 202,
+      "accepted": true,
+      "task_id": 14,
+      "duplicate": false,
+      "state": "queued",
+      "completed": false
+    },
+    "passed": true
+  },
+  {
+    "workflow": "W5 - transaction Intake",
+    "observed": {
+      "http_status": 202,
+      "accepted": true,
+      "task_id": 14,
+      "duplicate": true,
+      "state": "succeeded",
+      "completed": false
+    },
+    "passed": true
+  }
+]
