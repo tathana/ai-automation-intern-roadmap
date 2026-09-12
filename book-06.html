@@ -1,7 +1,7 @@
 <!doctype html><html lang="th"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>Book 06 — System Design &amp; Delivery</title><style>
 :root{color-scheme:light;--ink:#203149;--muted:#5b6b7d;--line:#dbe3e9;--accent:#096b63}
 *{box-sizing:border-box}html{scroll-behavior:smooth;scroll-padding-top:24px}body{margin:0;background:#f3f6f8;color:var(--ink);font-family:"Leelawadee UI",Tahoma,sans-serif;font-size:17px;line-height:1.9}a{color:var(--accent);text-underline-offset:4px}header{background:#173b43;color:white;padding:56px max(24px,calc((100vw - 1240px)/2));}header h1{font-size:clamp(28px,4vw,46px);line-height:1.35;margin:12px 0}header p{max-width:780px;color:#d9e9eb}.eyebrow{letter-spacing:2px;font-size:13px;color:#a8dfd5}.layout{max-width:1300px;margin:auto;display:grid;grid-template-columns:280px minmax(0,1fr);gap:30px;padding:30px 24px}aside{position:sticky;top:20px;align-self:start;max-height:92vh;overflow:auto;padding-right:12px}aside h2{font-size:18px}nav a{display:block;padding:9px 10px;border-bottom:1px solid var(--line);text-decoration:none;font-size:14px;line-height:1.6}nav a:hover{background:#e1eeeb}article{background:white;padding:clamp(20px,4vw,48px);border:1px solid var(--line);border-radius:12px;margin-bottom:28px;overflow-wrap:anywhere}article h1{font-size:29px;line-height:1.5;margin:20px 0 28px}h2{font-size:24px;margin-top:40px}h3{font-size:20px;margin-top:28px}pre{background:#152c3b;color:#eaf2f7;padding:20px;border-radius:8px;overflow:auto;line-height:1.65;font-size:14px;white-space:pre;overflow-wrap:normal}code{font-family:Consolas,"Courier New",monospace}p code,li code,td code{background:#edf2f5;padding:2px 5px;border-radius:4px;font-size:.9em}blockquote{margin:24px 0;padding:4px 20px;border-left:4px solid #138779;background:#eff8f5}table{border-collapse:collapse;width:100%;font-size:15px}th,td{border:1px solid var(--line);padding:12px;text-align:left;vertical-align:top}th{background:#eaf2f2}.table-scroll{overflow:auto;margin:20px 0}hr{border:0;border-top:1px solid var(--line);margin:32px 0}.source{font-size:12px;color:var(--muted)}.local-toc{margin-top:18px;font-size:14px;background:#f5f8fa;padding:10px 14px;border-radius:6px}.local-toc a{display:block;margin:7px 0}summary{cursor:pointer}.back{display:inline-block;margin-top:24px;font-size:14px}button{border:1px solid #aac8c5;background:white;color:#175c54;padding:9px 16px;border-radius:6px;cursor:pointer;font:inherit;font-size:14px}footer{max-width:1000px;margin:20px auto;padding:24px;color:var(--muted);font-size:14px}@media(max-width:850px){.layout{display:block;padding:16px}aside{position:static;max-height:none;padding:0 0 20px}nav{max-height:280px;overflow:auto}article h1{font-size:25px}body{font-size:16px}}@media print{body{background:white;font-size:11pt}header{background:white;color:black;padding:0}header p{color:black}.layout{display:block;padding:0}aside,button,.local-toc,.back{display:none}article{border:0;padding:0;break-before:page}pre{white-space:pre-wrap;background:#f0f2f4;color:black;font-size:9pt}a{color:inherit}h1,h2,h3{break-after:avoid}.table-scroll{overflow:visible}}
-</style></head><body><header id="top"><div class="eyebrow">PREMIUM TEXTBOOK COLLECTION</div><h1>Book 06 — System Design &amp; Delivery</h1><p>จาก requirement ไปสู่ architecture, state, security, testing และ handoff</p><p><a style="color:white" href="command-atlas.html">Command Atlas</a> · <a style="color:white" href="debugging-atlas.html">Debugging Atlas</a> · <a style="color:white" href="technical-glossary.html">Technical Glossary</a></p><button onclick="window.print()">พิมพ์ / บันทึกเป็น PDF</button> <a style="color:white" href="book-06-materials.zip">ดาวน์โหลด Markdown</a></header><div class="layout"><aside><h2>สารบัญ</h2><nav><a href="#lesson-0">Book 06 — System Design &amp; Delivery Playbook</a><a href="#lesson-1">00 — Requirement, Scope และ Acceptance Criteria</a><a href="#lesson-2">01 — Project Layout Patterns</a><a href="#lesson-3">02 — Layers, Dependencies และ Contracts</a><a href="#lesson-4">03 — Data Model, State, Queue และ Idempotency</a><a href="#lesson-5">04 — Configuration, Security, Privacy และ Trust Boundaries</a><a href="#lesson-6">05 — Testing, Observability, CI/CD และ Rollout</a><a href="#lesson-7">06 — Architecture Gallery</a><a href="#lesson-8">07 — ADR, Design Review, Documentation และ Handoff</a><a href="#lesson-9">08 — Sources, Verification และ Maturity Model</a></nav></aside><main><article id="lesson-0"><div class="source">README.md</div><details class="local-toc"><summary>หัวข้อในบทนี้</summary><a href="#lesson-0-_1">เป้าหมาย</a><a href="#lesson-0-_2">บทเรียน</a><a href="#lesson-0-_3">วิธีใช้</a></details><h1 id="lesson-0-book-06-system-design-delivery-playbook">Book 06 — System Design &amp; Delivery Playbook</h1>
+</style></head><body><header id="top"><div class="eyebrow">PREMIUM TEXTBOOK COLLECTION</div><h1>Book 06 — System Design &amp; Delivery</h1><p>จาก requirement ไปสู่ architecture, state, security, testing และ handoff</p><p><a style="color:white" href="book-07.html">Project Templates</a> · <a style="color:white" href="command-atlas.html">Command Atlas</a> · <a style="color:white" href="debugging-atlas.html">Debugging Atlas</a> · <a style="color:white" href="technical-glossary.html">Technical Glossary</a></p><button onclick="window.print()">พิมพ์ / บันทึกเป็น PDF</button> <a style="color:white" href="book-06-materials.zip">ดาวน์โหลด Markdown</a></header><div class="layout"><aside><h2>สารบัญ</h2><nav><a href="#lesson-0">Book 06 — System Design &amp; Delivery Playbook</a><a href="#lesson-1">00 — Requirement, Scope และ Acceptance Criteria</a><a href="#lesson-2">01 — Project Layout Patterns</a><a href="#lesson-3">02 — Layers, Dependencies และ Contracts</a><a href="#lesson-4">03 — Data Model, State, Queue และ Idempotency</a><a href="#lesson-5">04 — Configuration, Security, Privacy และ Trust Boundaries</a><a href="#lesson-6">05 — Testing, Observability, CI/CD และ Rollout</a><a href="#lesson-7">06 — Architecture Gallery</a><a href="#lesson-8">07 — ADR, Design Review, Documentation และ Handoff</a><a href="#lesson-9">08 — Sources, Verification และ Maturity Model</a><a href="#lesson-10">09 — Guided Design Walkthrough: จากโจทย์หนึ่งประโยคสู่ระบบที่อธิบายได้</a></nav></aside><main><article id="lesson-0"><div class="source">README.md</div><details class="local-toc"><summary>หัวข้อในบทนี้</summary><a href="#lesson-0-_1">เป้าหมาย</a><a href="#lesson-0-_2">บทเรียน</a><a href="#lesson-0-_3">วิธีใช้</a></details><h1 id="lesson-0-book-06-system-design-delivery-playbook">Book 06 — System Design &amp; Delivery Playbook</h1>
 <p>เล่มนี้ใช้หลังรู้เครื่องมือพื้นฐานแล้ว เพื่อเปลี่ยน requirement ที่ยังคลุมเครือให้เป็นระบบที่มีขอบเขต, contracts, state, failure policy, tests และผู้รับผิดชอบ เหมาะกลับมาเปิดก่อนเริ่มโปรเจกต์หรือส่ง design ให้ทีมตรวจ</p>
 <h2 id="lesson-0-_1">เป้าหมาย</h2>
 <pre><code class="language-text">ปัญหาธุรกิจ → scope/metrics → data + contracts → components
@@ -52,11 +52,16 @@
 <td>08</td>
 <td>Sources, verification และ maturity model</td>
 </tr>
+<tr>
+<td>09</td>
+<td>Guided Design Walkthrough: อธิบายทุก boundary ผ่านโปรเจกต์เดียว</td>
+</tr>
 </tbody>
 </table></div>
 <h2 id="lesson-0-_3">วิธีใช้</h2>
 <p>อ่านบท 00 แล้วสร้าง design pack ของโปรเจกต์หนึ่งชิ้น จากนั้นเปิดเฉพาะบทที่สัมพันธ์กับความเสี่ยง เช่นมี webhook ให้อ่าน state/idempotency, มี AI ให้อ่าน trust boundary/evaluation และมี side effect ให้เพิ่ม authorization/human approval</p>
-<p>เล่มนี้ไม่บังคับทุกโปรเจกต์ใช้โครงสร้างใหญ่ เริ่ม architecture ที่เล็กที่สุดซึ่งรองรับ risk/ทีม แล้วเพิ่มความซับซ้อนเมื่อมีเหตุผลและหลักฐาน</p><a class="back" href="#top">↑ กลับสารบัญ</a></article><article id="lesson-1"><div class="source">00_requirements_scope_acceptance.md</div><details class="local-toc"><summary>หัวข้อในบทนี้</summary><a href="#lesson-1-_1">เริ่มจากปัญหา ไม่ใช่เทคโนโลยี</a><a href="#lesson-1-problem-statement-template">Problem Statement Template</a><a href="#lesson-1-functional-vs-non-functional-requirements">Functional vs Non-functional Requirements</a><a href="#lesson-1-acceptance-criteria">Acceptance Criteria ที่ตรวจได้</a><a href="#lesson-1-success-metrics-guardrails">Success Metrics และ Guardrails</a><a href="#lesson-1-constraint-assumption-log">Constraint และ Assumption Log</a><a href="#lesson-1-scope-ladder">Scope Ladder</a><a href="#lesson-1-design-exercise">Design Exercise</a></details><h1 id="lesson-1-00-requirement-scope-acceptance-criteria">00 — Requirement, Scope และ Acceptance Criteria</h1>
+<p>เล่มนี้ไม่บังคับทุกโปรเจกต์ใช้โครงสร้างใหญ่ เริ่ม architecture ที่เล็กที่สุดซึ่งรองรับ risk/ทีม แล้วเพิ่มความซับซ้อนเมื่อมีเหตุผลและหลักฐาน</p>
+<p>ถ้าหัวข้อ architecture/state/security ดูเป็นคำศัพท์แยกส่วน ให้เปิดบท 09 บทนี้เดินโปรเจกต์เดียวจาก requirement ไปถึง release และชี้ว่าทฤษฎีแต่ละส่วนเปลี่ยนการออกแบบจริงอย่างไร</p><a class="back" href="#top">↑ กลับสารบัญ</a></article><article id="lesson-1"><div class="source">00_requirements_scope_acceptance.md</div><details class="local-toc"><summary>หัวข้อในบทนี้</summary><a href="#lesson-1-_1">เริ่มจากปัญหา ไม่ใช่เทคโนโลยี</a><a href="#lesson-1-problem-statement-template">Problem Statement Template</a><a href="#lesson-1-functional-vs-non-functional-requirements">Functional vs Non-functional Requirements</a><a href="#lesson-1-acceptance-criteria">Acceptance Criteria ที่ตรวจได้</a><a href="#lesson-1-success-metrics-guardrails">Success Metrics และ Guardrails</a><a href="#lesson-1-constraint-assumption-log">Constraint และ Assumption Log</a><a href="#lesson-1-scope-ladder">Scope Ladder</a><a href="#lesson-1-design-exercise">Design Exercise</a></details><h1 id="lesson-1-00-requirement-scope-acceptance-criteria">00 — Requirement, Scope และ Acceptance Criteria</h1>
 <h2 id="lesson-1-_1">เริ่มจากปัญหา ไม่ใช่เทคโนโลยี</h2>
 <p>Requirement ที่ว่า “ใช้ AI ช่วยอ่าน resume” ยังไม่พอ ต้องถามว่าใครทำงานอะไร ใช้เวลาตรงไหน output ถูกใช้ตัดสินใจอะไร และความผิดพลาดแบบใดรับไม่ได้</p>
 <pre><code class="language-text">ปัจจุบัน HR เปิดไฟล์ → ค้น skill → คัดลอก quote → สร้าง note
@@ -830,4 +835,153 @@ links to runbook/ADR/eval
 <li>เชื่อมกลับ Books 00–05 โดยไม่เปลี่ยน URL เดิม</li>
 </ul>
 <h2 id="lesson-9-definition-of-done-design-pack">Definition of Done ของ Design Pack</h2>
-<p>ผู้อ่านใหม่ตอบได้ว่าแก้ปัญหาอะไร, component ไหนรับผิดชอบอะไร, source of truth อยู่ไหน, failure/replay ทำอย่างไร, ใครมีสิทธิ์ทำ side effect, วัดผลอย่างไร และ rollback/ส่งต่ออย่างไร</p><a class="back" href="#top">↑ กลับสารบัญ</a></article></main></div><footer>Core → Practice → Deep Dive • ตรวจ Sources/Verification ก่อนใช้กับระบบจริง</footer></body></html>
+<p>ผู้อ่านใหม่ตอบได้ว่าแก้ปัญหาอะไร, component ไหนรับผิดชอบอะไร, source of truth อยู่ไหน, failure/replay ทำอย่างไร, ใครมีสิทธิ์ทำ side effect, วัดผลอย่างไร และ rollback/ส่งต่ออย่างไร</p><a class="back" href="#top">↑ กลับสารบัญ</a></article><article id="lesson-10"><div class="source">09_guided_design_walkthrough.md</div><details class="local-toc"><summary>หัวข้อในบทนี้</summary><a href="#lesson-10-step-1">Step 1: อย่าเริ่มวาดกล่องจากชื่อเครื่องมือ</a><a href="#lesson-10-step-2-requirement-component">Step 2: Requirement เปลี่ยนเป็น Component อย่างไร</a><a href="#lesson-10-step-3">Step 3: เริ่มโครงสร้างเล็กก่อน</a><a href="#lesson-10-step-4-contract-semantics">Step 4: Contract ต้องมี Semantics</a><a href="#lesson-10-step-5-state-recovery">Step 5: State เป็นภาษากลางของ Recovery</a><a href="#lesson-10-step-6-transaction-boundary">Step 6: Transaction Boundary ป้องกัน “ตอบสำเร็จแต่ไม่มีงาน”</a><a href="#lesson-10-step-7-idempotency-retry">Step 7: Idempotency ไม่ใช่แค่ Retry</a><a href="#lesson-10-step-8-trust-boundary-validation">Step 8: Trust Boundary เปลี่ยน Validation</a><a href="#lesson-10-step-9-tests-boundary">Step 9: Tests สะท้อน Boundary</a><a href="#lesson-10-step-10-observability-identity">Step 10: Observability เดินตาม Identity</a><a href="#lesson-10-step-11-architecture">Step 11: Architecture ที่ “ใหญ่พอ” แต่ไม่ใหญ่เกิน</a><a href="#lesson-10-step-12-delivery-design">Step 12: Delivery คือส่วนหนึ่งของ Design</a><a href="#lesson-10-mini-design-exercise">Mini Design Exercise</a><a href="#lesson-10-_1">ไปต่อ</a></details><h1 id="lesson-10-09-guided-design-walkthrough">09 — Guided Design Walkthrough: จากโจทย์หนึ่งประโยคสู่ระบบที่อธิบายได้</h1>
+<p>ใช้ตัวอย่าง “ช่วย HR หา evidence ใน resume” เพื่อเชื่อม requirement, layout, contract, state, security, tests และ delivery โดยไม่สมมติว่า AI เป็นแกนของทุกปัญหา</p>
+<h2 id="lesson-10-step-1">Step 1: อย่าเริ่มวาดกล่องจากชื่อเครื่องมือ</h2>
+<p>โจทย์แรก:</p>
+<pre><code class="language-text">ใช้ AI ช่วยอ่าน resume เป็นพันไฟล์
+</code></pre>
+<p>ยังตอบ architecture ไม่ได้ เพราะไม่รู้ว่า output ใช้ทำอะไร ต้องถามจนได้ workflow:</p>
+<pre><code class="language-text">HR เปิดเอกสาร → หาหลักฐาน skill/experience → จด quote
+→ reviewer ตรวจจากต้นฉบับ → ใช้ประกอบงานคัดกรอง
+</code></pre>
+<p>จุดออกแบบสำคัญเปลี่ยนทันที: ระบบควรช่วยสร้าง <strong>evidence draft</strong> ไม่ใช่ตัดสินผู้สมัคร และ output ต้องย้อนกลับไป source ได้</p>
+<h2 id="lesson-10-step-2-requirement-component">Step 2: Requirement เปลี่ยนเป็น Component อย่างไร</h2>
+<pre><code class="language-text">REQ รับงานและคืน ID โดยไม่รอนาน
+        ↓
+API intake + durable task store
+
+REQ extraction อาจช้า/ล้มเหลว
+        ↓
+worker + bounded retry + explicit state
+
+REQ ทุก claim มีหลักฐาน
+        ↓
+schema validator + evidence validator
+
+REQ คนต้องตรวจและ action ถูก audit
+        ↓
+review boundary + authorization + audit record
+</code></pre>
+<p>Component ไม่ได้เกิดเพราะ “best practice บอกให้มี” แต่เกิดจาก responsibility/risk ที่ชัด</p>
+<h2 id="lesson-10-step-3">Step 3: เริ่มโครงสร้างเล็กก่อน</h2>
+<p>Prototype แรกอาจเป็น:</p>
+<pre><code class="language-text">prototype.py
+fixtures/
+tests/
+README.md
+</code></pre>
+<p>เมื่อมี HTTP, state และ provider ซึ่งเปลี่ยนคนละเหตุผลจึงโตเป็น:</p>
+<pre><code class="language-text">src/app/
+├── api/       # request/response/auth boundary
+├── domain/    # evidence and transition rules
+├── services/  # intake/process/review use cases
+├── adapters/  # DB/file/model provider
+└── models/    # contracts/config
+</code></pre>
+<p>กฎง่าย: ถ้าไฟล์เดียวต้อง import FastAPI, SQL, provider SDK และ business rule พร้อมกัน มันมีหลายเหตุผลให้แก้ ควรแยก boundary</p>
+<h2 id="lesson-10-step-4-contract-semantics">Step 4: Contract ต้องมี Semantics</h2>
+<pre><code class="language-json">{"event_id":"evt-01","document_ref":"fixture://resume-01.pdf"}
+</code></pre>
+<p>Schema บอก type แต่ design ต้องตอบเพิ่ม:</p>
+<ul>
+<li>event ID unique ต่อ source หรือต่อวัน</li>
+<li>duplicate payload ต่างกันใช้ ID เดิมทำอย่างไร</li>
+<li>scheme/path ใดอนุญาต</li>
+<li>response 202 รับประกันว่า state commit แล้วหรือยัง</li>
+<li>caller poll/retry จาก status/error ใด</li>
+</ul>
+<p>นี่คือสาเหตุที่ contract test ไม่ควรตรวจแค่ JSON shape</p>
+<h2 id="lesson-10-step-5-state-recovery">Step 5: State เป็นภาษากลางของ Recovery</h2>
+<pre><code class="language-text">queued → processing → retry_wait → queued
+            ↓
+       needs_review → approved/rejected
+            ↓
+      failed_terminal
+</code></pre>
+<p>หากมีเพียง boolean <code>done</code> เราแยกไม่ได้ว่ากำลังทำ, รอ retry, ต้องใช้คน หรือหมดสิทธิ์ retry แล้ว State machine ทำให้ API, worker, UI, metrics และ runbook ใช้ความหมายเดียวกัน</p>
+<p>สำหรับ transition หนึ่งรายการให้ตอบ:</p>
+<pre><code class="language-text">processing → retry_wait
+actor: worker
+precondition: owns unexpired lease
+write atomically: status, attempt, error_category, next_attempt_at, audit
+side effect: none
+</code></pre>
+<h2 id="lesson-10-step-6-transaction-boundary">Step 6: Transaction Boundary ป้องกัน “ตอบสำเร็จแต่ไม่มีงาน”</h2>
+<pre><code class="language-text">BEGIN
+  insert task(event_id unique)
+  insert audit(task_created)
+COMMIT
+return 202 task_id
+</code></pre>
+<p>ถ้าตอบ <code>202</code> ก่อน commit แล้ว process ตาย caller เชื่อว่ารับงานแล้วแต่ไม่มี state ถ้า insert task กับ audit แยก transaction อาจมี task ที่ตรวจย้อนหลังไม่ได้</p>
+<h2 id="lesson-10-step-7-idempotency-retry">Step 7: Idempotency ไม่ใช่แค่ Retry</h2>
+<p>Retry คือ “ลองอีกครั้ง”; idempotency คือ “ลองซ้ำแล้วผลเชิงธุรกิจไม่ถูกทำซ้ำ”</p>
+<pre><code class="language-text">same event_id
+  ↓ unique constraint + transaction
+same logical task_id
+  ↓ attempts may be many
+one approved/export side effect
+</code></pre>
+<p>ต้องกำหนด scope/key/payload conflict/retention ไม่ใช่เพิ่ม header แล้วหวังว่า framework จัดการ</p>
+<h2 id="lesson-10-step-8-trust-boundary-validation">Step 8: Trust Boundary เปลี่ยน Validation</h2>
+<pre><code class="language-text">resume text (untrusted) → model prompt
+model JSON (untrusted) → schema validator
+claim + quote → source evidence validator
+validated draft → authorized human
+approved record → future export adapter
+</code></pre>
+<p>แม้ model ตอบ JSON ถูก schema ก็อาจอ้าง quote ที่ไม่มีจริง และแม้ quote ถูกก็ยังไม่ควรมีสิทธิ์ approve/export เอง Validation, authorization และ human review แก้คนละความเสี่ยง</p>
+<h2 id="lesson-10-step-9-tests-boundary">Step 9: Tests สะท้อน Boundary</h2>
+<pre><code class="language-text">domain: quote matching/state transitions → unit
+DB unique/lease/transaction → integration
+API auth/schema/errors → API integration
+provider adapter → contract tests with controlled fake
+end-to-end: submit → worker → review
+AI quality: versioned dataset/eval, not one demo
+operations: crash/restart/replay drills
+</code></pre>
+<p>การ mock database ใน test idempotency อาจพลาด behavior ของ unique constraint จริง จึงเลือก test level ตามสิ่งที่ต้องพิสูจน์</p>
+<h2 id="lesson-10-step-10-observability-identity">Step 10: Observability เดินตาม Identity</h2>
+<pre><code class="language-text">request_id → task_id → attempt_id → review_id
+</code></pre>
+<p>Log เหตุการณ์เชิงโครงสร้างโดยไม่ใส่ raw resume; metric ดู queue age/retry/review correction; trace ช่วย latency ข้าม component Identity ทำให้รวมหลักฐานของงานเดียวโดยไม่ค้นจากชื่อผู้สมัคร</p>
+<h2 id="lesson-10-step-11-architecture">Step 11: Architecture ที่ “ใหญ่พอ” แต่ไม่ใหญ่เกิน</h2>
+<p>สำหรับ synthetic prototype อาจยังใช้ process เดียว + SQLite และ worker command แยกได้ ไม่จำเป็น Kubernetes/message broker แต่ contract/state boundary ควรชัดเพื่อย้าย adapter ภายหลัง</p>
+<p>เพิ่มระบบเมื่อมี evidence:</p>
+<div class="table-scroll"><table>
+<thead>
+<tr>
+<th>Evidence</th>
+<th>Possible change</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>concurrent load สูง</td>
+<td>stronger DB/worker scaling</td>
+</tr>
+<tr>
+<td>OCR cases มากและคุ้ม</td>
+<td>approved OCR pipeline</td>
+</tr>
+<tr>
+<td>review queue bottleneck</td>
+<td>UI/batching/prioritization</td>
+</tr>
+<tr>
+<td>multiple downstream side effects</td>
+<td>outbox/delivery state</td>
+</tr>
+</tbody>
+</table></div>
+<h2 id="lesson-10-step-12-delivery-design">Step 12: Delivery คือส่วนหนึ่งของ Design</h2>
+<p>ก่อนเรียก pilot ต้องมี config/secret ownership, migration, health/readiness, logs/metrics, rollback/stop control, runbook และผู้รับมอบทดลอง recovery ถ้ากู้ไม่ได้โดยไม่มีผู้เขียน architecture ยังไม่จบ</p>
+<h2 id="lesson-10-mini-design-exercise">Mini Design Exercise</h2>
+<p>เปลี่ยนตัวอย่างเป็น Daily Report Automation แล้วตัด component ที่ไม่จำเป็น คำตอบที่สมเหตุผลอาจเหลือ:</p>
+<pre><code class="language-text">approved CSV → Python CLI validation → pure aggregation
+→ atomic Markdown output → human review/send
+</code></pre>
+<p>ไม่มี AI, API, queue หรือ database เพราะ volume/actor/failure policy ยังไม่ต้องการ การ “ตัดของออกพร้อมเหตุผล” เป็นทักษะ system design เช่นเดียวกับการเพิ่มของ</p>
+<h2 id="lesson-10-_1">ไปต่อ</h2>
+<p>เมื่อเข้าใจเส้นนี้แล้ว เปิด <strong>Book 07 — Project Delivery Template Book</strong> เพื่อคัดลอก intake, requirements, data/risk, architecture, test, release และ handoff templates พร้อมตัวอย่างกรอกครบวงจร</p><a class="back" href="#top">↑ กลับสารบัญ</a></article></main></div><footer>Core → Practice → Deep Dive • ตรวจ Sources/Verification ก่อนใช้กับระบบจริง</footer></body></html>

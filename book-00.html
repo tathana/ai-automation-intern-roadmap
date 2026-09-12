@@ -1,7 +1,7 @@
 <!doctype html><html lang="th"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>Book 00 — Developer Toolkit</title><style>
 :root{color-scheme:light;--ink:#203149;--muted:#5b6b7d;--line:#dbe3e9;--accent:#096b63}
 *{box-sizing:border-box}html{scroll-behavior:smooth;scroll-padding-top:24px}body{margin:0;background:#f3f6f8;color:var(--ink);font-family:"Leelawadee UI",Tahoma,sans-serif;font-size:17px;line-height:1.9}a{color:var(--accent);text-underline-offset:4px}header{background:#173b43;color:white;padding:56px max(24px,calc((100vw - 1240px)/2));}header h1{font-size:clamp(28px,4vw,46px);line-height:1.35;margin:12px 0}header p{max-width:780px;color:#d9e9eb}.eyebrow{letter-spacing:2px;font-size:13px;color:#a8dfd5}.layout{max-width:1300px;margin:auto;display:grid;grid-template-columns:280px minmax(0,1fr);gap:30px;padding:30px 24px}aside{position:sticky;top:20px;align-self:start;max-height:92vh;overflow:auto;padding-right:12px}aside h2{font-size:18px}nav a{display:block;padding:9px 10px;border-bottom:1px solid var(--line);text-decoration:none;font-size:14px;line-height:1.6}nav a:hover{background:#e1eeeb}article{background:white;padding:clamp(20px,4vw,48px);border:1px solid var(--line);border-radius:12px;margin-bottom:28px;overflow-wrap:anywhere}article h1{font-size:29px;line-height:1.5;margin:20px 0 28px}h2{font-size:24px;margin-top:40px}h3{font-size:20px;margin-top:28px}pre{background:#152c3b;color:#eaf2f7;padding:20px;border-radius:8px;overflow:auto;line-height:1.65;font-size:14px;white-space:pre;overflow-wrap:normal}code{font-family:Consolas,"Courier New",monospace}p code,li code,td code{background:#edf2f5;padding:2px 5px;border-radius:4px;font-size:.9em}blockquote{margin:24px 0;padding:4px 20px;border-left:4px solid #138779;background:#eff8f5}table{border-collapse:collapse;width:100%;font-size:15px}th,td{border:1px solid var(--line);padding:12px;text-align:left;vertical-align:top}th{background:#eaf2f2}.table-scroll{overflow:auto;margin:20px 0}hr{border:0;border-top:1px solid var(--line);margin:32px 0}.source{font-size:12px;color:var(--muted)}.local-toc{margin-top:18px;font-size:14px;background:#f5f8fa;padding:10px 14px;border-radius:6px}.local-toc a{display:block;margin:7px 0}summary{cursor:pointer}.back{display:inline-block;margin-top:24px;font-size:14px}button{border:1px solid #aac8c5;background:white;color:#175c54;padding:9px 16px;border-radius:6px;cursor:pointer;font:inherit;font-size:14px}footer{max-width:1000px;margin:20px auto;padding:24px;color:var(--muted);font-size:14px}@media(max-width:850px){.layout{display:block;padding:16px}aside{position:static;max-height:none;padding:0 0 20px}nav{max-height:280px;overflow:auto}article h1{font-size:25px}body{font-size:16px}}@media print{body{background:white;font-size:11pt}header{background:white;color:black;padding:0}header p{color:black}.layout{display:block;padding:0}aside,button,.local-toc,.back{display:none}article{border:0;padding:0;break-before:page}pre{white-space:pre-wrap;background:#f0f2f4;color:black;font-size:9pt}a{color:inherit}h1,h2,h3{break-after:avoid}.table-scroll{overflow:visible}}
-</style></head><body><header id="top"><div class="eyebrow">PREMIUM TEXTBOOK COLLECTION</div><h1>Book 00 — Developer Toolkit</h1><p>Command line, paths, Python environments, processes, ports และ safe workflow</p><p><a style="color:white" href="command-atlas.html">Command Atlas</a> · <a style="color:white" href="debugging-atlas.html">Debugging Atlas</a> · <a style="color:white" href="technical-glossary.html">Technical Glossary</a></p><button onclick="window.print()">พิมพ์ / บันทึกเป็น PDF</button> <a style="color:white" href="book-00-materials.zip">ดาวน์โหลด Markdown</a></header><div class="layout"><aside><h2>สารบัญ</h2><nav><a href="#lesson-0">Book 00 — Developer Toolkit: Command Line, Environment และเครื่องมือพื้นฐาน</a><a href="#lesson-1">00 — Terminal และ Command Mental Model</a><a href="#lesson-2">01 — Paths, Files และ Navigation</a><a href="#lesson-3">02 — Python, Virtual Environment และ Dependencies</a><a href="#lesson-4">03 — Processes, Ports, HTTP และ Environment Variables</a><a href="#lesson-5">04 — Tests, Lint, Format, Type Checking และ Task Commands</a><a href="#lesson-6">05 — Git, Docker, n8n และ Database Command Cookbook</a><a href="#lesson-7">06 — Command Safety, Secrets และ Recovery</a><a href="#lesson-8">07 — Project Bootstrap Lab จากโฟลเดอร์ว่าง</a><a href="#lesson-9">08 — Sources, Verification และขอบเขต</a></nav></aside><main><article id="lesson-0"><div class="source">README.md</div><details class="local-toc"><summary>หัวข้อในบทนี้</summary><a href="#lesson-0-_1">เป้าหมาย</a><a href="#lesson-0-_2">ลำดับอ่าน</a><a href="#lesson-0-_3">วิธีอ่านสามชั้น</a><a href="#lesson-0-5">ความสัมพันธ์กับแผน 5 สัปดาห์</a></details><h1 id="lesson-0-book-00-developer-toolkit-command-line-environment">Book 00 — Developer Toolkit: Command Line, Environment และเครื่องมือพื้นฐาน</h1>
+</style></head><body><header id="top"><div class="eyebrow">PREMIUM TEXTBOOK COLLECTION</div><h1>Book 00 — Developer Toolkit</h1><p>Command line, paths, Python environments, processes, ports และ safe workflow</p><p><a style="color:white" href="book-07.html">Project Templates</a> · <a style="color:white" href="command-atlas.html">Command Atlas</a> · <a style="color:white" href="debugging-atlas.html">Debugging Atlas</a> · <a style="color:white" href="technical-glossary.html">Technical Glossary</a></p><button onclick="window.print()">พิมพ์ / บันทึกเป็น PDF</button> <a style="color:white" href="book-00-materials.zip">ดาวน์โหลด Markdown</a></header><div class="layout"><aside><h2>สารบัญ</h2><nav><a href="#lesson-0">Book 00 — Developer Toolkit: Command Line, Environment และเครื่องมือพื้นฐาน</a><a href="#lesson-1">00 — Terminal และ Command Mental Model</a><a href="#lesson-2">01 — Paths, Files และ Navigation</a><a href="#lesson-3">02 — Python, Virtual Environment และ Dependencies</a><a href="#lesson-4">03 — Processes, Ports, HTTP และ Environment Variables</a><a href="#lesson-5">04 — Tests, Lint, Format, Type Checking และ Task Commands</a><a href="#lesson-6">05 — Git, Docker, n8n และ Database Command Cookbook</a><a href="#lesson-7">06 — Command Safety, Secrets และ Recovery</a><a href="#lesson-8">07 — Project Bootstrap Lab จากโฟลเดอร์ว่าง</a><a href="#lesson-9">08 — Sources, Verification และขอบเขต</a><a href="#lesson-10">09 — Guided Companion: จาก Command หนึ่งบรรทัดไปสู่ภาพทั้งระบบ</a></nav></aside><main><article id="lesson-0"><div class="source">README.md</div><details class="local-toc"><summary>หัวข้อในบทนี้</summary><a href="#lesson-0-_1">เป้าหมาย</a><a href="#lesson-0-_2">ลำดับอ่าน</a><a href="#lesson-0-_3">วิธีอ่านสามชั้น</a><a href="#lesson-0-5">ความสัมพันธ์กับแผน 5 สัปดาห์</a></details><h1 id="lesson-0-book-00-developer-toolkit-command-line-environment">Book 00 — Developer Toolkit: Command Line, Environment และเครื่องมือพื้นฐาน</h1>
 <p>เล่มนี้เป็นฐานร่วมของทุก Book ใช้อ่านก่อนเริ่มและกลับมาเปิดเมื่อคำสั่ง “รันได้ในเครื่องหนึ่งแต่ไม่ได้อีกเครื่อง” เน้น PowerShell บน Windows ตามเครื่องที่ใช้ พร้อมบอกความต่างสำคัญจาก CMD/Bash</p>
 <h2 id="lesson-0-_1">เป้าหมาย</h2>
 <p>เมื่อจบ คุณควรอธิบายได้ว่า command รันจาก directory ใด ใช้ executable/environment ใด รับ arguments อะไร เปลี่ยน state ใด และดู exit code/output ที่ไหน</p>
@@ -56,6 +56,10 @@
 <td>08</td>
 <td>Sources, verification และขอบเขต</td>
 </tr>
+<tr>
+<td>09</td>
+<td>Guided Companion: อธิบายทุกบทแบบเห็นภาพและอ่าน command ทีละส่วน</td>
+</tr>
 </tbody>
 </table></div>
 <h2 id="lesson-0-_3">วิธีอ่านสามชั้น</h2>
@@ -68,7 +72,8 @@
 <p>ทุกตัวอย่าง destructive จะระบุชัด เล่มนี้ไม่สอนให้คัดลอกคำสั่งลบ/เขียนทับโดยไม่ตรวจ target</p>
 </blockquote>
 <h2 id="lesson-0-5">ความสัมพันธ์กับแผน 5 สัปดาห์</h2>
-<p>เรียนบท 00–03 ก่อน Week 1 จากนั้นอ่านบทที่เกี่ยวข้องตามงาน เช่น Git ก่อน commit, HTTP ก่อน Week 2, n8n ก่อน Week 3 และ Docker ก่อน Week 5 ไม่ต้องรอจบ Book 00 ทั้งเล่มจึงเริ่มเขียน Python ได้</p><a class="back" href="#top">↑ กลับสารบัญ</a></article><article id="lesson-1"><div class="source">00_terminal_command_mental_model.md</div><details class="local-toc"><summary>หัวข้อในบทนี้</summary><a href="#lesson-1-terminal-shell-command">Terminal, Shell และ Command ต่างกันอย่างไร</a><a href="#lesson-1-prompt">อ่าน Prompt ก่อนพิมพ์</a><a href="#lesson-1-anatomy-command">Anatomy ของ command</a><a href="#lesson-1-output">Output สามช่องทาง</a><a href="#lesson-1-powershell-cmdbash">PowerShell ไม่ใช่ CMD/Bash</a><a href="#lesson-1-core-practice">Core Practice</a><a href="#lesson-1-deep-dive-command-resolution">Deep Dive: Command resolution</a></details><h1 id="lesson-1-00-terminal-command-mental-model">00 — Terminal และ Command Mental Model</h1>
+<p>เรียนบท 00–03 ก่อน Week 1 จากนั้นอ่านบทที่เกี่ยวข้องตามงาน เช่น Git ก่อน commit, HTTP ก่อน Week 2, n8n ก่อน Week 3 และ Docker ก่อน Week 5 ไม่ต้องรอจบ Book 00 ทั้งเล่มจึงเริ่มเขียน Python ได้</p>
+<p>ถ้าบทใดดูสั้นหรือศัพท์แน่น ให้เปิดบท 09 คู่กัน บทนี้แปล mental model ของบท 00–08 เป็นภาษาที่เห็นภาพ พร้อม “ทายก่อนรัน”, expected result และลำดับ debug</p><a class="back" href="#top">↑ กลับสารบัญ</a></article><article id="lesson-1"><div class="source">00_terminal_command_mental_model.md</div><details class="local-toc"><summary>หัวข้อในบทนี้</summary><a href="#lesson-1-terminal-shell-command">Terminal, Shell และ Command ต่างกันอย่างไร</a><a href="#lesson-1-prompt">อ่าน Prompt ก่อนพิมพ์</a><a href="#lesson-1-anatomy-command">Anatomy ของ command</a><a href="#lesson-1-output">Output สามช่องทาง</a><a href="#lesson-1-powershell-cmdbash">PowerShell ไม่ใช่ CMD/Bash</a><a href="#lesson-1-core-practice">Core Practice</a><a href="#lesson-1-deep-dive-command-resolution">Deep Dive: Command resolution</a></details><h1 id="lesson-1-00-terminal-command-mental-model">00 — Terminal และ Command Mental Model</h1>
 <h2 id="lesson-1-terminal-shell-command">Terminal, Shell และ Command ต่างกันอย่างไร</h2>
 <ul>
 <li><strong>Terminal</strong> คือหน้าต่างที่รับข้อความและแสดงผล</li>
@@ -740,4 +745,196 @@ git commit -m "Bootstrap FastAPI toolkit lab"
 <li>n8n deployment/credentials/user folder</li>
 <li>CI runner, cloud provider, secret manager และ production access policy</li>
 </ul>
-<p>เล่มนี้ไม่แทน runbook บริษัทหรือสิทธิ์อนุมัติการเปลี่ยน production</p><a class="back" href="#top">↑ กลับสารบัญ</a></article></main></div><footer>Core → Practice → Deep Dive • ตรวจ Sources/Verification ก่อนใช้กับระบบจริง</footer></body></html>
+<p>เล่มนี้ไม่แทน runbook บริษัทหรือสิทธิ์อนุมัติการเปลี่ยน production</p><a class="back" href="#top">↑ กลับสารบัญ</a></article><article id="lesson-10"><div class="source">09_guided_companion.md</div><details class="local-toc"><summary>หัวข้อในบทนี้</summary><a href="#lesson-10-1-enter">1. ตอนกด Enter เกิดอะไรขึ้น</a><a href="#lesson-10-2-path">2. Path คือคำตอบของ “เริ่มจากที่ไหน ไปหาอะไร”</a><a href="#lesson-10-3-environment-python">3. Environment คือกระเป๋าเครื่องมือของ Python แต่ละชุด</a><a href="#lesson-10-4-process-port-http">4. Process, Port และ HTTP เป็นคนละชั้น</a><a href="#lesson-10-5-environment-variable">5. Environment Variable เดินทางอย่างไร</a><a href="#lesson-10-6-quality-commands">6. Quality Commands ไม่ได้ทำงานซ้ำกัน</a><a href="#lesson-10-7-git-snapshot-history-backup">7. Git เก็บ Snapshot และ History ไม่ใช่ระบบ Backup อัตโนมัติ</a><a href="#lesson-10-8-docker-image-container">8. Docker Image กับ Container</a><a href="#lesson-10-9-n8n-database-commands-state">9. n8n และ Database Commands เปลี่ยน State</a><a href="#lesson-10-10-universal-debug-ladder">10. Universal Debug Ladder</a></details><h1 id="lesson-10-09-guided-companion-command">09 — Guided Companion: จาก Command หนึ่งบรรทัดไปสู่ภาพทั้งระบบ</h1>
+<p>บทนี้ไม่ได้แทนบท 00–08 แต่ใช้เปิดคู่กันเมื่อคำว่า shell, PATH, process, environment, port, image หรือ state ยังดูเป็นนามธรรม</p>
+<h2 id="lesson-10-1-enter">1. ตอนกด Enter เกิดอะไรขึ้น</h2>
+<p>สมมติ prompt แสดง:</p>
+<pre><code class="language-text">PS D:\work\resume-api&gt;
+</code></pre>
+<p>แล้วพิมพ์:</p>
+<pre><code class="language-powershell">python -m pytest tests -q
+</code></pre>
+<p>ให้แยกภาพเป็นห้าชั้น:</p>
+<pre><code class="language-text">1 current directory = D:\work\resume-api
+2 PowerShell แยก python | -m | pytest | tests | -q
+3 PowerShell หา executable ที่ชื่อ python
+4 Python process หา module pytest ใน environment ของมัน
+5 pytest หา target tests จาก current directory แล้วคืน output + exit code
+</code></pre>
+<p>ดังนั้น error แต่ละชั้นคนละเรื่อง:</p>
+<ul>
+<li><code>python is not recognized</code> — shell หา executable ไม่เจอ</li>
+<li><code>No module named pytest</code> — พบ Python แต่ environment นี้ไม่มี pytest</li>
+<li><code>file or directory not found: tests</code> — pytest เปิดได้ แต่ path target ไม่ตรง</li>
+<li>tests failed — เครื่องมือครบและพบ test แล้ว แต่ behavior ไม่ผ่าน</li>
+</ul>
+<p>อย่าแก้ทุกอาการด้วย <code>pip install</code> เพราะอาจอยู่คนละชั้น</p>
+<h2 id="lesson-10-2-path">2. Path คือคำตอบของ “เริ่มจากที่ไหน ไปหาอะไร”</h2>
+<pre><code class="language-powershell">Get-Content '.\config\settings.json'
+</code></pre>
+<p>อ่านทีละส่วน:</p>
+<pre><code class="language-text">.                 current directory
+\config           เข้าโฟลเดอร์ config
+\settings.json    เลือกไฟล์
+</code></pre>
+<p>ถ้าปัจจุบันอยู่ <code>D:\work\resume-api</code> path ที่ resolve คือ <code>D:\work\resume-api\config\settings.json</code> แต่ถ้าอยู่ <code>D:\work</code> คำสั่งเดิมจะมองคนละที่</p>
+<h3 id="lesson-10-flow-path">Flow ตรวจ path ก่อนสรุปว่าไฟล์หาย</h3>
+<pre><code class="language-text">Get-Location
+  ↓ อยู่ project root หรือไม่
+Test-Path '.\config\settings.json'
+  ↓ false
+Get-ChildItem
+  ↓ ดูชื่อจริง/ระดับโฟลเดอร์/นามสกุล
+Resolve-Path &lt;existing path&gt;
+</code></pre>
+<p>ข้อความ “หาไฟล์ไม่เจอ” ไม่ได้แปลว่าไม่มีไฟล์เสมอไป อาจเริ่มจาก directory ผิด สะกด/case/extension ผิด หรือโปรแกรม resolve path จากตำแหน่งอื่น</p>
+<h2 id="lesson-10-3-environment-python">3. Environment คือกระเป๋าเครื่องมือของ Python แต่ละชุด</h2>
+<pre><code class="language-text">machine
+├── system Python + packages ชุด A
+└── project .venv Python + packages ชุด B
+</code></pre>
+<p>การ activate ช่วยให้ชื่อ <code>python</code> ชี้ไป <code>.venv</code> ก่อน แต่หลักฐานที่ชัดกว่าคือ:</p>
+<pre><code class="language-powershell">python -c "import sys; print(sys.executable)"
+python -m pip --version
+</code></pre>
+<p>สองบรรทัดควรชี้ environment เดียวกัน การใช้ <code>python -m pip install ...</code> จึงชัดกว่า <code>pip install ...</code>: เราระบุว่าให้ <strong>Python ตัวนี้</strong> เปิด module pip</p>
+<h3 id="lesson-10-debug-import">Debug <code>import</code> แบบไม่เดา</h3>
+<pre><code class="language-text">ตรวจ sys.executable
+  ↓
+ตรวจ python -m pip show &lt;package&gt;
+  ↓
+ตรวจชื่อ module ที่ import (อาจไม่เท่าชื่อ package)
+  ↓
+ตรวจ local file ชื่อชน เช่น fastapi.py
+  ↓
+ตรวจ project install/src layout
+</code></pre>
+<p>อย่า install ซ้ำจนกว่าจะรู้ว่า install เข้า interpreter ใด</p>
+<h2 id="lesson-10-4-process-port-http">4. Process, Port และ HTTP เป็นคนละชั้น</h2>
+<p>เมื่อเปิด server:</p>
+<pre><code class="language-powershell">python -m uvicorn app.main:app --host 127.0.0.1 --port 8000
+</code></pre>
+<pre><code class="language-text">Python process
+  ↓ imports app.main and reads variable app
+Uvicorn process listens TCP 127.0.0.1:8000
+  ↓ receives HTTP GET /health
+FastAPI matches route/method
+  ↓ validates and runs handler
+response status/body
+</code></pre>
+<p>แปลอาการตามระยะที่ request ไปถึง:</p>
+<div class="table-scroll"><table>
+<thead>
+<tr>
+<th>อาการ</th>
+<th>หลักฐานว่าไปถึงไหน</th>
+<th>ตรวจต่อ</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>connection refused</td>
+<td>ยังไม่ถึง HTTP app</td>
+<td>listener, process log, host/port</td>
+</tr>
+<tr>
+<td>404</td>
+<td>ถึง HTTP server</td>
+<td>path/prefix/trailing slash</td>
+</tr>
+<tr>
+<td>405</td>
+<td>พบ path</td>
+<td>method ที่ route รองรับ</td>
+</tr>
+<tr>
+<td>422</td>
+<td>พบ route และ validator</td>
+<td>request schema/body/header</td>
+</tr>
+<tr>
+<td>500</td>
+<td>เข้า application แล้ว</td>
+<td>traceback, dependency/state</td>
+</tr>
+</tbody>
+</table></div>
+<h3 id="lesson-10-0000-browser"><code>0.0.0.0</code> ทำไมเปิด browser ตรง ๆ ไม่ใช่แนวคิดที่ดี</h3>
+<p><code>0.0.0.0</code> คือ bind instruction ให้ server ฟังทุก interface ที่มี ไม่ใช่ปลายทางเฉพาะสำหรับ client ในเครื่องให้ใช้ <code>127.0.0.1:port</code>; ระหว่าง Compose containers ใช้ service name/port ภายในตาม network</p>
+<h2 id="lesson-10-5-environment-variable">5. Environment Variable เดินทางอย่างไร</h2>
+<pre><code class="language-powershell">$env:APP_ENV='development'
+python -c "import os; print(os.getenv('APP_ENV'))"
+</code></pre>
+<pre><code class="language-text">PowerShell process มี APP_ENV
+        ↓ child inherits a copy
+Python process อ่าน string "development"
+        ↓ config layer parses + validates
+application settings
+</code></pre>
+<p>การตั้งค่าหลัง process เปิดแล้วมักไม่เปลี่ยนค่าที่ process อ่านไป ต้อง restart ตาม design และค่าจาก environment เป็น string:</p>
+<pre><code class="language-python">raw = "false"
+bool(raw)       # True เพราะเป็น string ที่ไม่ว่าง
+</code></pre>
+<p>จึงใช้ settings model/parser ที่นิยาม accepted values และ fail fast</p>
+<h2 id="lesson-10-6-quality-commands">6. Quality Commands ไม่ได้ทำงานซ้ำกัน</h2>
+<pre><code class="language-text">formatter → จัดรูปแบบ
+linter    → หา pattern/error บางประเภท
+type check→ ตรวจสัญญาชนิดแบบ static
+tests     → รัน behavior examples
+</code></pre>
+<p>format ผ่านไม่ได้แปลว่า function ถูก และ coverage สูงไม่ได้แปลว่า assertion ตรวจสิ่งสำคัญ ลำดับก่อน commit ที่อ่านง่าย:</p>
+<pre><code class="language-powershell">python -m ruff format --check .
+python -m ruff check .
+python -m pytest -q
+git diff --check
+git status
+</code></pre>
+<p>ถ้าโปรเจกต์มีคำสั่งมาตรฐานใน README/<code>pyproject.toml</code>/task runner ให้ใช้ของทีม เพราะ options และ test environment อาจต่างจากคำสั่งทั่วไป</p>
+<h2 id="lesson-10-7-git-snapshot-history-backup">7. Git เก็บ Snapshot และ History ไม่ใช่ระบบ Backup อัตโนมัติ</h2>
+<pre><code class="language-text">working tree --git add--&gt; staging area --git commit--&gt; local history
+                                                   --git push--&gt; remote
+</code></pre>
+<p><code>git status</code> บอก state, <code>git diff</code> บอก unstaged change, <code>git diff --staged</code> บอกสิ่งที่จะเข้า commit การ commit ไม่ได้ push และ push ไม่ได้ deploy เว้นแต่ pipeline ถูกออกแบบให้ทำเช่นนั้น</p>
+<p>ก่อนคำสั่งเปลี่ยน state ให้ตอบ:</p>
+<ul>
+<li>อยู่ repo/branch ใด</li>
+<li>target file/commit/remote ใด</li>
+<li>เปลี่ยน local หรือ remote</li>
+<li>กู้กลับอย่างไรโดยไม่ทับงานคนอื่น</li>
+</ul>
+<h2 id="lesson-10-8-docker-image-container">8. Docker Image กับ Container</h2>
+<pre><code class="language-text">Dockerfile + build context --docker build--&gt; image (template/read-only layers)
+image + runtime config --docker run--&gt; container process
+container filesystem (ephemeral) + named volume (persistent by policy)
+</code></pre>
+<p><code>COPY . .</code> มองเห็นเฉพาะ build context และอาจ copy secret/venv หาก <code>.dockerignore</code> ไม่ดี ส่วน environment variables/volumes/ports เป็น runtime concerns</p>
+<h3 id="lesson-10-port-mapping">Port mapping</h3>
+<pre><code class="language-text">browser http://127.0.0.1:8015
+  ↓ host port 8015
+Docker mapping 8015:8000
+  ↓ container port 8000
+Uvicorn must listen 0.0.0.0:8000 inside container
+</code></pre>
+<p>สลับ host/container port เป็นสาเหตุยอดนิยมของ “container healthy แต่เข้าไม่ได้”</p>
+<h2 id="lesson-10-9-n8n-database-commands-state">9. n8n และ Database Commands เปลี่ยน State</h2>
+<p>การ import/activate workflow, execute migration, update rows และ replay webhook อาจมี side effect อย่าคิดว่าเป็นเพียง command line:</p>
+<pre><code class="language-text">command → credentials/config → target instance/database
+        → state mutation → downstream side effects/audit
+</code></pre>
+<p>ตรวจ instance/environment, workflow/database identity, backup/export, dry-run และ idempotency ก่อนรัน โดยเฉพาะคำสั่งที่คัดลอกจากเครื่อง local ไป staging/production</p>
+<h2 id="lesson-10-10-universal-debug-ladder">10. Universal Debug Ladder</h2>
+<pre><code class="language-text">1 reproduce ด้วย input เล็ก
+2 capture exact command + cwd + version + output + exit code
+3 classify: shell/path/env/process/network/HTTP/app/data/state
+4 inspect closest evidence at failed boundary
+5 change one variable
+6 rerun same reproduction
+7 add regression test/runbook note
+</code></pre>
+<h3 id="lesson-10-_1">แบบฝึกสั้น</h3>
+<p>พบ <code>ModuleNotFoundError</code> หลัง activate <code>.venv</code> ให้เขียนหลักฐานสามบรรทัดที่จะเก็บก่อน install อะไรเพิ่ม คำตอบขั้นต่ำ:</p>
+<pre><code class="language-powershell">python -c "import sys; print(sys.executable)"
+python -m pip --version
+python -m pip show &lt;package-name&gt;
+</code></pre>
+<p>จากนั้นจึงเทียบกับ project dependency declaration และชื่อ import จริง</p><a class="back" href="#top">↑ กลับสารบัญ</a></article></main></div><footer>Core → Practice → Deep Dive • ตรวจ Sources/Verification ก่อนใช้กับระบบจริง</footer></body></html>

@@ -1,6 +1,6 @@
 # AI & Automation Internship Learning Portal
 
-Static portal containing the Book 00–06 textbook collection, the original five-week learning path and quick-reference atlases.
+Static portal containing the Book 00–07 textbook collection, the original five-week learning path, a reusable project-delivery template pack and quick-reference atlases.
 
 ## Files
 
@@ -20,6 +20,7 @@ Static portal containing the Book 00–06 textbook collection, the original five
 - `week-5-materials.zip` — source lessons, local capstone/tests, Compose and ReleaseGuard starter
 - `week-5-assets/` — individual source and workflow downloads linked from the book
 - `book-06.html` / `book-06-materials.zip` — System Design & Delivery Playbook
+- `book-07.html` / `book-07-materials.zip` — intake-to-handoff textbook, reusable templates and two filled examples
 - `command-atlas.html` — searchable command reference
 - `debugging-atlas.html` — symptom-to-layer debugging reference
 - `technical-glossary.html` — Thai/English engineering vocabulary
