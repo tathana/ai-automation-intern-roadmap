@@ -1,9 +1,17 @@
-<!doctype html>
-<html lang="th"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1"><title>Week 2 • HTTP, API, FastAPI & Testing</title><style>
+<!DOCTYPE html>
+
+<html lang="th"><head><meta charset="utf-8"/><meta content="width=device-width, initial-scale=1" name="viewport"/><title>Week 2 • HTTP, API, FastAPI &amp; Testing</title><style>
 :root{color-scheme:light;--ink:#203149;--muted:#5b6b7d;--line:#dbe3e9;--accent:#096b63}
 *{box-sizing:border-box}html{scroll-behavior:smooth;scroll-padding-top:24px}body{margin:0;background:#f3f6f8;color:var(--ink);font-family:"Leelawadee UI",Tahoma,sans-serif;font-size:17px;line-height:1.9}a{color:var(--accent);text-underline-offset:4px}header{background:#173b43;color:white;padding:56px max(24px,calc((100vw - 1240px)/2));}header h1{font-size:clamp(28px,4vw,46px);line-height:1.35;margin:12px 0}header p{max-width:780px;color:#d9e9eb}.eyebrow{letter-spacing:2px;font-size:13px;color:#a8dfd5}.layout{max-width:1300px;margin:auto;display:grid;grid-template-columns:280px minmax(0,1fr);gap:30px;padding:30px 24px}aside{position:sticky;top:20px;align-self:start;max-height:92vh;overflow:auto;padding-right:12px}aside h2{font-size:18px}nav a{display:block;padding:9px 10px;border-bottom:1px solid var(--line);text-decoration:none;font-size:14px;line-height:1.6}nav a:hover{background:#e1eeeb}article{background:white;padding:clamp(20px,4vw,48px);border:1px solid var(--line);border-radius:12px;margin-bottom:28px;overflow-wrap:anywhere}article h1{font-size:29px;line-height:1.5;margin:20px 0 28px}h2{font-size:24px;margin-top:40px}h3{font-size:20px;margin-top:28px}pre{background:#152c3b;color:#eaf2f7;padding:20px;border-radius:8px;overflow:auto;line-height:1.65;font-size:14px;white-space:pre;overflow-wrap:normal}code{font-family:Consolas,"Courier New",monospace}p code,li code,td code{background:#edf2f5;padding:2px 5px;border-radius:4px;font-size:.9em}blockquote{margin:24px 0;padding:4px 20px;border-left:4px solid #138779;background:#eff8f5}table{border-collapse:collapse;width:100%;font-size:15px}th,td{border:1px solid var(--line);padding:12px;text-align:left;vertical-align:top}th{background:#eaf2f2}.table-scroll{overflow:auto;margin:20px 0}hr{border:0;border-top:1px solid var(--line);margin:32px 0}.source{font-size:12px;color:var(--muted)}.local-toc{margin-top:18px;font-size:14px;background:#f5f8fa;padding:10px 14px;border-radius:6px}.local-toc a{display:block;margin:7px 0}summary{cursor:pointer}.back{display:inline-block;margin-top:24px;font-size:14px}button{border:1px solid #aac8c5;background:white;color:#175c54;padding:9px 16px;border-radius:6px;cursor:pointer;font:inherit;font-size:14px}footer{max-width:1000px;margin:20px auto;padding:24px;color:var(--muted);font-size:14px}@media(max-width:850px){.layout{display:block;padding:16px}aside{position:static;max-height:none;padding:0 0 20px}nav{max-height:280px;overflow:auto}article h1{font-size:25px}body{font-size:16px}}@media print{body{background:white;font-size:11pt}header{background:white;color:black;padding:0}header p{color:black}.layout{display:block;padding:0}aside,button,.local-toc,.back{display:none}article{border:0;padding:0;break-before:page}pre{white-space:pre-wrap;background:#f0f2f4;color:black;font-size:9pt}a{color:inherit}h1,h2,h3{break-after:avoid}.table-scroll{overflow:visible}}
 </style></head>
-<body><header id="top"><div class="eyebrow">PRE-COOP / WEEK 02 / LEARNING BOOK</div><h1>HTTP, API, FastAPI<br>และ Automated Testing</h1><p>จาก request/response mental model สู่ API ที่มี contract, reliability, webhook safety และ tests</p><p>รวมบทเรียน 00–08 แบบฝึกหัด และโจทย์ API Sentinel • อ่านออฟไลน์ได้</p><button onclick="window.print()">พิมพ์ / บันทึกเป็น PDF</button></header><div class="layout"><aside><h2>สารบัญบทเรียน</h2><nav aria-label="สารบัญ"><a href="#lesson-0">Week 2 — HTTP, API, FastAPI และ Automated Testing</a><a href="#lesson-1">00 — Assessment</a><a href="#lesson-2">01 — HTTP และ API Mental Model</a><a href="#lesson-3">02 — Reliable API Client</a><a href="#lesson-4">03 — FastAPI และ Pydantic</a><a href="#lesson-5">04 — Architecture, Errors, Logging และ Security</a><a href="#lesson-6">05 — Testing FastAPI และ Mocking</a><a href="#lesson-7">06 — Webhooks และ Idempotency</a><a href="#lesson-8">07 — Week 2 Cheat Sheet</a><a href="#lesson-9">08 — Deep Practical Companion</a><a href="#lesson-10">Week 2 Drills</a><a href="#lesson-11">Drill 01 — HTTP Detective</a><a href="#lesson-12">Drill 02 — Reliable Client</a><a href="#lesson-13">Drill 03 — FastAPI Contract</a><a href="#lesson-14">Drill 04 — Failure Testing</a><a href="#lesson-15">Special Challenge — API Sentinel</a><a href="#lesson-16">Grading Rubric — 100</a><a href="#lesson-17">Progressive Hints</a><a href="#lesson-18">API Sentinel — Requirements</a><a href="#lesson-19">Required Test Cases</a><a href="#lesson-20">API Sentinel Starter</a></nav></aside><main><article id="lesson-0"><div class="source">README.md</div><details class="local-toc"><summary>หัวข้อในบทนี้</summary><a href="#lesson-0-_1">เป้าหมาย</a><a href="#lesson-0-_2">บทเรียน</a><a href="#lesson-0-_3">วิธีเรียน</a><a href="#lesson-0-definition-of-done">Definition of Done</a></details><h1 id="lesson-0-week-2-http-api-fastapi-automated-testing">Week 2 — HTTP, API, FastAPI และ Automated Testing</h1>
+<body><header id="top"><div class="eyebrow">PRE-COOP / WEEK 02 / LEARNING BOOK</div><h1>HTTP, API, FastAPI<br/>และ Automated Testing</h1><p>จาก request/response mental model สู่ API ที่มี contract, reliability, webhook safety และ tests</p><p>รวมบทเรียน 00–11 แบบฝึกหัด และโจทย์ API Sentinel • อ่านออฟไลน์ได้</p><button onclick="window.print()">พิมพ์ / บันทึกเป็น PDF</button> <a href="week-2-materials.zip" style="color:white">ดาวน์โหลด Markdown และชุดฝึก</a></header><div class="layout"><aside><h2>สารบัญบทเรียน</h2><nav aria-label="สารบัญ"><a href="#lesson-0">Week 2 — HTTP, API, FastAPI และ Automated Testing</a><a href="#lesson-1">00 — Assessment</a><a href="#lesson-2">01 — HTTP และ API Mental Model</a><a href="#lesson-3">02 — Reliable API Client</a><a href="#lesson-4">03 — FastAPI และ Pydantic</a><a href="#lesson-5">04 — Architecture, Errors, Logging และ Security</a><a href="#lesson-6">05 — Testing FastAPI และ Mocking</a><a href="#lesson-7">06 — Webhooks และ Idempotency</a><a href="#lesson-8">07 — Week 2 Cheat Sheet</a><a href="#lesson-9">08 — Deep Practical Companion</a><a href="#lesson-10">09 — FastAPI จากไฟล์เปล่า: Code Walkthrough</a><a href="#lesson-11">10 — Real Service Blueprint และ Debugging</a><a href="#lesson-12">11 — Sources และ Verification</a><a href="#lesson-13">Week 2 Drills</a><a href="#lesson-14">Drill 01 — HTTP Detective</a><a href="#lesson-15">Drill 02 — Reliable Client</a><a href="#lesson-16">Drill 03 — FastAPI Contract</a><a href="#lesson-17">Drill 04 — Failure Testing</a><a href="#lesson-18">Special Challenge — API Sentinel</a><a href="#lesson-19">Grading Rubric — 100</a><a href="#lesson-20">Progressive Hints</a><a href="#lesson-21">API Sentinel — Requirements</a><a href="#lesson-22">Required Test Cases</a><a href="#lesson-23">API Sentinel Starter</a></nav></aside><main><article id="lesson-0"><div class="source">README.md</div><details class="local-toc"><summary>หัวข้อในบทนี้</summary><a href="#lesson-0-_1">เป้าหมาย</a><a href="#lesson-0-_2">บทเรียน</a><a href="#lesson-0-_3">วิธีเรียน</a><a href="#lesson-0-definition-of-done">Definition of Done</a></details><h1 id="lesson-0-week-2-http-api-fastapi-automated-testing">Week 2 — HTTP, API, FastAPI และ Automated Testing</h1>
+<p>เล่มนี้เป็น textbook จาก “โปรแกรมของเรา” ไปสู่ “บริการที่ระบบอื่นเรียกได้” เนื้อหาเดิมเก็บศัพท์เทคนิคและคำอธิบายแบบเข้าใจง่ายไว้ ส่วนบท 09–10 เติม code walkthrough ตั้งแต่ไฟล์เปล่าและ architecture งานจริงสำหรับกลับมาเปิดระหว่างฝึกงาน</p>
+<p>อ่านสามระดับตามเวลา:</p>
+<ul>
+<li><strong>Core:</strong> บท 01–07 เข้าใจ HTTP, validation, route/service/repository และ tests</li>
+<li><strong>Practice:</strong> ทำ drills และพิมพ์โค้ดบท 09 ด้วยตัวเอง อย่าคัดลอกอย่างเดียว</li>
+<li><strong>Deep Dive/Reference:</strong> บท 08–10 ใช้ debug และออกแบบ service ที่ต่อ Week 3–5</li>
+</ul>
 <h2 id="lesson-0-_1">เป้าหมาย</h2>
 <p>เปลี่ยน logic จาก Week 1 ให้ระบบอื่นเรียกผ่าน HTTP ได้อย่างมี contract, validation, failure handling และ tests</p>
 <pre><code class="language-text">Client → HTTP → FastAPI → Pydantic → Service → SQLite/External API → Response
@@ -53,9 +61,21 @@
 <td>08</td>
 <td><a href="#lesson-9">Deep Practical Companion</a></td>
 </tr>
+<tr>
+<td>09</td>
+<td><a href="#lesson-10">FastAPI จากไฟล์เปล่า: Code Walkthrough</a></td>
+</tr>
+<tr>
+<td>10</td>
+<td><a href="#lesson-11">Real Service Blueprint และ Debugging</a></td>
+</tr>
+<tr>
+<td>11</td>
+<td><a href="#lesson-12">Sources และ Verification</a></td>
+</tr>
 </tbody>
 </table></div>
-<p>แบบฝึกอยู่ใน <a href="#lesson-10"><code>drills/</code></a> และโจทย์ท้ายสัปดาห์อยู่ใน <a href="#lesson-15"><code>special_challenge_api_sentinel/</code></a></p>
+<p>แบบฝึกอยู่ใน <a href="#lesson-13"><code>drills/</code></a> และโจทย์ท้ายสัปดาห์อยู่ใน <a href="#lesson-18"><code>special_challenge_api_sentinel/</code></a></p>
 <h2 id="lesson-0-_3">วิธีเรียน</h2>
 <pre><code class="language-text">อ่าน contract → วาด request/response → ทดลอง success
 → invalid input → dependency failure → อ่าน log → test → commit
@@ -71,7 +91,7 @@
 <li>[ ] tests ไม่ยิง network/production DB จริง</li>
 <li>[ ] webhook ซ้ำไม่สร้างผลกระทบซ้ำ</li>
 <li>[ ] Challenge ผ่านอย่างน้อย 75%</li>
-</ul><a class="back" href="#top">↑ กลับสารบัญ</a></article><article id="lesson-1"><div class="source">00_assessment.md</div><details class="local-toc"><summary>หัวข้อในบทนี้</summary></details><h1 id="lesson-1-00-assessment">00 — Assessment</h1>
+</ul><a class="back" href="#top">↑ กลับสารบัญ</a></article><article id="lesson-1"><div class="source">00_assessment.md</div><details class="local-toc"><summary>หัวข้อในบทนี้</summary><a href="#lesson-1-assessment">วิธีใช้ Assessment</a></details><h1 id="lesson-1-00-assessment">00 — Assessment</h1>
 <p>ตอบก่อนค้น: request มีส่วนใดบ้าง, JSON text ต่างจาก dict อย่างไร, 401 ต่างจาก 403 อย่างไร, timeout ต่างจาก 500 อย่างไร, ทำไม retry POST อาจซ้ำ, Pydantic แทน business rules ทั้งหมดได้ไหม และ mock ไปเพื่ออะไร</p>
 <p>อ่าน request นี้แล้วแยกทุกส่วน:</p>
 <pre><code class="language-http">POST /api/v1/transactions?dry_run=true HTTP/1.1
@@ -80,7 +100,17 @@ Idempotency-Key: req-123
 
 {"transaction_id":"tx-1","amount_satangs":5000}
 </code></pre>
-<p>เมื่อจบ Week ต้อง demo success, invalid, duplicate และ upstream timeout พร้อมไล่ flow จาก client ถึง DB และกลับมาเป็น response ได้</p><a class="back" href="#top">↑ กลับสารบัญ</a></article><article id="lesson-2"><div class="source">01_http_api_foundation.md</div><details class="local-toc"><summary>หัวข้อในบทนี้</summary><a href="#lesson-2-clientserver">Client/Server</a><a href="#lesson-2-request">Request</a><a href="#lesson-2-methods">Methods</a><a href="#lesson-2-status-codes">Status Codes</a><a href="#lesson-2-headers">Headers</a><a href="#lesson-2-webhookpolling">Webhook/Polling</a><a href="#lesson-2-inspect">Inspect</a></details><h1 id="lesson-2-01-http-api-mental-model">01 — HTTP และ API Mental Model</h1>
+<p>เมื่อจบ Week ต้อง demo success, invalid, duplicate และ upstream timeout พร้อมไล่ flow จาก client ถึง DB และกลับมาเป็น response ได้</p>
+<h2 id="lesson-1-assessment">วิธีใช้ Assessment</h2>
+<pre><code class="language-text">ตอบจากความเข้าใจก่อน
+       ↓
+ทำ request จริงด้วย TestClient/curl
+       ↓
+เทียบ status + body + state ใน repository
+       ↓
+อธิบาย failure ด้วยศัพท์ transport / HTTP / validation / business
+</code></pre>
+<p>ไม่ต้องตอบถูกทั้งหมดก่อนเริ่ม ให้ทำเครื่องหมายคำถามที่ตอบด้วยเหตุผลไม่ได้ แล้วกลับมาตอบใหม่หลังบท 08–10 หลักฐานว่าผ่านคือเขียน endpoint เล็กเองและมี tests อย่างน้อย success, invalid input, not found, conflict และ dependency failure</p><a class="back" href="#top">↑ กลับสารบัญ</a></article><article id="lesson-2"><div class="source">01_http_api_foundation.md</div><details class="local-toc"><summary>หัวข้อในบทนี้</summary><a href="#lesson-2-clientserver">Client/Server</a><a href="#lesson-2-request">Request</a><a href="#lesson-2-methods">Methods</a><a href="#lesson-2-status-codes">Status Codes</a><a href="#lesson-2-headers">Headers</a><a href="#lesson-2-webhookpolling">Webhook/Polling</a><a href="#lesson-2-inspect">Inspect</a></details><h1 id="lesson-2-01-http-api-mental-model">01 — HTTP และ API Mental Model</h1>
 <h2 id="lesson-2-clientserver">Client/Server</h2>
 <!-- tutor-rich:## Client/Server -->
 <h3 id="lesson-2-_1">คำอธิบายแบบเข้าใจง่าย</h3>
@@ -1122,17 +1152,467 @@ Output หรือ error ตาม contract
 </code></pre>
 <h4 id="lesson-9-_13">จุดที่มักเข้าใจผิด</h4>
 <p>อย่าจำเฉพาะ syntax ให้ถามว่า input, output, side effect และ failure คืออะไร</p>
-<p>อธิบายให้ได้: request lifecycle, schema vs business validation, response model ป้องกันอะไร, dependency override ทำให้ test ปลอดภัยอย่างไร, retry POST เสี่ยงอะไร, unique constraint ป้องกัน race อย่างไร และ webhook signature ต้องใช้ raw body เพราะอะไร</p><a class="back" href="#top">↑ กลับสารบัญ</a></article><article id="lesson-10"><div class="source">drills/README.md</div><details class="local-toc"><summary>หัวข้อในบทนี้</summary></details><h1 id="lesson-10-week-2-drills">Week 2 Drills</h1>
-<p>ทำใน repo ทดลองและ commit แยก drill: 01 อ่าน HTTP, 02 reliable client, 03 FastAPI contract, 04 failure tests</p><a class="back" href="#top">↑ กลับสารบัญ</a></article><article id="lesson-11"><div class="source">drills/drill_01_http_detective.md</div><details class="local-toc"><summary>หัวข้อในบทนี้</summary></details><h1 id="lesson-11-drill-01-http-detective">Drill 01 — HTTP Detective</h1>
-<p>ใช้ curl กับ API ทดลอง 6 requests: GET success, POST success, malformed JSON, missing field, unknown resource และ wrong content type บันทึก method/path/query/headers/body/status และอธิบายว่า failure เกิดก่อนหรือหลัง endpoint</p><a class="back" href="#top">↑ กลับสารบัญ</a></article><article id="lesson-12"><div class="source">drills/drill_02_reliable_client.md</div><details class="local-toc"><summary>หัวข้อในบทนี้</summary></details><h1 id="lesson-12-drill-02-reliable-client">Drill 02 — Reliable Client</h1>
-<p>เขียน client ที่มี timeout และแปลง 404, 429, 503, invalid JSON เป็น error categories ของโปรเจกต์ ใช้ fake transport ทดสอบทุกกรณี ห้าม network จริง อธิบายว่า case ใด retry ได้และเพราะอะไร</p><a class="back" href="#top">↑ กลับสารบัญ</a></article><article id="lesson-13"><div class="source">drills/drill_03_fastapi_contract.md</div><details class="local-toc"><summary>หัวข้อในบทนี้</summary></details><h1 id="lesson-13-drill-03-fastapi-contract">Drill 03 — FastAPI Contract</h1>
-<p>สร้าง <code>POST /items</code> และ <code>GET /items/{id}</code> แยก request/response models, forbid unknown fields, ตรวจ boundary, map not found/conflict และยืนยันว่า internal field ไม่ออก response</p><a class="back" href="#top">↑ กลับสารบัญ</a></article><article id="lesson-14"><div class="source">drills/drill_04_failure_testing.md</div><details class="local-toc"><summary>หัวข้อในบทนี้</summary></details><h1 id="lesson-14-drill-04-failure-testing">Drill 04 — Failure Testing</h1>
-<p>เขียน tests สำหรับ duplicate, DB rollback, upstream timeout, malformed upstream 200 response และ unexpected exception ตรวจทั้ง status/error shape/DB side effect/secret leakage</p><a class="back" href="#top">↑ กลับสารบัญ</a></article><article id="lesson-15"><div class="source">special_challenge_api_sentinel/README.md</div><details class="local-toc"><summary>หัวข้อในบทนี้</summary></details><h1 id="lesson-15-special-challenge-api-sentinel">Special Challenge — API Sentinel</h1>
+<p>อธิบายให้ได้: request lifecycle, schema vs business validation, response model ป้องกันอะไร, dependency override ทำให้ test ปลอดภัยอย่างไร, retry POST เสี่ยงอะไร, unique constraint ป้องกัน race อย่างไร และ webhook signature ต้องใช้ raw body เพราะอะไร</p><a class="back" href="#top">↑ กลับสารบัญ</a></article><article id="lesson-10"><div class="source">09_fastapi_from_zero_walkthrough.md</div><details class="local-toc"><summary>หัวข้อในบทนี้</summary><a href="#lesson-10-core-function-endpoint">Core: จาก function ธรรมดาเป็น endpoint</a><a href="#lesson-10-step-1-app-health-endpoint">Step 1: สร้าง app และ health endpoint</a><a href="#lesson-10-step-2-request-response-models">Step 2: ประกาศ request และ response models</a><a href="#lesson-10-step-3-service-repository">Step 3: เขียน service และ repository แบบเล็ก</a><a href="#lesson-10-step-4-route">Step 4: เชื่อม route ให้บาง</a><a href="#lesson-10-step-5-tests-contract">Step 5: เขียน tests จาก contract</a><a href="#lesson-10-deep-dive-global-memory-dependency-injection">Deep Dive: ปรับจาก global memory ไปสู่ dependency injection</a><a href="#lesson-10-debugging-checklist">Debugging Checklist</a><a href="#lesson-10-mini-challenge">Mini Challenge</a></details><h1 id="lesson-10-09-fastapi-code-walkthrough">09 — FastAPI จากไฟล์เปล่า: Code Walkthrough</h1>
+<p>บทนี้ตั้งใจให้พิมพ์ตามด้วยตัวเองเพื่อเชื่อม Python function, Pydantic model และ HTTP contract เข้าด้วยกัน ใช้ข้อมูล transaction สังเคราะห์และเก็บใน memory เพื่อเน้น flow ก่อน ยังไม่ใช่ production database</p>
+<h2 id="lesson-10-core-function-endpoint">Core: จาก function ธรรมดาเป็น endpoint</h2>
+<p>function ธรรมดามี caller เป็นโค้ด Python:</p>
+<pre><code class="language-python">def double(value: int) -&gt; int:
+    return value * 2
+
+result = double(10)
+</code></pre>
+<p>endpoint มี caller ผ่าน HTTP จึงต้องแปลง request เป็น Python values และ Python result กลับเป็น response:</p>
+<pre><code class="language-text">POST /transactions + JSON text
+           ↓ HTTP server/FastAPI
+Pydantic parse + validate
+           ↓ Python object
+path operation function
+           ↓ service result
+response model serialize
+           ↓
+HTTP status + JSON text
+</code></pre>
+<h2 id="lesson-10-step-1-app-health-endpoint">Step 1: สร้าง app และ health endpoint</h2>
+<p>สร้าง <code>main.py</code>:</p>
+<pre><code class="language-python">from fastapi import FastAPI
+
+app = FastAPI(title="Week 2 Transaction Lab")
+
+
+@app.get("/health")
+def health() -&gt; dict[str, str]:
+    return {"status": "ok"}
+</code></pre>
+<p>อ่านทีละบรรทัด:</p>
+<ul>
+<li><code>app = FastAPI(...)</code> สร้าง ASGI application object ที่ server จะโหลด</li>
+<li><code>@app.get("/health")</code> ลงทะเบียนว่า GET path นี้ให้เรียก function ถัดไป</li>
+<li><code>def health()</code> เป็น path operation function</li>
+<li>dict ที่ return ถูก serialize เป็น JSON response; ค่าเริ่มต้นของ success คือ HTTP 200</li>
+</ul>
+<p>เปิด server จากโฟลเดอร์ที่มี <code>main.py</code>:</p>
+<pre><code class="language-powershell">python -m uvicorn main:app --reload
+</code></pre>
+<p><code>main:app</code> แปลว่า import module <code>main</code> แล้วหา object <code>app</code> หากรันจากโฟลเดอร์ผิดมักได้ import error</p>
+<p>Expected:</p>
+<pre><code class="language-http">GET /health HTTP/1.1
+
+HTTP/1.1 200 OK
+content-type: application/json
+
+{"status":"ok"}
+</code></pre>
+<h2 id="lesson-10-step-2-request-response-models">Step 2: ประกาศ request และ response models</h2>
+<pre><code class="language-python">from pydantic import BaseModel, Field
+
+
+class TransactionCreate(BaseModel):
+    transaction_id: str = Field(min_length=1, max_length=80)
+    amount_satangs: int = Field(gt=0)
+    description: str | None = Field(default=None, max_length=200)
+
+
+class TransactionCreated(BaseModel):
+    transaction_id: str
+    amount_satangs: int
+    status: str
+</code></pre>
+<p>จุดสำคัญ:</p>
+<ul>
+<li><code>TransactionCreate</code> คือ contract ของ input ไม่ใช่ database row ทั้งหมด</li>
+<li><code>str | None</code> บอกว่าชนิดอาจเป็น string หรือ None; <code>default=None</code> ทำให้ไม่ส่ง field ก็ได้</li>
+<li><code>Field(gt=0)</code> เป็น structural constraint ที่ตรวจได้ก่อนเข้า route</li>
+<li>response model แยกจาก input เพื่อไม่เผลอคืน internal/secret fields ภายหลัง</li>
+</ul>
+<p>ลองทายผล:</p>
+<pre><code class="language-json">{"transaction_id":"T1","amount_satangs":5000}
+</code></pre>
+<p>ผ่าน ส่วน amount เป็น 0, field หาย หรือ string ที่แปลงไม่ได้จะถูกปฏิเสธก่อน service ทำงาน โดยทั่วไป FastAPI คืน 422 พร้อมรายละเอียดตำแหน่ง field ตาม validation behavior</p>
+<h2 id="lesson-10-step-3-service-repository">Step 3: เขียน service และ repository แบบเล็ก</h2>
+<p>เพิ่มโค้ด:</p>
+<pre><code class="language-python">class DuplicateTransaction(Exception):
+    pass
+
+
+class InMemoryTransactionRepository:
+    def __init__(self) -&gt; None:
+        self._rows: dict[str, TransactionCreated] = {}
+
+    def get(self, transaction_id: str) -&gt; TransactionCreated | None:
+        return self._rows.get(transaction_id)
+
+    def add(self, row: TransactionCreated) -&gt; None:
+        if row.transaction_id in self._rows:
+            raise DuplicateTransaction(row.transaction_id)
+        self._rows[row.transaction_id] = row
+
+
+class TransactionService:
+    def __init__(self, repository: InMemoryTransactionRepository) -&gt; None:
+        self.repository = repository
+
+    def create(self, request: TransactionCreate) -&gt; TransactionCreated:
+        row = TransactionCreated(
+            transaction_id=request.transaction_id,
+            amount_satangs=request.amount_satangs,
+            status="created",
+        )
+        self.repository.add(row)
+        return row
+</code></pre>
+<p>flow ของ <code>create()</code>:</p>
+<pre><code class="language-text">validated request object
+        ↓ ประกอบ output/domain record
+TransactionCreated(status="created")
+        ↓ repository ตรวจ key และเก็บ
+return record หรือ raise DuplicateTransaction
+</code></pre>
+<p>business rule “transaction_id ห้ามซ้ำ” อยู่ service/repository boundary ไม่ใช่ Pydantic เพราะต้องดู state ที่มีอยู่แล้ว</p>
+<h2 id="lesson-10-step-4-route">Step 4: เชื่อม route ให้บาง</h2>
+<pre><code class="language-python">from fastapi import HTTPException, status
+
+repository = InMemoryTransactionRepository()
+service = TransactionService(repository)
+
+
+@app.post(
+    "/transactions",
+    response_model=TransactionCreated,
+    status_code=status.HTTP_201_CREATED,
+)
+def create_transaction(request: TransactionCreate) -&gt; TransactionCreated:
+    try:
+        return service.create(request)
+    except DuplicateTransaction as exc:
+        raise HTTPException(
+            status_code=status.HTTP_409_CONFLICT,
+            detail={"code": "duplicate_transaction", "transaction_id": str(exc)},
+        ) from exc
+</code></pre>
+<p>route รับผิดชอบ HTTP: รับ model, เรียก service, map domain error เป็น 409 และประกาศ response contract ส่วน service ไม่ import <code>HTTPException</code> จึงทดสอบโดยไม่ต้องเปิด server ได้</p>
+<pre><code class="language-text">POST valid, new id  → service add สำเร็จ → 201 + TransactionCreated
+POST valid, same id → DuplicateTransaction → route map → 409
+POST invalid amount → Pydantic/FastAPI reject → 422; service ไม่ถูกเรียก
+</code></pre>
+<h2 id="lesson-10-step-5-tests-contract">Step 5: เขียน tests จาก contract</h2>
+<p>สร้าง <code>test_main.py</code>:</p>
+<pre><code class="language-python">from fastapi.testclient import TestClient
+
+from main import app, repository
+
+client = TestClient(app)
+
+
+def setup_function() -&gt; None:
+    repository._rows.clear()  # ใช้เฉพาะ lab; production ใช้ fixture/dependency override
+
+
+def test_create_transaction() -&gt; None:
+    response = client.post(
+        "/transactions",
+        json={"transaction_id": "T1", "amount_satangs": 5000},
+    )
+
+    assert response.status_code == 201
+    assert response.json() == {
+        "transaction_id": "T1",
+        "amount_satangs": 5000,
+        "status": "created",
+    }
+
+
+def test_rejects_non_positive_amount() -&gt; None:
+    response = client.post(
+        "/transactions",
+        json={"transaction_id": "T1", "amount_satangs": 0},
+    )
+    assert response.status_code == 422
+
+
+def test_duplicate_is_conflict() -&gt; None:
+    payload = {"transaction_id": "T1", "amount_satangs": 5000}
+    assert client.post("/transactions", json=payload).status_code == 201
+    response = client.post("/transactions", json=payload)
+    assert response.status_code == 409
+    assert response.json()["detail"]["code"] == "duplicate_transaction"
+</code></pre>
+<p><code>TestClient</code> เรียก app โดยไม่ต้องเปิด socket จริง จึงเหมาะกับ API tests แต่ยังไม่พิสูจน์ reverse proxy, container network หรือ production database</p>
+<p>รัน:</p>
+<pre><code class="language-powershell">python -m pytest -q
+</code></pre>
+<h2 id="lesson-10-deep-dive-global-memory-dependency-injection">Deep Dive: ปรับจาก global memory ไปสู่ dependency injection</h2>
+<p>global repository ทำให้ตัวอย่างสั้นแต่ test isolation และ lifecycle ไม่ชัด งานจริงควรให้ route ขอ service ผ่าน dependency:</p>
+<pre><code class="language-python">from typing import Annotated
+from fastapi import Depends
+
+
+def get_service() -&gt; TransactionService:
+    return service
+
+
+ServiceDep = Annotated[TransactionService, Depends(get_service)]
+
+
+@app.post("/transactions", response_model=TransactionCreated, status_code=201)
+def create_transaction(request: TransactionCreate, svc: ServiceDep) -&gt; TransactionCreated:
+    return svc.create(request)
+</code></pre>
+<p>test สามารถ override <code>get_service</code> ด้วย fake ที่ควบคุมได้ แล้ว reset override หลัง test นี่คือเหตุผลของ dependency injection: ทำ dependency ชัด, เปลี่ยน implementation และทดสอบ failure ได้ ไม่ใช่เพียง syntax ของ framework</p>
+<h2 id="lesson-10-debugging-checklist">Debugging Checklist</h2>
+<pre><code class="language-text">ModuleNotFoundError → อยู่ project root และ import path ถูกหรือไม่
+404                  → method/path/prefix ถูกหรือไม่
+405                  → path มี แต่ใช้ method ผิด
+422                  → เปิด response.detail ดู loc/type/input
+500                  → อ่าน server log/trace id; อย่าส่ง traceback ให้ client
+test ผ่าน server พัง → ตรวจ environment, startup, network และ dependency จริง
+</code></pre>
+<h2 id="lesson-10-mini-challenge">Mini Challenge</h2>
+<p>เพิ่ม <code>GET /transactions/{transaction_id}</code> ให้คืน 200 เมื่อพบและ 404 เมื่อไม่พบ เขียน tests ก่อน implementation และอย่าคืน <code>_rows</code> ทั้ง dict ออกสู่ API</p><a class="back" href="#top">↑ กลับสารบัญ</a></article><article id="lesson-11"><div class="source">10_real_service_blueprint.md</div><details class="local-toc"><summary>หัวข้อในบทนี้</summary><a href="#lesson-11-problem-statement">Problem Statement</a><a href="#lesson-11-contract">Contract ก่อนเขียนโค้ด</a><a href="#lesson-11-layers">แยก Layers และความรับผิดชอบ</a><a href="#lesson-11-synchronous-asynchronous-contract">Synchronous กับ Asynchronous Contract</a><a href="#lesson-11-error-mapping-response">Error Mapping: จากสาเหตุสู่ response</a><a href="#lesson-11-end-to-end-debug-map">End-to-End Debug Map</a><a href="#lesson-11-observability">Observability ที่พอใช้ตามงาน</a><a href="#lesson-11-test-matrix">Test Matrix</a><a href="#lesson-11-security-boundary">Security Boundary</a><a href="#lesson-11-from-week-2-to-week-5">From Week 2 to Week 5</a><a href="#lesson-11-mini-project-intake-api-design-pack">Mini Project: Intake API Design Pack</a></details><h1 id="lesson-11-10-real-service-blueprint-debugging">10 — Real Service Blueprint และ Debugging</h1>
+<p>บทนี้รวม Week 2 ให้เห็นเป็นบริการที่ต่อเข้ากับ n8n, AI และ worker ในสัปดาห์ถัดไป ใช้ case Resume Intake ด้วย metadata สังเคราะห์ ไม่รับไฟล์/ข้อมูลจริงในตัวอย่าง</p>
+<h2 id="lesson-11-problem-statement">Problem Statement</h2>
+<p>ระบบรับคำขอสร้างงานอ่าน resume แล้วตอบ task ID เพื่อให้ caller ตรวจสถานะภายหลัง เป้าหมาย Week 2 คือออกแบบ HTTP contract และขอบเขต service ยังไม่ให้ AI อ่านหรือตัดสินผู้สมัคร</p>
+<pre><code class="language-text">Client/n8n
+  │ POST /resume-intakes
+  │ Idempotency-Key: HR-001
+  │ {candidate_id, file_ref, file_hash}
+  v
+FastAPI → input validation → auth/policy → IntakeService → Repository
+  │                                                   ↓ durable task
+  └── 202 {task_id, status:"queued", duplicate:false}
+</code></pre>
+<h2 id="lesson-11-contract">Contract ก่อนเขียนโค้ด</h2>
+<p>Request:</p>
+<pre><code class="language-http">POST /api/v1/resume-intakes HTTP/1.1
+Content-Type: application/json
+Idempotency-Key: HR-001
+Authorization: Bearer &lt;redacted&gt;
+
+{
+  "candidate_id": "C-SYNTH-001",
+  "file_ref": "fixture://resume/synth-001",
+  "file_hash": "sha256-example"
+}
+</code></pre>
+<p>Responses:</p>
+<div class="table-scroll"><table>
+<thead>
+<tr>
+<th>กรณี</th>
+<th style="text-align: right;">HTTP</th>
+<th>body สำคัญ</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>สร้าง task ใหม่</td>
+<td style="text-align: right;">202</td>
+<td>task_id, queued, duplicate=false</td>
+</tr>
+<tr>
+<td>key+payload เดิม</td>
+<td style="text-align: right;">200 หรือ 202 ตาม contract</td>
+<td>task เดิม, duplicate=true</td>
+</tr>
+<tr>
+<td>key เดิม payload ต่าง</td>
+<td style="text-align: right;">409</td>
+<td>idempotency_conflict</td>
+</tr>
+<tr>
+<td>field/type ผิด</td>
+<td style="text-align: right;">422</td>
+<td>validation details</td>
+</tr>
+<tr>
+<td>ไม่มี/ไม่ถูกต้อง credential</td>
+<td style="text-align: right;">401</td>
+<td>generic auth error</td>
+</tr>
+<tr>
+<td>มีตัวตนแต่ไม่มีสิทธิ์</td>
+<td style="text-align: right;">403</td>
+<td>forbidden</td>
+</tr>
+<tr>
+<td>database ไม่พร้อม</td>
+<td style="text-align: right;">503</td>
+<td>dependency_unavailable + trace_id</td>
+</tr>
+</tbody>
+</table></div>
+<p>เลือก behavior duplicate ให้ชัดและ test ตาม contract ไม่จำเป็นต้องเหมือนทุกระบบ</p>
+<h2 id="lesson-11-layers">แยก Layers และความรับผิดชอบ</h2>
+<pre><code class="language-text">Router       HTTP parsing/status/header + call service
+Schema       shape/type/field constraints
+Service      use case + business transitions
+Repository   persistence/query/unique constraint/transaction
+Client       calls external services with timeout policy
+Worker       processes queued task later (Week 5)
+</code></pre>
+<p>route ที่ยาวมักเกิดเพราะ validation, SQL, external calls และ error mapping ถูกวางรวมกัน แยกชั้นเพื่อให้แต่ละ failure test ได้ตรง boundary</p>
+<h2 id="lesson-11-synchronous-asynchronous-contract">Synchronous กับ Asynchronous Contract</h2>
+<p>แบบ synchronous:</p>
+<pre><code class="language-text">request → อ่านไฟล์ → เรียก AI → validate → save → response
+client รอทั้งหมด; timeout/retry ซับซ้อนและ request นาน
+</code></pre>
+<p>แบบ asynchronous:</p>
+<pre><code class="language-text">request → validate → persist queued task → 202
+                                  ↓ ภายหลัง
+                           worker → analyze → result
+client → GET /tasks/{id} → queued/processing/succeeded/needs_review/failed
+</code></pre>
+<p>ห้ามตอบ 202 ก่อน persist task สำเร็จ และ <code>BackgroundTasks</code> ใน process เดียวไม่ได้กลายเป็น durable queue โดยอัตโนมัติ หาก process ตาย งานที่ยังไม่เก็บอย่างทนทานอาจหาย ประเด็น worker/lease/crash recovery อยู่ Week 5</p>
+<h2 id="lesson-11-error-mapping-response">Error Mapping: จากสาเหตุสู่ response</h2>
+<pre><code class="language-text">Pydantic error            → 422 invalid_request
+TaskNotFound              → 404 task_not_found
+IdempotencyConflict       → 409 idempotency_conflict
+DatabaseTemporarilyDown   → 503 dependency_unavailable
+unexpected exception      → 500 internal_error + trace_id
+</code></pre>
+<p>client ต้องได้ error body ที่เสถียรพอให้เขียน logic แต่ไม่ควรได้ SQL, stack trace, secret หรือ raw resume</p>
+<p>ตัวอย่าง error body:</p>
+<pre><code class="language-json">{
+  "error": {
+    "code": "idempotency_conflict",
+    "message": "The key was already used with different input",
+    "trace_id": "trace-synthetic-7"
+  }
+}
+</code></pre>
+<h2 id="lesson-11-end-to-end-debug-map">End-to-End Debug Map</h2>
+<pre><code class="language-text">Client says timeout
+   ↓ มี request ใน access log หรือไม่
+ไม่มี → DNS/TLS/network/proxy/client timeout
+มี   → route เริ่มหรือไม่ + trace_id
+          ↓
+     validation ผ่านหรือไม่
+          ↓
+     service เรียก dependency ใด
+          ↓
+     DB commit สำเร็จหรือ rollback
+          ↓
+     response ถูกสร้างแต่กลับไม่ถึง clientหรือไม่
+</code></pre>
+<p>เมื่อ client timeout หลัง server commit อาจมี task ถูกสร้างแล้ว การ retry ด้วย idempotency key เดิมควรคืน task เดิม ไม่สร้างใหม่</p>
+<h2 id="lesson-11-observability">Observability ที่พอใช้ตามงาน</h2>
+<p>structured log ต่อ transition:</p>
+<pre><code class="language-json">{
+  "event": "resume_intake_created",
+  "trace_id": "trace-synthetic-7",
+  "task_id": "TASK-7",
+  "candidate_ref": "C-SYNTH-001",
+  "status": "queued",
+  "duration_ms": 24
+}
+</code></pre>
+<p>ไม่ log raw authorization header, file bytes หรือ resume text Metrics ขั้นต้น: request count/status, latency, validation failures, duplicate/conflict rate และ dependency error rate</p>
+<h2 id="lesson-11-test-matrix">Test Matrix</h2>
+<div class="table-scroll"><table>
+<thead>
+<tr>
+<th>ชั้น</th>
+<th>Test</th>
+<th>ไม่ควรแตะ</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>service unit</td>
+<td>state/business errors</td>
+<td>HTTP/server/real DB</td>
+</tr>
+<tr>
+<td>repository integration</td>
+<td>unique key/transaction</td>
+<td>external API</td>
+</tr>
+<tr>
+<td>API contract</td>
+<td>status/body/headers</td>
+<td>production DB/network</td>
+</tr>
+<tr>
+<td>external client</td>
+<td>timeout/error translation ด้วย mock transport</td>
+<td>provider จริง</td>
+</tr>
+<tr>
+<td>end-to-end staging</td>
+<td>network/config/persistence จริงของ staging</td>
+<td>production data</td>
+</tr>
+</tbody>
+</table></div>
+<p>เขียน negative cases ก่อนต่อ Week 3: missing field, malformed JSON, duplicate same payload, duplicate changed payload, unauthorized, forbidden, DB unavailable และ client replay</p>
+<h2 id="lesson-11-security-boundary">Security Boundary</h2>
+<ul>
+<li>authenticate caller ก่อนทำงานที่ต้องมีตัวตน</li>
+<li>authorize ว่า caller เข้าถึง candidate/task นี้ได้</li>
+<li>validate file reference ตาม allowlist/scope ไม่เปิด arbitrary local path หรือ URL</li>
+<li>จำกัด request size/rate และไม่เชื่อ filename/content type เพียงอย่างเดียว</li>
+<li>ใช้ synthetic data ใน lab และตรวจ policy/retention ก่อนข้อมูลจริง</li>
+</ul>
+<h2 id="lesson-11-from-week-2-to-week-5">From Week 2 to Week 5</h2>
+<pre><code class="language-text">Week 2 FastAPI contract
+       ↓ Week 3 n8n เรียก API และ route outcomes
+Week 4 analysis service คืน validated/review result
+       ↓ Week 5 durable worker จัดการ queued task/retry/crash
+ระบบรวม: API + orchestration + guarded AI + operational reliability
+</code></pre>
+<h2 id="lesson-11-mini-project-intake-api-design-pack">Mini Project: Intake API Design Pack</h2>
+<p>ส่งมอบโดยยังไม่ต้องมี AI:</p>
+<ol>
+<li>OpenAPI/contract สำหรับ POST intake และ GET task</li>
+<li>Pydantic request/response models</li>
+<li>thin routes + service + repository interface</li>
+<li>idempotency behavior และ state machine</li>
+<li>test matrix อย่างน้อย 10 cases</li>
+<li>run instructions, sample curl และ known limitations</li>
+</ol>
+<p>หากอีกคนอ่านแล้วรู้ว่าจะส่งอะไร, ได้สถานะใด, retry อย่างไร และตาม task ที่ไหน งาน Week 2 ของคุณพร้อมต่อ n8n แล้ว</p><a class="back" href="#top">↑ กลับสารบัญ</a></article><article id="lesson-12"><div class="source">11_sources_and_verification.md</div><details class="local-toc"><summary>หัวข้อในบทนี้</summary><a href="#lesson-12-_1">แหล่งอ้างอิงหลัก</a><a href="#lesson-12-_2">สิ่งที่หนังสือพิสูจน์และไม่พิสูจน์</a><a href="#lesson-12-verification-checklist">Verification Checklist หลังแก้หนังสือ</a></details><h1 id="lesson-12-11-sources-verification">11 — Sources และ Verification</h1>
+<p>ตรวจเอกสารทางการล่าสุดสำหรับฉบับ Textbook เมื่อ 12 กันยายน 2026 ชื่อ API/พฤติกรรมของ dependency อาจเปลี่ยนเมื่ออัปเกรด จึงให้ตรวจ release notes และทดสอบใน environment ของทีมอีกครั้ง</p>
+<h2 id="lesson-12-_1">แหล่งอ้างอิงหลัก</h2>
+<ul>
+<li><a href="https://fastapi.tiangolo.com/tutorial/body/">FastAPI — Request Body</a>: Pydantic model เป็น request body, parsing/validation/documentation</li>
+<li><a href="https://fastapi.tiangolo.com/tutorial/body-nested-models/">FastAPI — Nested Models</a>: typed lists/dicts และ nested request structures</li>
+<li><a href="https://fastapi.tiangolo.com/tutorial/response-model/">FastAPI — Response Model</a>: output filtering/validation และการแยก input/output models</li>
+<li><a href="https://fastapi.tiangolo.com/tutorial/handling-errors/">FastAPI — Handling Errors</a>: <code>HTTPException</code> และ error responses</li>
+<li><a href="https://fastapi.tiangolo.com/tutorial/dependencies/">FastAPI — Dependencies</a>: dependency graph/injection สำหรับ database, security และ services</li>
+<li><a href="https://fastapi.tiangolo.com/tutorial/testing/">FastAPI — Testing</a>: <code>TestClient</code>, pytest และการส่ง JSON/headers ใน tests</li>
+<li><a href="https://fastapi.tiangolo.com/advanced/testing-dependencies/">FastAPI — Testing Dependencies with Overrides</a>: แทน dependency ใน test และ reset override</li>
+<li><a href="https://fastapi.tiangolo.com/tutorial/background-tasks/">FastAPI — Background Tasks</a>: งานหลัง response; บทนี้เพิ่มข้อควรระวังว่าไม่ใช่ durable queue โดยอัตโนมัติ</li>
+<li><a href="https://docs.pydantic.dev/latest/">Pydantic Documentation</a>: models, fields, validation errors และ strictness</li>
+</ul>
+<h2 id="lesson-12-_2">สิ่งที่หนังสือพิสูจน์และไม่พิสูจน์</h2>
+<pre><code class="language-text">Markdown/HTML examples อ่านและ syntax สมเหตุผล
+        ≠ ทุก snippet ถูกรวมเป็น production application เดียว
+TestClient ผ่าน
+        ≠ proxy/TLS/container/network จริงผ่าน
+mock dependency ผ่าน
+        ≠ provider หรือ database จริงพร้อมใช้งาน
+Pydantic ผ่าน
+        ≠ business rule/authorization ถูกต้อง
+</code></pre>
+<p>Challenge starter มีส่วนที่ตั้งใจให้ผู้เรียนทำต่อ อย่านับการอ่านเฉลยหรือการรันเฉพาะ health endpoint เป็น Definition of Done ทั้ง Week</p>
+<h2 id="lesson-12-verification-checklist">Verification Checklist หลังแก้หนังสือ</h2>
+<ul>
+<li>internal Markdown/HTML anchors ไม่ขาด</li>
+<li>code fences ปิดครบและ Python snippets สำคัญ compile/run แยกได้</li>
+<li>ไม่มี secret หรือ endpoint production ในเอกสาร</li>
+<li>ตัวอย่างใช้ synthetic identifiers/data</li>
+<li>HTML ที่เผยแพร่มีบท 09–11 และ flow/code blocks ครบ</li>
+<li>หน้า Week 1/3/4/5 และไฟล์เดิมไม่ถูกเขียนทับ</li>
+</ul><a class="back" href="#top">↑ กลับสารบัญ</a></article><article id="lesson-13"><div class="source">drills/README.md</div><details class="local-toc"><summary>หัวข้อในบทนี้</summary></details><h1 id="lesson-13-week-2-drills">Week 2 Drills</h1>
+<p>ทำใน repo ทดลองและ commit แยก drill: 01 อ่าน HTTP, 02 reliable client, 03 FastAPI contract, 04 failure tests</p><a class="back" href="#top">↑ กลับสารบัญ</a></article><article id="lesson-14"><div class="source">drills/drill_01_http_detective.md</div><details class="local-toc"><summary>หัวข้อในบทนี้</summary></details><h1 id="lesson-14-drill-01-http-detective">Drill 01 — HTTP Detective</h1>
+<p>ใช้ curl กับ API ทดลอง 6 requests: GET success, POST success, malformed JSON, missing field, unknown resource และ wrong content type บันทึก method/path/query/headers/body/status และอธิบายว่า failure เกิดก่อนหรือหลัง endpoint</p><a class="back" href="#top">↑ กลับสารบัญ</a></article><article id="lesson-15"><div class="source">drills/drill_02_reliable_client.md</div><details class="local-toc"><summary>หัวข้อในบทนี้</summary></details><h1 id="lesson-15-drill-02-reliable-client">Drill 02 — Reliable Client</h1>
+<p>เขียน client ที่มี timeout และแปลง 404, 429, 503, invalid JSON เป็น error categories ของโปรเจกต์ ใช้ fake transport ทดสอบทุกกรณี ห้าม network จริง อธิบายว่า case ใด retry ได้และเพราะอะไร</p><a class="back" href="#top">↑ กลับสารบัญ</a></article><article id="lesson-16"><div class="source">drills/drill_03_fastapi_contract.md</div><details class="local-toc"><summary>หัวข้อในบทนี้</summary></details><h1 id="lesson-16-drill-03-fastapi-contract">Drill 03 — FastAPI Contract</h1>
+<p>สร้าง <code>POST /items</code> และ <code>GET /items/{id}</code> แยก request/response models, forbid unknown fields, ตรวจ boundary, map not found/conflict และยืนยันว่า internal field ไม่ออก response</p><a class="back" href="#top">↑ กลับสารบัญ</a></article><article id="lesson-17"><div class="source">drills/drill_04_failure_testing.md</div><details class="local-toc"><summary>หัวข้อในบทนี้</summary></details><h1 id="lesson-17-drill-04-failure-testing">Drill 04 — Failure Testing</h1>
+<p>เขียน tests สำหรับ duplicate, DB rollback, upstream timeout, malformed upstream 200 response และ unexpected exception ตรวจทั้ง status/error shape/DB side effect/secret leakage</p><a class="back" href="#top">↑ กลับสารบัญ</a></article><article id="lesson-18"><div class="source">special_challenge_api_sentinel/README.md</div><details class="local-toc"><summary>หัวข้อในบทนี้</summary></details><h1 id="lesson-18-special-challenge-api-sentinel">Special Challenge — API Sentinel</h1>
 <p>สร้าง API รับ transaction events และเรียก Risk Provider จำลอง โดยใช้ความรู้ Week 1–2</p>
 <pre><code class="language-text">Client/Webhook → FastAPI → Pydantic → Transaction Service
 → SQLite + Idempotency → Risk Client → Structured Response/Audit
 </code></pre>
-<p>อ่าน <a href="#lesson-18">Requirements</a>, <a href="#lesson-19">Test Cases</a>, <a href="#lesson-17">Hints</a> และ <a href="#lesson-16">Rubric</a> ก่อนเริ่ม</p><a class="back" href="#top">↑ กลับสารบัญ</a></article><article id="lesson-16"><div class="source">special_challenge_api_sentinel/GRADING_RUBRIC.md</div><details class="local-toc"><summary>หัวข้อในบทนี้</summary></details><h1 id="lesson-16-grading-rubric-100">Grading Rubric — 100</h1>
+<p>อ่าน <a href="#lesson-21">Requirements</a>, <a href="#lesson-22">Test Cases</a>, <a href="#lesson-20">Hints</a> และ <a href="#lesson-19">Rubric</a> ก่อนเริ่ม</p><a class="back" href="#top">↑ กลับสารบัญ</a></article><article id="lesson-19"><div class="source">special_challenge_api_sentinel/GRADING_RUBRIC.md</div><details class="local-toc"><summary>หัวข้อในบทนี้</summary></details><h1 id="lesson-19-grading-rubric-100">Grading Rubric — 100</h1>
 <ul>
 <li>API contracts/status codes 20</li>
 <li>architecture/separation 15</li>
@@ -1142,7 +1622,7 @@ Output หรือ error ตาม contract
 <li>automated tests 15</li>
 <li>README/logging/security 5</li>
 </ul>
-<p>Critical failure: secret ใน repo/log, test ยิง production, SQL interpolation จาก input, duplicate สร้าง financial effect ซ้ำ, หรือ error ตอบ success ต้องแก้ก่อนถือว่าผ่าน</p><a class="back" href="#top">↑ กลับสารบัญ</a></article><article id="lesson-17"><div class="source">special_challenge_api_sentinel/HINTS.md</div><details class="local-toc"><summary>หัวข้อในบทนี้</summary></details><h1 id="lesson-17-progressive-hints">Progressive Hints</h1>
+<p>Critical failure: secret ใน repo/log, test ยิง production, SQL interpolation จาก input, duplicate สร้าง financial effect ซ้ำ, หรือ error ตอบ success ต้องแก้ก่อนถือว่าผ่าน</p><a class="back" href="#top">↑ กลับสารบัญ</a></article><article id="lesson-20"><div class="source">special_challenge_api_sentinel/HINTS.md</div><details class="local-toc"><summary>หัวข้อในบทนี้</summary></details><h1 id="lesson-20-progressive-hints">Progressive Hints</h1>
 <ol>
 <li>เขียน schemas และ contract table ก่อน route</li>
 <li>ทำ service เป็น pure/use-case logic เท่าที่ทำได้</li>
@@ -1151,8 +1631,8 @@ Output หรือ error ตาม contract
 <li>wrap provider library exception เป็น project error</li>
 <li>override dependencies ใน FastAPI tests</li>
 <li>ทดสอบ side effect จำนวน row ไม่ใช่ status อย่างเดียว</li>
-</ol><a class="back" href="#top">↑ กลับสารบัญ</a></article><article id="lesson-18"><div class="source">special_challenge_api_sentinel/REQUIREMENTS.md</div><details class="local-toc"><summary>หัวข้อในบทนี้</summary><a href="#lesson-18-endpoints">Endpoints</a><a href="#lesson-18-engineering">Engineering</a><a href="#lesson-18-failure-policy">Failure Policy</a></details><h1 id="lesson-18-api-sentinel-requirements">API Sentinel — Requirements</h1>
-<h2 id="lesson-18-endpoints">Endpoints</h2>
+</ol><a class="back" href="#top">↑ กลับสารบัญ</a></article><article id="lesson-21"><div class="source">special_challenge_api_sentinel/REQUIREMENTS.md</div><details class="local-toc"><summary>หัวข้อในบทนี้</summary><a href="#lesson-21-endpoints">Endpoints</a><a href="#lesson-21-engineering">Engineering</a><a href="#lesson-21-failure-policy">Failure Policy</a></details><h1 id="lesson-21-api-sentinel-requirements">API Sentinel — Requirements</h1>
+<h2 id="lesson-21-endpoints">Endpoints</h2>
 <ul>
 <li><code>GET /health</code></li>
 <li><code>POST /api/v1/transactions</code> รับ transaction ID, account ID, amount satangs, currency</li>
@@ -1160,7 +1640,7 @@ Output หรือ error ตาม contract
 <li><code>GET /api/v1/transactions/summary</code></li>
 <li><code>POST /webhooks/risk-results</code></li>
 </ul>
-<h2 id="lesson-18-engineering">Engineering</h2>
+<h2 id="lesson-21-engineering">Engineering</h2>
 <ul>
 <li>Pydantic input/output models; unknown fields policy ชัด</li>
 <li>route/service/repository/client แยกกัน</li>
@@ -1171,8 +1651,8 @@ Output หรือ error ตาม contract
 <li>structured errors พร้อม request ID; ไม่เผย secret/traceback</li>
 <li><code>.env.example</code>, README และ pytest</li>
 </ul>
-<h2 id="lesson-18-failure-policy">Failure Policy</h2>
-<p>แยก invalid request, not found, conflict, provider timeout, rate limit, invalid provider response และ unexpected error ห้ามตอบ success เมื่อ critical persistence ล้ม</p><a class="back" href="#top">↑ กลับสารบัญ</a></article><article id="lesson-19"><div class="source">special_challenge_api_sentinel/TEST_CASES.md</div><details class="local-toc"><summary>หัวข้อในบทนี้</summary></details><h1 id="lesson-19-required-test-cases">Required Test Cases</h1>
+<h2 id="lesson-21-failure-policy">Failure Policy</h2>
+<p>แยก invalid request, not found, conflict, provider timeout, rate limit, invalid provider response และ unexpected error ห้ามตอบ success เมื่อ critical persistence ล้ม</p><a class="back" href="#top">↑ กลับสารบัญ</a></article><article id="lesson-22"><div class="source">special_challenge_api_sentinel/TEST_CASES.md</div><details class="local-toc"><summary>หัวข้อในบทนี้</summary></details><h1 id="lesson-22-required-test-cases">Required Test Cases</h1>
 <ol>
 <li>health 200</li>
 <li>valid transaction 201</li>
@@ -1189,7 +1669,7 @@ Output หรือ error ตาม contract
 <li>duplicate webhook no duplicate effect</li>
 <li>response ไม่มี internal/secret field</li>
 <li>summary ถูกต้องหลังหลายรายการ</li>
-</ol><a class="back" href="#top">↑ กลับสารบัญ</a></article><article id="lesson-20"><div class="source">special_challenge_api_sentinel/starter/README.md</div><details class="local-toc"><summary>หัวข้อในบทนี้</summary></details><h1 id="lesson-20-api-sentinel-starter">API Sentinel Starter</h1>
+</ol><a class="back" href="#top">↑ กลับสารบัญ</a></article><article id="lesson-23"><div class="source">special_challenge_api_sentinel/starter/README.md</div><details class="local-toc"><summary>หัวข้อในบทนี้</summary></details><h1 id="lesson-23-api-sentinel-starter">API Sentinel Starter</h1>
 <pre><code class="language-powershell">py -m venv .venv
 .\.venv\Scripts\Activate.ps1
 python -m pip install -e ".[dev]"

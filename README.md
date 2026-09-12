@@ -7,6 +7,7 @@ Static learning portal containing the generated Week 1 through Week 5 HTML books
 - `index.html` — landing page
 - `week-1.html` — Week 1 learning book
 - `week-2.html` — Week 2 learning book
+- `week-2-materials.zip` — Week 2 Markdown, drills and API Sentinel starter
 - `week-3.html` — Week 3 n8n learning book, drills, FlowGuard and HR Intake
 - `week-3-materials.zip` — Week 3 Markdown, local mock API/tests and workflow examples
 - `week-3-assets/workflows/` — individual downloadable workflow JSON files
