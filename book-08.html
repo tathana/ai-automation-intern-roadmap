@@ -1,0 +1,350 @@
+<!doctype html><html lang="th"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><meta name="description" content="Reusable Python scripts and two full reference projects"><title>Book 08 — Practical Scripts & Full Projects</title><style>
+:root{color-scheme:light;--ink:#203149;--muted:#5b6b7d;--line:#dbe3e9;--accent:#096b63}
+*{box-sizing:border-box}html{scroll-behavior:smooth;scroll-padding-top:24px}body{margin:0;background:#f3f6f8;color:var(--ink);font-family:"Leelawadee UI",Tahoma,sans-serif;font-size:17px;line-height:1.9}a{color:var(--accent);text-underline-offset:4px}header{background:#173b43;color:white;padding:56px max(24px,calc((100vw - 1240px)/2));}header h1{font-size:clamp(28px,4vw,46px);line-height:1.35;margin:12px 0}header p{max-width:780px;color:#d9e9eb}.eyebrow{letter-spacing:2px;font-size:13px;color:#a8dfd5}.layout{max-width:1300px;margin:auto;display:grid;grid-template-columns:280px minmax(0,1fr);gap:30px;padding:30px 24px}aside{position:sticky;top:20px;align-self:start;max-height:92vh;overflow:auto;padding-right:12px}aside h2{font-size:18px}nav a{display:block;padding:9px 10px;border-bottom:1px solid var(--line);text-decoration:none;font-size:14px;line-height:1.6}nav a:hover{background:#e1eeeb}article{background:white;padding:clamp(20px,4vw,48px);border:1px solid var(--line);border-radius:12px;margin-bottom:28px;overflow-wrap:anywhere}article h1{font-size:29px;line-height:1.5;margin:20px 0 28px}h2{font-size:24px;margin-top:40px}h3{font-size:20px;margin-top:28px}pre{background:#152c3b;color:#eaf2f7;padding:20px;border-radius:8px;overflow:auto;line-height:1.65;font-size:14px;white-space:pre;overflow-wrap:normal}code{font-family:Consolas,"Courier New",monospace}p code,li code,td code{background:#edf2f5;padding:2px 5px;border-radius:4px;font-size:.9em}blockquote{margin:24px 0;padding:4px 20px;border-left:4px solid #138779;background:#eff8f5}table{border-collapse:collapse;width:100%;font-size:15px}th,td{border:1px solid var(--line);padding:12px;text-align:left;vertical-align:top}th{background:#eaf2f2}.table-scroll{overflow:auto;margin:20px 0}hr{border:0;border-top:1px solid var(--line);margin:32px 0}.source{font-size:12px;color:var(--muted)}.local-toc{margin-top:18px;font-size:14px;background:#f5f8fa;padding:10px 14px;border-radius:6px}.local-toc a{display:block;margin:7px 0}summary{cursor:pointer}.back{display:inline-block;margin-top:24px;font-size:14px}button{border:1px solid #aac8c5;background:white;color:#175c54;padding:9px 16px;border-radius:6px;cursor:pointer;font:inherit;font-size:14px}footer{max-width:1000px;margin:20px auto;padding:24px;color:var(--muted);font-size:14px}.visual-board{margin:20px 0;padding:16px;border:1px solid #cbd9df;border-radius:12px;background:#f7fafb;overflow:auto}.visual-flow{min-width:620px;display:flex;align-items:center;justify-content:center;gap:8px;padding:14px}.visual-box{min-width:112px;padding:11px;background:white;border:1px solid #9eb3bd;border-radius:9px;text-align:center;box-shadow:0 3px 8px rgba(20,50,60,.07)}.visual-arrow{font-weight:700;color:var(--accent)}.visual-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:10px}.visual-pane{background:white;border:1px solid #cbd9df;border-radius:8px;padding:12px}.visual-label{font-size:12px;letter-spacing:.08em;color:#527080;font-weight:700}.visual-lane{display:grid;grid-template-columns:130px 1fr;gap:12px;align-items:center;margin:8px 0}.visual-track{padding:9px;background:#e6f1ef;border-radius:7px}.visual-note{padding:11px 15px;border-left:4px solid var(--accent);background:#eaf5f3;margin:14px 0}@media(max-width:850px){.layout{display:block;padding:16px}aside{position:static;max-height:none;padding:0 0 20px}nav{max-height:280px;overflow:auto}article h1{font-size:25px}body{font-size:16px}.visual-grid{grid-template-columns:1fr}.visual-lane{grid-template-columns:1fr}}@media print{body{background:white;font-size:11pt}header{background:white;color:black;padding:0}header p{color:black}.layout{display:block;padding:0}aside,button,.local-toc,.back{display:none}article{border:0;padding:0;break-before:page}pre{white-space:pre-wrap;background:#f0f2f4;color:black;font-size:9pt}a{color:inherit}h1,h2,h3{break-after:avoid}.table-scroll{overflow:visible}}
+</style></head><body><header id="top"><div class="eyebrow">BOOK 08 · PRACTICAL REFERENCE</div><h1>Practical Script Library<br>& Full Reference Projects</h1><p>PDF/DOCX/TXT, CSV/JSON/XLSX, batch/hash, HTTP, SQLite, config/logging พร้อมระบบเต็มสองแบบที่รันและทดสอบได้</p><p><a style="color:white" href="index.html">หน้าหลัก</a> · <a style="color:white" href="project-01.html">Guided Project 01</a> · <a style="color:white" href="debugging-atlas.html">Debugging Atlas</a></p><button onclick="window.print()">พิมพ์ / บันทึกเป็น PDF</button> <a style="color:white" href="book-08-materials.zip">ดาวน์โหลด Scripts และ Full Projects</a></header><div class="layout"><aside><h2>สารบัญ</h2><nav><a href="#lesson-0">Book 08 — Practical Script Library &amp; Full Reference Projects</a><a href="#lesson-1">00 — Mental Model: Script ที่ใช้ซ้ำได้ต้องมี Contract</a><a href="#lesson-2">01 — Document Readers: PDF, DOCX และ TXT</a><a href="#lesson-3">02 — CSV, JSON และ Excel</a><a href="#lesson-4">03 — Batch Files, Manifest, Hash และ Deduplication</a><a href="#lesson-5">04 — HTTP/API Client ที่ไม่ค้างและไม่ Retry มั่ว</a><a href="#lesson-6">05 — SQLite Transaction และ Durable Job Store</a><a href="#lesson-7">06 — Configuration, Logging และ CLI</a><a href="#lesson-8">07 — Testing และ Safety Checklist สำหรับ Script</a><a href="#lesson-9">08 — Full Project A: Reliable Intake &amp; Review Platform</a><a href="#lesson-10">09 — Full Project B: Daily Operations Report Automation</a><a href="#lesson-11">10 — Sources, Versions และข้อจำกัด</a></nav></aside><main><article id="lesson-0"><div class="source">README.md</div><details class="local-toc"><summary>หัวข้อในบทนี้</summary><a href="#lesson-0-_1">สิ่งที่อยู่ในเล่ม</a><a href="#lesson-0-copypaste-engineering">วิธีใช้โดยไม่กลายเป็น Copy–Paste Engineering</a><a href="#lesson-0-_2">เริ่มจากตรงไหน</a><a href="#lesson-0-_3">ขอบเขตสำคัญ</a></details><h1 id="lesson-0-book-08-practical-script-library-full-reference-projects">Book 08 — Practical Script Library &amp; Full Reference Projects</h1>
+<p>เล่มนี้เป็นสะพานระหว่าง “อ่านบทเรียน” กับ “เปิดไฟล์ไปทำงาน” ประกอบด้วยสคริปต์ขนาดเล็กที่หยิบใช้แยกได้ และโปรเจกต์เต็มสองแบบที่แสดงว่าชิ้นส่วนเหล่านั้นถูกประกอบเป็นระบบอย่างไร</p>
+<h2 id="lesson-0-_1">สิ่งที่อยู่ในเล่ม</h2>
+<h3 id="lesson-0-practical-script-library">Practical Script Library</h3>
+<ul>
+<li>อ่าน PDF, DOCX, TXT, CSV, JSON และ XLSX อย่างมีขอบเขต</li>
+<li>สำรวจไฟล์ทั้งโฟลเดอร์และสร้าง manifest</li>
+<li>hash/deduplicate โดยไม่เทียบข้อมูลด้วยตา</li>
+<li>เรียก HTTP API พร้อม timeout และ bounded retry</li>
+<li>ใช้ SQLite transaction/idempotency</li>
+<li>โหลด environment configuration, logging และ CLI</li>
+<li>tests และ safety checklist ก่อนนำไปปรับใช้</li>
+</ul>
+<h3 id="lesson-0-full-reference-projects">Full Reference Projects</h3>
+<ol>
+<li><strong>Reliable Intake &amp; Review Platform</strong> — API, SQLite durable queue, worker, Mock AI, evidence validation, retry/lease, human review, audit, n8n, Docker และ tests</li>
+<li><strong>Daily Operations Report Automation</strong> — CSV/JSON intake, strict validation, atomic batch import, idempotency, SQLite, report API/CLI, audit, n8n, Docker และ tests</li>
+</ol>
+<h2 id="lesson-0-copypaste-engineering">วิธีใช้โดยไม่กลายเป็น Copy–Paste Engineering</h2>
+<pre><code class="language-text">เลือก script
+  ↓ อ่าน Input / Output / Failure
+  ↓ รัน fixture เล็ก
+  ↓ เขียน test ของ use case ตัวเอง
+  ↓ เปลี่ยนทีละ boundary
+  ↓ ตรวจ log/secret/PII
+  ↓ ค่อยนำเข้าโปรเจกต์
+</code></pre>
+<p>อย่าคัดลอกทั้งไฟล์เพียงเพราะรันผ่าน ตัวอย่างทั้งหมดมีขอบเขต local/synthetic และต้องปรับ policy, limits, authentication, dependency versions และ observability ตามระบบจริง</p>
+<h2 id="lesson-0-_2">เริ่มจากตรงไหน</h2>
+<ul>
+<li>ต้องอ่านเอกสาร: <a href="#lesson-2">01 — Document Readers</a></li>
+<li>ต้องส่ง batch: <a href="#lesson-3">02 — Tabular and Structured Data</a></li>
+<li>ต้องเชื่อม API: <a href="#lesson-5">04 — HTTP Client</a></li>
+<li>ต้องเก็บงานไม่ให้หาย/ซ้ำ: <a href="#lesson-6">05 — SQLite Job Store</a></li>
+<li>อยากอ่านระบบเต็ม: <a href="#lesson-9">08 — Project A</a> และ <a href="#lesson-10">09 — Project B</a></li>
+</ul>
+<h2 id="lesson-0-_3">ขอบเขตสำคัญ</h2>
+<ul>
+<li>PDF text extraction ไม่ใช่ OCR และไม่รับรองลำดับข้อความจากทุก layout</li>
+<li>ตัวอย่างไม่อ่าน macro-enabled Office files</li>
+<li>ไม่ส่งเอกสารหรือข้อมูลจริงไปบริการภายนอก</li>
+<li>Mock AI ไม่ใช่ตัวชี้วัด accuracy ของโมเดลจริง</li>
+<li>SQLite เหมาะกับ local/small single-host workload ไม่ใช่คำตอบเดียวสำหรับทุก production scale</li>
+</ul><a class="back" href="#top">↑ กลับสารบัญ</a></article><article id="lesson-1"><div class="source">00_script_mental_model.md</div><details class="local-toc"><summary>หัวข้อในบทนี้</summary><a href="#lesson-1-_1">โครงที่ควรเห็น</a><a href="#lesson-1-copy">Copy แล้วต้องเปลี่ยนอะไรบ้าง</a></details><h1 id="lesson-1-00-mental-model-script-contract">00 — Mental Model: Script ที่ใช้ซ้ำได้ต้องมี Contract</h1>
+<p>สคริปต์ที่ “ใช้ได้บนเครื่องเรา” ยังไม่เท่ากับสคริปต์ที่ทีมใช้ต่อได้ ก่อนเขียนให้ตอบห้าข้อ:</p>
+<div class="table-scroll"><table>
+<thead>
+<tr>
+<th>คำถาม</th>
+<th>ตัวอย่าง document reader</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Input คืออะไร</td>
+<td>path ที่ caller เลือกไว้แล้ว</td>
+</tr>
+<tr>
+<td>Output คืออะไร</td>
+<td>text + metadata/hash</td>
+</tr>
+<tr>
+<td>Side effect คืออะไร</td>
+<td>อ่านไฟล์; ไม่ลบ/ย้าย/ส่งออก</td>
+</tr>
+<tr>
+<td>Failure คืออะไร</td>
+<td>unsupported, encrypted, empty, too large</td>
+</tr>
+<tr>
+<td>Trust boundary อยู่ไหน</td>
+<td>filename/extension ยังไม่ใช่หลักฐานว่าไฟล์ปลอดภัย</td>
+</tr>
+</tbody>
+</table></div>
+<h2 id="lesson-1-_1">โครงที่ควรเห็น</h2>
+<pre><code class="language-text">CLI/API input
+   ↓ parse + validate
+pure/core function
+   ↓ typed result
+side-effect boundary
+   ↓ file / network / database
+observable result + controlled error
+</code></pre>
+<p>แยก core function ออกจาก <code>argparse</code>, HTTP route และ <code>print()</code> เพื่อให้ test logic โดยไม่ต้องเปิด network หรือเขียนไฟล์จริงทุกครั้ง</p>
+<h2 id="lesson-1-copy">Copy แล้วต้องเปลี่ยนอะไรบ้าง</h2>
+<ol>
+<li>limits: ขนาดไฟล์, จำนวนหน้า/แถว, timeout</li>
+<li>policy: extension/MIME, path allowlist, PII handling</li>
+<li>contracts: required columns/fields และ error shape</li>
+<li>observability: correlation ID, log fields, metrics</li>
+<li>recovery: retry ได้หรือไม่, idempotency key คืออะไร</li>
+</ol>
+<blockquote>
+<p>Script library เป็น starting point ไม่ใช่ production guarantee คำว่า reusable หมายถึง boundary ชัดและมี test ไม่ใช่ใช้ได้โดยไม่ต้องอ่าน</p>
+</blockquote><a class="back" href="#top">↑ กลับสารบัญ</a></article><article id="lesson-2"><div class="source">01_document_readers.md</div><details class="local-toc"><summary>หัวข้อในบทนี้</summary><a href="#lesson-2-_1">ภาพรวม</a><a href="#lesson-2-pdf">PDF</a><a href="#lesson-2-docx">DOCX</a><a href="#lesson-2-txt">TXT</a><a href="#lesson-2-_2">ทดลอง</a><a href="#lesson-2-failure">Failure ที่ต้องทดสอบ</a></details><h1 id="lesson-2-01-document-readers-pdf-docx-txt">01 — Document Readers: PDF, DOCX และ TXT</h1>
+<h2 id="lesson-2-_1">ภาพรวม</h2>
+<pre><code class="language-text">path
+ ↓ ตรวจชนิด + size ก่อน
+reader ตาม format
+ ↓ extract text
+normalize whitespace แบบไม่ทำลายหลักฐาน
+ ↓ ตรวจ empty/length
+DocumentText(text, sha256, pages, warnings)
+</code></pre>
+<p>เปิด <a href="book-08-assets/scripts/document_reader.py">document_reader.py</a> เพื่อดู implementation ที่รวม dispatch และ limits ไว้จุดเดียว</p>
+<h2 id="lesson-2-pdf">PDF</h2>
+<p><code>pypdf.PdfReader</code> อ่าน text layer ของแต่ละหน้าได้ แต่ PDF ที่เป็นภาพสแกนมักไม่มี text ให้ดึง และ layout หลายคอลัมน์อาจได้ลำดับคำไม่เหมือนที่ตามองเห็น</p>
+<pre><code class="language-python">from pypdf import PdfReader
+
+reader = PdfReader("synthetic.pdf")
+text = "\n".join(page.extract_text() or "" for page in reader.pages)
+</code></pre>
+<p>ก่อนวนทุกหน้า ตัวอย่างตรวจ file size, encryption และจำนวนหน้า หลัง extract ตรวจ empty อีกครั้ง ถ้า empty ให้ส่งไปเส้นทาง OCR/review ที่ประกาศไว้ ไม่ควรสร้างข้อความเดาเอง</p>
+<h2 id="lesson-2-docx">DOCX</h2>
+<p>DOCX เป็น ZIP package ไม่ใช่ text file ธรรมดา Reader จึงตรวจจำนวน entries และ uncompressed size เพื่อจำกัด zip expansion จากนั้นอ่าน paragraphs และ tables ตาม document order เท่าที่ API รองรับ</p>
+<pre><code class="language-text">DOCX package
+ ├─ paragraphs
+ ├─ tables/cells
+ └─ other objects เช่น image/text box
+</code></pre>
+<p>ตัวอย่างนี้ไม่ทำ OCR รูปใน DOCX และไม่รับรอง text box/complex layout ทุกชนิด จึงต้องมี warning/fixture ตามเอกสารจริงที่ระบบจะรองรับ</p>
+<h2 id="lesson-2-txt">TXT</h2>
+<p>TXT ดูง่ายแต่ยังต้องกำหนด encoding และ size ตัวอย่างใช้ UTF-8 แบบ strict หากเจอไฟล์จากระบบเก่าที่เป็น encoding อื่น ให้ตรวจและแปลงใน ingestion boundary แยก ไม่ใช้ <code>errors="ignore"</code> จนข้อมูลหายเงียบ</p>
+<h2 id="lesson-2-_2">ทดลอง</h2>
+<pre><code class="language-powershell">python scripts/document_reader.py fixtures/synthetic_note.txt
+python scripts/document_reader.py fixtures/synthetic_resume.pdf
+</code></pre>
+<p>Expected คือ JSON metadata และ preview ไม่ใช่การ print เอกสารทั้งหมด เพราะ log/terminal อาจถูกเก็บย้อนหลัง</p>
+<h2 id="lesson-2-failure">Failure ที่ต้องทดสอบ</h2>
+<ul>
+<li>extension ไม่รองรับ</li>
+<li>ไฟล์เกิน limit</li>
+<li>PDF encrypted/เกินจำนวนหน้า</li>
+<li>PDF scan แล้ว text ว่าง</li>
+<li>DOCX expansion สูงผิดปกติ</li>
+<li>TXT encoding ไม่ถูกต้อง</li>
+<li>path ไม่มีจริงหรือเป็น directory</li>
+</ul><a class="back" href="#top">↑ กลับสารบัญ</a></article><article id="lesson-3"><div class="source">02_tabular_structured_data.md</div><details class="local-toc"><summary>หัวข้อในบทนี้</summary><a href="#lesson-3-mental-model">Mental Model</a><a href="#lesson-3-csv">CSV</a><a href="#lesson-3-json">JSON</a><a href="#lesson-3-xlsx">XLSX</a><a href="#lesson-3-output-atomic">การเขียน Output แบบ Atomic</a><a href="#lesson-3-_1">ทดลอง</a></details><h1 id="lesson-3-02-csv-json-excel">02 — CSV, JSON และ Excel</h1>
+<p>เปิด <a href="book-08-assets/scripts/structured_io.py">structured_io.py</a> สำหรับ reader/writer ที่คืน <code>list[dict]</code> และตรวจ required columns</p>
+<h2 id="lesson-3-mental-model">Mental Model</h2>
+<pre><code class="language-text">bytes/file
+ ↓ parser ของ format
+rows: list[dict[str, object]]
+ ↓ validate required fields/types/business rules
+domain records
+ ↓ process/store/report
+</code></pre>
+<p>Parser เพียงบอกว่า syntax อ่านได้ ไม่ได้บอกว่าข้อมูลถูกต้อง เช่น CSV มีคอลัมน์ <code>amount_minor</code> แต่ค่าเป็น <code>"ten"</code> ยังต้องให้ model/domain validator ปฏิเสธ</p>
+<h2 id="lesson-3-csv">CSV</h2>
+<p>เปิดด้วย <code>newline=""</code> และระบุ encoding เพื่อให้โมดูล <code>csv</code> จัดการบรรทัดได้ถูกต้อง ตรวจ header ซ้ำ/ว่างและจำกัดจำนวนแถว</p>
+<h2 id="lesson-3-json">JSON</h2>
+<p>ประกาศก่อนว่าจะรับ JSON array หรือ object ที่มี key เช่น <code>records</code> อย่าเขียน code ที่เดาได้หลาย shape จน caller ไม่รู้ contract</p>
+<h2 id="lesson-3-xlsx">XLSX</h2>
+<p>ใช้ <code>openpyxl</code> แบบ <code>read_only=True</code>, <code>data_only=True</code> และเลือก worksheet/required header ชัด ตัวอย่างไม่อ่าน <code>.xls</code>, <code>.xlsm</code> หรือสูตรเป็น logic; <code>data_only=True</code> อ่าน cached result ซึ่งอาจไม่มีหรือเก่าได้ จึงต้องบันทึก limitation</p>
+<h2 id="lesson-3-output-atomic">การเขียน Output แบบ Atomic</h2>
+<p>ไฟล์รายงานควรเขียน temporary file ใน directory เดียวกันก่อน แล้ว replace เป้าหมายเมื่อเขียนเสร็จ:</p>
+<pre><code class="language-text">report.json.tmp
+  ↓ write + flush สำเร็จ
+replace
+  ↓
+report.json
+</code></pre>
+<p>ช่วยลดโอกาสมี output ครึ่งไฟล์เมื่อ process หยุด แต่ไม่ได้แทน backup/versioning</p>
+<h2 id="lesson-3-_1">ทดลอง</h2>
+<pre><code class="language-powershell">python scripts/structured_io.py fixtures/events.csv --required event_id occurred_at amount_minor status
+python scripts/structured_io.py fixtures/events.json --required event_id occurred_at amount_minor status
+</code></pre><a class="back" href="#top">↑ กลับสารบัญ</a></article><article id="lesson-4"><div class="source">03_files_hash_batch.md</div><details class="local-toc"><summary>หัวข้อในบทนี้</summary><a href="#lesson-4-_1">ทำไมไม่วนทุกไฟล์แล้วประมวลผลทันที</a><a href="#lesson-4-idempotency-key-file-hash">Idempotency Key ไม่จำเป็นต้องเท่ากับ File Hash</a><a href="#lesson-4-_2">ทดลอง</a></details><h1 id="lesson-4-03-batch-files-manifest-hash-deduplication">03 — Batch Files, Manifest, Hash และ Deduplication</h1>
+<p>เปิด <a href="book-08-assets/scripts/batch_manifest.py">batch_manifest.py</a></p>
+<h2 id="lesson-4-_1">ทำไมไม่วนทุกไฟล์แล้วประมวลผลทันที</h2>
+<p>แยก discovery ออกจาก processing ทำให้ตรวจ scope ก่อนเกิด side effect:</p>
+<pre><code class="language-text">discover files
+ ↓ filter extension + reject symlink ตาม policy
+build manifest: relative path, size, sha256
+ ↓ review/count/limit
+process approved manifest
+</code></pre>
+<p>SHA-256 ช่วยเทียบ bytes ว่าเหมือนกัน แต่ไม่บอกว่าเอกสารสองไฟล์ “ความหมายเดียวกัน” และ hash ของ extracted text ต่างจาก hash ของ original bytes ต้องตั้งชื่อ field เช่น <code>file_sha256</code> กับ <code>text_sha256</code> ให้ชัด</p>
+<h2 id="lesson-4-idempotency-key-file-hash">Idempotency Key ไม่จำเป็นต้องเท่ากับ File Hash</h2>
+<pre><code class="language-text">task_key = file_sha256 + parser_version + policy_version
+</code></pre>
+<p>ไฟล์เดิมแต่ parser รุ่นใหม่อาจสมควรประมวลผลใหม่ ในทางกลับกัน client retry request เดิมควรได้ task เดิม จึงต้องเขียน contract ตาม business event ไม่ใช่เลือก hash แบบสุ่ม</p>
+<h2 id="lesson-4-_2">ทดลอง</h2>
+<pre><code class="language-powershell">python scripts/batch_manifest.py fixtures --extension .json .csv .txt
+</code></pre>
+<p>สคริปต์ไม่ follow symlink และคืน relative path เพื่อไม่เผย absolute directory ใน manifest ที่นำไปแชร์</p><a class="back" href="#top">↑ กลับสารบัญ</a></article><article id="lesson-5"><div class="source">04_http_api_client.md</div><details class="local-toc"><summary>หัวข้อในบทนี้</summary><a href="#lesson-5-flow">Flow</a><a href="#lesson-5-retry">ทำไม Retry เฉพาะบางกรณี</a></details><h1 id="lesson-5-04-httpapi-client-retry">04 — HTTP/API Client ที่ไม่ค้างและไม่ Retry มั่ว</h1>
+<p>เปิด <a href="book-08-assets/scripts/safe_http.py">safe_http.py</a></p>
+<h2 id="lesson-5-flow">Flow</h2>
+<pre><code class="language-text">prepare request + stable event ID
+ ↓ connect/read/write/pool timeout
+send
+ ├─ 2xx → validate response contract
+ ├─ 4xx permanent → return controlled error; no retry
+ ├─ 429/5xx selected → bounded backoff/retry
+ └─ timeout/network unknown → replay same idempotency key
+</code></pre>
+<p>Timeout ไม่ได้พิสูจน์ว่า server ไม่ได้ commit งาน อาจเกิดหลัง server บันทึกแล้วแต่ response กลับไม่ถึง client ดังนั้นการ retry POST ต้องใช้ idempotency contract ไม่ใช่สร้าง event ID ใหม่</p>
+<h2 id="lesson-5-retry">ทำไม Retry เฉพาะบางกรณี</h2>
+<p><code>422</code> หมายถึงแก้ request ก่อนส่งใหม่ การ retry payload เดิมไม่ได้ช่วย ส่วน <code>429</code>, network error หรือ selected <code>5xx</code> อาจเป็น transient แต่ต้องมี attempt budget และ backoff</p>
+<pre><code class="language-powershell">python scripts/safe_http.py http://127.0.0.1:8015/health
+</code></pre>
+<p>ในงานจริงอย่า log Authorization header, token หรือ response ที่มี PII ทั้งก้อน</p><a class="back" href="#top">↑ กลับสารบัญ</a></article><article id="lesson-6"><div class="source">05_sqlite_transactions.md</div><details class="local-toc"><summary>หัวข้อในบทนี้</summary><a href="#lesson-6-_1">กฎหลัก</a><a href="#lesson-6-unique-constraint">Unique Constraint เป็นด่านจริง</a><a href="#lesson-6-transaction-network-call">Transaction ไม่ควรครอบ Network Call</a><a href="#lesson-6-_2">ทดลอง</a></details><h1 id="lesson-6-05-sqlite-transaction-durable-job-store">05 — SQLite Transaction และ Durable Job Store</h1>
+<p>เปิด <a href="book-08-assets/scripts/sqlite_job_store.py">sqlite_job_store.py</a></p>
+<h2 id="lesson-6-_1">กฎหลัก</h2>
+<pre><code class="language-text">BEGIN IMMEDIATE
+  ↓ insert event/task/audit
+COMMIT
+  ↓ จึงตอบ accepted
+</code></pre>
+<p>ถ้าสามการเขียนเป็น business action เดียวกัน ต้องสำเร็จหรือล้มเหลวร่วมกัน อย่าตอบ <code>202</code> ก่อน commit</p>
+<h2 id="lesson-6-unique-constraint">Unique Constraint เป็นด่านจริง</h2>
+<p>การ <code>SELECT</code> ก่อนแล้วค่อย <code>INSERT</code> อย่างเดียวมี race เมื่อ request มาพร้อมกัน วาง <code>UNIQUE(event_id)</code> ที่ database แล้วจัดการ collision ด้วย hash/contract:</p>
+<pre><code class="language-text">same event + same canonical payload → duplicate เดิม
+same event + different payload      → conflict
+</code></pre>
+<h2 id="lesson-6-transaction-network-call">Transaction ไม่ควรครอบ Network Call</h2>
+<pre><code class="language-text">transaction A: claim + lease → commit
+call provider/API นอก transaction
+transaction B: persist result if lease token valid → commit
+</code></pre>
+<p>การเปิด write transaction ระหว่างรอ network ทำให้ writer อื่นติด lock โดยไม่จำเป็น</p>
+<h2 id="lesson-6-_2">ทดลอง</h2>
+<pre><code class="language-powershell">python scripts/sqlite_job_store.py --db tmp/jobs.sqlite3 enqueue DEMO-001
+python scripts/sqlite_job_store.py --db tmp/jobs.sqlite3 claim
+python scripts/sqlite_job_store.py --db tmp/jobs.sqlite3 list
+</code></pre>
+<p>ไฟล์นี้เป็น educational single-host store ยังไม่ใช่ distributed queue</p><a class="back" href="#top">↑ กลับสารบัญ</a></article><article id="lesson-7"><div class="source">06_config_logging_cli.md</div><details class="local-toc"><summary>หัวข้อในบทนี้</summary><a href="#lesson-7-configuration">Configuration</a><a href="#lesson-7-logging">Logging</a><a href="#lesson-7-cli">CLI</a></details><h1 id="lesson-7-06-configuration-logging-cli">06 — Configuration, Logging และ CLI</h1>
+<p>เปิด <a href="book-08-assets/scripts/runtime_tools.py">runtime_tools.py</a></p>
+<h2 id="lesson-7-configuration">Configuration</h2>
+<p>อ่าน config จาก environment ที่ boundary เดียว ตรวจชนิด/range ตั้งแต่ startup และอย่าแอบใช้ default ที่อันตราย เช่น production URL หรือ token ว่างแล้วเปิด endpoint สำคัญ</p>
+<pre><code class="language-text">environment strings
+ ↓ parse/validate once
+Settings dataclass
+ ↓ inject
+service/repository/client
+</code></pre>
+<h2 id="lesson-7-logging">Logging</h2>
+<p>ใช้ structured fields ที่ค้นตามเส้นทางงานได้:</p>
+<pre><code class="language-text">event=task_processed task_id=T123 attempt=2 state=needs_review duration_ms=84
+</code></pre>
+<p>ไม่ log raw resume, token, full payload หรือ stack trace ให้ end user Correlation ID ช่วยเชื่อม API → worker → n8n แต่ไม่ควรเป็นข้อมูลลับ</p>
+<h2 id="lesson-7-cli">CLI</h2>
+<p><code>argparse</code> ช่วยให้ command มี <code>--help</code>, required arguments และ exit code สม่ำเสมอ แยก <code>main()</code> จาก core function เพื่อ test โดยไม่ต้อง spawn process ทุกกรณี</p>
+<pre><code class="language-powershell">python scripts/runtime_tools.py --help
+python scripts/runtime_tools.py --show-config
+</code></pre><a class="back" href="#top">↑ กลับสารบัญ</a></article><article id="lesson-8"><div class="source">07_testing_safety.md</div><details class="local-toc"><summary>หัวข้อในบทนี้</summary><a href="#lesson-8-test-pyramid">Test Pyramid ขนาดเล็ก</a><a href="#lesson-8-checklist-copy">Checklist ก่อน Copy ไปใช้งาน</a><a href="#lesson-8-review">คำถาม Review</a></details><h1 id="lesson-8-07-testing-safety-checklist-script">07 — Testing และ Safety Checklist สำหรับ Script</h1>
+<h2 id="lesson-8-test-pyramid">Test Pyramid ขนาดเล็ก</h2>
+<pre><code class="language-text">มาก: pure/unit — normalize, validate, hash, aggregate
+กลาง: file/SQLite integration — tmp_path, real parser, transaction
+น้อย: HTTP/process/Docker — boundary จริงและ clean start
+</code></pre>
+<h2 id="lesson-8-checklist-copy">Checklist ก่อน Copy ไปใช้งาน</h2>
+<ul>
+<li>[ ] ใช้ synthetic fixture ก่อนข้อมูลจริง</li>
+<li>[ ] input/output/error contract เขียนไว้แล้ว</li>
+<li>[ ] จำกัด size/pages/rows/timeout/attempts</li>
+<li>[ ] path มาจาก trusted caller และไม่รับ arbitrary URL/path ผ่าน public API</li>
+<li>[ ] ไม่มี secret/PII ใน source, fixture, log และ test snapshot</li>
+<li>[ ] write เป็น atomic/transactional เท่าที่เหมาะสม</li>
+<li>[ ] retry operation มี idempotency</li>
+<li>[ ] dependency/version ตรง environment ปัจจุบัน</li>
+<li>[ ] tests มี happy, invalid, empty, duplicate และ dependency failure</li>
+<li>[ ] README ระบุ exact CWD/interpreter/expected output</li>
+</ul>
+<h2 id="lesson-8-review">คำถาม Review</h2>
+<ol>
+<li>ถ้ารันซ้ำสองครั้ง side effect เพิ่มหรือไม่</li>
+<li>ถ้าหยุดกลางทางตรวจสถานะและทำต่ออย่างไร</li>
+<li>ถ้า input ใหญ่หรือ malformed ระบบใช้ทรัพยากรเท่าไร</li>
+<li>ถ้า dependency ตอบช้า/ผิด schema เราเชื่ออะไร</li>
+<li>คนรับช่วงต่อพิสูจน์ได้อย่างไรว่ารุ่นนี้ผ่าน</li>
+</ol><a class="back" href="#top">↑ กลับสารบัญ</a></article><article id="lesson-9"><div class="source">08_full_project_a.md</div><details class="local-toc"><summary>หัวข้อในบทนี้</summary><a href="#lesson-9-_1">สิ่งที่ครอบคลุม</a><a href="#lesson-9-code">เส้นทางอ่าน Code</a></details><h1 id="lesson-9-08-full-project-a-reliable-intake-review-platform">08 — Full Project A: Reliable Intake &amp; Review Platform</h1>
+<p>โปรเจกต์นี้ยก capstone ที่ผ่านการทดสอบจาก Book 05 มาเป็น reference source เต็ม ไม่ใช่ starter ที่เว้น TODO</p>
+<pre><code class="language-text">Transaction/Resume Intake API
+  ↓ SQLite task + audit (atomic)
+Worker claim + lease
+  ↓ deterministic rules / Mock AI
+output contract + evidence validation
+  ↓ succeeded / retry_pending / needs_review / failed
+Human review with token + idempotent decision
+</code></pre>
+<h2 id="lesson-9-_1">สิ่งที่ครอบคลุม</h2>
+<ul>
+<li>FastAPI/Pydantic contracts และ truthful HTTP errors</li>
+<li>durable SQLite queue, unique constraints และ restart persistence</li>
+<li>concurrent intake/claim tests</li>
+<li>bounded retry, lease reclaim และ stale-worker protection</li>
+<li>PDF/DOCX local CLI ingestion พร้อม limits</li>
+<li>Mock AI, invalid JSON และ hallucination scenarios</li>
+<li>lexical evidence validation และ human review</li>
+<li>audit history, Docker Compose, CI, runbook และ n8n examples</li>
+</ul>
+<p>เปิด <a href="book-08-assets/full_projects/project_a_reliable_intake_review/README.md">Project A README</a> แล้วรัน native tests ก่อน Docker โปรเจกต์ใช้ synthetic fixtures และไม่ทำ hiring/financial action จริง</p>
+<h2 id="lesson-9-code">เส้นทางอ่าน Code</h2>
+<pre><code class="language-text">models.py → api.py → repository.py
+          → service.py → worker.py
+tests/test_capstone.py → RUNBOOK.md → compose.yaml
+</code></pre>
+<p>อ่าน test คู่กับ implementation ทุกครั้ง โดยเฉพาะ duplicate/conflict, concurrent claim, retry budget, stale lease และ review idempotency</p><a class="back" href="#top">↑ กลับสารบัญ</a></article><article id="lesson-10"><div class="source">09_full_project_b.md</div><details class="local-toc"><summary>หัวข้อในบทนี้</summary><a href="#lesson-10-business-contract">Business Contract</a><a href="#lesson-10-_1">วิธีรัน</a><a href="#lesson-10-_2">จุดที่ควรศึกษา</a></details><h1 id="lesson-10-09-full-project-b-daily-operations-report-automation">09 — Full Project B: Daily Operations Report Automation</h1>
+<p>โปรเจกต์นี้เป็น reference implementation ใหม่สำหรับงาน automation ที่ deterministic ทั้งเส้น ไม่ใช้ LLM เพื่อแสดงว่า AI ไม่จำเป็นกับทุกปัญหา</p>
+<pre><code class="language-text">CSV/JSON file หรือ POST /batches
+  ↓ strict record validation
+canonical batch hash + UNIQUE batch_id
+  ↓ atomic SQLite import + audit
+GET/CLI daily report
+  ↓ JSON output แบบ atomic
+n8n ส่งเข้า API และ route duplicate/conflict/failure
+</code></pre>
+<h2 id="lesson-10-business-contract">Business Contract</h2>
+<p>แต่ละ event มี <code>event_id</code>, <code>occurred_at</code>, <code>amount_minor</code>, <code>status</code> (<code>success</code>/<code>failed</code>) และ <code>channel</code> ถ้า batch เดิม/payload เดิมส่งซ้ำต้องคืน batch เดิมโดยไม่เพิ่ม event ถ้า batch ID เดิมแต่ payloadเปลี่ยนต้อง conflict</p>
+<p>รายงานรายวันคืนจำนวนทั้งหมด, success/failed, success amount, breakdown ตาม channel และ timestamp รุ่น report โดยคำนวณจาก rows ใน DB ไม่เชื่อ aggregate จาก client</p>
+<h2 id="lesson-10-_1">วิธีรัน</h2>
+<p>เปิด <a href="book-08-assets/full_projects/project_b_daily_ops_report/README.md">Project B README</a> และเริ่มจาก:</p>
+<pre><code class="language-powershell">python -m venv .venv
+.\.venv\Scripts\python.exe -m pip install -r requirements.txt
+.\.venv\Scripts\python.exe -m pytest -q
+</code></pre>
+<p>จากนั้นทดลอง CLI import/report แล้วค่อยเปิด API และ n8n</p>
+<h2 id="lesson-10-_2">จุดที่ควรศึกษา</h2>
+<ul>
+<li>validation แยก parser syntax ออกจาก domain rule</li>
+<li>database transaction ทำให้ batch ไม่เข้าครึ่งเดียว</li>
+<li>idempotency ทำให้ safe replay หลัง timeout</li>
+<li>report output เขียนแบบ temporary + replace</li>
+<li>tests พิสูจน์ restart, duplicate, conflict, invalid row และ aggregate</li>
+<li>README/runbook ระบุ limitation ของ SQLite และ local authentication</li>
+</ul><a class="back" href="#top">↑ กลับสารบัญ</a></article><article id="lesson-11"><div class="source">10_sources_and_limits.md</div><details class="local-toc"><summary>หัวข้อในบทนี้</summary><a href="#lesson-11-primary-references">Primary References</a><a href="#lesson-11-_1">ข้อจำกัดที่ห้ามลืม</a></details><h1 id="lesson-11-10-sources-versions">10 — Sources, Versions และข้อจำกัด</h1>
+<h2 id="lesson-11-primary-references">Primary References</h2>
+<ul>
+<li><a href="https://docs.python.org/3/library/">Python Standard Library</a> — <code>pathlib</code>, <code>csv</code>, <code>json</code>, <code>hashlib</code>, <code>sqlite3</code>, <code>logging</code>, <code>argparse</code></li>
+<li><a href="https://pypdf.readthedocs.io/en/stable/user/extract-text.html">pypdf — Extract Text</a></li>
+<li><a href="https://python-docx.readthedocs.io/en/stable/">python-docx documentation</a></li>
+<li><a href="https://python-docx.readthedocs.io/en/stable/user/tables.html">python-docx — Working with Tables</a></li>
+<li><a href="https://www.python-httpx.org/advanced/timeouts/">HTTPX Timeouts</a></li>
+<li><a href="https://fastapi.tiangolo.com/">FastAPI documentation</a></li>
+<li><a href="https://docs.pydantic.dev/">Pydantic documentation</a></li>
+<li><a href="https://docs.docker.com/compose/">Docker Compose documentation</a></li>
+</ul>
+<h2 id="lesson-11-_1">ข้อจำกัดที่ห้ามลืม</h2>
+<ul>
+<li>ตรวจ dependency รุ่นที่องค์กรอนุมัติก่อนใช้งานจริง เอกสารเล่มนี้ไม่ใช่ lockfile ระยะยาว</li>
+<li><code>pypdf</code> ไม่ใช่ OCR และ PDF ไม่มี semantic structure แบบเดียวกับหน้าเว็บ</li>
+<li>Office/PDF parsers ประมวลผล input ที่อาจไม่น่าเชื่อถือ ต้องมี size/resource isolation/patch policy ตามความเสี่ยงจริง</li>
+<li>HTTP retry ต้องสัมพันธ์กับ method และ idempotency contract</li>
+<li>SQLite มี locking/concurrency/operations trade-offs ควรประเมินใหม่เมื่อหลาย host หรือ throughput สูง</li>
+<li>ตัวอย่าง authentication/token เป็น local demo boundary ไม่ใช่ production identity/RBAC</li>
+</ul><a class="back" href="#top">↑ กลับสารบัญ</a></article></main></div><footer>Reusable examples still require project-specific limits, policy, tests and security review</footer></body></html>

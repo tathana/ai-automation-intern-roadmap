@@ -1,6 +1,6 @@
 # AI & Automation Internship Learning Portal
 
-Static portal containing the Book 00–07 textbook collection, the original five-week learning path, embedded visual notes, a reusable project-delivery template pack, a guided end-to-end project and quick-reference atlases.
+Static portal containing the Book 00–08 textbook collection, the original five-week learning path, embedded visual notes, reusable scripts and delivery templates, two full reference projects, a guided end-to-end project and quick-reference atlases.
 
 ## Files
 
@@ -21,6 +21,8 @@ Static portal containing the Book 00–07 textbook collection, the original five
 - `week-5-assets/` — individual source and workflow downloads linked from the book
 - `book-06.html` / `book-06-materials.zip` — System Design & Delivery Playbook
 - `book-07.html` / `book-07-materials.zip` — intake-to-handoff textbook, reusable templates and two filled examples
+- `book-08.html` / `book-08-materials.zip` — practical script library plus Reliable Intake & Review and Daily Operations Report full projects
+- `book-08-assets/` — individually viewable source files linked from Book 08
 - `project-01.html` / `project-01-materials.zip` — Resume Evidence Assistant Lite guided build, synthetic fixtures, hints, acceptance matrix and delivery rubric
 - `command-atlas.html` — searchable command reference
 - `debugging-atlas.html` — symptom-to-layer debugging reference
