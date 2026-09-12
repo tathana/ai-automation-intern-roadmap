@@ -2,7 +2,7 @@
 <html lang="th"><head><meta charset="utf-8"/><meta content="width=device-width,initial-scale=1" name="viewport"/><meta content="Week 5 Git, Docker, clean code, durable workers และ Capstone พร้อมชุดฝึก" name="description"/><title>Week 5 • Engineering &amp; Capstone</title><style>
 :root{color-scheme:light;--ink:#203149;--muted:#5b6b7d;--line:#dbe3e9;--accent:#096b63}
 *{box-sizing:border-box}html{scroll-behavior:smooth;scroll-padding-top:24px}body{margin:0;background:#f3f6f8;color:var(--ink);font-family:"Leelawadee UI",Tahoma,sans-serif;font-size:17px;line-height:1.9}a{color:var(--accent);text-underline-offset:4px}header{background:#173b43;color:white;padding:56px max(24px,calc((100vw - 1240px)/2));}header h1{font-size:clamp(28px,4vw,46px);line-height:1.35;margin:12px 0}header p{max-width:780px;color:#d9e9eb}.eyebrow{letter-spacing:2px;font-size:13px;color:#a8dfd5}.layout{max-width:1300px;margin:auto;display:grid;grid-template-columns:280px minmax(0,1fr);gap:30px;padding:30px 24px}aside{position:sticky;top:20px;align-self:start;max-height:92vh;overflow:auto;padding-right:12px}aside h2{font-size:18px}nav a{display:block;padding:9px 10px;border-bottom:1px solid var(--line);text-decoration:none;font-size:14px;line-height:1.6}nav a:hover{background:#e1eeeb}article{background:white;padding:clamp(20px,4vw,48px);border:1px solid var(--line);border-radius:12px;margin-bottom:28px;overflow-wrap:anywhere}article h1{font-size:29px;line-height:1.5;margin:20px 0 28px}h2{font-size:24px;margin-top:40px}h3{font-size:20px;margin-top:28px}pre{background:#152c3b;color:#eaf2f7;padding:20px;border-radius:8px;overflow:auto;line-height:1.65;font-size:14px;white-space:pre;overflow-wrap:normal}code{font-family:Consolas,"Courier New",monospace}p code,li code,td code{background:#edf2f5;padding:2px 5px;border-radius:4px;font-size:.9em}blockquote{margin:24px 0;padding:4px 20px;border-left:4px solid #138779;background:#eff8f5}table{border-collapse:collapse;width:100%;font-size:15px}th,td{border:1px solid var(--line);padding:12px;text-align:left;vertical-align:top}th{background:#eaf2f2}.table-scroll{overflow:auto;margin:20px 0}hr{border:0;border-top:1px solid var(--line);margin:32px 0}.source{font-size:12px;color:var(--muted)}.local-toc{margin-top:18px;font-size:14px;background:#f5f8fa;padding:10px 14px;border-radius:6px}.local-toc a{display:block;margin:7px 0}summary{cursor:pointer}.back{display:inline-block;margin-top:24px;font-size:14px}button{border:1px solid #aac8c5;background:white;color:#175c54;padding:9px 16px;border-radius:6px;cursor:pointer;font:inherit;font-size:14px}footer{max-width:1000px;margin:20px auto;padding:24px;color:var(--muted);font-size:14px}@media(max-width:850px){.layout{display:block;padding:16px}aside{position:static;max-height:none;padding:0 0 20px}nav{max-height:280px;overflow:auto}article h1{font-size:25px}body{font-size:16px}}@media print{body{background:white;font-size:11pt}header{background:white;color:black;padding:0}header p{color:black}.layout{display:block;padding:0}aside,button,.local-toc,.back{display:none}article{border:0;padding:0;break-before:page}pre{white-space:pre-wrap;background:#f0f2f4;color:black;font-size:9pt}a{color:inherit}h1,h2,h3{break-after:avoid}.table-scroll{overflow:visible}}
-</style></head><body><header id="top"><div class="eyebrow">PRE-COOP / WEEK 05 / LEARNING BOOK</div><h1>Git, Docker และ Capstone</h1><p>ประกอบระบบ ตรวจ failure cases และส่งมอบงานให้คนอื่นใช้ต่อได้</p><p>บทเรียน 00–14 • Drills • ReleaseGuard • Transaction และ HR Capstone</p><button onclick="window.print()">พิมพ์ / บันทึกเป็น PDF</button> <a href="week-5-materials.zip" style="color:white">ดาวน์โหลดบทเรียนและชุดฝึก</a></header><div class="layout"><aside><h2>สารบัญบทเรียน</h2><nav aria-label="สารบัญ"><a href="#lesson-0">Week 5 — Git, Docker, Clean Code, Documentation และ Capstone</a><a href="#lesson-1">00 — Assessment และแผนที่เชื่อม Week 1–4</a><a href="#lesson-2">01 — Project Structure และ Clean Code ที่ช่วยให้แก้งานง่าย</a><a href="#lesson-3">02 — Git Team Workflow: จากงานส่วนตัวสู่การส่งให้ทีมตรวจ</a><a href="#lesson-4">03 — Docker: Image, Container และ Build Context</a><a href="#lesson-5">04 — Ports, Networks, Volumes และ Environment Variables</a><a href="#lesson-6">05 — Compose และ Healthchecks: เปิดครบไม่เท่ากับพร้อมใช้</a><a href="#lesson-7">06 — Durable State และ Transaction Boundary</a><a href="#lesson-8">07 — Worker, Retry, Lease และ Crash Recovery</a><a href="#lesson-9">08 — Human Review, Audit และ Side Effects</a><a href="#lesson-10">09 — Integration Testing และ CI ที่มีความหมาย</a><a href="#lesson-11">10 — Logs, Metrics และการ Debug ตามเส้นทางงาน</a><a href="#lesson-12">11 — README, Runbook และการส่งมอบงาน</a><a href="#lesson-13">12 — Transaction Capstone: รับงานซ้ำได้และตรวจความผิดปกติเป็นระบบ</a><a href="#lesson-14">13 — HR Capstone: ช่วยอ่านเอกสารโดยไม่ตัดสินคนแทน HR</a><a href="#lesson-15">14 — Demo, Portfolio และ Final Release Checklist</a><a href="#lesson-16">Capstone Lab — Native ก่อน แล้วค่อย Compose</a><a href="#lesson-17">Capstone Runbook — ตรวจอย่างปลอดภัยก่อนแก้</a><a href="#lesson-18">ReleaseGuard Hints — เปิดตามจุดที่ติด</a><a href="#lesson-19">ReleaseGuard — ซ่อมระบบก่อนส่งมอบ</a><a href="#lesson-20">Drills — 6 ชุดฝึกก่อนทำ ReleaseGuard</a><a href="#lesson-21">Roadmap Coverage — ใช้แผนเดิมต่อโดยรู้ว่าอะไรมีแล้ว</a><a href="#lesson-22">Verification — ขอบเขตหลักฐาน Week 5</a><a href="#lesson-23">n8n — Intake Probes สำหรับ Capstone</a></nav></aside><main><article id="lesson-0"><div class="source">README.md</div><details class="local-toc"><summary>หัวข้อในบทนี้</summary><a href="#lesson-0-_1">เรียนแบบไหนจึงไม่หนักเกินไป</a><a href="#lesson-0-_2">เส้นทางของระบบตัวอย่าง</a><a href="#lesson-0-_3">ชุดลงมือทำ</a></details><h1 id="lesson-0-week-5-git-docker-clean-code-documentation-capstone">Week 5 — Git, Docker, Clean Code, Documentation และ Capstone</h1>
+</style></head><body><header id="top"><div class="eyebrow">PRE-COOP / WEEK 05 / LEARNING BOOK</div><h1>Git, Docker และ Capstone</h1><p>ประกอบระบบ ตรวจ failure cases และส่งมอบงานให้คนอื่นใช้ต่อได้</p><p>บทเรียน 00–14 • Drills • ReleaseGuard • Transaction และ HR Capstone</p><button onclick="window.print()">พิมพ์ / บันทึกเป็น PDF</button> <a href="week-5-materials.zip" style="color:white">ดาวน์โหลดบทเรียนและชุดฝึก</a></header><div class="layout"><aside><h2>สารบัญบทเรียน</h2><nav aria-label="สารบัญ"><a href="#lesson-0">Week 5 — Git, Docker, Clean Code, Documentation และ Capstone</a><a href="#lesson-1">00 — Assessment และแผนที่เชื่อม Week 1–4</a><a href="#lesson-2">01 — Project Structure และ Clean Code ที่ช่วยให้แก้งานง่าย</a><a href="#lesson-3">02 — Git Team Workflow: จากงานส่วนตัวสู่การส่งให้ทีมตรวจ</a><a href="#lesson-4">03 — Docker: Image, Container และ Build Context</a><a href="#lesson-5">04 — Ports, Networks, Volumes และ Environment Variables</a><a href="#lesson-6">05 — Compose และ Healthchecks: เปิดครบไม่เท่ากับพร้อมใช้</a><a href="#lesson-7">06 — Durable State และ Transaction Boundary</a><a href="#lesson-8">07 — Worker, Retry, Lease และ Crash Recovery</a><a href="#lesson-9">08 — Human Review, Audit และ Side Effects</a><a href="#lesson-10">09 — Integration Testing และ CI ที่มีความหมาย</a><a href="#lesson-11">10 — Logs, Metrics และการ Debug ตามเส้นทางงาน</a><a href="#lesson-12">11 — README, Runbook และการส่งมอบงาน</a><a href="#lesson-13">12 — Transaction Capstone: รับงานซ้ำได้และตรวจความผิดปกติเป็นระบบ</a><a href="#lesson-14">13 — HR Capstone: ช่วยอ่านเอกสารโดยไม่ตัดสินคนแทน HR</a><a href="#lesson-15">14 — Demo, Portfolio และ Final Release Checklist</a><a href="#lesson-16">Capstone Lab — Native ก่อน แล้วค่อย Compose</a><a href="#lesson-17">Capstone Runbook — ตรวจอย่างปลอดภัยก่อนแก้</a><a href="#lesson-18">ReleaseGuard Hints — เปิดตามจุดที่ติด</a><a href="#lesson-19">ReleaseGuard — ซ่อมระบบก่อนส่งมอบ</a><a href="#lesson-20">Drills — 6 ชุดฝึกก่อนทำ ReleaseGuard</a><a href="#lesson-21">Roadmap Coverage — ใช้แผนเดิมต่อโดยรู้ว่าอะไรมีแล้ว</a><a href="#lesson-22">Verification — ขอบเขตหลักฐาน Week 5</a><a href="#lesson-23">n8n — Intake Probes สำหรับ Capstone</a></nav></aside><main><article id="lesson-0"><div class="source">README.md</div><details class="local-toc"><summary>หัวข้อในบทนี้</summary><a href="#lesson-0-_1">เรียนแบบไหนจึงไม่หนักเกินไป</a><a href="#lesson-0-_2">เส้นทางของระบบตัวอย่าง</a><a href="#lesson-0-_3">ชุดลงมือทำ</a><a href="#lesson-0-week-5">เส้นทางสำหรับคนเริ่ม Week 5 ครั้งแรก</a></details><h1 id="lesson-0-week-5-git-docker-clean-code-documentation-capstone">Week 5 — Git, Docker, Clean Code, Documentation และ Capstone</h1>
 <p>สัปดาห์นี้นำงาน Week 1–4 มาประกอบเป็นระบบที่ <strong>รันซ้ำได้ ตรวจปัญหาได้ และส่งต่อให้คนอื่นได้</strong> ไม่ใช่การแข่งขันเพิ่มเครื่องมือให้ครบทุกชื่อ เป้าหมายคืออธิบายได้ว่าแต่ละส่วนทำหน้าที่อะไร และเมื่อส่วนหนึ่งพัง ข้อมูลจะเป็นอย่างไร</p>
 <h2 id="lesson-0-_1">เรียนแบบไหนจึงไม่หนักเกินไป</h2>
 <p>อ่านบท 00–02 ก่อน แล้วรัน Capstone แบบ native ตาม README เพื่อเห็นผลโดยยังไม่ต้องเข้าใจ Docker ทั้งหมด จากนั้นเรียนบท 03–08 พร้อมทดลองระบบเดิม สุดท้ายใช้บท 09–14 ทำ release และส่งมอบ ไม่ต้องพิมพ์ทุกไฟล์ใหม่ แต่ควรแก้โจทย์เล็ก ๆ ด้วยตัวเองและอธิบาย diff ที่เปลี่ยนได้</p>
@@ -73,7 +73,19 @@ worker → claim งาน → mock AI → validate output
 <li><a href="#lesson-22">Verification และขอบเขตที่ยังไม่ทดสอบ</a></li>
 <li><a href="#lesson-21">เทียบกับ Premium Roadmap เดิมและงานต่อยอด</a></li>
 </ul>
-<p>ไฟล์ดาวน์โหลดรวม source, tests, Dockerfile, Compose และ workflow ตัวอย่าง เว็บ Vercel <strong>แสดงหนังสือเท่านั้น</strong> ไม่ได้เปิด API, worker หรือ n8n ให้ใช้งานออนไลน์ ห้ามใส่ข้อมูลผู้สมัครจริงหรือข้อมูลธุรกรรมจริงใน lab นี้</p><a class="back" href="#top">↑ กลับสารบัญ</a></article><article id="lesson-1"><div class="source">00_assessment_and_integration_map.md</div><details class="local-toc"><summary>หัวข้อในบทนี้</summary><a href="#lesson-1-_1">เรากำลังเพิ่มอะไรจากสัปดาห์ก่อน</a><a href="#lesson-1-_2">แบบทดสอบก่อนเริ่ม</a><a href="#lesson-1-_3">แบ่งขอบเขตความสำเร็จ</a><a href="#lesson-1-definition-of-done">Definition of Done คืออะไร</a></details><h1 id="lesson-1-00-assessment-week-14">00 — Assessment และแผนที่เชื่อม Week 1–4</h1>
+<p>ไฟล์ดาวน์โหลดรวม source, tests, Dockerfile, Compose และ workflow ตัวอย่าง เว็บ Vercel <strong>แสดงหนังสือเท่านั้น</strong> ไม่ได้เปิด API, worker หรือ n8n ให้ใช้งานออนไลน์ ห้ามใส่ข้อมูลผู้สมัครจริงหรือข้อมูลธุรกรรมจริงใน lab นี้</p>
+<h2 id="lesson-0-week-5">เส้นทางสำหรับคนเริ่ม Week 5 ครั้งแรก</h2>
+<p>แต่ละบทมีส่วนลงมือทำเพิ่มจากเนื้อหาเดิม ให้เริ่มจากคำอธิบาย → ทาย output → รัน → ตรวจผล → ลองกรณีผิด อย่าข้ามขั้นเลือก environment และ directory เพราะเป็นสาเหตุของปัญหาหลายอย่างที่ดูคล้าย bug ในโค้ด</p>
+<ol>
+<li>บท 00 เตรียม Python environment ให้ tests ผ่านก่อน</li>
+<li>บท 01 ฝึกแยกไฟล์ด้วยตัวอย่างเล็ก ไม่ย้าย Capstone เดิม</li>
+<li>บท 02 ทำ Git ใน repo ฝึกใหม่; บท 03–05 ค่อยเรียน Docker เมื่อ Engine พร้อม</li>
+<li>บท 06–08 ใช้ <code>learning_walkthrough.py</code> เห็น state/retry/review ใน terminal เดียว</li>
+<li>บท 09–11 ฝึกอ่าน tests, audit และเขียนคู่มือ</li>
+<li>บท 12–13 เปลี่ยนจาก walkthrough เป็น HTTP API/worker ตาม README</li>
+<li>บท 14 ซ้อมส่งมอบพร้อมหลักฐาน ไม่อ้าง mock เป็นระบบ production</li>
+</ol>
+<p>ตัวอย่างใหม่สำหรับทดลอง state/retry/lease/review/transaction/HR อยู่ใน <a href="week-5-assets/capstone/learning_walkthrough.py">learning_walkthrough.py</a> ใช้ temporary database ที่ถูกลบเมื่อจบ ไม่ต้องเปิด Docker หรือ server หากยังไม่พร้อม และไม่ใช้ credentials จริง</p><a class="back" href="#top">↑ กลับสารบัญ</a></article><article id="lesson-1"><div class="source">00_assessment_and_integration_map.md</div><details class="local-toc"><summary>หัวข้อในบทนี้</summary><a href="#lesson-1-_1">เรากำลังเพิ่มอะไรจากสัปดาห์ก่อน</a><a href="#lesson-1-_2">แบบทดสอบก่อนเริ่ม</a><a href="#lesson-1-_3">แบ่งขอบเขตความสำเร็จ</a><a href="#lesson-1-definition-of-done">Definition of Done คืออะไร</a><a href="#lesson-1-_4">เริ่มจากศูนย์ — ตั้งโต๊ะทำงานก่อนอ่านโค้ด</a><a href="#lesson-1-environment">Environment คือชุดเครื่องมือของโปรเจกต์</a><a href="#lesson-1-_5">แยกโหมดเรียนให้ชัด</a></details><h1 id="lesson-1-00-assessment-week-14">00 — Assessment และแผนที่เชื่อม Week 1–4</h1>
 <h2 id="lesson-1-_1">เรากำลังเพิ่มอะไรจากสัปดาห์ก่อน</h2>
 <p>Week 1 ทำให้จัดการข้อมูลและทดสอบฟังก์ชันได้ Week 2 ทำให้รับส่งข้อมูลผ่าน API ได้ Week 3 จัดลำดับงานด้วย workflow และ Week 4 เพิ่ม AI พร้อมตรวจผลลัพธ์ Week 5 ไม่ทิ้งสิ่งเหล่านี้ แต่ถามเพิ่มว่า “ถ้าปิดเครื่องแล้วเปิดใหม่ งานที่รับไว้ยังอยู่หรือไม่”</p>
 <pre><code class="language-text">ฟังก์ชันถูกต้อง         ← Week 1
@@ -91,7 +103,31 @@ worker → claim งาน → mock AI → validate output
 <p><strong>Stretch:</strong> real provider ที่องค์กรอนุมัติ, OCR, production database, authentication หลายผู้ใช้, outbox และระบบแจ้งเตือนจริง อย่าเปลี่ยนชื่อ stretch เป็น “ทำเสร็จแล้ว” เพียงเพราะมีภาพ architecture</p>
 <h2 id="lesson-1-definition-of-done">Definition of Done คืออะไร</h2>
 <p>คือข้อตกลงว่าอะไรต้องเป็นจริงจึงเรียกงานว่าเสร็จ เช่น “ส่ง event เดิมสองครั้งได้ task เดียว แม้เปิด Store ใหม่” ชัดกว่าคำว่า “รองรับ duplicate” เพราะคนอื่นเขียน test ตามได้</p>
-<p>ลองเขียนสามข้อของตัวเองก่อนอ่านบทถัดไป โดยใช้รูปแบบ <strong>สถานการณ์ → สิ่งที่ทำ → ผลที่ตรวจได้</strong> ตัวอย่าง: worker ได้งานแล้วหยุด → รอ lease หมด → worker ใหม่รับงานได้ และ worker เก่าเขียนทับไม่ได้</p><a class="back" href="#top">↑ กลับสารบัญ</a></article><article id="lesson-2"><div class="source">01_project_structure_clean_code.md</div><details class="local-toc"><summary>หัวข้อในบทนี้</summary><a href="#lesson-2-_1">แบ่งไฟล์ตามหน้าที่ ไม่ใช่ตามจำนวนบรรทัด</a><a href="#lesson-2-signature">อ่าน signature ก่อนอ่านเนื้อฟังก์ชัน</a><a href="#lesson-2-_2">ชื่อที่ดีช่วยลดคำอธิบาย</a><a href="#lesson-2-_3">เมื่อใดควรแยกฟังก์ชัน</a><a href="#lesson-2-workshop">Workshop — จากสคริปต์ไฟล์เดียวสู่โปรเจกต์ที่เป็นระบบ</a></details><h1 id="lesson-2-01-project-structure-clean-code">01 — Project Structure และ Clean Code ที่ช่วยให้แก้งานง่าย</h1>
+<p>ลองเขียนสามข้อของตัวเองก่อนอ่านบทถัดไป โดยใช้รูปแบบ <strong>สถานการณ์ → สิ่งที่ทำ → ผลที่ตรวจได้</strong> ตัวอย่าง: worker ได้งานแล้วหยุด → รอ lease หมด → worker ใหม่รับงานได้ และ worker เก่าเขียนทับไม่ได้</p>
+<h2 id="lesson-1-_4">เริ่มจากศูนย์ — ตั้งโต๊ะทำงานก่อนอ่านโค้ด</h2>
+<p>ให้ดาวน์โหลด ZIP จากหน้า Week 5 แล้วแตกไฟล์ก่อน อย่ารันไฟล์จากหน้าต่าง preview ของ ZIP เพราะ path และไฟล์ข้างเคียงอาจไม่อยู่ในตำแหน่งที่โปรแกรมคาด เปิด folder <code>capstone</code> ใน editor และเปิด PowerShell ที่ folder นี้ คำว่า <strong>terminal</strong> คือหน้าต่างพิมพ์คำสั่ง ส่วน <strong>Python interpreter</strong> คือโปรแกรมที่อ่านและรันโค้ด Python ให้เรา</p>
+<pre><code class="language-powershell">Get-Location
+Get-ChildItem
+python --version
+</code></pre>
+<p>คำสั่งแรกบอกว่ากำลังอยู่ที่ไหน คำสั่งที่สองควรเห็น <code>course</code>, <code>tests</code>, <code>requirements.txt</code> และ <code>README.md</code> คำสั่งที่สามควรพบ Python ที่ติดตั้งแล้ว ถ้าไม่พบคำสั่ง <code>python</code> ให้จัดการติดตั้ง/เลือก interpreter ก่อน ไม่ใช่เปลี่ยน source เพื่อข้ามขั้นตอนนี้</p>
+<h2 id="lesson-1-environment">Environment คือชุดเครื่องมือของโปรเจกต์</h2>
+<p><code>venv</code> แยก packages ของงานนี้จากโปรเจกต์อื่น ไม่ใช่เครื่องเสมือนทั้งเครื่อง ทำตามครั้งแรกจาก capstone:</p>
+<pre><code class="language-powershell">python -m venv .venv
+.\.venv\Scripts\python.exe -m pip install -r requirements.txt
+.\.venv\Scripts\python.exe -m pytest tests -q
+</code></pre>
+<p><code>-m pip</code> คือให้ Python ตัวที่ระบุเป็นผู้รัน pip จึงลดปัญหาลง package ผิด interpreter ส่วน <code>-r</code> ขอให้ pip อ่านรายการจากไฟล์ หากมี <code>.venv</code> อยู่แล้วและเป็นของ lab นี้ ไม่ต้องสร้างใหม่ทุกครั้ง</p>
+<p>ชุด Capstone เดิมควรผ่าน 24 tests ถ้าคุณเพิ่ม tests เองจำนวนอาจมากขึ้นได้ สีเขียวไม่ได้แปลว่าเปิด API แล้ว ขั้นนี้แค่ตรวจโค้ดใน environment ทดสอบ</p>
+<h2 id="lesson-1-_5">แยกโหมดเรียนให้ชัด</h2>
+<pre><code class="language-text">อ่าน concept → รัน learning_walkthrough.py ใน terminal เดียว
+      ↓ เข้าใจ state/retry/review แล้ว
+เปิด API + worker แยก terminal → ทดลอง HTTP
+      ↓ Docker Engine พร้อม
+รัน Compose → ทดลอง environment ของ containers
+</code></pre>
+<p>สคริปต์ <a href="week-5-assets/capstone/learning_walkthrough.py">learning_walkthrough.py</a> ใช้ฐานข้อมูลชั่วคราวและ mock เดิม ไม่ต้องเปิด server ไม่เสียค่า AI และไม่แตะ DB ของ Capstone ที่คุณใช้อยู่ ตัวอย่าง <code>python learning_walkthrough.py state</code> ให้แทน <code>python</code> ด้วย <code>.\.venv\Scripts\python.exe</code> หากยังไม่ได้ activate environment คำสั่งสั้นในบทถัดไปสมมติว่าคุณเลือก interpreter นี้แล้ว</p>
+<p>ถ้าอ่านแล้วไม่รู้ว่า output ควรเป็นอะไร ให้หยุดที่จุดตรวจของบทนั้นก่อน ไม่ต้องอ่านข้ามไป Docker เพื่อหวังว่าปัญหาจะหายไปเอง</p><a class="back" href="#top">↑ กลับสารบัญ</a></article><article id="lesson-2"><div class="source">01_project_structure_clean_code.md</div><details class="local-toc"><summary>หัวข้อในบทนี้</summary><a href="#lesson-2-_1">แบ่งไฟล์ตามหน้าที่ ไม่ใช่ตามจำนวนบรรทัด</a><a href="#lesson-2-signature">อ่าน signature ก่อนอ่านเนื้อฟังก์ชัน</a><a href="#lesson-2-_2">ชื่อที่ดีช่วยลดคำอธิบาย</a><a href="#lesson-2-_3">เมื่อใดควรแยกฟังก์ชัน</a><a href="#lesson-2-workshop">Workshop — จากสคริปต์ไฟล์เดียวสู่โปรเจกต์ที่เป็นระบบ</a></details><h1 id="lesson-2-01-project-structure-clean-code">01 — Project Structure และ Clean Code ที่ช่วยให้แก้งานง่าย</h1>
 <h2 id="lesson-2-_1">แบ่งไฟล์ตามหน้าที่ ไม่ใช่ตามจำนวนบรรทัด</h2>
 <p>ให้นึกว่า API เป็นจุดรับเรื่อง ไม่ใช่คนที่ต้องทำทุกอย่างเอง <code>api.py</code> อ่าน request และคืน response, <code>models.py</code> บอกข้อมูลที่ยอมรับ, <code>repository.py</code> ติดต่อฐานข้อมูล, <code>service.py</code> ประมวลผลงาน ส่วน <code>worker.py</code> เรียกงานต่อเนื่อง</p>
 <pre><code class="language-text">api.py ─────→ models.py  ตรวจรูปแบบ input
@@ -360,7 +396,7 @@ rules.py import main.py
 expected: False, True, False
 </code></pre>
 <p>อ่าน <a href="week-5-assets/examples/project_structure/split_package/tests/test_rules.py">test_rules.py</a> เป็นตัวอย่าง ชุดเดิมตรวจต่ำกว่า threshold, เท่ากับ threshold และสูงกว่า threshold ของ <code>needs_review()</code> รวม 3 tests หลังเพิ่มโจทย์ให้มี tests ใหม่ของคุณด้วย</p>
-<p>ถือว่าเข้าใจเมื่ออธิบายได้ว่าไฟล์ไหนเป็น entry point, ไฟล์ไหนเป็นกฎ, import เดินทางใด, ต้องรันจาก directory ไหน และทำไมยังไม่ต้องมี <code>services/</code> หรือ <code>repositories/</code> ในตัวอย่างที่ไม่มี API/DB นี้</p><a class="back" href="#top">↑ กลับสารบัญ</a></article><article id="lesson-3"><div class="source">02_git_team_workflow.md</div><details class="local-toc"><summary>หัวข้อในบทนี้</summary><a href="#lesson-3-git">ใช้พื้นฐานเดิม ไม่ต้องเรียน Git ใหม่ทั้งหมด</a><a href="#lesson-3-_1">ทำงานหนึ่งเรื่องให้จบหนึ่งชุด</a><a href="#lesson-3-pull-request">Pull Request ควรเล่าอะไร</a><a href="#lesson-3-conflict">เมื่อเกิด conflict</a><a href="#lesson-3-_2">ย้อนการเปลี่ยนแปลงอย่างปลอดภัย</a></details><h1 id="lesson-3-02-git-team-workflow">02 — Git Team Workflow: จากงานส่วนตัวสู่การส่งให้ทีมตรวจ</h1>
+<p>ถือว่าเข้าใจเมื่ออธิบายได้ว่าไฟล์ไหนเป็น entry point, ไฟล์ไหนเป็นกฎ, import เดินทางใด, ต้องรันจาก directory ไหน และทำไมยังไม่ต้องมี <code>services/</code> หรือ <code>repositories/</code> ในตัวอย่างที่ไม่มี API/DB นี้</p><a class="back" href="#top">↑ กลับสารบัญ</a></article><article id="lesson-3"><div class="source">02_git_team_workflow.md</div><details class="local-toc"><summary>หัวข้อในบทนี้</summary><a href="#lesson-3-git">ใช้พื้นฐานเดิม ไม่ต้องเรียน Git ใหม่ทั้งหมด</a><a href="#lesson-3-_1">ทำงานหนึ่งเรื่องให้จบหนึ่งชุด</a><a href="#lesson-3-pull-request">Pull Request ควรเล่าอะไร</a><a href="#lesson-3-conflict">เมื่อเกิด conflict</a><a href="#lesson-3-_2">ย้อนการเปลี่ยนแปลงอย่างปลอดภัย</a><a href="#lesson-3-_3">ทำความเข้าใจสถานะก่อนใช้คำสั่ง</a><a href="#lesson-3-lab-remote">Lab มือใหม่ — ไม่ต้องมี remote ก็ฝึกได้</a><a href="#lesson-3-remote">ก่อนทำงานกับ remote จริง</a></details><h1 id="lesson-3-02-git-team-workflow">02 — Git Team Workflow: จากงานส่วนตัวสู่การส่งให้ทีมตรวจ</h1>
 <h2 id="lesson-3-git">ใช้พื้นฐานเดิม ไม่ต้องเรียน Git ใหม่ทั้งหมด</h2>
 <p>ถ้ายังสับสน working tree, staging และ commit ให้เปิด Special Track 00 ที่เคยเรียนก่อน บทนี้เพิ่มเส้นทางทำงานเป็นทีม: รับงาน → branch → เปลี่ยนแปลงเล็ก → tests → review → merge โดยตัวอย่างให้ทำใน repository ฝึกแยก ไม่ทดลองกับ repository บริษัท</p>
 <pre><code class="language-text">main ที่สะอาด
@@ -388,7 +424,37 @@ git commit -m "Reject blank review notes"
 </code></pre>
 <h2 id="lesson-3-_2">ย้อนการเปลี่ยนแปลงอย่างปลอดภัย</h2>
 <p>สำหรับ commit ที่แชร์แล้ว โดยทั่วไป <code>git revert &lt;commit&gt;</code> สร้าง commit ใหม่ที่ย้อนผลเดิมและเก็บประวัติไว้ แต่ก่อนทำต้องตรวจ commit และผลกระทบ หาก DB schema หรือ external action เปลี่ยนไป การ revert source ไม่ได้ย้อนข้อมูลหรืออีเมลที่ส่งแล้ว หลีกเลี่ยง force push และ <code>reset --hard</code> ในเส้นทางฝึกนี้</p>
-<p>Git เก็บประวัติ source ไม่ใช่ที่เก็บ secrets หาก token เคยถูก commit การลบออกจากไฟล์ปัจจุบันอย่างเดียวไม่พอ ต้องเพิกถอน/หมุน token และประสานทีมเรื่องประวัติที่หลุดด้วย</p><a class="back" href="#top">↑ กลับสารบัญ</a></article><article id="lesson-4"><div class="source">03_docker_foundation.md</div><details class="local-toc"><summary>หัวข้อในบทนี้</summary><a href="#lesson-4-docker-python">ทำไมมี Docker ทั้งที่ Python รันได้แล้ว</a><a href="#lesson-4-dockerfile">อ่าน Dockerfile ทีละส่วน</a><a href="#lesson-4-build-context-build">Build context คือไฟล์ที่ส่งให้การ build</a><a href="#lesson-4-user-expose">USER และ EXPOSE ช่วยอะไร</a></details><h1 id="lesson-4-03-docker-image-container-build-context">03 — Docker: Image, Container และ Build Context</h1>
+<p>Git เก็บประวัติ source ไม่ใช่ที่เก็บ secrets หาก token เคยถูก commit การลบออกจากไฟล์ปัจจุบันอย่างเดียวไม่พอ ต้องเพิกถอน/หมุน token และประสานทีมเรื่องประวัติที่หลุดด้วย</p>
+<h2 id="lesson-3-_3">ทำความเข้าใจสถานะก่อนใช้คำสั่ง</h2>
+<p><strong>Repository</strong> เก็บประวัติงาน, <strong>commit</strong> คือ snapshot ที่บันทึกแล้ว และ <strong>branch</strong> คือชื่อที่ชี้ตำแหน่งหนึ่งของประวัติ ไม่ใช่การ copy โฟลเดอร์ทั้งชุดให้เราเห็นอีกอัน ส่วน GitHub เป็นบริการเก็บ repo/ทำงานร่วมกัน ไม่ใช่ Git ตัวเดียวกัน</p>
+<pre><code class="language-text">แก้ไฟล์ใน editor → working tree เปลี่ยน
+git add          → เลือกเนื้อหาที่จะบันทึก (staging)
+git commit       → บันทึก snapshot ในเครื่อง
+git push         → ส่ง commits ไป remote
+</code></pre>
+<p><code>git add</code> ไม่ได้ส่งงานขึ้นอินเทอร์เน็ต และ commit แล้วไม่จำเป็นต้องมี GitHub จึงจะดูประวัติได้ หากแก้ไฟล์ต่อหลัง add ต้อง add เวอร์ชันใหม่อีกครั้งก่อน commit มิฉะนั้น snapshot จะยังเป็นส่วนที่ stage ไว้ก่อนหน้า</p>
+<h2 id="lesson-3-lab-remote">Lab มือใหม่ — ไม่ต้องมี remote ก็ฝึกได้</h2>
+<p>เลือก folder ฝึกใหม่ <strong>นอก repo เดิม</strong> ก่อนใช้คำสั่งเหล่านี้ ไม่รัน <code>git init</code> ซ้อนในโฟลเดอร์เว็บบทเรียนหรือ Capstone ที่มี repo อยู่แล้ว:</p>
+<pre><code class="language-powershell">git init -b main
+git status
+</code></pre>
+<p>ใช้ editor สร้าง <code>README.md</code> เขียนหนึ่งบรรทัดว่าโปรเจกต์นี้ฝึกอะไร จากนั้น:</p>
+<pre><code class="language-powershell">git add README.md
+git diff --staged
+git commit -m "Add practice project overview"
+git switch -c feature/setup-notes
+</code></pre>
+<p>เพิ่มวิธีรันใน README ด้วย editor แล้ว <code>git diff</code> ควรเห็นเฉพาะข้อความใหม่ ตรวจแล้วค่อย add/commit อีกครั้ง ถ้า Git ถาม identity ให้ตั้งชื่อ/อีเมลของคุณตาม Special Track ไม่คัดลอกชื่อคนอื่นมาใช้</p>
+<pre><code class="language-powershell">git add README.md
+git commit -m "Document local setup steps"
+git switch main
+git merge feature/setup-notes
+git log --oneline --graph --all
+</code></pre>
+<p>Lab นี้ยังไม่มีการแก้ main แข่งกัน จึงมัก merge แบบ fast-forward คือเลื่อน main ไปยัง commit ล่าสุดของ feature ไม่ได้จำเป็นต้องสร้าง merge commit ทุกครั้ง จบแล้ว <code>git status</code> ควร clean และ README มีเนื้อหาที่เพิ่ม</p>
+<h2 id="lesson-3-remote">ก่อนทำงานกับ remote จริง</h2>
+<p><code>git fetch origin</code> รับข้อมูลประวัติจาก remote โดยไม่ merge เข้า branch ที่ทำอยู่ ใช้ดูความเปลี่ยนแปลงก่อน หากทีมใช้ <code>git pull --ff-only</code> แล้วคำสั่งปฏิเสธเพราะประวัติแยกกัน ให้หยุดตรวจ ไม่แก้ด้วย force push Git ไม่รู้ว่าโค้ดรวมแล้วทำงานถูก ต้องรัน tests และให้คน review ด้วย</p>
+<p>จุดตรวจ: อธิบายได้ว่าไฟล์แก้แล้วแต่ยังไม่ add, add แล้วแต่ยังไม่ commit และ commit แล้วแต่ยังไม่ push ต่างกันอย่างไร จากนั้นค่อยเรียน conflict ใน repo ฝึก</p><a class="back" href="#top">↑ กลับสารบัญ</a></article><article id="lesson-4"><div class="source">03_docker_foundation.md</div><details class="local-toc"><summary>หัวข้อในบทนี้</summary><a href="#lesson-4-docker-python">ทำไมมี Docker ทั้งที่ Python รันได้แล้ว</a><a href="#lesson-4-dockerfile">อ่าน Dockerfile ทีละส่วน</a><a href="#lesson-4-build-context-build">Build context คือไฟล์ที่ส่งให้การ build</a><a href="#lesson-4-user-expose">USER และ EXPOSE ช่วยอะไร</a><a href="#lesson-4-docker">ก่อนเริ่ม — Docker มีทั้งตัวสั่งและตัวทำงาน</a><a href="#lesson-4-lab-build-run">Lab — เห็นความต่างของ build กับ run ด้วยตัวเอง</a><a href="#lesson-4-build">ถ้า build ไม่ผ่าน อ่านบรรทัดที่ล้มก่อน</a></details><h1 id="lesson-4-03-docker-image-container-build-context">03 — Docker: Image, Container และ Build Context</h1>
 <h2 id="lesson-4-docker-python">ทำไมมี Docker ทั้งที่ Python รันได้แล้ว</h2>
 <p>เครื่องเราอาจมี Python และ package พร้อม แต่เครื่องเพื่อนอาจไม่เหมือนกัน Docker ช่วยกำหนดสภาพแวดล้อมสำหรับรันไว้เป็น image ถึงอย่างนั้นก็ไม่ได้ทำให้ทุกเครื่องเหมือนกันทุกด้าน: architecture, kernel, network และการตั้งค่าภายนอกยังมีผล</p>
 <pre><code class="language-text">Dockerfile + source + dependencies
@@ -414,7 +480,57 @@ COPY course ./course
 <p>จุดท้ายคำสั่งหมายถึง directory ปัจจุบันเป็น context ไม่ใช่สัญลักษณ์ตกแต่ง ถ้ารันผิด folder อาจหา requirements ไม่พบ หรือส่งไฟล์ที่ไม่ตั้งใจเข้า build ได้ <code>.dockerignore</code> จึงกัน <code>.env</code>, <code>.git</code>, DB และ cache ออกต่างหากจาก <code>.gitignore</code></p>
 <h2 id="lesson-4-user-expose">USER และ EXPOSE ช่วยอะไร</h2>
 <p>ตัวอย่างสร้างผู้ใช้ <code>appuser</code> แล้วใช้ <code>USER appuser</code> เพื่อไม่รัน application เป็น root โดยไม่จำเป็น แต่ non-root ไม่ใช่ sandbox ที่แก้ความเสี่ยงทั้งหมด ส่วน <code>EXPOSE 8015</code> เป็นข้อมูลประกอบ image ไม่ได้เปิด port บน host ให้เอง ต้อง publish port ตอน run/Compose</p>
-<p>ลองอธิบายโดยไม่เปิดบท: ทำไมแก้ source แล้ว container เก่ายังไม่เห็นการเปลี่ยนแปลง? เพราะตัวอย่าง copy source เข้า image ตอน build ไม่ได้ bind mount source จากเครื่อง จึงต้อง rebuild/recreate ที่เกี่ยวข้อง</p><a class="back" href="#top">↑ กลับสารบัญ</a></article><article id="lesson-5"><div class="source">04_ports_networks_volumes_env.md</div><details class="local-toc"><summary>หัวข้อในบทนี้</summary><a href="#lesson-5-localhost">localhost ของใคร</a><a href="#lesson-5-volume-container">Volume ต่างจากไฟล์ใน container อย่างไร</a><a href="#lesson-5-env-secret">.env ไม่ได้ทำให้ secret ปลอดภัยโดยอัตโนมัติ</a></details><h1 id="lesson-5-04-ports-networks-volumes-environment-variables">04 — Ports, Networks, Volumes และ Environment Variables</h1>
+<p>ลองอธิบายโดยไม่เปิดบท: ทำไมแก้ source แล้ว container เก่ายังไม่เห็นการเปลี่ยนแปลง? เพราะตัวอย่าง copy source เข้า image ตอน build ไม่ได้ bind mount source จากเครื่อง จึงต้อง rebuild/recreate ที่เกี่ยวข้อง</p>
+<h2 id="lesson-4-docker">ก่อนเริ่ม — Docker มีทั้งตัวสั่งและตัวทำงาน</h2>
+<p><strong>Docker CLI</strong> คือคำสั่ง <code>docker</code> ที่พิมพ์ใน terminal ส่วน <strong>Docker Engine</strong> เป็นส่วนที่สร้าง/รัน containers มี CLI อย่างเดียวจึงยังรัน container ไม่ได้ บนเครื่อง Windows ที่ใช้ Docker Desktop ให้เปิดโปรแกรมและรอ Engine พร้อมก่อน</p>
+<pre><code class="language-powershell">docker version
+docker compose version
+</code></pre>
+<p>คำสั่งแรกควรมีข้อมูลทั้ง Client และ Server ถ้าเห็น Client แต่มี error ติดต่อ named pipe/daemon ไม่ได้ ให้แก้ Engine ก่อน คำสั่งที่สองเพียงยืนยัน Compose CLI ไม่ได้พิสูจน์ว่า Engine พร้อม</p>
+<h2 id="lesson-4-lab-build-run">Lab — เห็นความต่างของ build กับ run ด้วยตัวเอง</h2>
+<p>รันจาก <code>capstone</code> ที่มี Dockerfile และมีอินเทอร์เน็ตสำหรับดาวน์โหลด base image/packages รอบแรก:</p>
+<pre><code class="language-powershell">docker build -t week5-capstone:local .
+docker image ls week5-capstone
+docker run --rm week5-capstone:local python --version
+</code></pre>
+<p>บรรทัดแรกสร้าง image ชื่อ <code>week5-capstone</code> tag <code>local</code> บรรทัดที่สองควรพบ image นั้น บรรทัดที่สามเริ่ม container ใหม่จาก image แต่ <strong>override CMD</strong> ด้วย <code>python --version</code> จึงพิมพ์เวอร์ชันแล้วจบ ไม่เปิด API</p>
+<pre><code class="language-text">build สำเร็จ → มี image แต่ยังไม่มี API รอรับ request
+run python --version → process สั้น ๆ → จบ
+run คำสั่ง uvicorn   → process server → ทำงานต่อจนหยุด
+</code></pre>
+<p><code>--rm</code> ขอให้ลบ container ชั่วคราวตัวนี้เมื่อจบ ไม่ได้ลบ image ตัวอย่างนี้ไม่ mount ข้อมูลและไม่รัน workflow จึงเหมาะทดลองครั้งแรก ห้ามอนุมานว่าใช้ <code>--rm</code> กับระบบเก็บข้อมูลโดยไม่ต้องคิดเรื่อง storage ได้ <a href="https://docs.docker.com/reference/cli/docker/container/run/">Docker run reference</a></p>
+<h2 id="lesson-4-build">ถ้า build ไม่ผ่าน อ่านบรรทัดที่ล้มก่อน</h2>
+<div class="table-scroll"><table>
+<thead>
+<tr>
+<th>อาการ</th>
+<th>จุดที่ควรตรวจ</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>หา Dockerfile ไม่พบ</td>
+<td>อยู่ capstone หรือยัง?</td>
+</tr>
+<tr>
+<td>COPY requirements ไม่พบ</td>
+<td>context ถูก folder หรือไม่?</td>
+</tr>
+<tr>
+<td>ดาวน์โหลด image/package ไม่ได้</td>
+<td>network, proxy และ registry access</td>
+</tr>
+<tr>
+<td>RUN pip install ล้มเหลว</td>
+<td>package/version ที่ error ไม่ใช่ลองเปลี่ยน port</td>
+</tr>
+<tr>
+<td>Build ผ่านแต่ import ไม่ได้ตอน run</td>
+<td>source ที่ COPY และ working directory ภายใน image</td>
+</tr>
+</tbody>
+</table></div>
+<p>อายุของ image คนละเรื่องกับอายุของ source ในเครื่อง แก้ Python บน host แล้ว <code>docker restart</code> ไม่ได้ copy โค้ดใหม่เข้า image ต้อง build และ recreate ตามขั้นตอน Compose ในบท 05 จุดตรวจของบทนี้คือบอกได้ว่า error เกิดตอนสร้าง image หรือตอนเริ่ม process</p><a class="back" href="#top">↑ กลับสารบัญ</a></article><article id="lesson-5"><div class="source">04_ports_networks_volumes_env.md</div><details class="local-toc"><summary>หัวข้อในบทนี้</summary><a href="#lesson-5-localhost">localhost ของใคร</a><a href="#lesson-5-volume-container">Volume ต่างจากไฟล์ใน container อย่างไร</a><a href="#lesson-5-env-secret">.env ไม่ได้ทำให้ secret ปลอดภัยโดยอัตโนมัติ</a><a href="#lesson-5-url">อ่าน URL ให้เห็นสามส่วน</a><a href="#lesson-5-volume-bind-mount-path">Volume กับ Bind Mount — ทั้งคู่เชื่อม path แต่ไม่เหมือนกัน</a><a href="#lesson-5-secret">ทดลองอ่านค่าจริงโดยไม่เผย secret</a></details><h1 id="lesson-5-04-ports-networks-volumes-environment-variables">04 — Ports, Networks, Volumes และ Environment Variables</h1>
 <h2 id="lesson-5-localhost">localhost ของใคร</h2>
 <p>นี่เป็นจุดที่ทำให้ต่อ API ไม่ติดบ่อยที่สุด <code>localhost</code> หมายถึงเครื่องหรือ container ที่กำลังเรียก ไม่ได้หมายถึง laptop ของเราเสมอไป</p>
 <div class="table-scroll"><table>
@@ -460,7 +576,28 @@ worker ──┘
 <p><code>.env.example</code> เป็นตัวอย่างที่แชร์ได้ ส่วน <code>.env</code> เป็นค่าของเครื่องเราและไม่ควร commit Compose อ่านค่า <code>${REVIEW_TOKEN:-}</code> จาก environment/ไฟล์ตามการตั้งค่าแล้วส่งให้ API; native Python ตัวอย่างไม่ได้โหลด <code>.env</code> เอง ต้องตั้ง <code>$env:REVIEW_TOKEN</code> ใน terminal ที่เปิด API</p>
 <pre><code class="language-powershell">$env:CAPSTONE_DB = "data/capstone.sqlite3"
 </code></pre>
-<p>นี่ตั้ง environment variable ของ PowerShell session ปัจจุบันและ process ลูก ไม่ได้แก้ source code และ terminal worker อีกหน้าต้องตั้งค่าของตัวเองด้วย <code>docker compose config</code> อาจแสดงค่าที่แทนแล้ว รวมถึง secret จึงอย่าโพสต์ output เต็มลงสาธารณะ ใช้ <code>config --quiet</code> เมื่อต้องการตรวจ syntax อย่างเดียว</p><a class="back" href="#top">↑ กลับสารบัญ</a></article><article id="lesson-6"><div class="source">05_compose_healthchecks.md</div><details class="local-toc"><summary>หัวข้อในบทนี้</summary><a href="#lesson-6-compose">Compose ช่วยจัดอะไร</a><a href="#lesson-6-running-healthy-business-success">Running, healthy และ business success</a><a href="#lesson-6-depends_on">depends_on ไม่ใช่ระบบกู้คืนทั้งหมด</a><a href="#lesson-6-n8n">n8n เป็นทางเลือก ไม่ใช่เงื่อนไขก่อนรันระบบ</a></details><h1 id="lesson-6-05-compose-healthchecks">05 — Compose และ Healthchecks: เปิดครบไม่เท่ากับพร้อมใช้</h1>
+<p>นี่ตั้ง environment variable ของ PowerShell session ปัจจุบันและ process ลูก ไม่ได้แก้ source code และ terminal worker อีกหน้าต้องตั้งค่าของตัวเองด้วย <code>docker compose config</code> อาจแสดงค่าที่แทนแล้ว รวมถึง secret จึงอย่าโพสต์ output เต็มลงสาธารณะ ใช้ <code>config --quiet</code> เมื่อต้องการตรวจ syntax อย่างเดียว</p>
+<h2 id="lesson-5-url">อ่าน URL ให้เห็นสามส่วน</h2>
+<p><code>http://127.0.0.1:8015/health</code> มี protocol <code>http</code>, address/port <code>127.0.0.1:8015</code> และ path <code>/health</code> Port เปรียบเหมือนช่องทางที่ process รอรับงาน ไม่ใช่ชื่อไฟล์ ส่วน endpoint คือเส้นทางที่ API รองรับบน service นั้น</p>
+<p>ถ้าเปลี่ยน host port เป็น <code>127.0.0.1:18015:8015</code> ในสำเนา Compose, browser บน host ต้องเรียก 18015 แต่ n8n ภายใน network เดิมยังเรียก <code>api:8015</code> ได้ อย่าเปลี่ยนทุกเลขพร้อมกันโดยไม่รู้ว่ากำลังแก้ฝั่งไหน</p>
+<h2 id="lesson-5-volume-bind-mount-path">Volume กับ Bind Mount — ทั้งคู่เชื่อม path แต่ไม่เหมือนกัน</h2>
+<p>Named volume ให้ Docker จัดการพื้นที่เก็บข้อมูล เช่น <code>capstone_data:/data</code> ส่วน bind mount ระบุ directory บน host เอง เหมาะเมื่อจำเป็นต้องเชื่อมไฟล์จากเครื่อง แต่ต้องคิดเรื่อง permission/path และอย่า mount โฟลเดอร์ส่วนตัวกว้าง ๆ ให้ container โดยไม่จำเป็น</p>
+<pre><code class="language-text">capstone_data:/data
+└──────┬─────┘ └─┬─┘
+  ชื่อ volume   path ภายใน container
+</code></pre>
+<p>ตัวอย่างใช้ named volume ไม่ใช่การเขียน DB ลง folder capstone ของ Windows ถ้าเปิด <code>data/</code> บน host แล้วไม่เห็นข้อมูลจาก Compose จึงยังสรุปไม่ได้ว่าระบบไม่บันทึก</p>
+<h2 id="lesson-5-secret">ทดลองอ่านค่าจริงโดยไม่เผย secret</h2>
+<p>หลังเปิด Compose ตามบท 05 ใช้คำสั่งนี้ตรวจ <strong>เฉพาะ DB path</strong> ภายใน API:</p>
+<pre><code class="language-powershell">docker compose exec api python -c "import os; print(os.environ.get('CAPSTONE_DB'))"
+</code></pre>
+<p>ควรเห็น <code>/data/capstone.sqlite3</code> คำว่า <code>exec</code> คือรันคำสั่งเพิ่มเติมใน container ที่กำลังทำงาน ไม่สร้าง environment ใหม่เหมือนเปิด Python บน host ถ้า service ยังหยุดอยู่คำสั่งนี้จะใช้ไม่ได้ ต้องตรวจ <code>docker compose ps</code> ก่อน</p>
+<p>สำหรับ native:</p>
+<pre><code class="language-powershell">$env:CAPSTONE_DB = "data/capstone.sqlite3"
+python -c "import os; print(os.environ.get('CAPSTONE_DB'))"
+</code></pre>
+<p>ควรเห็น relative path ที่ตั้งเอง ทดลองใน terminal ใหม่จะไม่จำเป็นต้องมีค่าเดียวกันเพราะเป็นคนละ session อย่าพิมพ์ environment ทั้งหมดเพื่อ debug เพราะอาจมี credentials อื่นอยู่ด้วย</p>
+<p>จุดตรวจ: ถ้าส่งงานได้แต่ worker ไม่เห็น ให้ตรวจ path และ volume ก่อนสงสัยว่าคิวเสีย ถ้าเชื่อมต่อไม่ได้ ให้ตรวจผู้เรียกอยู่ host หรือ container ก่อนแก้ URL</p><a class="back" href="#top">↑ กลับสารบัญ</a></article><article id="lesson-6"><div class="source">05_compose_healthchecks.md</div><details class="local-toc"><summary>หัวข้อในบทนี้</summary><a href="#lesson-6-compose">Compose ช่วยจัดอะไร</a><a href="#lesson-6-running-healthy-business-success">Running, healthy และ business success</a><a href="#lesson-6-depends_on">depends_on ไม่ใช่ระบบกู้คืนทั้งหมด</a><a href="#lesson-6-n8n">n8n เป็นทางเลือก ไม่ใช่เงื่อนไขก่อนรันระบบ</a><a href="#lesson-6-yaml">อ่าน YAML แบบคนเพิ่งเริ่ม</a><a href="#lesson-6-startup">เดินตาม startup ของไฟล์เรา</a><a href="#lesson-6-lab">Lab — เปิดระบบและตรวจทีละชั้น</a><a href="#lesson-6-configuration">หยุด เริ่มใหม่ และใช้ configuration ใหม่ต่างกัน</a></details><h1 id="lesson-6-05-compose-healthchecks">05 — Compose และ Healthchecks: เปิดครบไม่เท่ากับพร้อมใช้</h1>
 <h2 id="lesson-6-compose">Compose ช่วยจัดอะไร</h2>
 <p>แทนที่จะจำคำสั่งรัน API, worker, network และ volume หลายชุด เราเขียนความสัมพันธ์ใน <a href="week-5-assets/capstone/compose.yaml">compose.yaml</a> ชื่อ service ทำหน้าที่เป็นชื่อเรียกภายใน network ด้วย แต่ Compose ไม่ได้แทน business workflow: ลำดับการวิเคราะห์ resume ยังอยู่ใน service/worker ไม่ใช่ใน YAML</p>
 <pre><code class="language-powershell">docker compose config --quiet
@@ -485,7 +622,66 @@ human decision
 <p><code>restart: unless-stopped</code> ช่วยเริ่ม process ใหม่ในสถานการณ์ที่นโยบายครอบคลุม แต่ไม่รู้ว่า “ส่งอีเมลไปแล้วหรือยัง” นั่นเป็นเหตุผลที่บทถัดไปเก็บ task, lease และผลลัพธ์ใน DB</p>
 <h2 id="lesson-6-n8n">n8n เป็นทางเลือก ไม่ใช่เงื่อนไขก่อนรันระบบ</h2>
 <p>Compose มี profile <code>automation</code> แยกไว้ ไม่เปิดโดย default ตั้ง <code>N8N_IMAGE</code> เป็นเวอร์ชันที่คุณตรวจและอนุมัติก่อนเปิด profile; lab ไม่รับรอง tag ว่าเหมาะเปิด public หาก port 5678 ถูกใช้โดย n8n เดิม อย่าหยุดของเดิมเพื่อรันบทเรียน ให้ใช้ native workflow กับ API host แทนหรือเลือก host port ใหม่ในสำเนา config</p>
-<p>ก่อนจบบท ทดลองอ่าน YAML แล้วบอกว่า API กับ worker แชร์อะไร และไม่ได้แชร์อะไร: แชร์ volume/database แต่ไม่ได้แชร์ตัวแปร Python ใน memory เพราะเป็นคนละ process</p><a class="back" href="#top">↑ กลับสารบัญ</a></article><article id="lesson-7"><div class="source">06_durable_state_and_transactions.md</div><details class="local-toc"><summary>หัวข้อในบทนี้</summary><a href="#lesson-7-set-memory">ทำไม set ใน memory ยังไม่พอ</a><a href="#lesson-7-event-task">ทำไมต้องบันทึก event และ task พร้อมกัน</a><a href="#lesson-7-unique-constraint-db">UNIQUE constraint คือด่านที่ DB ช่วยยืนยัน</a><a href="#lesson-7-id">ส่ง ID เดิมแต่เนื้อหาเปลี่ยนควรทำอย่างไร</a><a href="#lesson-7-transaction">Transaction ต้องสั้น</a></details><h1 id="lesson-7-06-durable-state-transaction-boundary">06 — Durable State และ Transaction Boundary</h1>
+<p>ก่อนจบบท ทดลองอ่าน YAML แล้วบอกว่า API กับ worker แชร์อะไร และไม่ได้แชร์อะไร: แชร์ volume/database แต่ไม่ได้แชร์ตัวแปร Python ใน memory เพราะเป็นคนละ process</p>
+<h2 id="lesson-6-yaml">อ่าน YAML แบบคนเพิ่งเริ่ม</h2>
+<p>YAML ใช้การเยื้องบรรทัดบอกความเป็นลูกของข้อมูล ไม่ใช่แค่จัดให้สวย ใช้ spaces ตามไฟล์เดิม ไม่ใช้ tab สลับกัน ส่วน <code>-</code> เริ่มสมาชิกใน list:</p>
+<pre><code class="language-yaml">services:
+  api:
+    build: .
+    ports:
+      - "127.0.0.1:8015:8015"
+</code></pre>
+<p>อ่านว่า services มี service ชื่อ api; api ให้ build จาก directory ปัจจุบัน และมี ports หนึ่งรายการ ถ้าวาง <code>ports</code> ผิดระดับ ความหมายก็เปลี่ยนหรือ config ตรวจไม่ผ่านได้ <code>api</code> เป็น service name ที่เราเลือก ไม่ใช่ keyword บังคับของ Docker</p>
+<h2 id="lesson-6-startup">เดินตาม startup ของไฟล์เรา</h2>
+<pre><code class="language-text">Compose อ่าน config
+    ↓ build image สำหรับ api/worker
+เปิด API → ตรวจ /health ตามรอบ
+    ↓ API healthy
+เปิด worker → worker อ่าน DB เดียวกัน
+</code></pre>
+<p>API healthcheck ใช้ Python ใน container เรียก <code>/health</code> ของตัวเอง ไม่ต้องติดตั้ง curl เพิ่ม <code>interval: 5s</code> คือช่วงตรวจ, <code>timeout: 3s</code> คือเวลาสูงสุดของการตรวจหนึ่งรอบ, <code>retries: 10</code> คือจำนวน failure ต่อเนื่องที่ใช้ตัดสิน unhealthy ส่วน <code>start_period</code> ให้ช่วงเริ่มต้นก่อนนับ failures ตามกติกา healthcheck ไม่ใช่การสั่งพัก startup ทุก service 10 วินาทีตายตัว</p>
+<p>Container ที่ unhealthy ไม่ได้ถูก restart โดยนโยบาย <code>unless-stopped</code> เพียงเพราะสถานะสุขภาพเปลี่ยน นโยบาย restart เน้นการออกของ process; ต้องตรวจสาเหตุ ไม่เพิ่ม retries เพื่อซ่อนปัญหา</p>
+<h2 id="lesson-6-lab">Lab — เปิดระบบและตรวจทีละชั้น</h2>
+<p>หยุด native API/worker ของ lab ก่อนเพื่อไม่ชน port ไม่หยุด service อื่นของคุณโดยเดา จาก capstone:</p>
+<pre><code class="language-powershell">docker compose config --quiet
+docker compose up --build -d api worker
+docker compose ps
+Invoke-RestMethod http://127.0.0.1:8015/health
+</code></pre>
+<p>ขั้นแรกหากผ่านอาจไม่มีข้อความ ให้ตรวจ <code>$LASTEXITCODE</code> หลังคำสั่งซึ่งควรเป็น 0 ขั้นสองมีข้อความ build/start ที่เปลี่ยนตามเครื่อง ขั้นสามควรเห็น API running/healthy และ worker running ขั้นสี่ควรได้ <code>status: ok</code>, <code>scope: week5-local-synthetic</code>, <code>provider: mock</code> หากมี service อื่นตอบอยู่ที่ port นี้ scope จะช่วยให้ไม่ทดสอบผิดระบบ</p>
+<pre><code class="language-powershell">python demo.py transaction
+docker compose logs --tail 50 worker
+</code></pre>
+<p><code>demo.py</code> รันบน host จึงยังต้องมี Python dependencies ตาม README และจะติดตามผล task ให้ ถ้าอยู่ queued ให้ตรวจ worker; ถ้า intake ตอบ 422 ให้ตรวจ input; ถ้า connection refused ให้ตรวจ API/port ก่อน อย่าเริ่มจากลบ volume</p>
+<h2 id="lesson-6-configuration">หยุด เริ่มใหม่ และใช้ configuration ใหม่ต่างกัน</h2>
+<div class="table-scroll"><table>
+<thead>
+<tr>
+<th>คำสั่ง</th>
+<th>ใช้เมื่อ</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>docker compose stop api worker</code></td>
+<td>หยุด lab แต่เก็บ containers/data</td>
+</tr>
+<tr>
+<td><code>docker compose start api worker</code></td>
+<td>เริ่ม containers ที่หยุดไว้</td>
+</tr>
+<tr>
+<td><code>docker compose restart api worker</code></td>
+<td>restart process ของ containers เดิม ไม่ rebuild source</td>
+</tr>
+<tr>
+<td><code>docker compose up --build -d api worker</code></td>
+<td>สร้าง image ใหม่และให้ Compose ปรับ containers ตาม source/config</td>
+</tr>
+</tbody>
+</table></div>
+<p>ถ้าแก้ <code>.env</code> อย่าคาดว่า restart จะรับ config ใหม่เสมอ ใช้เส้นทาง recreate ผ่าน <code>up</code> ตาม config ที่ตรวจแล้ว และระวัง environment ใน shell ที่อาจมีค่า override อยู่ <a href="https://docs.docker.com/reference/cli/docker/compose/up/">Compose up reference</a></p>
+<p>ครั้งแรกยังไม่ต้องเปิด n8n profile ให้ API/worker ผ่านก่อน Review endpoints อาจตอบ 503 หากยังไม่ได้ตั้ง token แต่ไม่ได้หมายความว่า intake API ใช้งานไม่ได้ อ่านขั้นตั้ง token แยกใน README; อย่าแก้ authorize ให้อนุญาตทุกคนเพื่อให้ demo ผ่าน</p><a class="back" href="#top">↑ กลับสารบัญ</a></article><article id="lesson-7"><div class="source">06_durable_state_and_transactions.md</div><details class="local-toc"><summary>หัวข้อในบทนี้</summary><a href="#lesson-7-set-memory">ทำไม set ใน memory ยังไม่พอ</a><a href="#lesson-7-event-task">ทำไมต้องบันทึก event และ task พร้อมกัน</a><a href="#lesson-7-unique-constraint-db">UNIQUE constraint คือด่านที่ DB ช่วยยืนยัน</a><a href="#lesson-7-id">ส่ง ID เดิมแต่เนื้อหาเปลี่ยนควรทำอย่างไร</a><a href="#lesson-7-transaction">Transaction ต้องสั้น</a><a href="#lesson-7-state">State คืออะไรในภาษาง่าย</a><a href="#lesson-7-lab-store">Lab — ดูงานเดิมหลังเปิด Store ใหม่</a><a href="#lesson-7-sql">อ่านคำสั่ง SQL ในโค้ดทีละส่วน</a><a href="#lesson-7-with-transaction">with ไม่ได้แปลว่าเริ่ม transaction เหมือนกันทุกชนิด</a></details><h1 id="lesson-7-06-durable-state-transaction-boundary">06 — Durable State และ Transaction Boundary</h1>
 <h2 id="lesson-7-set-memory">ทำไม set ใน memory ยังไม่พอ</h2>
 <p>สมมติเราเก็บ event ที่รับแล้วใน <code>seen_ids = set()</code> การส่งซ้ำระหว่าง process เดิมทำงานอาจถูกกันได้ แต่เมื่อ restart set ถูกสร้างใหม่เป็นค่าว่าง ระบบจึงรับ event เก่าเป็นงานใหม่ ความจำของ process ต่างจากข้อมูลถาวรในฐานข้อมูล</p>
 <pre><code class="language-text">in-memory set → restart → ว่าง
@@ -509,7 +705,34 @@ COMMIT ทั้งชุด หรือ ROLLBACK ทั้งชุด
 <p>ตัวอย่างเลือกคืน <strong>409 Conflict</strong> ไม่แก้ข้อมูลเดิมเงียบ ๆ เพราะ event identity เดียวกันไม่ควรหมายถึงจำนวนเงินสองค่า JSON ถูก serialize แบบเรียง keys เพื่อเทียบ payload โดยไม่ขึ้นกับลำดับ key แต่ค่าต่างจริง เช่น mode ต่าง ยังคงถือว่า conflict</p>
 <p>Resume ใช้ candidate ID + hash ของข้อความ + processing version + job version เป็น key จึงเป็น <strong>text-level dedup</strong> ไม่ใช่ file-level dedup ไฟล์ PDF สองไฟล์ที่ได้ข้อความตรงกันอาจรวมเป็น task เดียว ขณะที่ whitespace ต่างกันทำให้ hash ต่างกัน เมื่อเปลี่ยน job requirements ต้องเปลี่ยน job version ด้วย ไม่เช่นนั้นถือว่า identity เดิมแต่ options ขัดแย้ง ควรเลือกนิยามให้ตรงงานจริง ไม่ใช้คำว่า hash แล้วสมมติว่าปัญหา identity จบทั้งหมด</p>
 <h2 id="lesson-7-transaction">Transaction ต้องสั้น</h2>
-<p>อย่าเปิด DB write transaction ค้างไว้ระหว่างรอ AI เพราะจะทำให้ writer อื่นรอโดยไม่จำเป็น เราจึง claim งานแล้ว commit ก่อนเรียก provider จากนั้นเริ่ม transaction ใหม่เพื่อบันทึกผล การแบ่งนี้ต้องมี lease และการป้องกัน worker เก่าเขียนทับ ซึ่งเป็นหัวข้อถัดไป</p><a class="back" href="#top">↑ กลับสารบัญ</a></article><article id="lesson-8"><div class="source">07_worker_retry_recovery.md</div><details class="local-toc"><summary>หัวข้อในบทนี้</summary><a href="#lesson-8-worker">Worker คือคนทำงานเบื้องหลัง</a><a href="#lesson-8-lease-lock">Lease ต่างจาก lock ที่ถือไว้ตลอดอย่างไร</a><a href="#lesson-8-retry-error">Retry ไม่ใช่ลองใหม่ทุก error</a><a href="#lesson-8-_1">ขอบเขตที่ต้องรู้ก่อนนำไปใช้จริง</a></details><h1 id="lesson-8-07-worker-retry-lease-crash-recovery">07 — Worker, Retry, Lease และ Crash Recovery</h1>
+<p>อย่าเปิด DB write transaction ค้างไว้ระหว่างรอ AI เพราะจะทำให้ writer อื่นรอโดยไม่จำเป็น เราจึง claim งานแล้ว commit ก่อนเรียก provider จากนั้นเริ่ม transaction ใหม่เพื่อบันทึกผล การแบ่งนี้ต้องมี lease และการป้องกัน worker เก่าเขียนทับ ซึ่งเป็นหัวข้อถัดไป</p>
+<h2 id="lesson-7-state">State คืออะไรในภาษาง่าย</h2>
+<p>State คือข้อมูลว่า “ตอนนี้สิ่งนี้อยู่ขั้นไหน” เช่น task queued หรือ running ไม่ใช่แค่ตัวแปรชื่อ state เมื่อเก็บใน DB เราจึงกลับมาถามสถานะได้แม้ผู้รับ request กับผู้ทำงานเป็นคนละ process</p>
+<p>ฐานข้อมูลมี <strong>table</strong> เหมือนชุดข้อมูลหนึ่งชนิด, <strong>row</strong> เป็นหนึ่งรายการ และ <strong>column</strong> เป็นรายละเอียดของรายการ เช่น table tasks มี row ของงานหนึ่งชิ้น และ column attempts บอกจำนวนครั้งที่เริ่มทำงานนั้น ต่างจาก table events ที่เก็บข้อมูลธุรกรรมต้นทาง</p>
+<h2 id="lesson-7-lab-store">Lab — ดูงานเดิมหลังเปิด Store ใหม่</h2>
+<p>จาก capstone ใช้ environment ที่ติดตั้ง requirements แล้ว:</p>
+<pre><code class="language-powershell">python learning_walkthrough.py state
+</code></pre>
+<p>ส่วนต้นควรเห็น:</p>
+<pre><code class="language-text">first: task_id=1 duplicate=False
+reopened: task_id=1 duplicate=True
+</code></pre>
+<p>สคริปต์สร้าง DB ชั่วคราว รับ E1 แล้วสร้าง Store object ใหม่ชี้ไฟล์เดิม ก่อนส่ง E1 ซ้ำ จึงพิสูจน์ว่า dedup ไม่ได้อาศัย object เก่าอย่างเดียว แต่ <strong>ไม่ใช่การ restart เครื่องจริง</strong> ผล SQL ควรมี task เดียว state queued และ attempts 0 เพราะยังไม่เรียก worker</p>
+<h2 id="lesson-7-sql">อ่านคำสั่ง SQL ในโค้ดทีละส่วน</h2>
+<pre><code class="language-python">row = con.execute(
+    'SELECT payload FROM events WHERE event_id=?',
+    (payload['event_id'],),
+).fetchone()
+</code></pre>
+<p><code>con</code> คือ connection กับ DB, <code>execute()</code> ส่ง SQL, <code>?</code> เป็น placeholder สำหรับค่า และ tuple <code>(value,)</code> ต้องมี comma เพราะเป็น tuple สมาชิกเดียว ไม่ใช่วงเล็บครอบค่าเฉย ๆ <code>fetchone()</code> ขอผลหนึ่ง row หรือ None เมื่อไม่พบ ใช้ parameter binding ไม่ต่อ string จาก input เข้า SQL เอง</p>
+<pre><code class="language-text">ไม่พบ row → เป็น event ใหม่ → insert
+พบ row + payload เหมือน → คืน task เดิม
+พบ row + payload ต่าง → Conflict → ไม่เขียนทับ
+</code></pre>
+<p>ใน Store ตั้ง <code>row_factory = sqlite3.Row</code> จึงอ่าน <code>row['payload']</code> ได้ด้วยชื่อ column ส่วน <code>.lastrowid</code> หลัง insert ใช้รับ ID ของแถวที่สร้าง และ <code>.rowcount</code> ใช้ดูจำนวนแถวที่ UPDATE เปลี่ยนจริง ความหมายต่างกัน อย่าใช้สลับกัน</p>
+<h2 id="lesson-7-with-transaction"><code>with</code> ไม่ได้แปลว่าเริ่ม transaction เหมือนกันทุกชนิด</h2>
+<p><code>with store.connection()</code> ใช้ context manager ที่เราเขียนเอง: เปิด connection, commit/rollback ตามเส้นทาง และปิดใน finally ส่วน <code>BEGIN IMMEDIATE</code> ใน method เป็นการเริ่ม write transaction ที่ต้องการจริง ถ้าเกิด exception ก่อนจบ ชุดการเปลี่ยนแปลงจะ rollback ตาม code นี้ อย่าอนุมานว่า <code>with</code> ทุก object ใน Python มีพฤติกรรมเกี่ยวกับ DB แบบนี้</p>
+<p>จุดตรวจ: ถ้าข้อมูลหายหลังรัน walkthrough จบ เป็นสิ่งที่ตั้งใจเพราะใช้ temporary DB สำหรับเรียน ส่วน API/worker จริงใช้ path ตาม config ต้องไม่เลือก temporary storage หากต้องเก็บงานต่อ</p><a class="back" href="#top">↑ กลับสารบัญ</a></article><article id="lesson-8"><div class="source">07_worker_retry_recovery.md</div><details class="local-toc"><summary>หัวข้อในบทนี้</summary><a href="#lesson-8-worker">Worker คือคนทำงานเบื้องหลัง</a><a href="#lesson-8-lease-lock">Lease ต่างจาก lock ที่ถือไว้ตลอดอย่างไร</a><a href="#lesson-8-retry-error">Retry ไม่ใช่ลองใหม่ทุก error</a><a href="#lesson-8-_1">ขอบเขตที่ต้องรู้ก่อนนำไปใช้จริง</a><a href="#lesson-8-lab-retry-network">Lab — ดู retry แบบไม่ต้องรอ network จริง</a><a href="#lesson-8-while-true-api">ทำไมไม่ใช้ while True ลอง API ไปเรื่อย ๆ</a><a href="#lesson-8-lab-worker">Lab — worker เก่ากลับมาช้า</a></details><h1 id="lesson-8-07-worker-retry-lease-crash-recovery">07 — Worker, Retry, Lease และ Crash Recovery</h1>
 <h2 id="lesson-8-worker">Worker คือคนทำงานเบื้องหลัง</h2>
 <p>API รับงานและคืน task ID ส่วน worker วนดูว่ามีงานถึงเวลาทำหรือไม่ หากไม่มีจะพักสั้น ๆ ไม่ใช้ CPU วนเปล่า ถ้ามีจะ claim ก่อนประมวลผล การ claim คือจองสิทธิ์ทำงานชั่วคราว ไม่ใช่ลบงานออกจาก DB</p>
 <pre><code class="language-text">queued → running → succeeded
@@ -535,7 +758,32 @@ COMMIT ทั้งชุด หรือ ROLLBACK ทั้งชุด
 <h2 id="lesson-8-_1">ขอบเขตที่ต้องรู้ก่อนนำไปใช้จริง</h2>
 <p>Lab ไม่มี lease heartbeat หากงานใช้เวลานานกว่า 30 วินาที ผลอาจถูกปฏิเสธและงานถูกทำซ้ำ ต้องเพิ่ม renewal/timeout ที่สัมพันธ์กันก่อนใช้ provider ช้า Mock timeout เป็น exception จำลอง ไม่ใช่การวัด network timeout จริง</p>
 <p>ระบบนี้ยอมให้การคำนวณเกิดมากกว่าหนึ่งครั้งได้ จึงไม่ควรอ้าง exactly-once end-to-end แม้บันทึกผลใน DB ได้อย่างมีเงื่อนไข การเรียก external API ที่มี side effect ยังต้องมี idempotency ของระบบปลายทางหรือ outbox เพิ่มเติม</p>
-<p>ลองรัน test <code>test_expired_worker_cannot_overwrite</code> แล้วอ่าน assertion ทีละบรรทัด จะเห็นว่าเราไม่ต้องรอจริง 30 วินาที เพราะส่งเวลาจำลองเข้า Store</p><a class="back" href="#top">↑ กลับสารบัญ</a></article><article id="lesson-9"><div class="source">08_review_and_side_effects.md</div><details class="local-toc"><summary>หัวข้อในบทนี้</summary><a href="#lesson-9-ai-result-decision">ทำไม AI result กับ decision ต้องแยกกัน</a><a href="#lesson-9-decision-id">ทำไม decision ต้องมี ID</a><a href="#lesson-9-auth">Auth ตัวอย่างตั้งใจจำกัดมาก</a><a href="#lesson-9-audit-log">Audit log ควรบอกเหตุการณ์ ไม่คัดลอกข้อมูลทั้งหมด</a><a href="#lesson-9-outbox">Outbox คืออะไร และตอนนี้ทำถึงไหน</a></details><h1 id="lesson-9-08-human-review-audit-side-effects">08 — Human Review, Audit และ Side Effects</h1>
+<p>ลองรัน test <code>test_expired_worker_cannot_overwrite</code> แล้วอ่าน assertion ทีละบรรทัด จะเห็นว่าเราไม่ต้องรอจริง 30 วินาที เพราะส่งเวลาจำลองเข้า Store</p>
+<h2 id="lesson-8-lab-retry-network">Lab — ดู retry แบบไม่ต้องรอ network จริง</h2>
+<pre><code class="language-powershell">python learning_walkthrough.py retry
+</code></pre>
+<p>สคริปต์ใช้ mock transient ซึ่งกำหนดให้สอง attempts แรกล้มเหลวและครั้งที่สามผ่าน:</p>
+<pre><code class="language-text">time=100 worked=True state=retry_pending attempts=1
+time=100.5 worked=False state=retry_pending attempts=1
+time=101 worked=True state=retry_pending attempts=2
+time=102 worked=False state=retry_pending attempts=2
+time=103 worked=True state=succeeded attempts=3
+</code></pre>
+<p><code>worked=False</code> หมายถึงรอบนั้นยังไม่มีงานที่ claim ได้ ไม่ใช่ provider ตอบผิด และ attempts เพิ่มเมื่อ claim จริง ไม่เพิ่มเพียงเพราะ worker ตื่นมาตรวจ ส่วนเวลาในตัวอย่างเป็นเลขจำลอง ไม่ใช่เวลาจริงของเครื่อง</p>
+<h2 id="lesson-8-while-true-api">ทำไมไม่ใช้ <code>while True</code> ลอง API ไปเรื่อย ๆ</h2>
+<p>ถ้าไม่มี budget งานที่แก้ไม่ได้อาจเสียทรัพยากรตลอด และขวางงานอื่น Retry ควรมีเงื่อนไข, เวลานัดครั้งถัดไป และจุดจบ ในโค้ดนี้ <code>available</code> คือเวลาที่เร็วที่สุดที่ task รอบถัดไปเริ่มได้ ไม่ใช่การบอกว่า worker ต้องทำตรงวินาทีนั้นแน่นอน</p>
+<pre><code class="language-text">TemporaryFailure
+     ↓ attempts &gt;= 3 ?
+   ใช่ → failed + review
+   ไม่ → retry_pending + available ใหม่
+</code></pre>
+<p><code>except TemporaryFailure</code> เลือกจัดการ exception กลุ่มชั่วคราวโดยเฉพาะ ส่วน unexpected exception ยังปล่อยให้เกิด failure ที่เห็นได้และกู้ผ่าน lease แทนการ catch แล้วรายงาน success เสมอ</p>
+<h2 id="lesson-8-lab-worker">Lab — worker เก่ากลับมาช้า</h2>
+<pre><code class="language-powershell">python learning_walkthrough.py lease
+</code></pre>
+<p>ควรได้ <code>old_completion_accepted=False</code> และ <code>new_completion_accepted=True</code> จากนั้น result owner เป็น new สคริปต์ claim สองครั้งด้วยเวลาต่างกันเพื่อจำลองสิทธิ์เก่าหมดอายุ ไม่ได้เปิดสอง worker OS จริง การทดสอบ concurrent claim มีแยกใน pytest</p>
+<p>อ่าน SQL ใน <code>finish()</code>: นอกจาก task ID ต้องตรงแล้ว state ต้อง running, token ต้องตรง และ lease ต้องยังไม่หมด เมื่อ UPDATE ไม่ได้แถว <code>.rowcount</code> เป็น 0 จึงคืน False สิ่งสำคัญคือ <strong>ผลที่เก็บจริง</strong> ไม่ใช่แค่ provider คำนวณเสร็จ หากขยาย worker ให้มี log ควรตรวจผล finish เพื่อไม่ log ว่าบันทึกสำเร็จทั้งที่ถูก fence</p>
+<p>จุดตรวจ: อธิบายความต่างระหว่าง retry เพราะ provider ล้ม กับ reclaim เพราะ worker เงียบหายได้ ทั้งคู่ทำให้คำนวณซ้ำได้ แต่สาเหตุและหลักฐาน audit ต่างกัน</p><a class="back" href="#top">↑ กลับสารบัญ</a></article><article id="lesson-9"><div class="source">08_review_and_side_effects.md</div><details class="local-toc"><summary>หัวข้อในบทนี้</summary><a href="#lesson-9-ai-result-decision">ทำไม AI result กับ decision ต้องแยกกัน</a><a href="#lesson-9-decision-id">ทำไม decision ต้องมี ID</a><a href="#lesson-9-auth">Auth ตัวอย่างตั้งใจจำกัดมาก</a><a href="#lesson-9-audit-log">Audit log ควรบอกเหตุการณ์ ไม่คัดลอกข้อมูลทั้งหมด</a><a href="#lesson-9-outbox">Outbox คืออะไร และตอนนี้ทำถึงไหน</a><a href="#lesson-9-lab-review-ai-result">Lab — เห็น review เปลี่ยน แต่ AI result ไม่ถูกแก้ทับ</a><a href="#lesson-9-_1">อ่านการตัดสินใจแบบทีละขั้น</a><a href="#lesson-9-bearer-token">Bearer token คือบัตรผ่าน ไม่ใช่ชื่อคน</a><a href="#lesson-9-side-effect">Side effect ที่ต้องระวัง</a></details><h1 id="lesson-9-08-human-review-audit-side-effects">08 — Human Review, Audit และ Side Effects</h1>
 <h2 id="lesson-9-ai-result-decision">ทำไม AI result กับ decision ต้องแยกกัน</h2>
 <p>AI อาจช่วยสรุปสิ่งที่พบ แต่การตรวจทานของคนเป็นข้อมูลอีกชนิด ถ้าแก้ result เดิมทับทันทีจะตอบไม่ได้ว่า AI เสนออะไร และคนแก้ตรงไหน ตัวอย่างจึงเก็บ result ใน tasks และ decision ใน reviews</p>
 <pre><code class="language-text">AI result ──→ เก็บตามที่ผ่าน validation
@@ -558,7 +806,30 @@ COMMIT ทั้งชุด หรือ ROLLBACK ทั้งชุด
               ↓ dispatcher ส่งภายนอก
               ↓ บันทึก sent / retry
 </code></pre>
-<p>Capstone นี้ยังไม่ส่งอีเมล/ข้อความภายนอกและยังไม่ implement outbox เป็นโจทย์ stretch อย่านำ <code>print('sent')</code> มาใช้เป็นหลักฐานว่าปลายทางได้รับแล้ว แม้เพิ่ม outbox ก็ยังอาจส่งซ้ำในช่องว่างระหว่างส่งสำเร็จกับบันทึก sent ต้องมี dedup/idempotency ที่ปลายทางหรือแผนจัดการด้วย</p><a class="back" href="#top">↑ กลับสารบัญ</a></article><article id="lesson-10"><div class="source">09_testing_and_ci.md</div><details class="local-toc"><summary>หัวข้อในบทนี้</summary><a href="#lesson-10-_1">ทดสอบผลที่สำคัญ ไม่ใช่แค่บรรทัดที่รันผ่าน</a><a href="#lesson-10-test-arrange-act-assert">อ่าน test ด้วย Arrange / Act / Assert</a><a href="#lesson-10-failure-matrix">Failure matrix ของงานนี้</a><a href="#lesson-10-ci-checks-checkout">CI คือการรัน checks จาก checkout ใหม่</a></details><h1 id="lesson-10-09-integration-testing-ci">09 — Integration Testing และ CI ที่มีความหมาย</h1>
+<p>Capstone นี้ยังไม่ส่งอีเมล/ข้อความภายนอกและยังไม่ implement outbox เป็นโจทย์ stretch อย่านำ <code>print('sent')</code> มาใช้เป็นหลักฐานว่าปลายทางได้รับแล้ว แม้เพิ่ม outbox ก็ยังอาจส่งซ้ำในช่องว่างระหว่างส่งสำเร็จกับบันทึก sent ต้องมี dedup/idempotency ที่ปลายทางหรือแผนจัดการด้วย</p>
+<h2 id="lesson-9-lab-review-ai-result">Lab — เห็น review เปลี่ยน แต่ AI result ไม่ถูกแก้ทับ</h2>
+<pre><code class="language-powershell">python learning_walkthrough.py review
+</code></pre>
+<p>ควรเห็น:</p>
+<pre><code class="language-text">review_before=pending
+review_after=verified
+same_decision_on_replay=True
+ai_result_unchanged=True
+</code></pre>
+<p>จากนั้นมี audit records ให้ดูตามลำดับ สคริปต์จำลองว่าคนตรวจข้อมูลสังเคราะห์แล้วเรียก repository โดยตรง <strong>ไม่ได้ทดสอบ HTTP auth</strong> และไม่ได้แปลว่า application ควรอนุญาตให้ทุกคนเรียก decision ได้ การตรวจ auth อยู่ใน API tests และการทดลองผ่าน HTTP ตาม README</p>
+<h2 id="lesson-9-_1">อ่านการตัดสินใจแบบทีละขั้น</h2>
+<p>เริ่มจาก <code>task_id</code> ที่มี review → อ่าน result/evidence → เขียน note ว่าตรวจอะไร → สร้าง decision_id สำหรับการส่งนี้ → ส่ง → ตรวจ review state และ audit หาก network สะดุดและต้องส่งซ้ำ ใช้ decision_id กับ payload เดิม ไม่สร้าง ID ใหม่ทุกครั้งที่ retry</p>
+<pre><code class="language-text">ผล AI: Python มี quote สนับสนุน
+คนตรวจ: อ่าน quote เทียบเอกสารแล้ว
+decision: verified + note
+     ↓ เก็บคนละช่องทางข้อมูล
+ยังย้อนดูผล AI ก่อนคนตรวจได้
+</code></pre>
+<h2 id="lesson-9-bearer-token">Bearer token คือบัตรผ่าน ไม่ใช่ชื่อคน</h2>
+<p>Header <code>Authorization: Bearer &lt;token&gt;</code> ให้ server ตรวจว่าผู้เรียกรู้ token ที่ตั้งไว้หรือไม่ ตัวอย่างนี้ใช้ shared token จึงยังแยกไม่ได้ว่าเป็นคนใดจริง แม้มี reviewer label คงที่ก็ไม่ใช่หลักฐาน identity รายบุคคล ห้ามใส่ token ลง URL เพราะ URL อาจถูกเก็บในประวัติและ logs</p>
+<p>เมื่อ HTTP ตอบ 401 ให้ตรวจ header/ค่าที่ตั้ง เมื่อ 503 ให้ตรวจว่า API เปิด review auth แล้วหรือยัง ถ้า 404 ให้ตรวจ task มี review จริงหรือไม่ และ 409 ต้องอ่านว่าตัดสินแล้วหรือ ID ซ้ำ ห้ามแก้ปัญหาด้วยลบ review row เพื่อให้กดได้ใหม่โดยไม่มี audit</p>
+<h2 id="lesson-9-side-effect">Side effect ที่ต้องระวัง</h2>
+<p>Side effect คือผลนอกเหนือจากค่าที่ฟังก์ชัน return เช่นเขียน DB, ส่งอีเมล หรือแก้สถานะในระบบอื่น หากฟังก์ชันคำนวณถูกสองครั้งอาจไม่เสียหาย แต่ส่งอีเมลสองฉบับไม่เหมือนหนึ่งฉบับ นี่เป็นเหตุผลให้แยกการคำนวณ, การบันทึก และการส่งภายนอก แทนการเรียกทุกอย่างใน retry loop เดียว</p><a class="back" href="#top">↑ กลับสารบัญ</a></article><article id="lesson-10"><div class="source">09_testing_and_ci.md</div><details class="local-toc"><summary>หัวข้อในบทนี้</summary><a href="#lesson-10-_1">ทดสอบผลที่สำคัญ ไม่ใช่แค่บรรทัดที่รันผ่าน</a><a href="#lesson-10-test-arrange-act-assert">อ่าน test ด้วย Arrange / Act / Assert</a><a href="#lesson-10-failure-matrix">Failure matrix ของงานนี้</a><a href="#lesson-10-ci-checks-checkout">CI คือการรัน checks จาก checkout ใหม่</a><a href="#lesson-10-test">อ่าน test จริงโดยไม่ต้องเข้าใจทั้งระบบก่อน</a><a href="#lesson-10-test_1">เวลา test แดง ควรอ่านอะไร</a><a href="#lesson-10-ci">CI อยู่ตรงไหนจึงจะทำงาน</a></details><h1 id="lesson-10-09-integration-testing-ci">09 — Integration Testing และ CI ที่มีความหมาย</h1>
 <h2 id="lesson-10-_1">ทดสอบผลที่สำคัญ ไม่ใช่แค่บรรทัดที่รันผ่าน</h2>
 <p>Unit test เหมาะกับกฎเล็ก ๆ เช่นจำนวนเงินถึง threshold หรือไม่ Integration test ตรวจหลายส่วนทำงานร่วมกัน เช่น request ผ่าน Pydantic แล้วบันทึก DB และ worker อ่านต่อ ชุดนี้ใช้ฐานข้อมูลชั่วคราวแยกแต่ละ test ไม่แตะ DB ที่คุณอ่านงานอยู่</p>
 <pre><code class="language-powershell">python -m pytest tests -q
@@ -617,7 +888,28 @@ assert store.task(tid)['state'] == 'succeeded'   # Assert
     ↓ เครื่อง CI checkout source
 install dependencies → tests → รายงานผ่าน/ไม่ผ่าน
 </code></pre>
-<p>CI สีเขียวช่วยยืนยันเฉพาะสิ่งที่ test ครอบคลุม ไม่รับรอง security, container runtime หรือความแม่นยำ AI จริง และ requirements ที่กำหนดช่วงเวอร์ชันอาจ resolve ต่างกันในอนาคต งานส่งมอบจริงควรมี lock/constraints ที่ทีมใช้ พร้อมรอบ update ไม่ freeze ทุกอย่างแล้วลืมดูแล</p><a class="back" href="#top">↑ กลับสารบัญ</a></article><article id="lesson-11"><div class="source">10_observability_and_debugging.md</div><details class="local-toc"><summary>หัวข้อในบทนี้</summary><a href="#lesson-11-task-id-restart">เริ่มจาก task ID ไม่เริ่มด้วย restart ทุกอย่าง</a><a href="#lesson-11-log">Log ที่ดีต้องตอบคำถามได้</a><a href="#lesson-11-count">Count กับอายุงานบอกคนละอย่าง</a><a href="#lesson-11-_1">วัดผลลดเวลางานอย่างซื่อสัตย์</a></details><h1 id="lesson-11-10-logs-metrics-debug">10 — Logs, Metrics และการ Debug ตามเส้นทางงาน</h1>
+<p>CI สีเขียวช่วยยืนยันเฉพาะสิ่งที่ test ครอบคลุม ไม่รับรอง security, container runtime หรือความแม่นยำ AI จริง และ requirements ที่กำหนดช่วงเวอร์ชันอาจ resolve ต่างกันในอนาคต งานส่งมอบจริงควรมี lock/constraints ที่ทีมใช้ พร้อมรอบ update ไม่ freeze ทุกอย่างแล้วลืมดูแล</p>
+<h2 id="lesson-10-test">อ่าน test จริงโดยไม่ต้องเข้าใจทั้งระบบก่อน</h2>
+<p>เลือก <code>test_durable_dedup_and_conflict</code> ใน tests/test_capstone.py แล้วรัน:</p>
+<pre><code class="language-powershell">python -m pytest tests/test_capstone.py -q -k durable_dedup
+</code></pre>
+<p>ควรมี 1 passed และ tests อื่นถูก deselected หมายถึงไม่ได้เลือกมารัน ไม่ใช่ tests เหล่านั้นผ่านหมดแล้ว อ่านทีละช่วง: สร้าง event → รับครั้งแรก → เปิด Store ใหม่ → รับซ้ำ → assert ID เดิม → ทดลองข้อมูลขัดแย้ง → assert ว่ามี event เดียว</p>
+<pre><code class="language-python">with pytest.raises(Conflict):
+    reopened.ingest_transaction(event(amount=5), 102)
+</code></pre>
+<p>คำสั่งนี้ <strong>คาดหวัง</strong> ให้เกิด Conflict ภายใน block ถ้าไม่มี exception จึงถือว่า test fail ตรงข้ามกับการเขียน try/except เพื่อกลืน error แล้วปล่อย test ผ่าน เหตุการณ์ไม่สำเร็จทางธุรกิจอาจเป็นผล test ที่ผ่านได้ หากตรงกับ contract ที่ต้องป้องกัน</p>
+<h2 id="lesson-10-test_1">เวลา test แดง ควรอ่านอะไร</h2>
+<pre><code class="language-text">ชื่อ test ที่ fail → input ที่ใช้ → expected → actual
+        ↓ หาบรรทัด assertion
+ตรวจ implementation หรือ setup → แก้เหตุ → รัน test เดิม
+        ↓ ผ่านแล้ว
+รันทั้ง suite กัน regression
+</code></pre>
+<p><strong>Regression</strong> คือสิ่งที่เคยทำงานได้กลับเสียหลังแก้ส่วนอื่น ถ้าแก้ threshold เพื่อให้ test หนึ่งผ่าน แต่ไม่ตรวจ boundary อีกสองฝั่ง อาจทำให้กฎเปลี่ยนโดยไม่ตั้งใจ อย่าเปลี่ยน assertion ตาม output ปัจจุบันเพียงเพื่อให้แสดงสีเขียว</p>
+<h2 id="lesson-10-ci">CI อยู่ตรงไหนจึงจะทำงาน</h2>
+<p>หากนำ Capstone ไปสร้าง repo ฝึกแยก ไฟล์ template ต้องอยู่ที่ <code>.github/workflows/tests.yml</code> ของ <strong>repo root</strong> ไม่ใช่ซ่อนอยู่ใน ZIP บนเว็บแล้วคาดว่า GitHub จะรัน Python ภายใน ZIP ให้ เริ่มจาก local tests ผ่านก่อน push แล้วเปิดผลแต่ละ step ในแท็บ Actions ของ repo นั้น</p>
+<p>ถ้า CI ลง dependencies ไม่สำเร็จ จะยังสรุปไม่ได้ว่า tests ของคุณ fail เพราะยังไปไม่ถึงขั้นทดสอบ ถ้า local ผ่านแต่ CI fail ให้เทียบ Python version, dependency versions, CWD, ตัวพิมพ์ใหญ่เล็กของชื่อไฟล์ และ config ที่ไม่ได้ commit โดยไม่ส่ง secrets ไปเปิดเผยเพื่อ debug</p>
+<p>จุดตรวจ: บอกได้ว่า test ใดพิสูจน์อะไร และสิ่งใดยังไม่ตรวจ อย่าใช้คำว่า “ทดสอบครบ” โดยไม่บอกขอบเขต</p><a class="back" href="#top">↑ กลับสารบัญ</a></article><article id="lesson-11"><div class="source">10_observability_and_debugging.md</div><details class="local-toc"><summary>หัวข้อในบทนี้</summary><a href="#lesson-11-task-id-restart">เริ่มจาก task ID ไม่เริ่มด้วย restart ทุกอย่าง</a><a href="#lesson-11-log">Log ที่ดีต้องตอบคำถามได้</a><a href="#lesson-11-count">Count กับอายุงานบอกคนละอย่าง</a><a href="#lesson-11-_1">วัดผลลดเวลางานอย่างซื่อสัตย์</a><a href="#lesson-11-log-audit-metric">แยก Log, Audit และ Metric ก่อน</a><a href="#lesson-11-lab">Lab — อ่านภาพรวม แล้วเจาะงานหนึ่งรายการ</a><a href="#lesson-11-_2">ตารางแยกสาเหตุ ไม่แก้ด้วยคำสั่งเดียวทุกปัญหา</a><a href="#lesson-11-_3">ตัวอย่างแบบฟอร์มวัดเวลา</a></details><h1 id="lesson-11-10-logs-metrics-debug">10 — Logs, Metrics และการ Debug ตามเส้นทางงาน</h1>
 <h2 id="lesson-11-task-id-restart">เริ่มจาก task ID ไม่เริ่มด้วย restart ทุกอย่าง</h2>
 <p>ถ้า workflow ดูเหมือนสำเร็จแต่ไม่พบผล ให้หา task ID จาก intake response ก่อน แล้วอ่าน <code>/tasks/{id}</code> และ <code>/tasks/{id}/audit</code> เหตุการณ์จะบอกว่าค้างก่อน claim, ระหว่างประมวลผล หรือรอ review</p>
 <pre><code class="language-text">มี task_id หรือไม่?
@@ -644,7 +936,64 @@ GROUP BY state;
              - (เวลาคนเตรียม input + เวลารอตามนิยาม + เวลาคนตรวจแก้)
 </code></pre>
 <p>แยก machine elapsed time กับ human active time เพราะ workflow รัน 10 นาทีไม่ได้แปลว่าคนเสียเวลา 10 นาที และอย่าใช้เวลาของ mock provider อ้างความเร็วของโมเดลจริง เก็บ sample size, วันที่, failure rate, review rate และเงื่อนไขที่วัดในรายงานเสมอ</p>
-<p>เมื่อพบ bug ให้บันทึก input สังเคราะห์ที่ทำซ้ำได้, expected/actual, task ID, version และ test ที่เพิ่ม นี่มีประโยชน์ต่อทีมมากกว่าคำว่า “บางครั้งไม่ทำงาน”</p><a class="back" href="#top">↑ กลับสารบัญ</a></article><article id="lesson-12"><div class="source">11_documentation_and_handoff.md</div><details class="local-toc"><summary>หัวข้อในบทนี้</summary><a href="#lesson-12-readme-runbook">README กับ Runbook ต่างกันอย่างไร</a><a href="#lesson-12-readme">README ขั้นต่ำที่ควรส่งพร้อมงาน</a><a href="#lesson-12-security-handoff-commit-key">Security handoff ไม่ใช่แค่เขียนว่าอย่า commit key</a><a href="#lesson-12-decision-log">Decision log ช่วยจำเหตุผล</a><a href="#lesson-12-release-note">Release note ควรพูดถึงผลต่อผู้ใช้</a></details><h1 id="lesson-12-11-readme-runbook">11 — README, Runbook และการส่งมอบงาน</h1>
+<p>เมื่อพบ bug ให้บันทึก input สังเคราะห์ที่ทำซ้ำได้, expected/actual, task ID, version และ test ที่เพิ่ม นี่มีประโยชน์ต่อทีมมากกว่าคำว่า “บางครั้งไม่ทำงาน”</p>
+<h2 id="lesson-11-log-audit-metric">แยก Log, Audit และ Metric ก่อน</h2>
+<p><strong>Log</strong> ช่วยอ่านว่า process กำลังทำอะไร/เจอ error อะไร <strong>Audit</strong> เก็บเหตุการณ์ที่ต้องย้อนตรวจของงานหรือ decision ส่วน <strong>Metric</strong> เป็นค่ารวม เช่นจำนวน queued หรืออัตรา failure ไม่ใช่สิ่งเดียวกัน แม้บางระบบสร้าง metrics จาก logs ได้</p>
+<pre><code class="language-text">หนึ่งงานผิดปกติ → task + audit + logs ตาม ID
+หลายงานเริ่มค้าง → metrics บอกแนวโน้ม → เจาะบาง task
+</code></pre>
+<p>Lab ยังไม่มี dashboard/alerting เต็มระบบ <code>/summary</code> เป็นจุดเริ่มอ่าน counts ไม่ใช่ระบบ monitoring ที่แจ้งเตือนให้เอง</p>
+<h2 id="lesson-11-lab">Lab — อ่านภาพรวม แล้วเจาะงานหนึ่งรายการ</h2>
+<p>หลังเปิด native API/worker ตาม README:</p>
+<pre><code class="language-powershell">Invoke-RestMethod http://127.0.0.1:8015/summary | ConvertTo-Json -Depth 6
+</code></pre>
+<p><code>ConvertTo-Json</code> ช่วยให้เห็นข้อมูลซ้อนเป็นข้อความ และ <code>-Depth 6</code> เพิ่มระดับข้อมูลที่แสดง ไม่ได้เปลี่ยนข้อมูลใน DB ถ้ามี <code>queued: 3</code> หมายถึงตอนอ่านมีสามงานรอ ไม่ได้แปลว่าสามงานนั้น error</p>
+<p>หยิบ task ID จาก intake response ของคุณมาใส่แทนเลข 1:</p>
+<pre><code class="language-powershell">Invoke-RestMethod http://127.0.0.1:8015/tasks/1 | ConvertTo-Json -Depth 8
+Invoke-RestMethod http://127.0.0.1:8015/tasks/1/audit | ConvertTo-Json -Depth 6
+</code></pre>
+<p>หากไม่เปิด API ยังฝึกอ่าน summary สังเคราะห์ได้ด้วย <code>python learning_walkthrough.py transaction</code> จะเห็น 3 events, tasks succeeded 3 และ pending reviews 2 จากกฎของตัวอย่างนี้</p>
+<h2 id="lesson-11-_2">ตารางแยกสาเหตุ ไม่แก้ด้วยคำสั่งเดียวทุกปัญหา</h2>
+<div class="table-scroll"><table>
+<thead>
+<tr>
+<th>สิ่งที่เห็น</th>
+<th>ความหมายที่เป็นไปได้</th>
+<th>ตรวจต่อ</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Connection refused</td>
+<td>ไม่มี process รับที่ address/port นั้น</td>
+<td>API เปิดหรือยัง, URL ถูกเครื่องหรือไม่</td>
+</tr>
+<tr>
+<td>422</td>
+<td>request ไม่ตรง schema</td>
+<td>ชื่อ field/type/value</td>
+</tr>
+<tr>
+<td>queued + attempts 0</td>
+<td>ยังไม่ถูก claim</td>
+<td>worker เปิดไหม, DB เดียวกันไหม</td>
+</tr>
+<tr>
+<td>retry_pending + attempts 2</td>
+<td>มี failure ชั่วคราวสองรอบ</td>
+<td>available / provider reason</td>
+</tr>
+<tr>
+<td>succeeded + pending review</td>
+<td>ประมวลผลแล้ว คนยังไม่ตรวจ</td>
+<td>ไม่ต้องส่งงานใหม่เพื่อให้ review หาย</td>
+</tr>
+</tbody>
+</table></div>
+<p>อย่ารัน <code>docker compose logs</code> แล้วเผยแพร่ output ทั้งหมดโดยไม่อ่านก่อน แม้ application ตั้งใจไม่ log ข้อมูลจริง ส่วน library, stack trace หรือ proxy อาจมีข้อมูลอื่น ต้องเลือกเฉพาะส่วนที่จำเป็น</p>
+<h2 id="lesson-11-_3">ตัวอย่างแบบฟอร์มวัดเวลา</h2>
+<p>เก็บเป็นตารางที่คุณกรอกผลทดลองจริง: sample ID สังเคราะห์, manual active minutes, assisted preparation minutes, correction minutes, machine elapsed seconds และ outcome ใช้หน่วยให้ตรงกันก่อนคำนวณ แยกเอกสารที่อ่านไม่ได้ออกมาเป็น failure ที่รายงาน ไม่ทิ้งมันเพื่อให้ค่าเฉลี่ยดูดี</p>
+<p>จุดตรวจ: เล่าปัญหาหนึ่งรายการโดยใช้หลักฐานได้ว่า “รับแล้วแต่ยังไม่ถูก claim” แทนคำว่า “API ไม่ทำงาน” ซึ่งกว้างเกินไป</p><a class="back" href="#top">↑ กลับสารบัญ</a></article><article id="lesson-12"><div class="source">11_documentation_and_handoff.md</div><details class="local-toc"><summary>หัวข้อในบทนี้</summary><a href="#lesson-12-readme-runbook">README กับ Runbook ต่างกันอย่างไร</a><a href="#lesson-12-readme">README ขั้นต่ำที่ควรส่งพร้อมงาน</a><a href="#lesson-12-security-handoff-commit-key">Security handoff ไม่ใช่แค่เขียนว่าอย่า commit key</a><a href="#lesson-12-decision-log">Decision log ช่วยจำเหตุผล</a><a href="#lesson-12-release-note">Release note ควรพูดถึงผลต่อผู้ใช้</a><a href="#lesson-12-workshop-readme">Workshop — เขียน README ให้คนที่ไม่เคยนั่งข้างเรารันได้</a><a href="#lesson-12-readme_1">โครง README ที่คัดไปปรับใช้ได้</a><a href="#lesson-12-_1">ทดลองส่งมอบแบบไม่แตะข้อมูลเดิม</a><a href="#lesson-12-runbook">Runbook หนึ่งเรื่องควรมีจุดจบ</a></details><h1 id="lesson-12-11-readme-runbook">11 — README, Runbook และการส่งมอบงาน</h1>
 <h2 id="lesson-12-readme-runbook">README กับ Runbook ต่างกันอย่างไร</h2>
 <p>README ช่วยคนใหม่เริ่มใช้งานและเข้าใจขอบเขต ส่วน runbook ช่วยคนที่ระบบมีปัญหาตัดสินใจว่าตรวจอะไรต่อ ไม่ต้องคัดลอกทุกบรรทัดจาก source มาใส่เอกสาร แต่ต้องให้คำสั่งที่รันได้จาก folder ที่ระบุ</p>
 <pre><code class="language-text">คนใหม่ → README → setup → sample → expected result
@@ -659,7 +1008,33 @@ GROUP BY state;
 <h2 id="lesson-12-decision-log">Decision log ช่วยจำเหตุผล</h2>
 <p>ตัวอย่างสั้น: “เลือก SQLite เพราะเป็น lab เครื่องเดียวและลด setup; เมื่อเพิ่มหลาย host จะย้าย queue/database ตาม requirement ไม่วาง SQLite บน network filesystem เพื่อ scale โดยไม่ทดสอบ” เอกสารนี้เรียกได้ว่า ADR แบบย่อ: context, decision, consequences</p>
 <h2 id="lesson-12-release-note">Release note ควรพูดถึงผลต่อผู้ใช้</h2>
-<p>แทน “refactor service” เขียนว่า “ส่งงานซ้ำด้วย ID เดิมคืน task เดิม; payload ต่างคืน 409; ยังไม่รองรับ OCR” พร้อมวิธีตรวจและขั้นตอน rollback ที่พิจารณาข้อมูลด้วย หากแก้ schema DB การ revert Git อย่างเดียวอาจไม่พอ ต้องมี migration/restore plan ที่ผ่านการทดสอบ</p><a class="back" href="#top">↑ กลับสารบัญ</a></article><article id="lesson-13"><div class="source">12_transaction_capstone.md</div><details class="local-toc"><summary>หัวข้อในบทนี้</summary><a href="#lesson-13-_1">ปัญหาที่แก้และสิ่งที่ไม่ทำ</a><a href="#lesson-13-payload">อ่าน payload</a><a href="#lesson-13-_2">ทดลองสามรอบ</a><a href="#lesson-13-demo">สิ่งที่ต้องอธิบายตอน demo</a><a href="#lesson-13-acceptance-core">Acceptance ของ Core</a></details><h1 id="lesson-13-12-transaction-capstone">12 — Transaction Capstone: รับงานซ้ำได้และตรวจความผิดปกติเป็นระบบ</h1>
+<p>แทน “refactor service” เขียนว่า “ส่งงานซ้ำด้วย ID เดิมคืน task เดิม; payload ต่างคืน 409; ยังไม่รองรับ OCR” พร้อมวิธีตรวจและขั้นตอน rollback ที่พิจารณาข้อมูลด้วย หากแก้ schema DB การ revert Git อย่างเดียวอาจไม่พอ ต้องมี migration/restore plan ที่ผ่านการทดสอบ</p>
+<h2 id="lesson-12-workshop-readme">Workshop — เขียน README ให้คนที่ไม่เคยนั่งข้างเรารันได้</h2>
+<p>เริ่มจากผู้อ่านไม่รู้ว่าเราเปิด terminal ที่ไหน จึงต้องบอก <strong>ก่อนรัน</strong>, <strong>คำสั่ง</strong>, <strong>ผลที่ควรเห็น</strong>, <strong>ถ้าไม่เห็นให้ตรวจอะไร</strong> ตัวอย่างคำว่า “รัน server” อย่างเดียวข้ามรายละเอียดมากเกินไป</p>
+<pre><code class="language-text">ก่อนรัน: อยู่ capstone, ติดตั้ง requirements ใน .venv แล้ว
+คำสั่ง: .\.venv\Scripts\python.exe -m uvicorn course.api:app --host 127.0.0.1 --port 8015
+ผล: terminal ค้างรอรับ request; เปิด /health ได้
+ตรวจต่อ: ถ้า port ชน ให้ดูว่ามี API lab เก่าเปิดอยู่หรือไม่
+</code></pre>
+<p>Server ทำงานค้างใน terminal เป็นเรื่องปกติ ไม่ใช่คำสั่งติด จึงเปิดอีก terminal สำหรับ client อย่าให้ผู้อ่านกด Ctrl+C หยุด server เพื่อพิมพ์ request แล้วงงว่าทำไมเชื่อมต่อไม่ได้</p>
+<h2 id="lesson-12-readme_1">โครง README ที่คัดไปปรับใช้ได้</h2>
+<pre><code class="language-text">1. Problem / Scope: ช่วยงานใด และไม่ทำอะไร
+2. Prerequisites: Python/Docker และสิทธิ์ที่ต้องมี
+3. Setup: folder, environment, dependencies
+4. Run: API / worker / client แยก terminal
+5. Sample: synthetic input + expected output
+6. Tests: คำสั่งและขอบเขต
+7. Troubleshooting: อาการ → ตรวจ → วิธีแก้ที่ปลอดภัย
+8. Limitations / Security: mock, auth, data handling
+9. Stop / Recovery: หยุดอย่างไรและข้อมูลยังอยู่ที่ไหน
+</code></pre>
+<p>ให้แทนข้อความด้วยสิ่งที่โปรเจกต์ทำจริง ถ้ายังไม่ทดสอบ Docker อย่าเขียนว่า “Docker verified” เพียงเพราะมี Dockerfile และอย่าระบุ env var ที่ source ไม่เคยอ่าน</p>
+<h2 id="lesson-12-_1">ทดลองส่งมอบแบบไม่แตะข้อมูลเดิม</h2>
+<p>แตก ZIP ใหม่ไป folder ฝึกแยก ทำตาม README ด้วย environment ใหม่ และใช้ข้อมูลสังเคราะห์ ถ้ามี server เก่าใช้ port อยู่ ให้หยุดเฉพาะ lab ที่คุณรู้จักหรือกำหนด port ใหม่พร้อมแก้ client URL ไม่ stop ทุก Python process ในเครื่อง</p>
+<p>จดทุกขั้นตอนที่ต้องถามเจ้าของงานเพิ่ม เช่น “ต้อง cd ไปไหน”, “token มาจากไหน”, “output นี้ถูกไหม” แล้วแก้เอกสารตรงนั้น การใช้ได้บนเครื่องเราอย่างเดียวไม่พอจะพิสูจน์ว่าคนอื่นใช้ต่อได้</p>
+<h2 id="lesson-12-runbook">Runbook หนึ่งเรื่องควรมีจุดจบ</h2>
+<p>ตัวอย่าง queued ค้าง: ตรวจ task → worker → DB path → เปิด worker ที่ถูก config → ตรวจว่า task เปลี่ยน state และ audit มี claimed ถ้ายังไม่เปลี่ยนหลังเงื่อนไขที่ควรพร้อม ให้เก็บหลักฐานและส่งต่อ ไม่วน restart ไม่จำกัดจนต้นเหตุหายจาก logs</p>
+<p>จุดตรวจ: คนอื่นเริ่ม, ตรวจผล และหยุด lab ได้จากเอกสาร โดยคุณไม่ต้องบอกค่าลับหรือส่ง DB ของตัวเองให้เขา</p><a class="back" href="#top">↑ กลับสารบัญ</a></article><article id="lesson-13"><div class="source">12_transaction_capstone.md</div><details class="local-toc"><summary>หัวข้อในบทนี้</summary><a href="#lesson-13-_1">ปัญหาที่แก้และสิ่งที่ไม่ทำ</a><a href="#lesson-13-payload">อ่าน payload</a><a href="#lesson-13-_2">ทดลองสามรอบ</a><a href="#lesson-13-demo">สิ่งที่ต้องอธิบายตอน demo</a><a href="#lesson-13-acceptance-core">Acceptance ของ Core</a><a href="#lesson-13-terminal">เริ่มแบบเห็นผลทีละขั้นใน terminal เดียว</a><a href="#lesson-13-http">ต่อผ่าน HTTP — ต้องเปิดอะไรบ้าง</a><a href="#lesson-13-duplicate-conflict">ทดลอง duplicate และ conflict อย่างมีเหตุผล</a><a href="#lesson-13-failure">เช็ก failure แบบมีผลคาดหวัง</a></details><h1 id="lesson-13-12-transaction-capstone">12 — Transaction Capstone: รับงานซ้ำได้และตรวจความผิดปกติเป็นระบบ</h1>
 <h2 id="lesson-13-_1">ปัญหาที่แก้และสิ่งที่ไม่ทำ</h2>
 <p>เราจำลองทีมที่รับ transaction events แล้วต้องรวบรวมรายการควรตรวจ AI ช่วยสร้างข้อความ mock ประกอบ แต่ <strong>กฎตรวจความผิดปกติเป็น deterministic rules</strong> ไม่ยกหน้าที่ตัดสินยอดเงินให้ AI และไม่ตัดสินว่าเป็น fraud</p>
 <pre><code class="language-text">event → strict validation → durable dedup
@@ -681,7 +1056,35 @@ mock summary + ตรวจ rule labels → result + review
 <p>ให้เปิด task และ audit ควบคู่กัน: request รับเมื่อไร, claim กี่ครั้ง, result ผ่านหรือรอตรวจ และ review แยกจาก result อย่างไร สำหรับ summary ตัวอย่างตรวจโครงสร้างและ rule labels แต่ <strong>ไม่ได้มี semantic verifier ที่พิสูจน์ข้อความสรุปอิสระของ LLM</strong> เพราะ provider ปัจจุบันเป็น mock คงที่</p>
 <h2 id="lesson-13-acceptance-core">Acceptance ของ Core</h2>
 <p>ส่งซ้ำได้ task เดิมหลัง reopen DB; ID เดิมข้อมูลต่างถูกปฏิเสธ; duplicate ไม่เพิ่ม velocity; เงินเก็บหน่วยย่อย; failed AI ไม่ทำให้ event หาย; review decision ส่งซ้ำได้โดยไม่เปลี่ยน AI result ทดสอบสิ่งเหล่านี้ก่อนตกแต่ง dashboard</p>
-<p>Stretch ที่คุ้มคือเพิ่ม per-rule configuration และ regression tests, event-time handling, outbox และ production auth ตามโจทย์จริง ไม่ต้องทำทุกอย่างเพื่อให้หน้าตาเหมือนระบบขนาดใหญ่</p><a class="back" href="#top">↑ กลับสารบัญ</a></article><article id="lesson-14"><div class="source">13_hr_capstone.md</div><details class="local-toc"><summary>หัวข้อในบทนี้</summary><a href="#lesson-14-_1">งานที่ช่วยลดเวลา</a><a href="#lesson-14-_2">เริ่มจากข้อความก่อน</a><a href="#lesson-14-evidence-validation">Evidence validation ช่วยอะไรและไม่ช่วยอะไร</a><a href="#lesson-14-job-requirements">เทียบ Job Requirements แบบไม่ตัดสินคน</a><a href="#lesson-14-pdfdocx-local">อ่าน PDF/DOCX แบบ local — วิธีเรียก</a><a href="#lesson-14-file-hash-text-hash">File hash กับ text hash อย่าสับสน</a><a href="#lesson-14-_3">ลำดับต่อยอดที่แนะนำ</a></details><h1 id="lesson-14-13-hr-capstone-hr">13 — HR Capstone: ช่วยอ่านเอกสารโดยไม่ตัดสินคนแทน HR</h1>
+<p>Stretch ที่คุ้มคือเพิ่ม per-rule configuration และ regression tests, event-time handling, outbox และ production auth ตามโจทย์จริง ไม่ต้องทำทุกอย่างเพื่อให้หน้าตาเหมือนระบบขนาดใหญ่</p>
+<h2 id="lesson-13-terminal">เริ่มแบบเห็นผลทีละขั้นใน terminal เดียว</h2>
+<pre><code class="language-powershell">python learning_walkthrough.py transaction
+</code></pre>
+<p>ใช้ DB ใหม่ชั่วคราวทุกครั้ง ส่ง E1 = 500, E2 = 100000, E3 = 500 สตางค์ ของ user เดียวกันในช่วงเวลาจำลองที่ใกล้กัน ผลกฎควรเป็น:</p>
+<pre><code class="language-text">E1 → []                       ยอดไม่สูง และยังไม่ครบ 3 events
+E2 → [large_amount]           เท่ากับ threshold จึงเข้าเกณฑ์
+E3 → [velocity_3_in_60s]      event ที่สามในช่วงเวลา
+</code></pre>
+<p><code>[]</code> คือ list ว่าง ไม่ได้หมายถึง error ส่วน E3 ยอดไม่สูงก็ยังเข้า velocity ได้ เพราะกฎดูคนละเรื่อง นี่ช่วยให้ไม่สรุปว่า anomaly เกิดได้จากยอดเงินอย่างเดียว</p>
+<h2 id="lesson-13-http">ต่อผ่าน HTTP — ต้องเปิดอะไรบ้าง</h2>
+<p>ทำ native setup ใน README ก่อน Terminal A เปิด API, B เปิด worker และ C ส่งข้อมูล ถ้าเรียน Docker ให้เลือก Compose แทน A/B ไม่เปิดสองระบบบน port เดียวกันพร้อมกัน</p>
+<p>ใน terminal C:</p>
+<pre><code class="language-powershell">$body = @{ event_id="E-lesson12-01"; user_id="U-learning"; amount_minor=150000; currency="THB" } | ConvertTo-Json
+$accepted = Invoke-RestMethod http://127.0.0.1:8015/transactions -Method Post -ContentType "application/json" -Body $body
+$accepted
+Invoke-RestMethod "http://127.0.0.1:8015/tasks/$($accepted.task_id)" | ConvertTo-Json -Depth 8
+</code></pre>
+<p><code>@{...}</code> เป็น hashtable ของ PowerShell แล้ว <code>ConvertTo-Json</code> เปลี่ยนเป็น JSON text <code>-Method Post</code> ส่งงานใหม่ตาม endpoint ส่วน <code>$accepted.task_id</code> อ่าน ID ที่ API คืน ไม่เดาว่าต้องเป็น 1 เสมอ นิพจน์ <code>$()</code> ใน string ใช้แทรกค่า ID ลง URL</p>
+<p>ถ้า worker เร็ว อาจเห็น succeeded ตั้งแต่ GET ครั้งแรก ถ้ายัง queued/running ให้ GET อีกครั้ง ไม่ส่ง POST ใหม่ด้วย ID ใหม่เพียงเพื่อเช็กผล เพราะจะเป็นคนละ event</p>
+<h2 id="lesson-13-duplicate-conflict">ทดลอง duplicate และ conflict อย่างมีเหตุผล</h2>
+<p>ส่ง <code>$body</code> เดิมซ้ำ ควรได้ task ID เดิมและ duplicate true แม้ state ตอนรับซ้ำอาจเป็น succeeded แล้ว หากเปลี่ยน amount แต่เก็บ event_id เดิม ควรได้ HTTP 409 โดย PowerShell อาจแสดงเป็น error ของ request นี่คือการป้องกัน conflict ตามที่ตั้งใจ ไม่ใช่ให้แก้ server จนรับทุกอย่าง</p>
+<p>หากต้องการเริ่มกรณีใหม่ให้ใช้ event_id ใหม่ เช่น E-lesson12-02 อย่าใช้ ID ใหม่สำหรับ retry ของ event เดิม เพราะจะทำให้ dedup ช่วยไม่ได้</p>
+<h2 id="lesson-13-failure">เช็ก failure แบบมีผลคาดหวัง</h2>
+<pre><code class="language-powershell">python demo.py transaction --mode invalid_json
+python demo.py transaction --mode timeout
+</code></pre>
+<p>ตัวแรกควรมี needs_review พร้อม summary_unavailable ตัวที่สอง retry จนครบ 3 แล้ว failed แต่ event/rules และรายการตรวจยังอยู่ คำว่า failed ตรงนี้คือการประมวลผล task ไม่สำเร็จตาม contract ไม่ได้ลบธุรกรรมต้นทาง</p>
+<p>จุดตรวจ: อธิบายได้ว่าทำไมเราเชื่อ rules จากโค้ดที่กำหนด แต่ไม่ถือ free-text summary ของ AI เป็นแหล่งจริงแทน DB และกฎ</p><a class="back" href="#top">↑ กลับสารบัญ</a></article><article id="lesson-14"><div class="source">13_hr_capstone.md</div><details class="local-toc"><summary>หัวข้อในบทนี้</summary><a href="#lesson-14-_1">งานที่ช่วยลดเวลา</a><a href="#lesson-14-_2">เริ่มจากข้อความก่อน</a><a href="#lesson-14-evidence-validation">Evidence validation ช่วยอะไรและไม่ช่วยอะไร</a><a href="#lesson-14-job-requirements">เทียบ Job Requirements แบบไม่ตัดสินคน</a><a href="#lesson-14-pdfdocx-local">อ่าน PDF/DOCX แบบ local — วิธีเรียก</a><a href="#lesson-14-file-hash-text-hash">File hash กับ text hash อย่าสับสน</a><a href="#lesson-14-_3">ลำดับต่อยอดที่แนะนำ</a><a href="#lesson-14-lab-extraction-api">Lab — อ่านผล extraction โดยไม่เปิด API ก่อน</a><a href="#lesson-14-request-http">ส่ง request ผ่าน HTTP ด้วยตัวเอง</a><a href="#lesson-14-_4">จากไฟล์ไปข้อความต้องผ่านอีกขั้น</a><a href="#lesson-14-json">อ่าน JSON ที่ซ้อนกันอย่างไร</a></details><h1 id="lesson-14-13-hr-capstone-hr">13 — HR Capstone: ช่วยอ่านเอกสารโดยไม่ตัดสินคนแทน HR</h1>
 <h2 id="lesson-14-_1">งานที่ช่วยลดเวลา</h2>
 <p>เป้าหมายคือดึงข้อความและจัดข้ออ้างเกี่ยวกับทักษะพร้อมหลักฐานให้คนตรวจเร็วขึ้น ไม่ใช่จัดอันดับผู้สมัครหรือปฏิเสธคนอัตโนมัติ ตัวอย่างไม่ใช้ชื่อ อายุ เพศ หรือภาพถ่ายในการตัดสิน และใช้เอกสารสังเคราะห์เท่านั้น</p>
 <pre><code class="language-text">ข้อความ / local PDF-DOCX ที่เชื่อถือได้
@@ -716,7 +1119,33 @@ Docker → not_evidenced  → ให้ตรวจเพิ่ม ไม่ป�
 <h2 id="lesson-14-file-hash-text-hash">File hash กับ text hash อย่าสับสน</h2>
 <p>CLI แสดง SHA-256 ของ bytes ไฟล์เพื่อช่วยตรวจไฟล์ในเครื่อง แต่ API ปัจจุบันเก็บ key จาก <strong>ข้อความที่สกัด</strong> ไม่ได้เก็บ hash ไฟล์นั้นใน record ดังนั้น version นี้ยังไม่ใช่ end-to-end file provenance หากต้องตรวจกลับถึงไฟล์ต้นทางต้องเพิ่ม source record, file hash, parser version และ access control ก่อน</p>
 <h2 id="lesson-14-_3">ลำดับต่อยอดที่แนะนำ</h2>
-<p>Core: text intake + evidence + durable review ให้ผ่านก่อน ต่อด้วย local parser smoke tests แล้วจึงทำ manifest ต่อ candidate, file provenance, OCR queue, batch dashboard และ provider ที่อนุมัติ ขั้น batch resume หลักพันยังไม่ได้รับการ load test และไม่ควรใช้จำนวน test fixtures อ้างความพร้อมระดับนั้น</p><a class="back" href="#top">↑ กลับสารบัญ</a></article><article id="lesson-15"><div class="source">14_demo_portfolio_release.md</div><details class="local-toc"><summary>หัวข้อในบทนี้</summary><a href="#lesson-15-demo">Demo ที่ดีเล่าปัญหาและหลักฐาน</a><a href="#lesson-15-portfolio">Portfolio ควรมีอะไร</a><a href="#lesson-15-checklist">Checklist ก่อนเรียกว่าพร้อมส่ง</a><a href="#lesson-15-8">ช่วงฝึกงาน 8 เดือนควรทำต่ออย่างไร</a></details><h1 id="lesson-15-14-demo-portfolio-final-release-checklist">14 — Demo, Portfolio และ Final Release Checklist</h1>
+<p>Core: text intake + evidence + durable review ให้ผ่านก่อน ต่อด้วย local parser smoke tests แล้วจึงทำ manifest ต่อ candidate, file provenance, OCR queue, batch dashboard และ provider ที่อนุมัติ ขั้น batch resume หลักพันยังไม่ได้รับการ load test และไม่ควรใช้จำนวน test fixtures อ้างความพร้อมระดับนั้น</p>
+<h2 id="lesson-14-lab-extraction-api">Lab — อ่านผล extraction โดยไม่เปิด API ก่อน</h2>
+<pre><code class="language-powershell">python learning_walkthrough.py hr
+python learning_walkthrough.py hr --mode hallucination
+</code></pre>
+<p>รอบ normal ใช้ข้อความ <code>Built a Python ETL project.</code> กับ requirements Python/Docker จึงควรได้ evidence_found สำหรับ Python และ not_evidenced สำหรับ Docker รอบ hallucination mock จะอ้าง Rust พร้อม quote ที่ไม่มีในเอกสาร ต้องเป็น needs_review และไม่มี validated output ให้ใช้ต่อ</p>
+<pre><code class="language-text">document_text → ข้อความต้นทาง
+claim         → สิ่งที่ระบบอ้าง เช่นมีทักษะ Python
+quote         → ข้อความหลักฐานที่อ้างถึง
+match         → เทียบ claim กับ requirement ที่กำหนด
+</code></pre>
+<p>อย่าอ่าน <code>not_evidenced</code> ว่า “ทำไม่ได้” เพราะ parser อาจอ่านไม่ครบ, mock ไม่รู้สำนวนอื่น หรือ resume ไม่ได้เขียนทักษะนั้นไว้ การถามคน/ตรวจเพิ่มเป็นอีกขั้นหนึ่ง</p>
+<h2 id="lesson-14-request-http">ส่ง request ผ่าน HTTP ด้วยตัวเอง</h2>
+<p>หลังเปิด API/worker ตาม README ใน terminal client:</p>
+<pre><code class="language-powershell">$resumeBody = @{ candidate_id="C-lesson13-01"; document_text="Built a Python ETL project."; job_requirements=@("Python","Docker"); job_version="learning-v1" } | ConvertTo-Json
+$accepted = Invoke-RestMethod http://127.0.0.1:8015/resumes -Method Post -ContentType "application/json" -Body $resumeBody
+Invoke-RestMethod "http://127.0.0.1:8015/tasks/$($accepted.task_id)" | ConvertTo-Json -Depth 10
+</code></pre>
+<p><code>@("Python","Docker")</code> เป็น array ใน PowerShell ต่างจาก <code>@{...}</code> ที่เป็น hashtable API รับ JSON แล้ว Pydantic ตรวจชนิดข้อมูลก่อนบันทึก หากเปลี่ยนเกณฑ์สำหรับข้อความ/คนเดิม ให้เปลี่ยน job_version ตามบทเดิมเพื่อไม่ชน identity ของการประเมินครั้งก่อน</p>
+<h2 id="lesson-14-_4">จากไฟล์ไปข้อความต้องผ่านอีกขั้น</h2>
+<pre><code class="language-powershell">python -m course.ingest_file --candidate-id C-file-demo --file fixtures/synthetic_resume.pdf
+</code></pre>
+<p>คำสั่งนี้ต้องมี API เปิดอยู่ เพราะ CLI อ่านไฟล์ในเครื่องแล้ว POST ข้อความ ไม่ได้บันทึก DB โดยตรง ควรได้ file_hash และ task_id เมื่อ intake สำเร็จ จากนั้นยังต้องตรวจ task และ review ไม่จบที่การอ่าน PDF ผ่าน</p>
+<p>ตัวอย่าง Empty PDF ควรรายงาน local_ingest_error ไม่ควรส่งข้อความว่างไปให้ AI เติมเอง หาก CLI error ให้ตรวจชนิดไฟล์/ขนาด/อ่านข้อความได้หรือไม่ก่อนตรวจ provider และ note ว่า CLI รายงานชนิด exception แบบย่อ จึงต้อง debug เพิ่มอย่างระวังโดยไม่ log resume จริง</p>
+<h2 id="lesson-14-json">อ่าน JSON ที่ซ้อนกันอย่างไร</h2>
+<p>เริ่มจาก <code>state</code> ก่อน หาก succeeded ค่อยอ่าน <code>result.claims</code> และ <code>result.requirement_matches</code> ถ้า needs_review/failed ให้ดู reason และไม่สมมติว่ามี claims เสมอ การเรียก <code>result['claims']</code> โดยไม่ตรวจ state อาจเกิด KeyError ซึ่งไม่ใช่ปัญหา AI แต่เป็นการอ่าน contract ผิดทาง</p>
+<p>จุดตรวจ: ยกตัวอย่างได้หนึ่งกรณีที่ JSON ถูก schema แต่ evidence ผิด และหนึ่งกรณีที่ evidence อยู่จริงแต่ยังต้องให้คนตรวจความหมาย</p><a class="back" href="#top">↑ กลับสารบัญ</a></article><article id="lesson-15"><div class="source">14_demo_portfolio_release.md</div><details class="local-toc"><summary>หัวข้อในบทนี้</summary><a href="#lesson-15-demo">Demo ที่ดีเล่าปัญหาและหลักฐาน</a><a href="#lesson-15-portfolio">Portfolio ควรมีอะไร</a><a href="#lesson-15-checklist">Checklist ก่อนเรียกว่าพร้อมส่ง</a><a href="#lesson-15-8">ช่วงฝึกงาน 8 เดือนควรทำต่ออย่างไร</a><a href="#lesson-15-demo_1">ซ้อม demo แบบมีสคริปต์ ไม่ต้องจำทุกไฟล์</a><a href="#lesson-15-release-deploy">Release ไม่เท่ากับ Deploy เสมอ</a><a href="#lesson-15-_1">บันทึกผลส่งมอบหนึ่งหน้า</a><a href="#lesson-15-_2">ถ้าจะเอาไปใช้ช่วงฝึกงานจริง</a></details><h1 id="lesson-15-14-demo-portfolio-final-release-checklist">14 — Demo, Portfolio และ Final Release Checklist</h1>
 <h2 id="lesson-15-demo">Demo ที่ดีเล่าปัญหาและหลักฐาน</h2>
 <p>เริ่มจากงานเดิมหนึ่งอย่าง เช่นต้องตรวจรายการจากหลายแหล่ง แล้วแสดงว่าระบบช่วยขั้นตอนไหน อย่าเริ่มด้วยรายชื่อเครื่องมือยาว ๆ โดยคนฟังยังไม่รู้ว่าจะได้อะไร</p>
 <pre><code class="language-text">ปัญหาเดิม → input สังเคราะห์ → flow → ผลลัพธ์
@@ -739,7 +1168,33 @@ Docker → not_evidenced  → ให้ตรวจเพิ่ม ไม่ป�
 </ul>
 <h2 id="lesson-15-8">ช่วงฝึกงาน 8 เดือนควรทำต่ออย่างไร</h2>
 <p>เดือนแรกเน้นเข้าใจกระบวนการและสิทธิ์ข้อมูล เลือกงานย่อยที่คนใช้ตรวจผลได้ง่าย จากนั้นส่งรอบเล็ก เก็บ feedback และวัดเวลาที่คนใช้จริง ประสิทธิภาพการทำงานร่วมทีม การสื่อสารข้อจำกัด และความรับผิดชอบต่อข้อมูล สำคัญพอ ๆ กับเพิ่มเทคนิคใหม่</p>
-<p>การมี Capstone ไม่รับประกัน offer แต่ทำให้คุณมีหลักฐานคุยกับทีมว่า “ส่วนนี้ผมทำได้ ตรวจแบบนี้ และส่วนนี้ยังต้องให้พี่ช่วยตัดสินใจ” ซึ่งเป็นจุดเริ่มต้นที่ดีสำหรับการทำงานจริง</p><a class="back" href="#top">↑ กลับสารบัญ</a></article><article id="lesson-16"><div class="source">capstone/README.md</div><details class="local-toc"><summary>หัวข้อในบทนี้</summary><a href="#lesson-16-_1">ขอบเขต</a><a href="#lesson-16-1-environment">1. เตรียม environment</a><a href="#lesson-16-2-api-terminal-a">2. เปิด API — terminal A</a><a href="#lesson-16-3-worker-terminal-b-folder">3. เปิด worker — terminal B ใน folder เดียวกัน</a><a href="#lesson-16-4-terminal-c">4. ทดลอง — terminal C</a><a href="#lesson-16-5-review">5. ทดลอง review</a><a href="#lesson-16-6-docker-compose-native">6. Docker Compose — ทางเลือกหลัง native</a><a href="#lesson-16-_2">ไฟล์ที่ควรเปิดประกอบ</a></details><h1 id="lesson-16-capstone-lab-native-compose">Capstone Lab — Native ก่อน แล้วค่อย Compose</h1>
+<p>การมี Capstone ไม่รับประกัน offer แต่ทำให้คุณมีหลักฐานคุยกับทีมว่า “ส่วนนี้ผมทำได้ ตรวจแบบนี้ และส่วนนี้ยังต้องให้พี่ช่วยตัดสินใจ” ซึ่งเป็นจุดเริ่มต้นที่ดีสำหรับการทำงานจริง</p>
+<h2 id="lesson-15-demo_1">ซ้อม demo แบบมีสคริปต์ ไม่ต้องจำทุกไฟล์</h2>
+<p>รอบแรกใช้ learning_walkthrough เพื่อเล่า state/retry ให้คล่อง แล้วรอบส่งมอบจริงเลือก native หรือ Compose ที่คุณทดสอบผ่าน อย่าเปิด Docker ครั้งแรกหน้าคนดูแล้วอ้างว่าพร้อมใช้งาน</p>
+<pre><code class="language-text">นาที 0–1: ปัญหา + ขอบเขต local/mock
+นาที 1–3: ส่งงาน → task ID → ผล + review
+นาที 3–4: ส่งซ้ำ → task เดิม ไม่มี event ใหม่
+นาที 4–5: AI output ผิด → review ไม่รายงานสำเร็จปลอม
+นาที 5–7: tests, ข้อจำกัด, สิ่งที่ต้องทำก่อนใช้จริง
+</code></pre>
+<p>เตรียม synthetic input ไว้ก่อนและมี expected result ข้าง ๆ หาก demo live ล้มให้บอกว่าล้มที่ขั้นไหน พร้อมหลักฐาน ไม่เปิด output เก่ามาทำเหมือนเป็นผลสดโดยไม่ระบุ</p>
+<h2 id="lesson-15-release-deploy">Release ไม่เท่ากับ Deploy เสมอ</h2>
+<p>Release คือชุดงานรุ่นที่ระบุและส่งมอบได้ อาจเป็น repo tag หรือ ZIP พร้อมเอกสาร ส่วน deploy คือการนำระบบไปทำงานใน environment เป้าหมาย เว็บ Vercel ของหลักสูตร deploy หนังสือ ไม่ได้ deploy backend Capstone นี่เป็นขอบเขตที่ควรบอกชัดใน portfolio</p>
+<h2 id="lesson-15-_1">บันทึกผลส่งมอบหนึ่งหน้า</h2>
+<p>ใช้หัวข้อต่อไปนี้แล้วเติมผลจริง ไม่ต้องเขียนยาว:</p>
+<pre><code class="language-text">Version / commit:
+Problem and intended user:
+Implemented flow:
+Environment tested:
+Commands and observed outcomes:
+Mocked / not tested:
+Known risks and limitations:
+Next small improvement:
+</code></pre>
+<p>อย่าเขียนเพียง “tests passed” ให้ระบุว่า tests ของกฎ/DB/API หรือ workflow ส่วน container runtime ยังไม่ทดสอบก็ใส่ไว้ตรง not tested การสื่อสารสิ่งที่ยังไม่รู้เป็นส่วนหนึ่งของงาน engineering ไม่ใช่ทำให้งานดูด้อยลง</p>
+<h2 id="lesson-15-_2">ถ้าจะเอาไปใช้ช่วงฝึกงานจริง</h2>
+<p>นำ architecture และคำถามไปคุยกับพี่เลี้ยงก่อน เช่นข้อมูลออกนอกบริษัทได้หรือไม่, ใครเป็นคนตรวจ, อนุญาต provider ใด และต้องเก็บ audit นานเท่าไร อย่า copy token/config จากเครื่องส่วนตัวหรือใช้ synthetic lab เป็น public service ทันที</p>
+<p>จุดตรวจท้ายสัปดาห์: เปิดโปรเจกต์ใหม่แล้วหาที่รับ request, กฎ, DB, tests และคู่มือเจอ อธิบายเส้นทางงานปกติและงานพังได้ และรู้ว่าสิ่งใดต้องขอคำแนะนำจากทีมก่อนเปลี่ยน</p><a class="back" href="#top">↑ กลับสารบัญ</a></article><article id="lesson-16"><div class="source">capstone/README.md</div><details class="local-toc"><summary>หัวข้อในบทนี้</summary><a href="#lesson-16-_1">ขอบเขต</a><a href="#lesson-16-1-environment">1. เตรียม environment</a><a href="#lesson-16-2-api-terminal-a">2. เปิด API — terminal A</a><a href="#lesson-16-3-worker-terminal-b-folder">3. เปิด worker — terminal B ใน folder เดียวกัน</a><a href="#lesson-16-4-terminal-c">4. ทดลอง — terminal C</a><a href="#lesson-16-5-review">5. ทดลอง review</a><a href="#lesson-16-6-docker-compose-native">6. Docker Compose — ทางเลือกหลัง native</a><a href="#lesson-16-_2">ไฟล์ที่ควรเปิดประกอบ</a></details><h1 id="lesson-16-capstone-lab-native-compose">Capstone Lab — Native ก่อน แล้วค่อย Compose</h1>
 <h2 id="lesson-16-_1">ขอบเขต</h2>
 <p>ระบบ local-only สำหรับข้อมูลสังเคราะห์ มี API, worker, SQLite queue, mock AI, audit และ review decision ไม่มีการเรียก paid API ไม่มีอีเมลหรือการจ้างงานอัตโนมัติ เว็บบทเรียนไม่ได้ host backend นี้ ต้องดาวน์โหลด ZIP แล้วรันในเครื่อง</p>
 <h2 id="lesson-16-1-environment">1. เตรียม environment</h2>
@@ -749,6 +1204,16 @@ Docker → not_evidenced  → ให้ตรวจเพิ่ม ไม่ป�
 .\.venv\Scripts\python.exe -m pytest tests -q
 </code></pre>
 <p>ไม่ต้อง activate ก็ได้ เพราะระบุ interpreter ตรง ๆ ถ้าใช้ <code>python</code> ในคำสั่งถัดไป ให้แน่ใจว่าเป็น environment ที่ติดตั้ง packages แล้ว ไม่ใช้ global interpreter คนละตัวสลับกัน</p>
+<h3 id="lesson-16-terminal">ถ้ายังไม่พร้อมเปิดหลาย terminal</h3>
+<p>ทดลอง walkthrough ก่อน API ได้โดยไม่ต้องตั้ง token หรือเปิด Docker:</p>
+<pre><code class="language-powershell">.\.venv\Scripts\python.exe learning_walkthrough.py state
+.\.venv\Scripts\python.exe learning_walkthrough.py retry
+.\.venv\Scripts\python.exe learning_walkthrough.py lease
+.\.venv\Scripts\python.exe learning_walkthrough.py review
+.\.venv\Scripts\python.exe learning_walkthrough.py transaction
+.\.venv\Scripts\python.exe learning_walkthrough.py hr
+</code></pre>
+<p>แต่ละคำสั่งใช้ DB ชั่วคราวของตัวเองและตรวจผลด้วย assertions เมื่อผ่านจะจบด้วย PASS อ่านโค้ดคู่กับบท 06–08 และ 12–13 เพื่อเห็นว่าเกิดอะไรขึ้น ข้อมูลนี้จะไม่ไปปรากฏใน API ที่เปิดภายหลัง เพราะไม่ได้ใช้ DB ไฟล์เดียวกัน และไม่ได้จำลอง network จริง</p>
 <h2 id="lesson-16-2-api-terminal-a">2. เปิด API — terminal A</h2>
 <pre><code class="language-powershell">$env:CAPSTONE_DB = "data/capstone.sqlite3"
 $env:REVIEW_TOKEN = (&amp; .\.venv\Scripts\python.exe -c "import secrets; print(secrets.token_urlsafe(32))")
@@ -925,6 +1390,7 @@ Respond to Webhook → ส่ง task_id/status หรือ error ตามจ�
 <h2 id="lesson-22-_1">สิ่งที่ตรวจและสิ่งที่ต้องแยก</h2>
 <p>ตรวจบน Windows วันที่ 12 กันยายน 2026: Python 3.12.7, FastAPI 0.126.0, Pydantic 2.8.2, pytest 7.4.4, httpx 0.27.0, pypdf 6.13.1 และ python-docx 1.2.0</p>
 <p>ผล reference Capstone: <strong>24 tests ผ่าน</strong> ผล ReleaseGuard starter: <strong>8 ไม่ผ่าน / 2 ผ่านตามที่ตั้งใจ</strong> เป็นจุดเริ่มให้ผู้เรียนแก้ ไม่ใช่ผล release ของ reference</p>
+<p>ส่วนเรียนแบบทีละขั้นที่เพิ่ม: ตรวจจาก ZIP ที่แตกใหม่แล้ว walkthrough <strong>10 กรณีผ่าน</strong> (state, retry, lease, review, transaction และ HR ทุก mock mode) รวมถึง Workshop แยกไฟล์ที่ single/split ให้ output เดียวกันและ <strong>3 tests ผ่าน</strong> แยกจาก 24 tests ของ Capstone ไม่ใช้ผล walkthrough ไปอ้างว่า Docker/HTTP auth ผ่าน เพราะสคริปต์เรียก implementation ใน process เดียวด้วยเวลาจำลอง</p>
 <p>Native HTTP ตรวจ demo Transaction/HR normal, transient, timeout และ hallucination พร้อมแยก API/worker คนละ process และทดลอง restart API แล้วส่ง event เดิมได้ task เดิม</p>
 <p>n8n native 1.115.3: import workflow สองไฟล์เข้า state ทดสอบแยกแล้ว execute แต่ละไฟล์สองครั้ง รวม <strong>4 executions ผ่าน</strong> ยืนยัน HTTP 202, task ID และ duplicate false/true ตามลำดับ ตรวจเฉพาะ intake probes ไม่ใช่ production webhook หรือ Compose n8n รายงาน <a href="week-5-assets/runtime_report.json">Native runtime results</a> ไม่มี credentials และใช้ข้อมูลสังเคราะห์</p>
 <p>Docker Compose v5.1.1 ผ่าน <code>config --quiet</code> แต่ <strong>ยังไม่ได้ build/run containers</strong> เนื่องจาก Docker Engine ไม่เปิด จึงยังไม่รับรอง image build, volume permissions, container restart หรือ n8n Compose networking บนเครื่องนี้</p>
