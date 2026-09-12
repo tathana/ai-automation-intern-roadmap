@@ -1,9 +1,9 @@
 <!doctype html>
 <html lang="th"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1"><title>Week 1 • Python, Data, SQL & Debugging</title><style>
 :root{color-scheme:light;--ink:#203149;--muted:#5b6b7d;--line:#dbe3e9;--accent:#096b63}
-*{box-sizing:border-box}html{scroll-behavior:smooth;scroll-padding-top:24px}body{margin:0;background:#f3f6f8;color:var(--ink);font-family:"Leelawadee UI",Tahoma,sans-serif;font-size:17px;line-height:1.9}a{color:var(--accent);text-underline-offset:4px}header{background:#173b43;color:white;padding:56px max(24px,calc((100vw - 1240px)/2));}header h1{font-size:clamp(28px,4vw,46px);line-height:1.35;margin:12px 0}header p{max-width:780px;color:#d9e9eb}.eyebrow{letter-spacing:2px;font-size:13px;color:#a8dfd5}.layout{max-width:1300px;margin:auto;display:grid;grid-template-columns:280px minmax(0,1fr);gap:30px;padding:30px 24px}aside{position:sticky;top:20px;align-self:start;max-height:92vh;overflow:auto;padding-right:12px}aside h2{font-size:18px}nav a{display:block;padding:9px 10px;border-bottom:1px solid var(--line);text-decoration:none;font-size:14px;line-height:1.6}nav a:hover{background:#e1eeeb}article{background:white;padding:clamp(20px,4vw,48px);border:1px solid var(--line);border-radius:12px;margin-bottom:28px;overflow-wrap:anywhere}article h1{font-size:29px;line-height:1.5;margin:20px 0 28px}h2{font-size:24px;margin-top:40px}h3{font-size:20px;margin-top:28px}pre{background:#152c3b;color:#eaf2f7;padding:20px;border-radius:8px;overflow:auto;line-height:1.65;font-size:14px;white-space:pre;overflow-wrap:normal}code{font-family:Consolas,"Courier New",monospace}p code,li code,td code{background:#edf2f5;padding:2px 5px;border-radius:4px;font-size:.9em}blockquote{margin:24px 0;padding:4px 20px;border-left:4px solid #138779;background:#eff8f5}table{border-collapse:collapse;width:100%;font-size:15px}th,td{border:1px solid var(--line);padding:12px;text-align:left;vertical-align:top}th{background:#eaf2f2}.table-scroll{overflow:auto;margin:20px 0}hr{border:0;border-top:1px solid var(--line);margin:32px 0}.source{font-size:12px;color:var(--muted)}.local-toc{margin-top:18px;font-size:14px;background:#f5f8fa;padding:10px 14px;border-radius:6px}.local-toc a{display:block;margin:7px 0}summary{cursor:pointer}.back{display:inline-block;margin-top:24px;font-size:14px}button{border:1px solid #aac8c5;background:white;color:#175c54;padding:9px 16px;border-radius:6px;cursor:pointer;font:inherit;font-size:14px}footer{max-width:1000px;margin:20px auto;padding:24px;color:var(--muted);font-size:14px}@media(max-width:850px){.layout{display:block;padding:16px}aside{position:static;max-height:none;padding:0 0 20px}nav{max-height:280px;overflow:auto}article h1{font-size:25px}body{font-size:16px}}@media print{body{background:white;font-size:11pt}header{background:white;color:black;padding:0}header p{color:black}.layout{display:block;padding:0}aside,button,.local-toc,.back{display:none}article{border:0;padding:0;break-before:page}pre{white-space:pre-wrap;background:#f0f2f4;color:black;font-size:9pt}a{color:inherit}h1,h2,h3{break-after:avoid}.table-scroll{overflow:visible}}
+*{box-sizing:border-box}html{scroll-behavior:smooth;scroll-padding-top:24px}body{margin:0;background:#f3f6f8;color:var(--ink);font-family:"Leelawadee UI",Tahoma,sans-serif;font-size:17px;line-height:1.9}a{color:var(--accent);text-underline-offset:4px}header{background:#173b43;color:white;padding:56px max(24px,calc((100vw - 1240px)/2));}header h1{font-size:clamp(28px,4vw,46px);line-height:1.35;margin:12px 0}header p{max-width:780px;color:#d9e9eb}.eyebrow{letter-spacing:2px;font-size:13px;color:#a8dfd5}.layout{max-width:1300px;margin:auto;display:grid;grid-template-columns:280px minmax(0,1fr);gap:30px;padding:30px 24px}aside{position:sticky;top:20px;align-self:start;max-height:92vh;overflow:auto;padding-right:12px}aside h2{font-size:18px}nav a{display:block;padding:9px 10px;border-bottom:1px solid var(--line);text-decoration:none;font-size:14px;line-height:1.6}nav a:hover{background:#e1eeeb}article{background:white;padding:clamp(20px,4vw,48px);border:1px solid var(--line);border-radius:12px;margin-bottom:28px;overflow-wrap:anywhere}article h1{font-size:29px;line-height:1.5;margin:20px 0 28px}h2{font-size:24px;margin-top:40px}h3{font-size:20px;margin-top:28px}pre{background:#152c3b;color:#eaf2f7;padding:20px;border-radius:8px;overflow:auto;line-height:1.65;font-size:14px;white-space:pre;overflow-wrap:normal}code{font-family:Consolas,"Courier New",monospace}p code,li code,td code{background:#edf2f5;padding:2px 5px;border-radius:4px;font-size:.9em}blockquote{margin:24px 0;padding:4px 20px;border-left:4px solid #138779;background:#eff8f5}table{border-collapse:collapse;width:100%;font-size:15px}th,td{border:1px solid var(--line);padding:12px;text-align:left;vertical-align:top}th{background:#eaf2f2}.table-scroll{overflow:auto;margin:20px 0}hr{border:0;border-top:1px solid var(--line);margin:32px 0}.source{font-size:12px;color:var(--muted)}.local-toc{margin-top:18px;font-size:14px;background:#f5f8fa;padding:10px 14px;border-radius:6px}.local-toc a{display:block;margin:7px 0}summary{cursor:pointer}.back{display:inline-block;margin-top:24px;font-size:14px}button{border:1px solid #aac8c5;background:white;color:#175c54;padding:9px 16px;border-radius:6px;cursor:pointer;font:inherit;font-size:14px}footer{max-width:1000px;margin:20px auto;padding:24px;color:var(--muted);font-size:14px}.visual-board{margin:20px 0;padding:16px;border:1px solid #cbd9df;border-radius:12px;background:#f7fafb;overflow:auto}.visual-flow{min-width:620px;display:flex;align-items:center;justify-content:center;gap:8px;padding:14px}.visual-box{min-width:112px;padding:11px;background:white;border:1px solid #9eb3bd;border-radius:9px;text-align:center;box-shadow:0 3px 8px rgba(20,50,60,.07)}.visual-arrow{font-weight:700;color:var(--accent)}.visual-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:10px}.visual-pane{background:white;border:1px solid #cbd9df;border-radius:8px;padding:12px}.visual-label{font-size:12px;letter-spacing:.08em;color:#527080;font-weight:700}.visual-lane{display:grid;grid-template-columns:130px 1fr;gap:12px;align-items:center;margin:8px 0}.visual-track{padding:9px;background:#e6f1ef;border-radius:7px}.visual-note{padding:11px 15px;border-left:4px solid var(--accent);background:#eaf5f3;margin:14px 0}@media(max-width:850px){.layout{display:block;padding:16px}aside{position:static;max-height:none;padding:0 0 20px}nav{max-height:280px;overflow:auto}article h1{font-size:25px}body{font-size:16px}.visual-grid{grid-template-columns:1fr}.visual-lane{grid-template-columns:1fr}}@media print{body{background:white;font-size:11pt}header{background:white;color:black;padding:0}header p{color:black}.layout{display:block;padding:0}aside,button,.local-toc,.back{display:none}article{border:0;padding:0;break-before:page}pre{white-space:pre-wrap;background:#f0f2f4;color:black;font-size:9pt}a{color:inherit}h1,h2,h3{break-after:avoid}.table-scroll{overflow:visible}}
 </style></head>
-<body><header id="top"><div class="eyebrow">PRE-COOP / WEEK 01 / LEARNING BOOK</div><h1>Python, Data, SQL<br>และ Debugging</h1><p>จากการอ่านโค้ดให้เข้าใจ สู่การจัดการข้อมูล ทดสอบ และสร้างงาน Automation ที่ตรวจสอบได้</p><p>รวมบทเรียน 00–10, Plain-Language Tutor Layer, แบบฝึกหัด และโจทย์ OpsGuard • อ่านออฟไลน์ได้</p><button onclick="window.print()">พิมพ์ / บันทึกเป็น PDF</button></header><div class="layout"><aside><h2>สารบัญบทเรียน</h2><nav aria-label="สารบัญ"><a href="#lesson-0">Week 1 — Python, Data Processing, SQL และ Debugging Foundation</a><a href="#lesson-1">00 — Week 1 Assessment and Goals</a><a href="#lesson-2">01 — Python Execution and Functions</a><a href="#lesson-3">02 — Data Structures and Data Flow</a><a href="#lesson-4">03 — Files, JSON, CSV, Pathlib and Configuration</a><a href="#lesson-5">04 — Validation, Exceptions, Logging and Debugging</a><a href="#lesson-6">05 — SQLite, SQL and Transactions</a><a href="#lesson-7">06 — Testing with Pytest and Mocking</a><a href="#lesson-8">07 — Idempotency and Project Hygiene</a><a href="#lesson-9">08 — Week 1 Cheat Sheet</a><a href="#lesson-10">09 — Week 1 Deep Explanation Companion</a><a href="#lesson-11">10 — Plain-Language Tutor Layer: เข้าใจก่อน แล้วค่อยเรียกศัพท์ให้ถูก</a><a href="#lesson-12">Week 1 Drills</a><a href="#lesson-13">Drill 01 — Python and Data</a><a href="#lesson-14">Drill 02 — Debugging</a><a href="#lesson-15">Drill 03 — SQL</a><a href="#lesson-16">Drill 04 — Testing</a><a href="#lesson-17">Special Challenge — OpsGuard</a><a href="#lesson-18">OpsGuard — Architecture Guide</a><a href="#lesson-19">OpsGuard — Grading Rubric</a><a href="#lesson-20">OpsGuard — Progressive Hints</a><a href="#lesson-21">OpsGuard — Requirements</a><a href="#lesson-22">OpsGuard — Required Test Cases</a><a href="#lesson-23">OpsGuard Starter</a></nav></aside><main><article id="lesson-0"><div class="source">README.md</div><details class="local-toc"><summary>หัวข้อในบทนี้</summary><a href="#lesson-0-_1">สัปดาห์นี้เรียนไปเพื่ออะไร</a><a href="#lesson-0-_2">แผนที่บทเรียน</a><a href="#lesson-0-_3">วิธีใช้ฉบับอธิบายละเอียด</a><a href="#lesson-0-_4">วิธีเรียนแต่ละบท</a><a href="#lesson-0-_6">ตารางเรียนที่แนะนำ</a><a href="#lesson-0-definition-of-done">Definition of Done</a><a href="#lesson-0-_7">ถ้ารู้สึกว่าเนื้อหาเยอะ</a></details><h1 id="lesson-0-week-1-python-data-processing-sql-debugging-foundation">Week 1 — Python, Data Processing, SQL และ Debugging Foundation</h1>
+<body><header id="top"><div class="eyebrow">PRE-COOP / WEEK 01 / LEARNING BOOK</div><h1>Python, Data, SQL<br>และ Debugging</h1><p>จากการอ่านโค้ดให้เข้าใจ สู่การจัดการข้อมูล ทดสอบ และสร้างงาน Automation ที่ตรวจสอบได้</p><p>รวมบทเรียน 00–11, Visual Notes, Plain-Language Tutor Layer, แบบฝึกหัด และโจทย์ OpsGuard • อ่านออฟไลน์ได้</p><button onclick="window.print()">พิมพ์ / บันทึกเป็น PDF</button></header><div class="layout"><aside><h2>สารบัญบทเรียน</h2><nav aria-label="สารบัญ"><a href="#lesson-0">Week 1 — Python, Data Processing, SQL และ Debugging Foundation</a><a href="#lesson-1">00 — Week 1 Assessment and Goals</a><a href="#lesson-2">01 — Python Execution and Functions</a><a href="#lesson-3">02 — Data Structures and Data Flow</a><a href="#lesson-4">03 — Files, JSON, CSV, Pathlib and Configuration</a><a href="#lesson-5">04 — Validation, Exceptions, Logging and Debugging</a><a href="#lesson-6">05 — SQLite, SQL and Transactions</a><a href="#lesson-7">06 — Testing with Pytest and Mocking</a><a href="#lesson-8">07 — Idempotency and Project Hygiene</a><a href="#lesson-9">08 — Week 1 Cheat Sheet</a><a href="#lesson-10">09 — Week 1 Deep Explanation Companion</a><a href="#lesson-11">10 — Plain-Language Tutor Layer: เข้าใจก่อน แล้วค่อยเรียกศัพท์ให้ถูก</a><a href="#lesson-12">11 — Visual Notes: Python, Data Flow และ SQL</a><a href="#lesson-13">Week 1 Drills</a><a href="#lesson-14">Drill 01 — Python and Data</a><a href="#lesson-15">Drill 02 — Debugging</a><a href="#lesson-16">Drill 03 — SQL</a><a href="#lesson-17">Drill 04 — Testing</a><a href="#lesson-18">Special Challenge — OpsGuard</a><a href="#lesson-19">OpsGuard — Architecture Guide</a><a href="#lesson-20">OpsGuard — Grading Rubric</a><a href="#lesson-21">OpsGuard — Progressive Hints</a><a href="#lesson-22">OpsGuard — Requirements</a><a href="#lesson-23">OpsGuard — Required Test Cases</a><a href="#lesson-24">OpsGuard Starter</a></nav></aside><main><article id="lesson-0"><div class="source">README.md</div><details class="local-toc"><summary>หัวข้อในบทนี้</summary><a href="#lesson-0-_1">สัปดาห์นี้เรียนไปเพื่ออะไร</a><a href="#lesson-0-_2">แผนที่บทเรียน</a><a href="#lesson-0-_3">วิธีใช้ฉบับอธิบายละเอียด</a><a href="#lesson-0-_4">วิธีเรียนแต่ละบท</a><a href="#lesson-0-_6">ตารางเรียนที่แนะนำ</a><a href="#lesson-0-definition-of-done">Definition of Done</a><a href="#lesson-0-_7">ถ้ารู้สึกว่าเนื้อหาเยอะ</a></details><h1 id="lesson-0-week-1-python-data-processing-sql-debugging-foundation">Week 1 — Python, Data Processing, SQL และ Debugging Foundation</h1>
 <h2 id="lesson-0-_1">สัปดาห์นี้เรียนไปเพื่ออะไร</h2>
 <p>งาน AI &amp; Automation ไม่ได้เริ่มที่โมเดล AI เสมอไป งานจำนวนมากเริ่มจากข้อมูลก้อนหนึ่งที่เข้ามาทางไฟล์, API หรือ Webhook แล้วเราต้องตอบคำถามให้ได้ว่า:</p>
 <ol>
@@ -87,7 +87,7 @@
 </tr>
 </tbody>
 </table></div>
-<p>แบบฝึกสั้นอยู่ใน <a href="#lesson-12"><code>drills/</code></a> และข้อสอบประจำสัปดาห์อยู่ใน <a href="#lesson-17"><code>special_challenge_ops_guard/</code></a></p>
+<p>แบบฝึกสั้นอยู่ใน <a href="#lesson-13"><code>drills/</code></a> และข้อสอบประจำสัปดาห์อยู่ใน <a href="#lesson-18"><code>special_challenge_ops_guard/</code></a></p>
 <hr/>
 <h2 id="lesson-0-_3">วิธีใช้ฉบับอธิบายละเอียด</h2>
 <p>เนื้อหาเดิมบท 01–07 เป็นบทหลัก ส่วน <a href="#lesson-10"><code>09_week1_deep_explanation_companion.md</code></a> เป็นครูประกบ ไม่จำเป็นต้องอ่านไฟล์ 09 รวดเดียว ให้ใช้ลำดับนี้:</p>
@@ -6842,10 +6842,26 @@ items=None → แต่ละ call สร้าง [] ของตัวเอ�
 8. จำสามข้ออะไร
 9. ทาย output ใหม่หนึ่งกรณี
 </code></pre>
-<p>เข้าใจไม่ได้แปลว่าจำคำอธิบายได้ แต่หมายถึงทาย behavior, อธิบายเหตุผล และเปลี่ยนตัวอย่างเองได้ครับ</p><a class="back" href="#top">↑ กลับสารบัญ</a></article><article id="lesson-12"><div class="source">drills/README.md</div><details class="local-toc"><summary>หัวข้อในบทนี้</summary><a href="#lesson-12-_1">วิธีทำ</a><a href="#lesson-12-_2">รายการ</a><a href="#lesson-12-special-challenge">เกณฑ์พร้อมเข้า Special Challenge</a></details><h1 id="lesson-12-week-1-drills">Week 1 Drills</h1>
+<p>เข้าใจไม่ได้แปลว่าจำคำอธิบายได้ แต่หมายถึงทาย behavior, อธิบายเหตุผล และเปลี่ยนตัวอย่างเองได้ครับ</p><a class="back" href="#top">↑ กลับสารบัญ</a></article><article id="lesson-12"><div class="source">11_python_data_sql_visual_notes.md</div><details class="local-toc"><summary>หัวข้อในบทนี้</summary><a href="#lesson-12-function-call">Function Call</a><a href="#lesson-12-list-tuple-dict-set">List, Tuple, Dict, Set ในภาพเดียว</a><a href="#lesson-12-loop-function">Loop และ Function</a><a href="#lesson-12-data-processing-pipeline">Data Processing Pipeline</a><a href="#lesson-12-sql-transaction-idempotency">SQL Transaction และ Idempotency</a><a href="#lesson-12-debug-flow">Debug Flow</a></details><h1 id="lesson-12-11-visual-notes-python-data-flow-sql">11 — Visual Notes: Python, Data Flow และ SQL</h1>
+<p>บทนี้แทรกภาพจำลองเพื่อเชื่อมคำศัพท์ใน Week 1 ไม่แทนรายละเอียดบท 01–07</p>
+<h2 id="lesson-12-function-call">Function Call</h2>
+<div class="visual-board"><div class="visual-flow"><div class="visual-box"><code>normalize(raw)</code></div><span class="visual-arrow">→ bind</span><div class="visual-box">local variables</div><span class="visual-arrow">→ execute</span><div class="visual-box"><code>return result</code></div><span class="visual-arrow">→</span><div class="visual-box">caller receives object</div></div></div>
+<p>ทุกครั้งที่เรียก function จะมี local frame ของรอบนั้น แต่ default mutable object อาจถูกสร้างตอน <code>def</code> และใช้ก้อนเดิมข้ามรอบ</p>
+<h2 id="lesson-12-list-tuple-dict-set">List, Tuple, Dict, Set ในภาพเดียว</h2>
+<div class="visual-board"><div class="visual-grid"><div class="visual-pane"><div class="visual-label">LIST</div><p><code>[A, B, C]</code></p><p>มีลำดับ แก้ไขได้ ใช้เก็บหลายรายการ</p></div><div class="visual-pane"><div class="visual-label">TUPLE</div><p><code>(x, y)</code></p><p>มีลำดับ เปลี่ยนสมาชิกไม่ได้ เหมาะ record สั้นที่ตำแหน่งชัด</p></div><div class="visual-pane"><div class="visual-label">DICT</div><p><code>{id: user}</code></p><p>เข้าถึงด้วย key เหมาะข้อมูลที่ field มีชื่อ</p></div><div class="visual-pane"><div class="visual-label">SET</div><p><code>{A, B}</code></p><p>สมาชิกไม่ซ้ำ เหมาะ membership/deduplicate</p></div><div class="visual-pane"><div class="visual-label">DATACLASS</div><p><code>User(id, name)</code></p><p>โมเดลภายในที่มีชื่อและ type ชัด</p></div><div class="visual-pane"><div class="visual-label">PYDANTIC</div><p><code>UserInput</code></p><p>ตรวจข้อมูลที่ boundary และรายงาน validation errors</p></div></div></div>
+<h2 id="lesson-12-loop-function">Loop และ Function</h2>
+<div class="visual-board"><div class="visual-flow"><div class="visual-box">iterable<br/><code>users</code></div><span class="visual-arrow">for each →</span><div class="visual-box">หนึ่ง item<br/><code>user</code></div><span class="visual-arrow">call →</span><div class="visual-box"><code>normalize(user)</code></div><span class="visual-arrow">append →</span><div class="visual-box">results</div></div></div>
+<p>แยก function เมื่อขั้นตอนมีชื่อ สัญญา และ test ได้ ไม่ใช่แค่เพื่อลดจำนวนบรรทัด</p>
+<h2 id="lesson-12-data-processing-pipeline">Data Processing Pipeline</h2>
+<div class="visual-board"><div class="visual-flow"><div class="visual-box">CSV / JSON<br/><small>raw</small></div><span class="visual-arrow">→ parse</span><div class="visual-box">Python objects</div><span class="visual-arrow">→ validate</span><div class="visual-box">clean records</div><span class="visual-arrow">→ transform</span><div class="visual-box">domain result</div><span class="visual-arrow">→ write</span><div class="visual-box">JSON / SQL</div></div></div>
+<p>ตรวจ shape และ types ทุก boundary อย่ารวม read/validate/transform/write ใน loop เดียวจนหา failure ไม่เจอ</p>
+<h2 id="lesson-12-sql-transaction-idempotency">SQL Transaction และ Idempotency</h2>
+<div class="visual-board"><div class="visual-flow"><div class="visual-box">BEGIN</div><span class="visual-arrow">→</span><div class="visual-box">insert task<br/><small>event_id unique</small></div><span class="visual-arrow">→</span><div class="visual-box">insert audit</div><span class="visual-arrow">→</span><div class="visual-box">COMMIT</div></div><div class="visual-note">ผิดกลางทาง → ROLLBACK ทั้งชุด; event เดิมเข้าพร้อมกัน → unique constraint ตัดสินใน source of truth</div></div>
+<h2 id="lesson-12-debug-flow">Debug Flow</h2>
+<div class="visual-board"><div class="visual-flow"><div class="visual-box">Reproduce</div><span class="visual-arrow">→</span><div class="visual-box">small input</div><span class="visual-arrow">→</span><div class="visual-box">inspect type/value</div><span class="visual-arrow">→</span><div class="visual-box">find first wrong boundary</div><span class="visual-arrow">→</span><div class="visual-box">fix + regression test</div></div></div><a class="back" href="#top">↑ กลับสารบัญ</a></article><article id="lesson-13"><div class="source">drills/README.md</div><details class="local-toc"><summary>หัวข้อในบทนี้</summary><a href="#lesson-13-_1">วิธีทำ</a><a href="#lesson-13-_2">รายการ</a><a href="#lesson-13-special-challenge">เกณฑ์พร้อมเข้า Special Challenge</a></details><h1 id="lesson-13-week-1-drills">Week 1 Drills</h1>
 <p>Drill ไม่ใช่ข้อสอบความจำ หากติดให้กลับไปอ่านคำอธิบายเสริมของบทที่เกี่ยวข้อง แต่ก่อนดูตัวอย่างให้เขียนสิ่งที่รู้สามข้อ: input shape, expected output และ failure ที่กำลังเจอ จากนั้นขอ hint ทีละระดับแทนการคัดลอกคำตอบเต็ม</p>
 <p>Drills เป็นแบบฝึกขนาดเล็กก่อน Special Challenge แต่ละข้อควรใช้ 20–60 นาที</p>
-<h2 id="lesson-12-_1">วิธีทำ</h2>
+<h2 id="lesson-13-_1">วิธีทำ</h2>
 <ol>
 <li>อ่าน requirement</li>
 <li>เขียน test cases บนกระดาษก่อน</li>
@@ -6853,21 +6869,21 @@ items=None → แต่ละ call สร้าง [] ของตัวเอ�
 <li>ถ้าติด ขอ AI เฉพาะ hint</li>
 <li>หลังรันผ่าน อธิบาย flow และเพิ่ม edge case</li>
 </ol>
-<h2 id="lesson-12-_2">รายการ</h2>
+<h2 id="lesson-13-_2">รายการ</h2>
 <ul>
-<li><a href="#lesson-13">Drill 01 — Python and Data</a></li>
-<li><a href="#lesson-14">Drill 02 — Debugging</a></li>
-<li><a href="#lesson-15">Drill 03 — SQL</a></li>
-<li><a href="#lesson-16">Drill 04 — Testing</a></li>
+<li><a href="#lesson-14">Drill 01 — Python and Data</a></li>
+<li><a href="#lesson-15">Drill 02 — Debugging</a></li>
+<li><a href="#lesson-16">Drill 03 — SQL</a></li>
+<li><a href="#lesson-17">Drill 04 — Testing</a></li>
 </ul>
-<h2 id="lesson-12-special-challenge">เกณฑ์พร้อมเข้า Special Challenge</h2>
+<h2 id="lesson-13-special-challenge">เกณฑ์พร้อมเข้า Special Challenge</h2>
 <ul>
 <li>ทำ Drill 01 ได้อย่างน้อย 4/5</li>
 <li>วิเคราะห์ Drill 02 ได้อย่างน้อย 5/6 bugs</li>
 <li>เขียน SQL Drill 03 ได้อย่างน้อย 4/5 queries</li>
 <li>เขียน tests Drill 04 ได้อย่างน้อย 8 cases</li>
-</ul><a class="back" href="#top">↑ กลับสารบัญ</a></article><article id="lesson-13"><div class="source">drills/drill_01_python_data.md</div><details class="local-toc"><summary>หัวข้อในบทนี้</summary><a href="#lesson-13-1-normalize-identifier">1. Normalize Identifier</a><a href="#lesson-13-2-normalize-amount">2. Normalize Amount</a><a href="#lesson-13-3-deduplicate-records">3. Deduplicate Records</a><a href="#lesson-13-4-build-lookup-and-join">4. Build Lookup and Join</a><a href="#lesson-13-5-aggregate">5. Aggregate</a></details><h1 id="lesson-13-drill-01-python-and-data">Drill 01 — Python and Data</h1>
-<h2 id="lesson-13-1-normalize-identifier">1. Normalize Identifier</h2>
+</ul><a class="back" href="#top">↑ กลับสารบัญ</a></article><article id="lesson-14"><div class="source">drills/drill_01_python_data.md</div><details class="local-toc"><summary>หัวข้อในบทนี้</summary><a href="#lesson-14-1-normalize-identifier">1. Normalize Identifier</a><a href="#lesson-14-2-normalize-amount">2. Normalize Amount</a><a href="#lesson-14-3-deduplicate-records">3. Deduplicate Records</a><a href="#lesson-14-4-build-lookup-and-join">4. Build Lookup and Join</a><a href="#lesson-14-5-aggregate">5. Aggregate</a></details><h1 id="lesson-14-drill-01-python-and-data">Drill 01 — Python and Data</h1>
+<h2 id="lesson-14-1-normalize-identifier">1. Normalize Identifier</h2>
 <p>สร้าง:</p>
 <pre><code class="language-python">def normalize_identifier(value: object) -&gt; str | None:
     ...
@@ -6881,7 +6897,7 @@ items=None → แต่ละ call สร้าง [] ของตัวเอ�
 <li>อนุญาตตัวอักษร ตัวเลข <code>_</code> และ <code>-</code></li>
 <li>invalid คืน <code>None</code></li>
 </ul>
-<h2 id="lesson-13-2-normalize-amount">2. Normalize Amount</h2>
+<h2 id="lesson-14-2-normalize-amount">2. Normalize Amount</h2>
 <p>รองรับ:</p>
 <pre><code class="language-text">100
 100.5
@@ -6891,7 +6907,7 @@ items=None → แต่ละ call สร้าง [] ของตัวเอ�
 <pre><code class="language-text">True, None, "", "abc", 0, negative
 </code></pre>
 <p>Stretch: ใช้ <code>Decimal</code></p>
-<h2 id="lesson-13-3-deduplicate-records">3. Deduplicate Records</h2>
+<h2 id="lesson-14-3-deduplicate-records">3. Deduplicate Records</h2>
 <p>สร้าง:</p>
 <pre><code class="language-python">def deduplicate_records(
     records: list[dict],
@@ -6899,10 +6915,10 @@ items=None → แต่ละ call สร้าง [] ของตัวเอ�
     ...
 </code></pre>
 <p>เก็บ record แรก คืน duplicate records แยกพร้อม source index</p>
-<h2 id="lesson-13-4-build-lookup-and-join">4. Build Lookup and Join</h2>
+<h2 id="lesson-14-4-build-lookup-and-join">4. Build Lookup and Join</h2>
 <p>รับ accounts และ events แล้วคืน event ที่เพิ่ม <code>owner_name</code></p>
 <p>Unknown account ต้องถูก reject ไม่ใช่เดาชื่อ</p>
-<h2 id="lesson-13-5-aggregate">5. Aggregate</h2>
+<h2 id="lesson-14-5-aggregate">5. Aggregate</h2>
 <p>คืน:</p>
 <pre><code class="language-python">{
     account_id: {
@@ -6912,14 +6928,14 @@ items=None → แต่ละ call สร้าง [] ของตัวเอ�
     }
 }
 </code></pre>
-<h3 id="lesson-13-self-review">Self-review</h3>
+<h3 id="lesson-14-self-review">Self-review</h3>
 <ul>
 <li>แก้ input ต้นฉบับหรือไม่?</li>
 <li>bool หลุดเป็น amount หรือไม่?</li>
 <li>duplicate behavior ชัดหรือไม่?</li>
 <li>unknown account หายเงียบหรือไม่?</li>
 <li>function ใหญ่เกินไปหรือไม่?</li>
-</ul><a class="back" href="#top">↑ กลับสารบัญ</a></article><article id="lesson-14"><div class="source">drills/drill_02_debugging.md</div><details class="local-toc"><summary>หัวข้อในบทนี้</summary><a href="#lesson-14-bug-1-mutable-default">Bug 1 — Mutable Default</a><a href="#lesson-14-bug-2-cwd-dependent-path">Bug 2 — CWD-dependent Path</a><a href="#lesson-14-bug-3-boolean-amount">Bug 3 — Boolean Amount</a><a href="#lesson-14-bug-4-swallowed-failure">Bug 4 — Swallowed Failure</a><a href="#lesson-14-bug-5-partial-commit">Bug 5 — Partial Commit</a><a href="#lesson-14-bug-6-import-side-effect">Bug 6 — Import Side Effect</a><a href="#lesson-14-stretch">Stretch</a></details><h1 id="lesson-14-drill-02-debugging">Drill 02 — Debugging</h1>
+</ul><a class="back" href="#top">↑ กลับสารบัญ</a></article><article id="lesson-15"><div class="source">drills/drill_02_debugging.md</div><details class="local-toc"><summary>หัวข้อในบทนี้</summary><a href="#lesson-15-bug-1-mutable-default">Bug 1 — Mutable Default</a><a href="#lesson-15-bug-2-cwd-dependent-path">Bug 2 — CWD-dependent Path</a><a href="#lesson-15-bug-3-boolean-amount">Bug 3 — Boolean Amount</a><a href="#lesson-15-bug-4-swallowed-failure">Bug 4 — Swallowed Failure</a><a href="#lesson-15-bug-5-partial-commit">Bug 5 — Partial Commit</a><a href="#lesson-15-bug-6-import-side-effect">Bug 6 — Import Side Effect</a><a href="#lesson-15-stretch">Stretch</a></details><h1 id="lesson-15-drill-02-debugging">Drill 02 — Debugging</h1>
 <p>ห้ามแก้ทันที ให้เขียนก่อนว่า:</p>
 <ul>
 <li>อาการ</li>
@@ -6929,21 +6945,21 @@ items=None → แต่ละ call สร้าง [] ของตัวเอ�
 <li>fix ที่เล็กที่สุด</li>
 <li>regression test</li>
 </ul>
-<h2 id="lesson-14-bug-1-mutable-default">Bug 1 — Mutable Default</h2>
+<h2 id="lesson-15-bug-1-mutable-default">Bug 1 — Mutable Default</h2>
 <pre><code class="language-python">def reject(record, rejected=[]):
     rejected.append(record)
     return rejected
 </code></pre>
-<h2 id="lesson-14-bug-2-cwd-dependent-path">Bug 2 — CWD-dependent Path</h2>
+<h2 id="lesson-15-bug-2-cwd-dependent-path">Bug 2 — CWD-dependent Path</h2>
 <pre><code class="language-python">def load():
     with open("../data/input.json", encoding="utf-8") as file:
         return json.load(file)
 </code></pre>
-<h2 id="lesson-14-bug-3-boolean-amount">Bug 3 — Boolean Amount</h2>
+<h2 id="lesson-15-bug-3-boolean-amount">Bug 3 — Boolean Amount</h2>
 <pre><code class="language-python">def valid_amount(value):
     return isinstance(value, (int, float)) and value &gt; 0
 </code></pre>
-<h2 id="lesson-14-bug-4-swallowed-failure">Bug 4 — Swallowed Failure</h2>
+<h2 id="lesson-15-bug-4-swallowed-failure">Bug 4 — Swallowed Failure</h2>
 <pre><code class="language-python">def save(conn, row):
     try:
         conn.execute("INSERT INTO events VALUES (?, ?)", row)
@@ -6951,20 +6967,20 @@ items=None → แต่ละ call สร้าง [] ของตัวเอ�
         return False
     return True
 </code></pre>
-<h2 id="lesson-14-bug-5-partial-commit">Bug 5 — Partial Commit</h2>
+<h2 id="lesson-15-bug-5-partial-commit">Bug 5 — Partial Commit</h2>
 <pre><code class="language-python">for row in rows:
     conn.execute("INSERT INTO events VALUES (?, ?)", row)
     conn.commit()
 </code></pre>
-<h2 id="lesson-14-bug-6-import-side-effect">Bug 6 — Import Side Effect</h2>
+<h2 id="lesson-15-bug-6-import-side-effect">Bug 6 — Import Side Effect</h2>
 <pre><code class="language-python"># notifier.py
 send_real_email()
 
 def format_message(data):
     return str(data)
 </code></pre>
-<h2 id="lesson-14-stretch">Stretch</h2>
-<p>สร้าง pytest ที่ทำให้ bug เดิมเกิดก่อนแก้ และผ่านหลังแก้</p><a class="back" href="#top">↑ กลับสารบัญ</a></article><article id="lesson-15"><div class="source">drills/drill_03_sql.md</div><details class="local-toc"><summary>หัวข้อในบทนี้</summary><a href="#lesson-15-query-1">Query 1</a><a href="#lesson-15-query-2">Query 2</a><a href="#lesson-15-query-3">Query 3</a><a href="#lesson-15-query-4">Query 4</a><a href="#lesson-15-query-5">Query 5</a><a href="#lesson-15-design-questions">Design Questions</a><a href="#lesson-15-rule">Rule</a></details><h1 id="lesson-15-drill-03-sql">Drill 03 — SQL</h1>
+<h2 id="lesson-15-stretch">Stretch</h2>
+<p>สร้าง pytest ที่ทำให้ bug เดิมเกิดก่อนแก้ และผ่านหลังแก้</p><a class="back" href="#top">↑ กลับสารบัญ</a></article><article id="lesson-16"><div class="source">drills/drill_03_sql.md</div><details class="local-toc"><summary>หัวข้อในบทนี้</summary><a href="#lesson-16-query-1">Query 1</a><a href="#lesson-16-query-2">Query 2</a><a href="#lesson-16-query-3">Query 3</a><a href="#lesson-16-query-4">Query 4</a><a href="#lesson-16-query-5">Query 5</a><a href="#lesson-16-design-questions">Design Questions</a><a href="#lesson-16-rule">Rule</a></details><h1 id="lesson-16-drill-03-sql">Drill 03 — SQL</h1>
 <p>ใช้ schema:</p>
 <pre><code class="language-sql">CREATE TABLE accounts (
     account_id TEXT PRIMARY KEY,
@@ -6980,32 +6996,32 @@ CREATE TABLE events (
     FOREIGN KEY (account_id) REFERENCES accounts(account_id)
 );
 </code></pre>
-<h2 id="lesson-15-query-1">Query 1</h2>
+<h2 id="lesson-16-query-1">Query 1</h2>
 <p>ดึง SUCCESS events เรียงยอดมากไปน้อย</p>
-<h2 id="lesson-15-query-2">Query 2</h2>
+<h2 id="lesson-16-query-2">Query 2</h2>
 <p>หายอดและจำนวน SUCCESS events แยกราย account</p>
-<h2 id="lesson-15-query-3">Query 3</h2>
+<h2 id="lesson-16-query-3">Query 3</h2>
 <p>ดึงเฉพาะ account ที่ยอด SUCCESS รวมอย่างน้อย 10,000 บาท</p>
-<h2 id="lesson-15-query-4">Query 4</h2>
+<h2 id="lesson-16-query-4">Query 4</h2>
 <p>แสดงทุก account รวม account ที่ไม่มี event</p>
-<h2 id="lesson-15-query-5">Query 5</h2>
+<h2 id="lesson-16-query-5">Query 5</h2>
 <p>หา account ที่มี FAILED อย่างน้อย 3 ครั้งในวันเดียวกัน</p>
-<h2 id="lesson-15-design-questions">Design Questions</h2>
+<h2 id="lesson-16-design-questions">Design Questions</h2>
 <ol>
 <li>Constraints ใดควรเพิ่ม?</li>
 <li>Index ใดอาจช่วย Query 5?</li>
 <li>ถ้า event ID เดิมถูกส่งซ้ำควรทำอย่างไร?</li>
 <li>ถ้า event ID เดิมแต่ amount ต่างควรทำอย่างไร?</li>
 </ol>
-<h2 id="lesson-15-rule">Rule</h2>
-<p>ใช้ parameters สำหรับค่าที่มาจากภายนอก ห้ามต่อ SQL string</p><a class="back" href="#top">↑ กลับสารบัญ</a></article><article id="lesson-16"><div class="source">drills/drill_04_testing.md</div><details class="local-toc"><summary>หัวข้อในบทนี้</summary><a href="#lesson-16-required-cases">Required Cases</a><a href="#lesson-16-requirements">Requirements</a><a href="#lesson-16-review-questions">Review Questions</a></details><h1 id="lesson-16-drill-04-testing">Drill 04 — Testing</h1>
+<h2 id="lesson-16-rule">Rule</h2>
+<p>ใช้ parameters สำหรับค่าที่มาจากภายนอก ห้ามต่อ SQL string</p><a class="back" href="#top">↑ กลับสารบัญ</a></article><article id="lesson-17"><div class="source">drills/drill_04_testing.md</div><details class="local-toc"><summary>หัวข้อในบทนี้</summary><a href="#lesson-17-required-cases">Required Cases</a><a href="#lesson-17-requirements">Requirements</a><a href="#lesson-17-review-questions">Review Questions</a></details><h1 id="lesson-17-drill-04-testing">Drill 04 — Testing</h1>
 <p>สร้าง tests อย่างน้อย 8 cases สำหรับระบบเล็กต่อไปนี้:</p>
 <pre><code class="language-python">def normalize_amount(value): ...
 def validate_event(raw, valid_account_ids): ...
 def save_event(conn, event): ...
 def run_pipeline(input_path, db_path): ...
 </code></pre>
-<h2 id="lesson-16-required-cases">Required Cases</h2>
+<h2 id="lesson-17-required-cases">Required Cases</h2>
 <ol>
 <li>valid integer amount</li>
 <li>valid numeric string</li>
@@ -7018,7 +7034,7 @@ def run_pipeline(input_path, db_path): ...
 <li>rerun pipeline</li>
 <li>rollback เมื่อ audit insert ล้ม</li>
 </ol>
-<h2 id="lesson-16-requirements">Requirements</h2>
+<h2 id="lesson-17-requirements">Requirements</h2>
 <ul>
 <li>ใช้ <code>pytest.mark.parametrize</code> อย่างน้อยหนึ่งชุด</li>
 <li>ใช้ <code>tmp_path</code></li>
@@ -7026,26 +7042,26 @@ def run_pipeline(input_path, db_path): ...
 <li>ห้ามเรียก network</li>
 <li>tests ต้องรันแยกตัวและสลับลำดับได้</li>
 </ul>
-<h2 id="lesson-16-review-questions">Review Questions</h2>
+<h2 id="lesson-17-review-questions">Review Questions</h2>
 <ul>
 <li>Test ตรวจ behavior หรือ implementation detail?</li>
 <li>ถ้าเปลี่ยนชื่อ local variable tests แตกหรือไม่?</li>
 <li>Failure path ถูกทดสอบจริงหรือเพียงคาดเดา?</li>
 <li>มี assertion ที่พิสูจน์ state หลัง rollback หรือไม่?</li>
-</ul><a class="back" href="#top">↑ กลับสารบัญ</a></article><article id="lesson-17"><div class="source">special_challenge_ops_guard/README.md</div><details class="local-toc"><summary>หัวข้อในบทนี้</summary><a href="#lesson-17-payment-event-reconciliation-anomaly-audit-pipeline">Payment Event Reconciliation &amp; Anomaly Audit Pipeline</a><a href="#lesson-17-_1">เอกสาร</a><a href="#lesson-17-_2">กติกา</a><a href="#lesson-17-_3">ระยะเวลาแนะนำ</a><a href="#lesson-17-_4">วิธีส่งให้รีวิว</a></details><h1 id="lesson-17-special-challenge-opsguard">Special Challenge — OpsGuard</h1>
+</ul><a class="back" href="#top">↑ กลับสารบัญ</a></article><article id="lesson-18"><div class="source">special_challenge_ops_guard/README.md</div><details class="local-toc"><summary>หัวข้อในบทนี้</summary><a href="#lesson-18-payment-event-reconciliation-anomaly-audit-pipeline">Payment Event Reconciliation &amp; Anomaly Audit Pipeline</a><a href="#lesson-18-_1">เอกสาร</a><a href="#lesson-18-_2">กติกา</a><a href="#lesson-18-_3">ระยะเวลาแนะนำ</a><a href="#lesson-18-_4">วิธีส่งให้รีวิว</a></details><h1 id="lesson-18-special-challenge-opsguard">Special Challenge — OpsGuard</h1>
 <p>Challenge นี้ตั้งใจรวมหลายแนวคิด จึงไม่ควรพยายามเขียนทั้งระบบรวดเดียว ให้เดินทีละ vertical slice: โหลด record หนึ่งรายการ → validate → persist → query → test แล้วจึงรองรับ batch/error/idempotency หากไม่เข้าใจ function ใด ให้อธิบาย contract ของ function นั้นก่อนแก้ implementation</p>
-<h2 id="lesson-17-payment-event-reconciliation-anomaly-audit-pipeline">Payment Event Reconciliation &amp; Anomaly Audit Pipeline</h2>
+<h2 id="lesson-18-payment-event-reconciliation-anomaly-audit-pipeline">Payment Event Reconciliation &amp; Anomaly Audit Pipeline</h2>
 <p>นี่คือข้อสอบจบ Week 1 สำหรับพิสูจน์ว่าไม่ได้เพียงอ่านเนื้อหา แต่สามารถนำ Python, Data Processing, SQLite, Debugging, Testing และ Idempotency มาประกอบเป็นระบบได้</p>
-<h2 id="lesson-17-_1">เอกสาร</h2>
+<h2 id="lesson-18-_1">เอกสาร</h2>
 <ol>
-<li><a href="#lesson-21">Requirements</a></li>
-<li><a href="#lesson-18">Architecture</a></li>
-<li><a href="#lesson-22">Test Cases</a></li>
-<li><a href="#lesson-19">Grading Rubric</a></li>
-<li><a href="#lesson-20">Hints</a></li>
-<li><a href="#lesson-23">Starter Guide</a></li>
+<li><a href="#lesson-22">Requirements</a></li>
+<li><a href="#lesson-19">Architecture</a></li>
+<li><a href="#lesson-23">Test Cases</a></li>
+<li><a href="#lesson-20">Grading Rubric</a></li>
+<li><a href="#lesson-21">Hints</a></li>
+<li><a href="#lesson-24">Starter Guide</a></li>
 </ol>
-<h2 id="lesson-17-_2">กติกา</h2>
+<h2 id="lesson-18-_2">กติกา</h2>
 <ul>
 <li>ไม่แก้ไฟล์ใน <code>Pre-coop/step1_basics</code></li>
 <li>ทำงานในสำเนา <code>starter/</code> หรือสร้าง submission ของตัวเอง</li>
@@ -7054,7 +7070,7 @@ def run_pipeline(input_path, db_path): ...
 <li>อย่าขอเฉลยเต็มก่อนผ่าน Milestone 3</li>
 <li>ทุกครั้งที่ AI ให้โค้ด ต้องอ่าน อธิบาย และเพิ่ม test</li>
 </ul>
-<h2 id="lesson-17-_3">ระยะเวลาแนะนำ</h2>
+<h2 id="lesson-18-_3">ระยะเวลาแนะนำ</h2>
 <div class="table-scroll"><table>
 <thead>
 <tr>
@@ -7086,7 +7102,7 @@ def run_pipeline(input_path, db_path): ...
 </tbody>
 </table></div>
 <p>รวมประมาณ 11–16 ชั่วโมง แบ่งทำหลายวันได้</p>
-<h2 id="lesson-17-_4">วิธีส่งให้รีวิว</h2>
+<h2 id="lesson-18-_4">วิธีส่งให้รีวิว</h2>
 <p>เมื่อจบแต่ละ milestone ให้ส่ง:</p>
 <ul>
 <li>ไฟล์ที่เปลี่ยน</li>
@@ -7095,8 +7111,8 @@ def run_pipeline(input_path, db_path): ...
 <li>ส่วนที่ AI ช่วย</li>
 <li>ส่วนที่ยังไม่มั่นใจ</li>
 </ul>
-<p>ผมจะ review โดยเริ่มจากคำใบ้และคำถามนำก่อนเสนอ code patch เต็ม</p><a class="back" href="#top">↑ กลับสารบัญ</a></article><article id="lesson-18"><div class="source">special_challenge_ops_guard/ARCHITECTURE.md</div><details class="local-toc"><summary>หัวข้อในบทนี้</summary><a href="#lesson-18-recommended-flow">Recommended Flow</a><a href="#lesson-18-module-responsibilities">Module Responsibilities</a><a href="#lesson-18-dependency-direction">Dependency Direction</a><a href="#lesson-18-data-shapes">Data Shapes</a><a href="#lesson-18-transaction-boundary">Transaction Boundary</a><a href="#lesson-18-design-decisions-readme">Design Decisions ที่ต้องเขียนใน README</a></details><h1 id="lesson-18-opsguard-architecture-guide">OpsGuard — Architecture Guide</h1>
-<h2 id="lesson-18-recommended-flow">Recommended Flow</h2>
+<p>ผมจะ review โดยเริ่มจากคำใบ้และคำถามนำก่อนเสนอ code patch เต็ม</p><a class="back" href="#top">↑ กลับสารบัญ</a></article><article id="lesson-19"><div class="source">special_challenge_ops_guard/ARCHITECTURE.md</div><details class="local-toc"><summary>หัวข้อในบทนี้</summary><a href="#lesson-19-recommended-flow">Recommended Flow</a><a href="#lesson-19-module-responsibilities">Module Responsibilities</a><a href="#lesson-19-dependency-direction">Dependency Direction</a><a href="#lesson-19-data-shapes">Data Shapes</a><a href="#lesson-19-transaction-boundary">Transaction Boundary</a><a href="#lesson-19-design-decisions-readme">Design Decisions ที่ต้องเขียนใน README</a></details><h1 id="lesson-19-opsguard-architecture-guide">OpsGuard — Architecture Guide</h1>
+<h2 id="lesson-19-recommended-flow">Recommended Flow</h2>
 <pre><code class="language-text">CLI / main
    ↓
 Load settings and paths
@@ -7124,29 +7140,29 @@ Atomic JSON write
    ↓
 Exit 0/1
 </code></pre>
-<h2 id="lesson-18-module-responsibilities">Module Responsibilities</h2>
-<h3 id="lesson-18-configpy"><code>config.py</code></h3>
+<h2 id="lesson-19-module-responsibilities">Module Responsibilities</h2>
+<h3 id="lesson-19-configpy"><code>config.py</code></h3>
 <ul>
 <li>project paths/defaults</li>
 <li>rates/allowed values</li>
 <li>settings object</li>
 <li>no business processing</li>
 </ul>
-<h3 id="lesson-18-loaderspy"><code>loaders.py</code></h3>
+<h3 id="lesson-19-loaderspy"><code>loaders.py</code></h3>
 <ul>
 <li>file open</li>
 <li>JSON parse</li>
 <li>top-level shape checks</li>
 <li>write JSON atomically</li>
 </ul>
-<h3 id="lesson-18-validatorspy"><code>validators.py</code></h3>
+<h3 id="lesson-19-validatorspy"><code>validators.py</code></h3>
 <ul>
 <li>pure normalization</li>
 <li>account/event validation</li>
 <li>normalized shape</li>
 <li>payload hash preparation</li>
 </ul>
-<h3 id="lesson-18-databasepy"><code>database.py</code></h3>
+<h3 id="lesson-19-databasepy"><code>database.py</code></h3>
 <ul>
 <li>connection</li>
 <li>schema</li>
@@ -7154,27 +7170,27 @@ Exit 0/1
 <li>transactions</li>
 <li>DB-specific code</li>
 </ul>
-<h3 id="lesson-18-pipelinepy"><code>pipeline.py</code></h3>
+<h3 id="lesson-19-pipelinepy"><code>pipeline.py</code></h3>
 <ul>
 <li>orchestration</li>
 <li>decisions between outcomes</li>
 <li>run summary</li>
 <li>no CLI parsing</li>
 </ul>
-<h3 id="lesson-18-reportspy"><code>reports.py</code></h3>
+<h3 id="lesson-19-reportspy"><code>reports.py</code></h3>
 <ul>
 <li>SQL queries</li>
 <li>report dictionary</li>
 <li>no file path assumptions</li>
 </ul>
-<h3 id="lesson-18-mainpy"><code>main.py</code></h3>
+<h3 id="lesson-19-mainpy"><code>main.py</code></h3>
 <ul>
 <li>CLI arguments</li>
 <li>logging config</li>
 <li>call pipeline</li>
 <li>exit code</li>
 </ul>
-<h2 id="lesson-18-dependency-direction">Dependency Direction</h2>
+<h2 id="lesson-19-dependency-direction">Dependency Direction</h2>
 <pre><code class="language-text">main
  ↓
 pipeline → validators
@@ -7182,7 +7198,7 @@ pipeline → validators
 database ← reports
 </code></pre>
 <p>หลีกเลี่ยง circular imports</p>
-<h2 id="lesson-18-data-shapes">Data Shapes</h2>
+<h2 id="lesson-19-data-shapes">Data Shapes</h2>
 <p>กำหนด shape อย่างน้อย:</p>
 <ol>
 <li>Raw account/event</li>
@@ -7193,7 +7209,7 @@ database ← reports
 <li>Report</li>
 </ol>
 <p>จะใช้ Dict, dataclass หรือ TypedDict ก็ได้ แต่ต้องสม่ำเสมอและอธิบายได้</p>
-<h2 id="lesson-18-transaction-boundary">Transaction Boundary</h2>
+<h2 id="lesson-19-transaction-boundary">Transaction Boundary</h2>
 <p>แนะนำ:</p>
 <pre><code class="language-text">accepted event
 + processed marker/hash
@@ -7203,7 +7219,7 @@ database ← reports
 </code></pre>
 <p>Rejected recordsไม่มี business write แต่ audit outcome ต้องบันทึกอย่างสม่ำเสมอ</p>
 <p>Velocity anomaly อาจคำนวณหลัง accepted inserts แต่ต้องมี unique constraint เพื่อ rerun-safe</p>
-<h2 id="lesson-18-design-decisions-readme">Design Decisions ที่ต้องเขียนใน README</h2>
+<h2 id="lesson-19-design-decisions-readme">Design Decisions ที่ต้องเขียนใน README</h2>
 <ol>
 <li>ใช้ float, Decimal หรือ satang integer เพราะอะไร?</li>
 <li>Duplicate hash รวม field ใด?</li>
@@ -7211,72 +7227,72 @@ database ← reports
 <li>Velocity anomaly บันทึกต่อ event หรือ account/day?</li>
 <li>Invalid record ทำให้ batch หยุดหรือไปต่อ?</li>
 <li>Report failure กระทบ DB commit หรือไม่?</li>
-</ol><a class="back" href="#top">↑ กลับสารบัญ</a></article><article id="lesson-19"><div class="source">special_challenge_ops_guard/GRADING_RUBRIC.md</div><details class="local-toc"><summary>หัวข้อในบทนี้</summary><a href="#lesson-19-100">คะแนนรวม 100</a><a href="#lesson-19-grade">Grade</a><a href="#lesson-19-critical-failures">Critical Failures</a></details><h1 id="lesson-19-opsguard-grading-rubric">OpsGuard — Grading Rubric</h1>
-<h2 id="lesson-19-100">คะแนนรวม 100</h2>
-<h3 id="lesson-19-1-correctness-20">1. Correctness — 20</h3>
+</ol><a class="back" href="#top">↑ กลับสารบัญ</a></article><article id="lesson-20"><div class="source">special_challenge_ops_guard/GRADING_RUBRIC.md</div><details class="local-toc"><summary>หัวข้อในบทนี้</summary><a href="#lesson-20-100">คะแนนรวม 100</a><a href="#lesson-20-grade">Grade</a><a href="#lesson-20-critical-failures">Critical Failures</a></details><h1 id="lesson-20-opsguard-grading-rubric">OpsGuard — Grading Rubric</h1>
+<h2 id="lesson-20-100">คะแนนรวม 100</h2>
+<h3 id="lesson-20-1-correctness-20">1. Correctness — 20</h3>
 <ul>
 <li>Pipeline flow ถูกต้อง</li>
 <li>Counts/totals ถูกต้อง</li>
 <li>Normalization ตรง requirement</li>
 <li>Reports สอดคล้องกับ database</li>
 </ul>
-<h3 id="lesson-19-2-validation-15">2. Validation — 15</h3>
+<h3 id="lesson-20-2-validation-15">2. Validation — 15</h3>
 <ul>
 <li>Required/type/domain validation</li>
 <li>Reject reasons ชัด</li>
 <li>Invalid record ไม่หายเงียบ</li>
 <li>bool/amount/timestamp edge cases</li>
 </ul>
-<h3 id="lesson-19-3-sql-and-transactions-15">3. SQL and Transactions — 15</h3>
+<h3 id="lesson-20-3-sql-and-transactions-15">3. SQL and Transactions — 15</h3>
 <ul>
 <li>Schema/constraints/foreign keys</li>
 <li>Parameterized SQL</li>
 <li>Transaction boundary</li>
 <li>Rollback behavior</li>
 </ul>
-<h3 id="lesson-19-4-idempotency-15">4. Idempotency — 15</h3>
+<h3 id="lesson-20-4-idempotency-15">4. Idempotency — 15</h3>
 <ul>
 <li>Duplicate-safe</li>
 <li>Conflict detection</li>
 <li>Original record ไม่ถูกเขียนทับ</li>
 <li>Anomaly/audit semantics ชัด</li>
 </ul>
-<h3 id="lesson-19-5-testing-15">5. Testing — 15</h3>
+<h3 id="lesson-20-5-testing-15">5. Testing — 15</h3>
 <ul>
 <li>Unit + integration</li>
 <li>temp files/DB</li>
 <li>boundary/failure/rerun</li>
 <li>deterministic/isolated</li>
 </ul>
-<h3 id="lesson-19-6-debugging-and-logging-5">6. Debugging and Logging — 5</h3>
+<h3 id="lesson-20-6-debugging-and-logging-5">6. Debugging and Logging — 5</h3>
 <ul>
 <li>contextual logs</li>
 <li>traceback สำหรับ critical failure</li>
 <li>no secrets/raw sensitive payload</li>
 <li>useful failure diagnosis</li>
 </ul>
-<h3 id="lesson-19-7-code-structure-5">7. Code Structure — 5</h3>
+<h3 id="lesson-20-7-code-structure-5">7. Code Structure — 5</h3>
 <ul>
 <li>responsibilities ชัด</li>
 <li>type hints</li>
 <li>readable names</li>
 <li>no unnecessary complexity</li>
 </ul>
-<h3 id="lesson-19-8-documentation-5">8. Documentation — 5</h3>
+<h3 id="lesson-20-8-documentation-5">8. Documentation — 5</h3>
 <ul>
 <li>setup/run/test</li>
 <li>flow/design decisions</li>
 <li>limitations</li>
 <li>sample output</li>
 </ul>
-<h3 id="lesson-19-9-explanation-and-ownership-5">9. Explanation and Ownership — 5</h3>
+<h3 id="lesson-20-9-explanation-and-ownership-5">9. Explanation and Ownership — 5</h3>
 <ul>
 <li>อธิบาย critical functions</li>
 <li>อธิบาย AI-assisted portions</li>
 <li>ตอบ trade-offs</li>
 <li>demo failure handling</li>
 </ul>
-<h2 id="lesson-19-grade">Grade</h2>
+<h2 id="lesson-20-grade">Grade</h2>
 <div class="table-scroll"><table>
 <thead>
 <tr>
@@ -7307,7 +7323,7 @@ database ← reports
 </tr>
 </tbody>
 </table></div>
-<h2 id="lesson-19-critical-failures">Critical Failures</h2>
+<h2 id="lesson-20-critical-failures">Critical Failures</h2>
 <p>แม้คะแนนถึง 75 ยังไม่ผ่านหาก:</p>
 <ul>
 <li>hardcoded real secret</li>
@@ -7318,9 +7334,9 @@ database ← reports
 <li>tests ใช้/ทำลาย database จริง</li>
 <li>foreign keys ถูกปิดโดยไม่รู้ตัว</li>
 <li>critical exception ถูกกลืน</li>
-</ul><a class="back" href="#top">↑ กลับสารบัญ</a></article><article id="lesson-20"><div class="source">special_challenge_ops_guard/HINTS.md</div><details class="local-toc"><summary>หัวข้อในบทนี้</summary><a href="#lesson-20-hint-level-1-questions">Hint Level 1 — Questions</a><a href="#lesson-20-hint-level-2-suggested-functions">Hint Level 2 — Suggested Functions</a><a href="#lesson-20-hint-level-3-processing-pseudocode">Hint Level 3 — Processing Pseudocode</a><a href="#lesson-20-hint-level-4-debugging">Hint Level 4 — Debugging</a></details><h1 id="lesson-20-opsguard-progressive-hints">OpsGuard — Progressive Hints</h1>
+</ul><a class="back" href="#top">↑ กลับสารบัญ</a></article><article id="lesson-21"><div class="source">special_challenge_ops_guard/HINTS.md</div><details class="local-toc"><summary>หัวข้อในบทนี้</summary><a href="#lesson-21-hint-level-1-questions">Hint Level 1 — Questions</a><a href="#lesson-21-hint-level-2-suggested-functions">Hint Level 2 — Suggested Functions</a><a href="#lesson-21-hint-level-3-processing-pseudocode">Hint Level 3 — Processing Pseudocode</a><a href="#lesson-21-hint-level-4-debugging">Hint Level 4 — Debugging</a></details><h1 id="lesson-21-opsguard-progressive-hints">OpsGuard — Progressive Hints</h1>
 <p>เปิดทีละระดับเมื่อพยายามเองแล้ว</p>
-<h2 id="lesson-20-hint-level-1-questions">Hint Level 1 — Questions</h2>
+<h2 id="lesson-21-hint-level-1-questions">Hint Level 1 — Questions</h2>
 <ul>
 <li>Raw shape กับ normalized shape ต่างกันอย่างไร?</li>
 <li>Function ใดเป็น pure และ function ใดแตะ I/O?</li>
@@ -7329,7 +7345,7 @@ database ← reports
 <li>Marker กับ business write อยู่ transaction เดียวกันหรือยัง?</li>
 <li>Test ใช้ path/database ชั่วคราวหรือไม่?</li>
 </ul>
-<h2 id="lesson-20-hint-level-2-suggested-functions">Hint Level 2 — Suggested Functions</h2>
+<h2 id="lesson-21-hint-level-2-suggested-functions">Hint Level 2 — Suggested Functions</h2>
 <pre><code class="language-python">load_json_array(path)
 normalize_identifier(value)
 normalize_amount(value)
@@ -7345,7 +7361,7 @@ record_outcome(conn, ...)
 build_report(conn, run_id)
 write_json_atomic(path, report)
 </code></pre>
-<h2 id="lesson-20-hint-level-3-processing-pseudocode">Hint Level 3 — Processing Pseudocode</h2>
+<h2 id="lesson-21-hint-level-3-processing-pseudocode">Hint Level 3 — Processing Pseudocode</h2>
 <pre><code class="language-text">load + validate accounts file
 load events file
 create run
@@ -7371,7 +7387,7 @@ apply velocity rule idempotently
 finish run
 query and write report
 </code></pre>
-<h2 id="lesson-20-hint-level-4-debugging">Hint Level 4 — Debugging</h2>
+<h2 id="lesson-21-hint-level-4-debugging">Hint Level 4 — Debugging</h2>
 <p>ถ้ารันซ้ำแล้วข้อมูลเพิ่ม:</p>
 <ol>
 <li>query counts แยก table</li>
@@ -7386,8 +7402,8 @@ query and write report
 <li>มี commit ก่อน failure หรือไม่?</li>
 <li>operations ใช้ connection เดียวกันหรือไม่?</li>
 </ol>
-<p>ไม่มีเฉลยเต็มในเอกสารนี้ ตั้งใจให้ใช้ review loop</p><a class="back" href="#top">↑ กลับสารบัญ</a></article><article id="lesson-21"><div class="source">special_challenge_ops_guard/REQUIREMENTS.md</div><details class="local-toc"><summary>หัวข้อในบทนี้</summary><a href="#lesson-21-1-business-scenario">1. Business Scenario</a><a href="#lesson-21-2-inputs">2. Inputs</a><a href="#lesson-21-3-event-validation">3. Event Validation</a><a href="#lesson-21-4-currency-conversion">4. Currency Conversion</a><a href="#lesson-21-5-event-outcomes">5. Event Outcomes</a><a href="#lesson-21-6-anomaly-rules">6. Anomaly Rules</a><a href="#lesson-21-7-database-requirements">7. Database Requirements</a><a href="#lesson-21-8-run-summary">8. Run Summary</a><a href="#lesson-21-9-reports">9. Reports</a><a href="#lesson-21-10-logging">10. Logging</a><a href="#lesson-21-11-cli">11. CLI</a><a href="#lesson-21-12-testing">12. Testing</a><a href="#lesson-21-13-non-functional-requirements">13. Non-functional Requirements</a><a href="#lesson-21-14-out-of-scope">14. Out of Scope</a></details><h1 id="lesson-21-opsguard-requirements">OpsGuard — Requirements</h1>
-<h2 id="lesson-21-1-business-scenario">1. Business Scenario</h2>
+<p>ไม่มีเฉลยเต็มในเอกสารนี้ ตั้งใจให้ใช้ review loop</p><a class="back" href="#top">↑ กลับสารบัญ</a></article><article id="lesson-22"><div class="source">special_challenge_ops_guard/REQUIREMENTS.md</div><details class="local-toc"><summary>หัวข้อในบทนี้</summary><a href="#lesson-22-1-business-scenario">1. Business Scenario</a><a href="#lesson-22-2-inputs">2. Inputs</a><a href="#lesson-22-3-event-validation">3. Event Validation</a><a href="#lesson-22-4-currency-conversion">4. Currency Conversion</a><a href="#lesson-22-5-event-outcomes">5. Event Outcomes</a><a href="#lesson-22-6-anomaly-rules">6. Anomaly Rules</a><a href="#lesson-22-7-database-requirements">7. Database Requirements</a><a href="#lesson-22-8-run-summary">8. Run Summary</a><a href="#lesson-22-9-reports">9. Reports</a><a href="#lesson-22-10-logging">10. Logging</a><a href="#lesson-22-11-cli">11. CLI</a><a href="#lesson-22-12-testing">12. Testing</a><a href="#lesson-22-13-non-functional-requirements">13. Non-functional Requirements</a><a href="#lesson-22-14-out-of-scope">14. Out of Scope</a></details><h1 id="lesson-22-opsguard-requirements">OpsGuard — Requirements</h1>
+<h2 id="lesson-22-1-business-scenario">1. Business Scenario</h2>
 <p>ทีม Operations ได้รับ payment events จากหลายระบบเป็นไฟล์ JSON ทุกวัน ผู้ส่งอาจ retry event เดิมเมื่อไม่ได้รับ confirmation จึงมีโอกาสเกิด duplicate นอกจากนี้ข้อมูลบางรายการอาจผิดรูปแบบ อ้าง account ที่ไม่มี หรือใช้ event ID เดิมแต่เปลี่ยนรายละเอียด</p>
 <p>ทีมต้องการ pipeline ที่:</p>
 <ul>
@@ -7398,8 +7414,8 @@ query and write report
 <li>รันซ้ำได้อย่างปลอดภัย</li>
 </ul>
 <hr/>
-<h2 id="lesson-21-2-inputs">2. Inputs</h2>
-<h3 id="lesson-21-accountsjson"><code>accounts.json</code></h3>
+<h2 id="lesson-22-2-inputs">2. Inputs</h2>
+<h3 id="lesson-22-accountsjson"><code>accounts.json</code></h3>
 <p>ตัวอย่าง:</p>
 <pre><code class="language-json">[
   {
@@ -7418,7 +7434,7 @@ query and write report
 <li><code>status</code>: <code>ACTIVE</code> หรือ <code>SUSPENDED</code></li>
 <li>account ID ต้องไม่ซ้ำ</li>
 </ul>
-<h3 id="lesson-21-payment_eventsjson"><code>payment_events.json</code></h3>
+<h3 id="lesson-22-payment_eventsjson"><code>payment_events.json</code></h3>
 <p>ตัวอย่าง:</p>
 <pre><code class="language-json">[
   {
@@ -7433,8 +7449,8 @@ query and write report
 ]
 </code></pre>
 <hr/>
-<h2 id="lesson-21-3-event-validation">3. Event Validation</h2>
-<h3 id="lesson-21-required-fields">Required Fields</h3>
+<h2 id="lesson-22-3-event-validation">3. Event Validation</h2>
+<h3 id="lesson-22-required-fields">Required Fields</h3>
 <ul>
 <li><code>event_id</code></li>
 <li><code>account_id</code></li>
@@ -7444,7 +7460,7 @@ query and write report
 <li><code>occurred_at</code></li>
 <li><code>source</code></li>
 </ul>
-<h3 id="lesson-21-normalization">Normalization</h3>
+<h3 id="lesson-22-normalization">Normalization</h3>
 <ul>
 <li>identifier: strip + uppercase</li>
 <li>amount: รับ int, float หรือ numeric string</li>
@@ -7454,7 +7470,7 @@ query and write report
 <li>source: strip + uppercase</li>
 <li>datetime: parse ISO 8601 และเก็บ normalized string</li>
 </ul>
-<h3 id="lesson-21-rules">Rules</h3>
+<h3 id="lesson-22-rules">Rules</h3>
 <ul>
 <li><code>event_id</code>: string ไม่ว่าง</li>
 <li><code>account_id</code>: ต้องมีใน accounts</li>
@@ -7467,7 +7483,7 @@ query and write report
 <li>occurred_at ต้อง parse ได้และมี timezone</li>
 </ul>
 <hr/>
-<h2 id="lesson-21-4-currency-conversion">4. Currency Conversion</h2>
+<h2 id="lesson-22-4-currency-conversion">4. Currency Conversion</h2>
 <p>ใช้อัตราคงที่เพื่อให้ tests deterministic:</p>
 <pre><code class="language-python">THB = 1.0
 USD = 35.0
@@ -7478,11 +7494,11 @@ SGD = 26.0
 <p>ปัดเป็น 2 ตำแหน่งตามกติกาที่ประกาศใน code/documentation</p>
 <p>Stretch: ใช้ <code>Decimal</code></p>
 <hr/>
-<h2 id="lesson-21-5-event-outcomes">5. Event Outcomes</h2>
+<h2 id="lesson-22-5-event-outcomes">5. Event Outcomes</h2>
 <p>แต่ละ input record ต้องได้ outcome หนึ่งประเภท:</p>
-<h3 id="lesson-21-accepted">ACCEPTED</h3>
+<h3 id="lesson-22-accepted">ACCEPTED</h3>
 <p>Valid และ event ID ยังไม่เคย process</p>
-<h3 id="lesson-21-rejected">REJECTED</h3>
+<h3 id="lesson-22-rejected">REJECTED</h3>
 <p>Validation/domain rule ไม่ผ่าน เช่น:</p>
 <ul>
 <li><code>MISSING_EVENT_ID</code></li>
@@ -7495,18 +7511,18 @@ SGD = 26.0
 <li><code>INVALID_SOURCE</code></li>
 </ul>
 <p>หนึ่ง record มีหลาย reasons ได้</p>
-<h3 id="lesson-21-duplicate">DUPLICATE</h3>
+<h3 id="lesson-22-duplicate">DUPLICATE</h3>
 <p>event ID เคย process และ normalized business payload เหมือนเดิม</p>
 <p>ห้ามสร้าง payment effect หรือ anomaly ซ้ำ</p>
-<h3 id="lesson-21-conflict">CONFLICT</h3>
+<h3 id="lesson-22-conflict">CONFLICT</h3>
 <p>event ID เคย process แต่ normalized business payload ต่างจากเดิม เช่น amount เปลี่ยน</p>
 <p>ต้องไม่แก้ event เดิมอัตโนมัติ และต้องบันทึก audit outcome</p>
 <hr/>
-<h2 id="lesson-21-6-anomaly-rules">6. Anomaly Rules</h2>
+<h2 id="lesson-22-6-anomaly-rules">6. Anomaly Rules</h2>
 <p>ใช้เฉพาะ accepted events</p>
-<h3 id="lesson-21-rule_large_amount">RULE_LARGE_AMOUNT</h3>
+<h3 id="lesson-22-rule_large_amount">RULE_LARGE_AMOUNT</h3>
 <p><code>SUCCESS</code> และ <code>amount_thb &gt;= 10000</code></p>
-<h3 id="lesson-21-rule_daily_velocity">RULE_DAILY_VELOCITY</h3>
+<h3 id="lesson-22-rule_daily_velocity">RULE_DAILY_VELOCITY</h3>
 <p>account เดียวกันมี accepted <code>SUCCESS</code> events ตั้งแต่ 3 รายการในวันเดียวกัน</p>
 <p>ต้องกำหนด behavior ให้ชัด:</p>
 <ul>
@@ -7515,7 +7531,7 @@ SGD = 26.0
 </ul>
 <p>Starter recommendation: anomaly ต่อ event พร้อม unique <code>(event_id, rule_code)</code></p>
 <hr/>
-<h2 id="lesson-21-7-database-requirements">7. Database Requirements</h2>
+<h2 id="lesson-22-7-database-requirements">7. Database Requirements</h2>
 <p>อย่างน้อยต้องมี:</p>
 <ul>
 <li><code>accounts</code></li>
@@ -7535,7 +7551,7 @@ SGD = 26.0
 </ul>
 <p>ห้ามแก้ schema โดยลบ constraint เพื่อให้ test ผ่าน</p>
 <hr/>
-<h2 id="lesson-21-8-run-summary">8. Run Summary</h2>
+<h2 id="lesson-22-8-run-summary">8. Run Summary</h2>
 <p>ทุก run ต้องได้ summary:</p>
 <pre><code class="language-json">{
   "run_id": "...",
@@ -7555,11 +7571,11 @@ SGD = 26.0
 <li>ห้ามทำ partial business writes</li>
 </ul>
 <hr/>
-<h2 id="lesson-21-9-reports">9. Reports</h2>
+<h2 id="lesson-22-9-reports">9. Reports</h2>
 <p>สร้าง <code>report_output.json</code> แบบ atomic write มี:</p>
-<h3 id="lesson-21-pipeline_summary"><code>pipeline_summary</code></h3>
+<h3 id="lesson-22-pipeline_summary"><code>pipeline_summary</code></h3>
 <p>summary ของ run ล่าสุด</p>
-<h3 id="lesson-21-account_reconciliation"><code>account_reconciliation</code></h3>
+<h3 id="lesson-22-account_reconciliation"><code>account_reconciliation</code></h3>
 <ul>
 <li>account_id</li>
 <li>owner_name</li>
@@ -7569,7 +7585,7 @@ SGD = 26.0
 <li>pending_count</li>
 </ul>
 <p>ต้องรวม active account ที่ไม่มี events</p>
-<h3 id="lesson-21-anomalies"><code>anomalies</code></h3>
+<h3 id="lesson-22-anomalies"><code>anomalies</code></h3>
 <ul>
 <li>event_id</li>
 <li>account_id</li>
@@ -7578,12 +7594,12 @@ SGD = 26.0
 <li>amount_thb</li>
 <li>occurred_at</li>
 </ul>
-<h3 id="lesson-21-rejection_summary"><code>rejection_summary</code></h3>
+<h3 id="lesson-22-rejection_summary"><code>rejection_summary</code></h3>
 <p>จำนวนแยกตาม reason code</p>
-<h3 id="lesson-21-conflicts"><code>conflicts</code></h3>
+<h3 id="lesson-22-conflicts"><code>conflicts</code></h3>
 <p>รายการ event ID ที่ payload ขัดแย้ง โดยไม่เปิดข้อมูล sensitive เกินจำเป็น</p>
 <hr/>
-<h2 id="lesson-21-10-logging">10. Logging</h2>
+<h2 id="lesson-22-10-logging">10. Logging</h2>
 <p>ต้องมี:</p>
 <ul>
 <li>run start/end</li>
@@ -7601,7 +7617,7 @@ SGD = 26.0
 <li>sensitive owner informationเกินจำเป็น</li>
 </ul>
 <hr/>
-<h2 id="lesson-21-11-cli">11. CLI</h2>
+<h2 id="lesson-22-11-cli">11. CLI</h2>
 <p>ตัวอย่าง:</p>
 <pre><code class="language-powershell">python -m ops_guard.main `
   --accounts data/accounts.json `
@@ -7617,7 +7633,7 @@ SGD = 26.0
 <li>optional <code>2</code>: invalid CLI/config</li>
 </ul>
 <hr/>
-<h2 id="lesson-21-12-testing">12. Testing</h2>
+<h2 id="lesson-22-12-testing">12. Testing</h2>
 <p>ต้องมีอย่างน้อย:</p>
 <ul>
 <li>unit tests สำหรับ normalizers/validators</li>
@@ -7635,7 +7651,7 @@ SGD = 26.0
 <li>ขึ้นกับ test order</li>
 </ul>
 <hr/>
-<h2 id="lesson-21-13-non-functional-requirements">13. Non-functional Requirements</h2>
+<h2 id="lesson-22-13-non-functional-requirements">13. Non-functional Requirements</h2>
 <ul>
 <li>Python 3.12+</li>
 <li>type hints ใน public functions</li>
@@ -7647,7 +7663,7 @@ SGD = 26.0
 <li>code อธิบายได้</li>
 </ul>
 <hr/>
-<h2 id="lesson-21-14-out-of-scope">14. Out of Scope</h2>
+<h2 id="lesson-22-14-out-of-scope">14. Out of Scope</h2>
 <p>ไม่ต้องทำ:</p>
 <ul>
 <li>FastAPI</li>
@@ -7658,8 +7674,8 @@ SGD = 26.0
 <li>Cloud database</li>
 <li>LLM</li>
 </ul>
-<p>สิ่งเหล่านี้จะมาใน Week ถัดไป</p><a class="back" href="#top">↑ กลับสารบัญ</a></article><article id="lesson-22"><div class="source">special_challenge_ops_guard/TEST_CASES.md</div><details class="local-toc"><summary>หัวข้อในบทนี้</summary><a href="#lesson-22-a-loader">A. Loader</a><a href="#lesson-22-b-account-validation">B. Account Validation</a><a href="#lesson-22-c-amount">C. Amount</a><a href="#lesson-22-d-event-validation">D. Event Validation</a><a href="#lesson-22-e-database">E. Database</a><a href="#lesson-22-f-idempotency">F. Idempotency</a><a href="#lesson-22-g-anomalies">G. Anomalies</a><a href="#lesson-22-h-reporting">H. Reporting</a><a href="#lesson-22-i-cli">I. CLI</a><a href="#lesson-22-minimum-submission">Minimum Submission</a></details><h1 id="lesson-22-opsguard-required-test-cases">OpsGuard — Required Test Cases</h1>
-<h2 id="lesson-22-a-loader">A. Loader</h2>
+<p>สิ่งเหล่านี้จะมาใน Week ถัดไป</p><a class="back" href="#top">↑ กลับสารบัญ</a></article><article id="lesson-23"><div class="source">special_challenge_ops_guard/TEST_CASES.md</div><details class="local-toc"><summary>หัวข้อในบทนี้</summary><a href="#lesson-23-a-loader">A. Loader</a><a href="#lesson-23-b-account-validation">B. Account Validation</a><a href="#lesson-23-c-amount">C. Amount</a><a href="#lesson-23-d-event-validation">D. Event Validation</a><a href="#lesson-23-e-database">E. Database</a><a href="#lesson-23-f-idempotency">F. Idempotency</a><a href="#lesson-23-g-anomalies">G. Anomalies</a><a href="#lesson-23-h-reporting">H. Reporting</a><a href="#lesson-23-i-cli">I. CLI</a><a href="#lesson-23-minimum-submission">Minimum Submission</a></details><h1 id="lesson-23-opsguard-required-test-cases">OpsGuard — Required Test Cases</h1>
+<h2 id="lesson-23-a-loader">A. Loader</h2>
 <ol>
 <li>โหลด valid JSON array</li>
 <li>file ไม่พบ</li>
@@ -7667,7 +7683,7 @@ SGD = 26.0
 <li>top-level เป็น object แทน array</li>
 <li>item ใน array ไม่ใช่ object</li>
 </ol>
-<h2 id="lesson-22-b-account-validation">B. Account Validation</h2>
+<h2 id="lesson-23-b-account-validation">B. Account Validation</h2>
 <ol start="6">
 <li>valid account</li>
 <li>missing account ID</li>
@@ -7675,7 +7691,7 @@ SGD = 26.0
 <li>invalid status</li>
 <li>blank owner name</li>
 </ol>
-<h2 id="lesson-22-c-amount">C. Amount</h2>
+<h2 id="lesson-23-c-amount">C. Amount</h2>
 <ol start="11">
 <li>integer</li>
 <li>float</li>
@@ -7687,7 +7703,7 @@ SGD = 26.0
 <li><code>None</code></li>
 <li>non-numeric string</li>
 </ol>
-<h2 id="lesson-22-d-event-validation">D. Event Validation</h2>
+<h2 id="lesson-23-d-event-validation">D. Event Validation</h2>
 <ol start="20">
 <li>valid THB event</li>
 <li>valid USD/SGD conversion</li>
@@ -7700,7 +7716,7 @@ SGD = 26.0
 <li>timestamp ไม่มี timezone</li>
 <li>timestamp parse ไม่ได้</li>
 </ol>
-<h2 id="lesson-22-e-database">E. Database</h2>
+<h2 id="lesson-23-e-database">E. Database</h2>
 <ol start="30">
 <li>foreign keys enabled</li>
 <li>valid event insert</li>
@@ -7708,7 +7724,7 @@ SGD = 26.0
 <li>constraints ปฏิเสธ invalid status/amount</li>
 <li>transaction rollback เมื่อ audit insert ล้ม</li>
 </ol>
-<h2 id="lesson-22-f-idempotency">F. Idempotency</h2>
+<h2 id="lesson-23-f-idempotency">F. Idempotency</h2>
 <ol start="35">
 <li>run input เดิมสองครั้ง business events ไม่เพิ่ม</li>
 <li>event ID เดิม payload เหมือน → DUPLICATE</li>
@@ -7716,7 +7732,7 @@ SGD = 26.0
 <li>conflict ไม่แก้ original event</li>
 <li>anomalies ไม่เพิ่มซ้ำเมื่อ rerun</li>
 </ol>
-<h2 id="lesson-22-g-anomalies">G. Anomalies</h2>
+<h2 id="lesson-23-g-anomalies">G. Anomalies</h2>
 <ol start="40">
 <li>amount 9,999.99 ไม่เข้า large rule</li>
 <li>amount 10,000 เข้า large rule</li>
@@ -7725,7 +7741,7 @@ SGD = 26.0
 <li>FAILED ไม่นับ velocity</li>
 <li>timezone/date grouping behavior ตรงกับ design</li>
 </ol>
-<h2 id="lesson-22-h-reporting">H. Reporting</h2>
+<h2 id="lesson-23-h-reporting">H. Reporting</h2>
 <ol start="46">
 <li>account ไม่มี event ยังอยู่ใน reconciliation</li>
 <li>totals/counts ถูกต้อง</li>
@@ -7733,26 +7749,26 @@ SGD = 26.0
 <li>conflicts แสดงถูกต้อง</li>
 <li>report JSON เขียนอ่านได้และภาษาไทยไม่เสีย</li>
 </ol>
-<h2 id="lesson-22-i-cli">I. CLI</h2>
+<h2 id="lesson-23-i-cli">I. CLI</h2>
 <ol start="51">
 <li>completed run exit 0</li>
 <li>invalid JSON exit non-zero</li>
 <li>run จาก CWD อื่นได้</li>
 </ol>
-<h2 id="lesson-22-minimum-submission">Minimum Submission</h2>
-<p>ไม่จำเป็นต้องมี 53 test functions เพราะใช้ parametrize ได้ แต่ต้องครอบคลุม behavior ทุกกลุ่ม และมี automated tests อย่างน้อย 20 assertions ที่มีความหมาย</p><a class="back" href="#top">↑ กลับสารบัญ</a></article><article id="lesson-23"><div class="source">special_challenge_ops_guard/starter/README.md</div><details class="local-toc"><summary>หัวข้อในบทนี้</summary><a href="#lesson-23-setup">Setup</a><a href="#lesson-23-run-tests">Run Tests</a><a href="#lesson-23-run">Run</a><a href="#lesson-23-recommended-milestones">Recommended Milestones</a><a href="#lesson-23-rule">Rule</a></details><h1 id="lesson-23-opsguard-starter">OpsGuard Starter</h1>
+<h2 id="lesson-23-minimum-submission">Minimum Submission</h2>
+<p>ไม่จำเป็นต้องมี 53 test functions เพราะใช้ parametrize ได้ แต่ต้องครอบคลุม behavior ทุกกลุ่ม และมี automated tests อย่างน้อย 20 assertions ที่มีความหมาย</p><a class="back" href="#top">↑ กลับสารบัญ</a></article><article id="lesson-24"><div class="source">special_challenge_ops_guard/starter/README.md</div><details class="local-toc"><summary>หัวข้อในบทนี้</summary><a href="#lesson-24-setup">Setup</a><a href="#lesson-24-run-tests">Run Tests</a><a href="#lesson-24-run">Run</a><a href="#lesson-24-recommended-milestones">Recommended Milestones</a><a href="#lesson-24-rule">Rule</a></details><h1 id="lesson-24-opsguard-starter">OpsGuard Starter</h1>
 <p>Starter นี้ตั้งใจให้มีโครงสร้างและ function contracts แต่ยังไม่เฉลย business logic</p>
-<h2 id="lesson-23-setup">Setup</h2>
+<h2 id="lesson-24-setup">Setup</h2>
 <pre><code class="language-powershell">cd starter
 python -m venv .venv
 .\.venv\Scripts\Activate.ps1
 python -m pip install -e ".[dev]"
 </code></pre>
-<h2 id="lesson-23-run-tests">Run Tests</h2>
+<h2 id="lesson-24-run-tests">Run Tests</h2>
 <pre><code class="language-powershell">pytest
 </code></pre>
 <p><code>test_validators.py</code> ถูกตั้งใจให้ <strong>fail ในตอนเริ่มต้น</strong> เพราะ starter functions ยังเป็น <code>NotImplementedError</code> ให้เติม implementation ทีละส่วนจน test ผ่าน แล้วเพิ่ม cases ตาม <code>../TEST_CASES.md</code></p>
-<h2 id="lesson-23-run">Run</h2>
+<h2 id="lesson-24-run">Run</h2>
 <p>หลังเติม implementation:</p>
 <pre><code class="language-powershell">python -m ops_guard.main `
   --accounts data/accounts.json `
@@ -7760,37 +7776,37 @@ python -m pip install -e ".[dev]"
   --database output/ops_guard.db `
   --report output/report_output.json
 </code></pre>
-<h2 id="lesson-23-recommended-milestones">Recommended Milestones</h2>
-<h3 id="lesson-23-milestone-1">Milestone 1</h3>
+<h2 id="lesson-24-recommended-milestones">Recommended Milestones</h2>
+<h3 id="lesson-24-milestone-1">Milestone 1</h3>
 <ul>
 <li><code>load_json_array</code></li>
 <li>normalizers</li>
 <li>account/event validation</li>
 <li>unit tests</li>
 </ul>
-<h3 id="lesson-23-milestone-2">Milestone 2</h3>
+<h3 id="lesson-24-milestone-2">Milestone 2</h3>
 <ul>
 <li>database connection/schema</li>
 <li>accepted/rejected processing</li>
 <li>integration tests</li>
 </ul>
-<h3 id="lesson-23-milestone-3">Milestone 3</h3>
+<h3 id="lesson-24-milestone-3">Milestone 3</h3>
 <ul>
 <li>payload hash</li>
 <li>duplicate/conflict</li>
 <li>rerun tests</li>
 </ul>
-<h3 id="lesson-23-milestone-4">Milestone 4</h3>
+<h3 id="lesson-24-milestone-4">Milestone 4</h3>
 <ul>
 <li>anomaly rules</li>
 <li>reports</li>
 <li>rollback/report tests</li>
 </ul>
-<h3 id="lesson-23-milestone-5">Milestone 5</h3>
+<h3 id="lesson-24-milestone-5">Milestone 5</h3>
 <ul>
 <li>CLI</li>
 <li>documentation</li>
 <li>demo</li>
 </ul>
-<h2 id="lesson-23-rule">Rule</h2>
+<h2 id="lesson-24-rule">Rule</h2>
 <p>TODO แต่ละจุดควรถูกเติมเมื่อมี test หรือ acceptance condition รองรับ อย่าเขียนทุกไฟล์ให้เสร็จแล้วค่อยทดสอบท้ายสุด</p><a class="back" href="#top">↑ กลับสารบัญ</a></article></main></div><footer>จัดรูปแบบจากเอกสารต้นฉบับใน week_01_python_data_sql_debugging โดยคงเนื้อหาและตัวอย่างโค้ดไว้ครบ • ลิงก์ไฟล์ประกอบบางรายการอ้างถึงโฟลเดอร์ต้นฉบับในเครื่อง</footer></body></html>

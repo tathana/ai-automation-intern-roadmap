@@ -1,8 +1,8 @@
 <!DOCTYPE html>
 <html lang="th"><head><meta charset="utf-8"/><meta content="width=device-width,initial-scale=1" name="viewport"/><title>Week 3 • n8n Automation Workflows</title><style>
 :root{color-scheme:light;--ink:#203149;--muted:#5b6b7d;--line:#dbe3e9;--accent:#096b63}
-*{box-sizing:border-box}html{scroll-behavior:smooth;scroll-padding-top:24px}body{margin:0;background:#f3f6f8;color:var(--ink);font-family:"Leelawadee UI",Tahoma,sans-serif;font-size:17px;line-height:1.9}a{color:var(--accent);text-underline-offset:4px}header{background:#173b43;color:white;padding:56px max(24px,calc((100vw - 1240px)/2));}header h1{font-size:clamp(28px,4vw,46px);line-height:1.35;margin:12px 0}header p{max-width:780px;color:#d9e9eb}.eyebrow{letter-spacing:2px;font-size:13px;color:#a8dfd5}.layout{max-width:1300px;margin:auto;display:grid;grid-template-columns:280px minmax(0,1fr);gap:30px;padding:30px 24px}aside{position:sticky;top:20px;align-self:start;max-height:92vh;overflow:auto;padding-right:12px}aside h2{font-size:18px}nav a{display:block;padding:9px 10px;border-bottom:1px solid var(--line);text-decoration:none;font-size:14px;line-height:1.6}nav a:hover{background:#e1eeeb}article{background:white;padding:clamp(20px,4vw,48px);border:1px solid var(--line);border-radius:12px;margin-bottom:28px;overflow-wrap:anywhere}article h1{font-size:29px;line-height:1.5;margin:20px 0 28px}h2{font-size:24px;margin-top:40px}h3{font-size:20px;margin-top:28px}pre{background:#152c3b;color:#eaf2f7;padding:20px;border-radius:8px;overflow:auto;line-height:1.65;font-size:14px;white-space:pre;overflow-wrap:normal}code{font-family:Consolas,"Courier New",monospace}p code,li code,td code{background:#edf2f5;padding:2px 5px;border-radius:4px;font-size:.9em}blockquote{margin:24px 0;padding:4px 20px;border-left:4px solid #138779;background:#eff8f5}table{border-collapse:collapse;width:100%;font-size:15px}th,td{border:1px solid var(--line);padding:12px;text-align:left;vertical-align:top}th{background:#eaf2f2}.table-scroll{overflow:auto;margin:20px 0}hr{border:0;border-top:1px solid var(--line);margin:32px 0}.source{font-size:12px;color:var(--muted)}.local-toc{margin-top:18px;font-size:14px;background:#f5f8fa;padding:10px 14px;border-radius:6px}.local-toc a{display:block;margin:7px 0}summary{cursor:pointer}.back{display:inline-block;margin-top:24px;font-size:14px}button{border:1px solid #aac8c5;background:white;color:#175c54;padding:9px 16px;border-radius:6px;cursor:pointer;font:inherit;font-size:14px}footer{max-width:1000px;margin:20px auto;padding:24px;color:var(--muted);font-size:14px}@media(max-width:850px){.layout{display:block;padding:16px}aside{position:static;max-height:none;padding:0 0 20px}nav{max-height:280px;overflow:auto}article h1{font-size:25px}body{font-size:16px}}@media print{body{background:white;font-size:11pt}header{background:white;color:black;padding:0}header p{color:black}.layout{display:block;padding:0}aside,button,.local-toc,.back{display:none}article{border:0;padding:0;break-before:page}pre{white-space:pre-wrap;background:#f0f2f4;color:black;font-size:9pt}a{color:inherit}h1,h2,h3{break-after:avoid}.table-scroll{overflow:visible}}
-</style></head><body><header id="top"><div class="eyebrow">PRE-COOP / WEEK 03 / LEARNING BOOK</div><h1>n8n และ Automation Workflows</h1><p>เข้าใจข้อมูลทุกจุด เชื่อม API และรับมือเมื่องานไม่เป็นไปตามคาด</p><p>บทเรียน 00–13 • Drills • FlowGuard • HR Resume Intake</p><button onclick="window.print()">พิมพ์ / บันทึกเป็น PDF</button> <a href="week-3-materials.zip" style="color:white">ดาวน์โหลด Markdown และชุดฝึก</a></header><div class="layout"><aside><h2>สารบัญบทเรียน</h2><nav aria-label="สารบัญ"><a href="#lesson-0">Week 3 — n8n และ Production-style Automation Workflows</a><a href="#lesson-1">00 — Assessment และเป้าหมาย</a><a href="#lesson-2">01 — Automation และ Orchestration</a><a href="#lesson-3">02 — สภาพแวดล้อมและการอ่าน Execution</a><a href="#lesson-4">03 — Items, JSON และ Expressions</a><a href="#lesson-5">04 — Triggers, Webhooks และ Schedule</a><a href="#lesson-6">05 — HTTP Request เชื่อม FastAPI</a><a href="#lesson-7">06 — จัดรูปข้อมูลและแยกเส้นทาง</a><a href="#lesson-8">07 — Loop, Batch และ Pagination</a><a href="#lesson-9">08 — Error, Retry และ Recovery</a><a href="#lesson-10">09 — Idempotency, Deduplication และ Audit</a><a href="#lesson-11">10 — Credentials, Export และ Runbook</a><a href="#lesson-12">11 — Sub-workflows และ Human Review</a><a href="#lesson-13">12 — Week 3 Cheat Sheet</a><a href="#lesson-14">13 — เดิน Flow ตั้งแต่ต้นจนจบ</a><a href="#lesson-15">14 — Visual Workbook: จาก Canvas สู่ Workflow งานจริง</a><a href="#lesson-16">Drills — ฝึกแยกทีละทักษะ</a><a href="#lesson-17">FlowGuard — คำใบ้เป็นลำดับ</a><a href="#lesson-18">Special Challenge — FlowGuard</a><a href="#lesson-19">FlowGuard — Runbook Template</a><a href="#lesson-20">Add-on — HR Resume Intake ก่อนเพิ่ม AI</a><a href="#lesson-21">pytest cache directory</a><a href="#lesson-22">Lab — Mock API สำหรับ Week 3</a><a href="#lesson-23">แหล่งอ้างอิงและขอบเขตของบทเรียน</a><a href="#lesson-24">Verification — สถานะการตรวจชุดเรียน</a></nav></aside><main><article id="lesson-0"><div class="source">README.md</div><details class="local-toc"><summary>หัวข้อในบทนี้</summary><a href="#lesson-0-_1">วิธีใช้เล่มนี้</a><a href="#lesson-0-_2">เรียนตามลำดับนี้</a><a href="#lesson-0-_3">วิธีอ่าน</a><a href="#lesson-0-_4">ขอบเขตและเวอร์ชัน</a></details><h1 id="lesson-0-week-3-n8n-production-style-automation-workflows">Week 3 — n8n และ Production-style Automation Workflows</h1>
+*{box-sizing:border-box}html{scroll-behavior:smooth;scroll-padding-top:24px}body{margin:0;background:#f3f6f8;color:var(--ink);font-family:"Leelawadee UI",Tahoma,sans-serif;font-size:17px;line-height:1.9}a{color:var(--accent);text-underline-offset:4px}header{background:#173b43;color:white;padding:56px max(24px,calc((100vw - 1240px)/2));}header h1{font-size:clamp(28px,4vw,46px);line-height:1.35;margin:12px 0}header p{max-width:780px;color:#d9e9eb}.eyebrow{letter-spacing:2px;font-size:13px;color:#a8dfd5}.layout{max-width:1300px;margin:auto;display:grid;grid-template-columns:280px minmax(0,1fr);gap:30px;padding:30px 24px}aside{position:sticky;top:20px;align-self:start;max-height:92vh;overflow:auto;padding-right:12px}aside h2{font-size:18px}nav a{display:block;padding:9px 10px;border-bottom:1px solid var(--line);text-decoration:none;font-size:14px;line-height:1.6}nav a:hover{background:#e1eeeb}article{background:white;padding:clamp(20px,4vw,48px);border:1px solid var(--line);border-radius:12px;margin-bottom:28px;overflow-wrap:anywhere}article h1{font-size:29px;line-height:1.5;margin:20px 0 28px}h2{font-size:24px;margin-top:40px}h3{font-size:20px;margin-top:28px}pre{background:#152c3b;color:#eaf2f7;padding:20px;border-radius:8px;overflow:auto;line-height:1.65;font-size:14px;white-space:pre;overflow-wrap:normal}code{font-family:Consolas,"Courier New",monospace}p code,li code,td code{background:#edf2f5;padding:2px 5px;border-radius:4px;font-size:.9em}blockquote{margin:24px 0;padding:4px 20px;border-left:4px solid #138779;background:#eff8f5}table{border-collapse:collapse;width:100%;font-size:15px}th,td{border:1px solid var(--line);padding:12px;text-align:left;vertical-align:top}th{background:#eaf2f2}.table-scroll{overflow:auto;margin:20px 0}hr{border:0;border-top:1px solid var(--line);margin:32px 0}.source{font-size:12px;color:var(--muted)}.local-toc{margin-top:18px;font-size:14px;background:#f5f8fa;padding:10px 14px;border-radius:6px}.local-toc a{display:block;margin:7px 0}summary{cursor:pointer}.back{display:inline-block;margin-top:24px;font-size:14px}button{border:1px solid #aac8c5;background:white;color:#175c54;padding:9px 16px;border-radius:6px;cursor:pointer;font:inherit;font-size:14px}footer{max-width:1000px;margin:20px auto;padding:24px;color:var(--muted);font-size:14px}.visual-board{margin:20px 0;padding:16px;border:1px solid #cbd9df;border-radius:12px;background:#f7fafb;overflow:auto}.visual-flow{min-width:620px;display:flex;align-items:center;justify-content:center;gap:8px;padding:14px}.visual-box{min-width:112px;padding:11px;background:white;border:1px solid #9eb3bd;border-radius:9px;text-align:center;box-shadow:0 3px 8px rgba(20,50,60,.07)}.visual-arrow{font-weight:700;color:var(--accent)}.visual-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:10px}.visual-pane{background:white;border:1px solid #cbd9df;border-radius:8px;padding:12px}.visual-label{font-size:12px;letter-spacing:.08em;color:#527080;font-weight:700}.visual-lane{display:grid;grid-template-columns:130px 1fr;gap:12px;align-items:center;margin:8px 0}.visual-track{padding:9px;background:#e6f1ef;border-radius:7px}.visual-note{padding:11px 15px;border-left:4px solid var(--accent);background:#eaf5f3;margin:14px 0}@media(max-width:850px){.layout{display:block;padding:16px}aside{position:static;max-height:none;padding:0 0 20px}nav{max-height:280px;overflow:auto}article h1{font-size:25px}body{font-size:16px}.visual-grid{grid-template-columns:1fr}.visual-lane{grid-template-columns:1fr}}@media print{body{background:white;font-size:11pt}header{background:white;color:black;padding:0}header p{color:black}.layout{display:block;padding:0}aside,button,.local-toc,.back{display:none}article{border:0;padding:0;break-before:page}pre{white-space:pre-wrap;background:#f0f2f4;color:black;font-size:9pt}a{color:inherit}h1,h2,h3{break-after:avoid}.table-scroll{overflow:visible}}
+</style></head><body><header id="top"><div class="eyebrow">PRE-COOP / WEEK 03 / LEARNING BOOK</div><h1>n8n และ Automation Workflows</h1><p>เข้าใจข้อมูลทุกจุด เชื่อม API และรับมือเมื่องานไม่เป็นไปตามคาด</p><p>บทเรียน 00–18 • UI Visual Atlas • Drills • FlowGuard • HR Resume Intake</p><button onclick="window.print()">พิมพ์ / บันทึกเป็น PDF</button> <a href="week-3-materials.zip" style="color:white">ดาวน์โหลด Markdown และชุดฝึก</a></header><div class="layout"><aside><h2>สารบัญบทเรียน</h2><nav aria-label="สารบัญ"><a href="#lesson-0">Week 3 — n8n และ Production-style Automation Workflows</a><a href="#lesson-1">00 — Assessment และเป้าหมาย</a><a href="#lesson-2">01 — Automation และ Orchestration</a><a href="#lesson-3">02 — สภาพแวดล้อมและการอ่าน Execution</a><a href="#lesson-4">03 — Items, JSON และ Expressions</a><a href="#lesson-5">04 — Triggers, Webhooks และ Schedule</a><a href="#lesson-6">05 — HTTP Request เชื่อม FastAPI</a><a href="#lesson-7">06 — จัดรูปข้อมูลและแยกเส้นทาง</a><a href="#lesson-8">07 — Loop, Batch และ Pagination</a><a href="#lesson-9">08 — Error, Retry และ Recovery</a><a href="#lesson-10">09 — Idempotency, Deduplication และ Audit</a><a href="#lesson-11">10 — Credentials, Export และ Runbook</a><a href="#lesson-12">11 — Sub-workflows และ Human Review</a><a href="#lesson-13">12 — Week 3 Cheat Sheet</a><a href="#lesson-14">13 — เดิน Flow ตั้งแต่ต้นจนจบ</a><a href="#lesson-15">14 — Visual Workbook: จาก Canvas สู่ Workflow งานจริง</a><a href="#lesson-16">15 — n8n UI Visual Atlas: มองหน้าจอแล้วรู้ว่ากำลังตรวจอะไร</a><a href="#lesson-17">16 — Build from Blank Canvas: สร้าง Workflow จริงแบบทีละคลิก</a><a href="#lesson-18">17 — Real Team Workflow Lifecycle: จากโจทย์ถึง Production Execution</a><a href="#lesson-19">18 — n8n Production Operations Reference</a><a href="#lesson-20">Drills — ฝึกแยกทีละทักษะ</a><a href="#lesson-21">FlowGuard — คำใบ้เป็นลำดับ</a><a href="#lesson-22">Special Challenge — FlowGuard</a><a href="#lesson-23">FlowGuard — Runbook Template</a><a href="#lesson-24">Add-on — HR Resume Intake ก่อนเพิ่ม AI</a><a href="#lesson-25">pytest cache directory</a><a href="#lesson-26">Lab — Mock API สำหรับ Week 3</a><a href="#lesson-27">แหล่งอ้างอิงและขอบเขตของบทเรียน</a><a href="#lesson-28">Verification — สถานะการตรวจชุดเรียน</a></nav></aside><main><article id="lesson-0"><div class="source">README.md</div><details class="local-toc"><summary>หัวข้อในบทนี้</summary><a href="#lesson-0-_1">วิธีใช้เล่มนี้</a><a href="#lesson-0-_2">เรียนตามลำดับนี้</a><a href="#lesson-0-_3">วิธีอ่าน</a><a href="#lesson-0-_4">ขอบเขตและเวอร์ชัน</a></details><h1 id="lesson-0-week-3-n8n-production-style-automation-workflows">Week 3 — n8n และ Production-style Automation Workflows</h1>
 <p>เล่มนี้ใช้ n8n เป็น <strong>visual orchestrator</strong> แต่ยังสอนให้มองข้อมูลและความล้มเหลวแบบวิศวกร เป้าหมายไม่ใช่จำตำแหน่งปุ่มทุกจุด แต่เปิด workflow ใดก็อธิบายได้ว่าเริ่มอย่างไร รับ/คืนข้อมูลรูปใด และเมื่อ replay แล้วอะไรอาจเกิดซ้ำได้</p>
 <h2 id="lesson-0-_1">วิธีใช้เล่มนี้</h2>
 <ul>
@@ -45,8 +45,8 @@
 </tr>
 <tr>
 <td>5</td>
-<td>14 + HR Intake + ทบทวน</td>
-<td>ออกแบบจาก canvas เปล่าและแยก file identity, task, review</td>
+<td>14–18 + HR Intake + ทบทวน</td>
+<td>สร้างจาก canvas เปล่า อ่าน execution และอธิบาย lifecycle ของทีม</td>
 </tr>
 </tbody>
 </table></div>
@@ -54,10 +54,11 @@
 <h2 id="lesson-0-_3">วิธีอ่าน</h2>
 <p>แต่ละบทมีคำอธิบายภาษาง่ายควบคู่ศัพท์เทคนิค ตัวอย่าง และ flow เฉพาะเรื่อง ลองทายผลก่อนอ่านเฉลย และเปิด Input/Output ของ node เทียบจริง หากติด syntax ให้ย้อน Week 1; หากติด request/response ให้ย้อน Week 2</p>
 <p>เริ่มที่ <a href="#lesson-1">00 Assessment</a> → <a href="#lesson-2">01 Mental Model</a> → <a href="#lesson-3">02 Setup</a> แล้วอ่านไฟล์หมายเลขถัดไป</p>
-<p>ชุดฝึก: <a href="#lesson-16">Drills</a>, <a href="#lesson-18">FlowGuard</a>, <a href="#lesson-20">HR Intake</a>, <a href="#lesson-22">Mock API</a></p>
+<p>ชุดฝึก: <a href="#lesson-20">Drills</a>, <a href="#lesson-22">FlowGuard</a>, <a href="#lesson-24">HR Intake</a>, <a href="#lesson-26">Mock API</a></p>
+<p>ถ้าอ่าน concept แล้วเปิด n8n ยังไม่รู้ว่าจะมองตรงไหน ให้เริ่มบท 15 ซึ่งเป็น UI Atlas แบบ schematic จากนั้นทำบท 16 แบบ click-by-click บท 17–18 เป็นภาพการทำงานของทีมและ production reference ไม่จำเป็นต้องจำ infrastructure ทั้งหมดในรอบแรก</p>
 <h2 id="lesson-0-_4">ขอบเขตและเวอร์ชัน</h2>
 <p>ตรวจพบ n8n 1.115.3 ในเครื่องเมื่อ 10 กันยายน 2026 ไม่ได้หมายความว่าเป็นรุ่นล่าสุดหรือเหมาะนำขึ้น production ตัวอย่างใช้ core nodes และระบุค่าที่สำคัญให้สร้างตาม UI ได้ แม้ชื่อเมนูของรุ่นใหม่เปลี่ยนไป เช่น Active/Publish และ Execute Workflow/Execute Sub-workflow</p>
-<p>ทดลองด้วยข้อมูลสังเคราะห์และ localhost เท่านั้น ไม่ใช้ระบบการเงินจริง ไม่ส่ง resume จริง และไม่เปิด mock API สู่สาธารณะ อ่านผลการตรวจจริงใน <a href="#lesson-24">Verification</a> ก่อนถือว่า workflow ผ่านการรันทดสอบ</p><a class="back" href="#top">↑ กลับสารบัญ</a></article><article id="lesson-1"><div class="source">00_assessment.md</div><details class="local-toc"><summary>หัวข้อในบทนี้</summary><a href="#lesson-1-_1">เราต่อยอดจากอะไร</a><a href="#lesson-1-_2">เช็กพื้นฐานก่อนเริ่ม</a><a href="#lesson-1-definition-of-done">Definition of Done</a><a href="#lesson-1-textbook">เส้นทางอ่านแบบ Textbook</a></details><h1 id="lesson-1-00-assessment">00 — Assessment และเป้าหมาย</h1>
+<p>ทดลองด้วยข้อมูลสังเคราะห์และ localhost เท่านั้น ไม่ใช้ระบบการเงินจริง ไม่ส่ง resume จริง และไม่เปิด mock API สู่สาธารณะ อ่านผลการตรวจจริงใน <a href="#lesson-28">Verification</a> ก่อนถือว่า workflow ผ่านการรันทดสอบ</p><a class="back" href="#top">↑ กลับสารบัญ</a></article><article id="lesson-1"><div class="source">00_assessment.md</div><details class="local-toc"><summary>หัวข้อในบทนี้</summary><a href="#lesson-1-_1">เราต่อยอดจากอะไร</a><a href="#lesson-1-_2">เช็กพื้นฐานก่อนเริ่ม</a><a href="#lesson-1-definition-of-done">Definition of Done</a><a href="#lesson-1-textbook">เส้นทางอ่านแบบ Textbook</a></details><h1 id="lesson-1-00-assessment">00 — Assessment และเป้าหมาย</h1>
 <h2 id="lesson-1-_1">เราต่อยอดจากอะไร</h2>
 <p>Week 1 สอนจัดการข้อมูลและทดสอบกฎ ส่วน Week 2 สอนให้ระบบคุยกันผ่าน HTTP ใน Week 3 เราจะเป็นคนกำหนดลำดับว่าเรียกระบบไหนก่อน และทำอย่างไรถ้าขั้นกลางไม่สำเร็จ</p>
 <pre><code class="language-text">Python: ตรวจ amount ได้ไหม?
@@ -202,7 +203,7 @@ n8n start
 <p>เมื่อ API เรียกยากหรือเสียเงิน เราสามารถ pin output ตัวอย่างเพื่อพัฒนา node ถัดไปได้ แต่ผลที่ได้พิสูจน์เพียงว่า logic ทำงานกับข้อมูลที่ pin ไม่ได้พิสูจน์ว่าเชื่อม API จริงสำเร็จ</p>
 <p>ก่อนทดสอบทั้ง flow ให้ unpin แล้วส่ง request ใหม่ การรัน production ไม่ได้ใช้ pinned data แบบการพัฒนา อย่าใช้ภาพผล pinned เป็นหลักฐาน integration test</p>
 <h2 id="lesson-3-mock-api">เปิด Mock API</h2>
-<p>ทำตาม <a href="#lesson-22">Lab README</a> ใน terminal อีกหน้าหนึ่ง API ใช้ port 8013 เพื่อแยกจากงาน Week 2 ที่อาจใช้ 8000</p>
+<p>ทำตาม <a href="#lesson-26">Lab README</a> ใน terminal อีกหน้าหนึ่ง API ใช้ port 8013 เพื่อแยกจากงาน Week 2 ที่อาจใช้ 8000</p>
 <div class="table-scroll"><table>
 <thead>
 <tr>
@@ -416,7 +417,7 @@ OUTPUT item 0:
 <p>อย่าใช้ <code>202</code> เพื่อซ่อนว่าระบบไม่ได้เก็บงาน หาก process ตายหลังตอบแล้ว task ต้องยังอยู่และ worker ต้องหยิบต่อได้ ประเด็น durable queue นี้จะประกอบเต็มใน Week 5</p><a class="back" href="#top">↑ กลับสารบัญ</a></article><article id="lesson-6"><div class="source">05_http_request.md</div><details class="local-toc"><summary>หัวข้อในบทนี้</summary><a href="#lesson-6-python-client-node">จาก Python client สู่ node</a><a href="#lesson-6-output">อ่าน output ให้ครบสองชั้น</a><a href="#lesson-6-never-error">Never Error ไม่ได้ทำให้ปัญหาหายไป</a><a href="#lesson-6-debug">Debug ตามชั้น</a><a href="#lesson-6-practice-request">ชั้น Practice: ประกอบ request ทีละส่วน</a><a href="#lesson-6-deep-dive-retry">ชั้น Deep Dive: Retry ตามชนิดความล้มเหลว</a></details><h1 id="lesson-6-05-http-request-fastapi">05 — HTTP Request เชื่อม FastAPI</h1>
 <h2 id="lesson-6-python-client-node">จาก Python client สู่ node</h2>
 <p>ที่ Week 2 เราเขียน <code>client.post(url, json=payload)</code> ตอนนี้ตั้งส่วนเดียวกันผ่าน UI: Method, URL, Headers, Body และ Timeout ไม่จำเป็นต้องลืมความรู้ HTTP เดิม</p>
-<p>เปิด mock ตาม <a href="#lesson-22">Lab</a> แล้วสร้าง HTTP Request ตามนี้:</p>
+<p>เปิด mock ตาม <a href="#lesson-26">Lab</a> แล้วสร้าง HTTP Request ตามนี้:</p>
 <div class="table-scroll"><table>
 <thead>
 <tr>
@@ -1134,29 +1135,251 @@ execution evidence + service state ตรงกัน
 <li>ภาพหรือบันทึก execution ID พร้อม actual output</li>
 <li>limitation สามข้อและสิ่งที่จะเพิ่มก่อนใช้ production</li>
 </ul>
-<p>หากเพื่อนอ่านแล้วบอกได้ว่าจุดไหน retry, จุดไหนให้คนตรวจ และจุดไหนเกิด side effect งานออกแบบถือว่าผ่านระดับพื้นฐานสำหรับส่งทีมตรวจ</p><a class="back" href="#top">↑ กลับสารบัญ</a></article><article id="lesson-16"><div class="source">drills/README.md</div><details class="local-toc"><summary>หัวข้อในบทนี้</summary><a href="#lesson-16-1-items-detective">1. Items Detective</a><a href="#lesson-16-2-expression-lab">2. Expression Lab</a><a href="#lesson-16-3-webhook-echo">3. Webhook Echo</a><a href="#lesson-16-4-api-connector">4. API Connector</a><a href="#lesson-16-5-batch-pagination">5. Batch และ Pagination</a><a href="#lesson-16-6-failure-recovery">6. Failure Recovery</a><a href="#lesson-16-_1">แบบบันทึกหลักฐาน</a></details><h1 id="lesson-16-drills">Drills — ฝึกแยกทีละทักษะ</h1>
+<p>หากเพื่อนอ่านแล้วบอกได้ว่าจุดไหน retry, จุดไหนให้คนตรวจ และจุดไหนเกิด side effect งานออกแบบถือว่าผ่านระดับพื้นฐานสำหรับส่งทีมตรวจ</p><a class="back" href="#top">↑ กลับสารบัญ</a></article><article id="lesson-16"><div class="source">15_n8n_ui_visual_atlas.md</div><details class="local-toc"><summary>หัวข้อในบทนี้</summary><a href="#lesson-16-1-editor">ภาพที่ 1: Editor มีสามคำถามหลัก</a><a href="#lesson-16-2-data-mapping-expression">ภาพที่ 2: Data Mapping และ Expression</a><a href="#lesson-16-3-executions">ภาพที่ 3: Executions คือหลักฐานหลังเหตุการณ์</a><a href="#lesson-16-4-test-production">ภาพที่ 4: Test กับ Production เป็นคนละรอบ</a><a href="#lesson-16-workflow">โน้ตที่ควรเขียนข้างทุก workflow</a></details><h1 id="lesson-16-15-n8n-ui-visual-atlas">15 — n8n UI Visual Atlas: มองหน้าจอแล้วรู้ว่ากำลังตรวจอะไร</h1>
+<p>ภาพในบทนี้เป็น <strong>schematic mock</strong> อิง mental model ของ n8n ไม่ใช่ screenshot ที่รับประกันตำแหน่งปุ่มทุกเวอร์ชัน เครื่องฝึกตรวจพบ n8n 1.115.3; ชื่อ Active/Publish และตำแหน่ง panel อาจต่างในระบบบริษัท</p>
+<style>
+.n8n-board{margin:1.2rem 0;padding:1rem;border:1px solid #cbd9df;border-radius:12px;background:#f7fafb;color:#173047;overflow:auto}.n8n-top{display:flex;justify-content:space-between;gap:.75rem;align-items:center;padding:.55rem .75rem;background:#203746;color:#fff;border-radius:8px}.n8n-canvas{min-width:690px;padding:1.5rem .75rem;display:flex;align-items:center;gap:.5rem;background-image:radial-gradient(#cbd9df 1px,transparent 1px);background-size:18px 18px}.n8n-node{min-width:112px;padding:.75rem;border:1px solid #93aab5;border-radius:9px;background:#fff;text-align:center;box-shadow:0 3px 8px rgba(20,50,60,.08)}.n8n-arrow{color:#08756b;font-weight:700}.n8n-panel{display:grid;grid-template-columns:1fr 1.25fr 1fr;gap:1px;background:#cbd9df;border:1px solid #cbd9df}.n8n-pane{background:#fff;padding:.8rem;min-height:150px}.n8n-label{font-size:.8rem;letter-spacing:.08em;color:#527080;font-weight:700}.n8n-good{color:#08756b}.n8n-bad{color:#a43d3d}.n8n-flow{display:flex;flex-wrap:wrap;align-items:center;justify-content:center;gap:.55rem}.n8n-state{padding:.55rem .75rem;background:#e7f2f0;border-radius:8px;text-align:center}.n8n-callout{padding:.75rem 1rem;border-left:4px solid #08756b;background:#eaf5f3;margin:1rem 0}@media(max-width:700px){.n8n-panel{grid-template-columns:1fr}.n8n-canvas{min-width:620px}}
+</style>
+<h2 id="lesson-16-1-editor">ภาพที่ 1: Editor มีสามคำถามหลัก</h2>
+<div aria-label="ภาพจำลอง n8n editor มี canvas และ input parameters output" class="n8n-board" role="img">
+<div class="n8n-top"><span>W3 — HR Synthetic Intake</span><span>Save · Test workflow · Publish</span></div>
+<div class="n8n-canvas"><div class="n8n-node">Webhook<br/><small>trigger</small></div><span class="n8n-arrow">→</span><div class="n8n-node">Normalize<br/><small>2 items</small></div><span class="n8n-arrow">→</span><div class="n8n-node">Intake API<br/><small>HTTP 201</small></div><span class="n8n-arrow">→</span><div class="n8n-node">Route<br/><small>queued</small></div></div>
+<div class="n8n-panel"><div class="n8n-pane"><div class="n8n-label">INPUT</div><p>ของจริงที่ node ได้รับ</p><code>event_id: HR-001</code><br/><code>candidate_id: C1</code></div><div class="n8n-pane"><div class="n8n-label">PARAMETERS</div><p>สิ่งที่เราสั่ง node</p><code>POST /resume-intake</code><br/><code>Body: {{$json}}</code></div><div class="n8n-pane"><div class="n8n-label">OUTPUT</div><p>ของจริงที่ node ส่งต่อ</p><code>statusCode: 201</code><br/><code>task_id: T7</code></div></div>
+</div>
+<pre><code class="language-text">INPUT: ฉันได้รับอะไรจริง
+PARAMETERS: ฉันถูกตั้งให้ทำอะไร
+OUTPUT: ฉันส่งอะไรจริง
+</code></pre>
+<p>สีเขียวตอบเพียงว่า node ไม่ throw error ในเงื่อนไขนั้น ไม่ได้ตอบว่า business outcome ถูกต้อง</p>
+<h2 id="lesson-16-2-data-mapping-expression">ภาพที่ 2: Data Mapping และ Expression</h2>
+<div class="n8n-board"><div class="n8n-panel"><div class="n8n-pane"><div class="n8n-label">INPUT JSON</div><pre><code>{
+  "body": {
+    "candidate_id": "C001"
+  }
+}</code></pre></div><div class="n8n-pane"><div class="n8n-label">EXPRESSION</div><p><code>{{$json.body.candidate_id}}</code></p><p>$json → body → candidate_id</p></div><div class="n8n-pane"><div class="n8n-label">PREVIEW</div><p class="n8n-good"><strong>C001</strong></p><p>ถ้าเป็น undefined ให้ย้อนดู Input ของ item นี้</p></div></div></div>
+<p>n8n สามารถลาก field จาก Input pane ไป parameter เพื่อสร้าง expression ได้ แต่ยังต้องอ่าน expression เอง เพราะ node name, item linking และ null/missing semantics อาจทำให้ผลต่างจากที่คิด</p>
+<h2 id="lesson-16-3-executions">ภาพที่ 3: Executions คือหลักฐานหลังเหตุการณ์</h2>
+<div class="n8n-board"><div class="n8n-top"><span>Execution #1842 · 10:32:18</span><span class="n8n-bad">Failed</span></div><div class="n8n-canvas"><div class="n8n-node n8n-good">Webhook<br/>1 item</div><span class="n8n-arrow">→</span><div class="n8n-node n8n-good">Normalize<br/>1 item</div><span class="n8n-arrow">→</span><div class="n8n-node n8n-bad">Intake API<br/>503</div><span class="n8n-arrow">→</span><div class="n8n-node">Route<br/>not run</div></div><div class="n8n-callout"><strong>ก่อนแก้:</strong> จด execution ID, workflow version/time, node แรกที่เสีย, input ที่ตัดข้อมูลลับแล้ว, status/error และ state ในระบบปลายทาง</div></div>
+<p>การ retry มีความหมายต่างกันระหว่างใช้ workflow ที่บันทึกล่าสุดกับ workflow เดิมของ execution ต้องเลือกตามเป้าหมายการพิสูจน์ และตรวจ side effect ก่อน retry</p>
+<h2 id="lesson-16-4-test-production">ภาพที่ 4: Test กับ Production เป็นคนละรอบ</h2>
+<div class="n8n-board"><div class="n8n-flow"><div class="n8n-state">Test URL<br/><small>listen ชั่วคราว</small></div><span class="n8n-arrow">→</span><div class="n8n-state">Manual/Test execution<br/><small>mock/pinned ได้</small></div><span class="n8n-arrow">≠</span><div class="n8n-state">Production URL<br/><small>published/active</small></div><span class="n8n-arrow">→</span><div class="n8n-state">Production execution<br/><small>runtime credentials/network</small></div></div></div>
+<p>ทดสอบบน Editor ไม่ได้พิสูจน์ว่า production trigger, credentials, network, timezone และ dependency จริงพร้อม</p>
+<h2 id="lesson-16-workflow">โน้ตที่ควรเขียนข้างทุก workflow</h2>
+<ul>
+<li>trigger และ owner</li>
+<li>business key/idempotency key</li>
+<li>input/output schema</li>
+<li>side effects</li>
+<li>failure/retry/review route</li>
+<li>credentials/config names โดยไม่มีค่าลับ</li>
+<li>test payload และ expected result</li>
+<li>disable/rollback และ runbook link</li>
+</ul><a class="back" href="#top">↑ กลับสารบัญ</a></article><article id="lesson-17"><div class="source">16_build_from_blank_canvas.md</div><details class="local-toc"><summary>หัวข้อในบทนี้</summary><a href="#lesson-17-n8n">ภาพรวมก่อนเปิด n8n</a><a href="#lesson-17-step-0">Step 0: เตรียมหลักฐาน</a><a href="#lesson-17-step-1-webhook">Step 1: Webhook</a><a href="#lesson-17-step-2-normalize-intake">Step 2: Normalize Intake</a><a href="#lesson-17-step-3-submit-event">Step 3: Submit Event</a><a href="#lesson-17-step-4-route-outcome">Step 4: Route Outcome</a><a href="#lesson-17-step-5-respond">Step 5: Respond</a><a href="#lesson-17-step-6-failure-lab">Step 6: Failure Lab</a><a href="#lesson-17-step-7-evidence">Step 7: Evidence</a><a href="#lesson-17-definition-of-done">Definition of Done</a></details><h1 id="lesson-17-16-build-from-blank-canvas-workflow">16 — Build from Blank Canvas: สร้าง Workflow จริงแบบทีละคลิก</h1>
+<p>เป้าหมาย: รับ synthetic event → normalize → ส่ง Mock API → route ตาม HTTP/business status → ตอบตามข้อเท็จจริง</p>
+<h2 id="lesson-17-n8n">ภาพรวมก่อนเปิด n8n</h2>
+<div class="n8n-board"><div class="n8n-flow"><div class="n8n-state">Webhook<br/>รับ POST</div><span class="n8n-arrow">→</span><div class="n8n-state">Edit Fields<br/>contract กลาง</div><span class="n8n-arrow">→</span><div class="n8n-state">HTTP Request<br/>FastAPI</div><span class="n8n-arrow">→</span><div class="n8n-state">Switch<br/>status</div><span class="n8n-arrow">→</span><div class="n8n-state">Respond<br/>truthful result</div></div></div>
+<h2 id="lesson-17-step-0">Step 0: เตรียมหลักฐาน</h2>
+<p>เปิด Mock API ตาม <code>lab/README.md</code> แล้ว probe <code>/health</code> จาก network เดียวกับ n8n สร้าง workflow ใหม่ชื่อ <code>W3 - Intake From Blank - &lt;ชื่อคุณ&gt;</code> อย่าแก้ตัวอย่างต้นฉบับ</p>
+<h2 id="lesson-17-step-1-webhook">Step 1: Webhook</h2>
+<p>ตั้ง Method <code>POST</code>, Path ที่ไม่ชนงานอื่น เช่น <code>w3-intake-thanaphat</code>, Response mode ให้ใช้ Respond to Webhook node ตาม UI รุ่นที่ใช้ กด listen/test แล้วส่ง:</p>
+<pre><code class="language-json">{"event_id":"BLANK-001","amount_minor":1200,"mode":"normal"}
+</code></pre>
+<p>Expected Input/Output ของ Webhook ต้องเห็น body จริง อย่าเดาว่า field อยู่ <code>$json.event_id</code>; บางรูปแบบอยู่ <code>$json.body.event_id</code></p>
+<h2 id="lesson-17-step-2-normalize-intake">Step 2: Normalize Intake</h2>
+<p>เพิ่ม Edit Fields/Set และสร้าง contract กลาง:</p>
+<pre><code class="language-text">event_id      string required
+amount_minor  integer &gt;= 0
+mode          string default normal
+trace_id      event_id ใน lab
+</code></pre>
+<p>ใช้ drag-and-drop จาก Input เพื่อสร้าง expression แล้วเปิด preview ทดสอบ missing field ด้วย อย่า normalize เป็น string ทุกอย่างจน type error ถูกซ่อน</p>
+<h2 id="lesson-17-step-3-submit-event">Step 3: Submit Event</h2>
+<p>เพิ่ม HTTP Request:</p>
+<pre><code class="language-text">Method: POST
+URL: ตามตำแหน่ง Mock API จากมุมของ n8n
+Send Body: JSON
+Body: normalized fields เท่านั้น
+Timeout: 3000 ms สำหรับ lab
+Full response: on
+Never error: on เฉพาะเพื่อฝึก route status ด้วยตัวเอง
+</code></pre>
+<p>Expected:</p>
+<pre><code class="language-json">{"statusCode":201,"body":{"status":"accepted"}}
+</code></pre>
+<p>รูปร่างจริงขึ้นกับ options/version ให้เชื่อ Output pane ไม่ใช่จำ path จากหนังสือ</p>
+<h2 id="lesson-17-step-4-route-outcome">Step 4: Route Outcome</h2>
+<p>เพิ่ม Switch ด้วยลำดับที่ไม่กลบกัน:</p>
+<pre><code class="language-text">201/200 + body success → accepted
+422 → rejected_input
+409 → conflict_review
+429/503 → retry_candidate
+default → unexpected_review
+</code></pre>
+<p>ทุก branch ต้องจบด้วย outcome ที่อธิบายได้ ห้ามสร้าง default เป็น success</p>
+<h2 id="lesson-17-step-5-respond">Step 5: Respond</h2>
+<p>ตอบ status/body ตามสิ่งที่เกิดขึ้นจริง ถ้า upstream 503 และระบบยังไม่ durable อย่าตอบ <code>success</code>; อาจตอบ 503 หรือ 202 เฉพาะเมื่อมี persisted task ที่ติดตามได้แล้ว</p>
+<h2 id="lesson-17-step-6-failure-lab">Step 6: Failure Lab</h2>
+<p>รันด้วย event ID ใหม่ทุกกรณี:</p>
+<div class="table-scroll"><table>
+<thead>
+<tr>
+<th>mode/input</th>
+<th>คาดหวัง</th>
+<th>retry</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>normal</td>
+<td>accepted</td>
+<td>no</td>
+</tr>
+<tr>
+<td>amount -1</td>
+<td>rejected</td>
+<td>no</td>
+</tr>
+<tr>
+<td>rate_limit</td>
+<td>retry candidate</td>
+<td>bounded</td>
+</tr>
+<tr>
+<td>transient</td>
+<td>retry candidate</td>
+<td>bounded</td>
+</tr>
+<tr>
+<td>permanent</td>
+<td>terminal/review</td>
+<td>no automatic loop</td>
+</tr>
+</tbody>
+</table></div>
+<h2 id="lesson-17-step-7-evidence">Step 7: Evidence</h2>
+<p>เก็บ workflow name/version, test payload, execution IDs, expected/actual table, screenshot ที่ปิดข้อมูลลับ, service state และ limitation จากนั้น export สำเนาที่ inactive ตรวจ pinned data/URL/credential references ก่อน commit</p>
+<h2 id="lesson-17-definition-of-done">Definition of Done</h2>
+<p>เพื่อน import แล้วสร้าง credential/config ตาม README, รัน normal/invalid/temporary case และอธิบายได้ว่า node ไหนรับผิดชอบ contract, retry, side effect และ truthful response</p><a class="back" href="#top">↑ กลับสารบัญ</a></article><article id="lesson-18"><div class="source">17_real_team_workflow_lifecycle.md</div><details class="local-toc"><summary>หัวข้อในบทนี้</summary><a href="#lesson-18-_1">ภาพวงจรจริง</a><a href="#lesson-18-1-discovery-canvas">1. Discovery ก่อน Canvas</a><a href="#lesson-18-2-development">2. Development</a><a href="#lesson-18-3-review">3. Review</a><a href="#lesson-18-4-staging">4. Staging</a><a href="#lesson-18-5-production-rollout">5. Production Rollout</a><a href="#lesson-18-6-incident-replay">6. Incident และ Replay</a><a href="#lesson-18-artifact">Artifact ที่ทีมควรได้รับ</a></details><h1 id="lesson-18-17-real-team-workflow-lifecycle-production-execution">17 — Real Team Workflow Lifecycle: จากโจทย์ถึง Production Execution</h1>
+<h2 id="lesson-18-_1">ภาพวงจรจริง</h2>
+<div class="n8n-board"><div class="n8n-flow"><div class="n8n-state">Discover<br/><small>process + owner</small></div><span class="n8n-arrow">→</span><div class="n8n-state">Design<br/><small>contract + failure</small></div><span class="n8n-arrow">→</span><div class="n8n-state">Develop<br/><small>synthetic + pin</small></div><span class="n8n-arrow">→</span><div class="n8n-state">Review<br/><small>JSON + docs</small></div><span class="n8n-arrow">→</span><div class="n8n-state">Stage<br/><small>real dependency</small></div><span class="n8n-arrow">→</span><div class="n8n-state">Publish<br/><small>limited rollout</small></div><span class="n8n-arrow">→</span><div class="n8n-state">Operate<br/><small>executions + recovery</small></div></div></div>
+<h2 id="lesson-18-1-discovery-canvas">1. Discovery ก่อน Canvas</h2>
+<p>ทีมที่ทำงานดีไม่ได้เปิด node search ทันที แต่ขอดู current process, input/output จริงที่ได้รับอนุญาต, owner, baseline, failure และ side effect แล้วเขียน node contract บนกระดาษ</p>
+<h2 id="lesson-18-2-development">2. Development</h2>
+<ul>
+<li>ใช้ development instance/project/workflow copy</li>
+<li>synthetic data ก่อน; pin เฉพาะพัฒนา node ปลายทาง</li>
+<li>ตั้งชื่อ node ด้วย verb + object เช่น <code>Normalize Intake</code></li>
+<li>แยก config/credential reference จาก logic</li>
+<li>ทดสอบ node ทีละจุดและ whole flow</li>
+<li>unpin ก่อน integration test</li>
+</ul>
+<h2 id="lesson-18-3-review">3. Review</h2>
+<p>ส่ง workflow JSON/ระบบ source control ตาม plan ที่มี พร้อม README, sample payload, expected cases, credential names, environment URL mapping และ runbook ผู้ตรวจดู logic change ไม่ใช่เพียงตำแหน่งกล่อง</p>
+<p>ฟีเจอร์ source control/environments และ RBAC ขึ้นกับแผนของ n8n ห้ามเขียน playbook ที่สมมติว่าทุก instance มี ให้มี fallback เป็น export/review/import ที่ควบคุมและ audit ได้</p>
+<h2 id="lesson-18-4-staging">4. Staging</h2>
+<pre><code class="language-text">saved workflow
+  ↓ map staging credentials/config
+publish/activate ตามรุ่นและ policy
+  ↓ test trigger จริง
+inspect execution + downstream state
+  ↓ invalid/duplicate/timeout/replay
+owner sign-off
+</code></pre>
+<p>การ push saved workflow ไม่จำเป็นต้องเท่ากับ published version ในปลายทาง จึงต้องตรวจทั้ง version และ publish state</p>
+<h2 id="lesson-18-5-production-rollout">5. Production Rollout</h2>
+<ul>
+<li>ปิด/จำกัด side effect ก่อนเมื่อทำได้</li>
+<li>เริ่ม sample/tenant/ช่วงเวลาจำกัด</li>
+<li>ตั้ง execution retention/alert/owner</li>
+<li>ตรวจ queue/oldest age/failure categories และ downstream state</li>
+<li>มีวิธี disable trigger โดยไม่ลบหลักฐาน</li>
+</ul>
+<h2 id="lesson-18-6-incident-replay">6. Incident และ Replay</h2>
+<pre><code class="language-text">execution failed
+  ↓ capture ID + version + input summary
+side effect เกิดแล้วหรือยัง?
+  ├─ unknown → query source of truth/idempotency record
+  ├─ yes → do not blindly replay
+  └─ no  → fix cause, replay with same business key
+  ↓ verify execution + downstream state
+</code></pre>
+<h2 id="lesson-18-artifact">Artifact ที่ทีมควรได้รับ</h2>
+<ul>
+<li>workflow JSON/source-controlled version</li>
+<li>node/data/failure diagram</li>
+<li>credential/config inventory ไม่มี secrets</li>
+<li>test cases และ execution evidence</li>
+<li>runbook, owner, disable/replay/rollback</li>
+<li>limitations และ plan/feature assumptions</li>
+</ul><a class="back" href="#top">↑ กลับสารบัญ</a></article><article id="lesson-19"><div class="source">18_n8n_production_operations_reference.md</div><details class="local-toc"><summary>หัวข้อในบทนี้</summary><a href="#lesson-19-deployment-shapes">Deployment Shapes</a><a href="#lesson-19-deployment">คำถามก่อนเลือกหรือเปลี่ยน Deployment</a><a href="#lesson-19-execution-data">Execution Data</a><a href="#lesson-19-binary-data">Binary Data</a><a href="#lesson-19-concurrency-rate-limits">Concurrency และ Rate Limits</a><a href="#lesson-19-security-baseline">Security Baseline</a><a href="#lesson-19-operations-dashboard">Operations Dashboard ที่มีความหมาย</a><a href="#lesson-19-intern-boundary">Intern Boundary</a></details><h1 id="lesson-19-18-n8n-production-operations-reference">18 — n8n Production Operations Reference</h1>
+<p>บทนี้ใช้คุยกับทีม platform/operations ไม่ใช่ checklist ที่ intern ต้องเปลี่ยนเอง Infrastructure และ feature availability ต้องอิง instance/plan/policy จริง</p>
+<h2 id="lesson-19-deployment-shapes">Deployment Shapes</h2>
+<div class="n8n-board"><div class="n8n-panel"><div class="n8n-pane"><div class="n8n-label">SMALL / CONTROLLED</div><p>n8n main process</p><p>Database</p><p>เหมาะ volume ต่ำและ failure domain ที่ยอมรับได้</p></div><div class="n8n-pane"><div class="n8n-label">QUEUE MODE</div><p>Main/webhook processes</p><p>Redis queue → workers</p><p>Postgres/state + shared binary strategy</p></div><div class="n8n-pane"><div class="n8n-label">MANAGED CLOUD</div><p>Provider operates platform</p><p>ทีมยังรับผิดชอบ workflow, credentials, data, retries และ side effects</p></div></div></div>
+<h2 id="lesson-19-deployment">คำถามก่อนเลือกหรือเปลี่ยน Deployment</h2>
+<ul>
+<li>volume, concurrency และ execution duration เท่าไร</li>
+<li>webhook latency/availability requirement คืออะไร</li>
+<li>state/database/backup/restore อยู่ที่ไหน</li>
+<li>binary files เก็บอย่างไรและหมดอายุเมื่อไร</li>
+<li>encryption key/secrets ใครดูแลและ rotate อย่างไร</li>
+<li>task runners/Code node ถูกจำกัดอย่างไร</li>
+<li>log, metrics, traces และ alerts ส่งไปไหน</li>
+<li>upgrade/migration/rollback ถูก rehearsal หรือยัง</li>
+</ul>
+<h2 id="lesson-19-execution-data">Execution Data</h2>
+<p>Execution history ช่วย debug แต่มีค่าใช้จ่ายด้าน storage และ privacy กำหนด save success/error/manual, retention/pruning และสิทธิ์เข้าถึงตามความต้องการ ไม่เก็บ raw payload “เผื่อไว้” โดยไม่มี purpose</p>
+<h2 id="lesson-19-binary-data">Binary Data</h2>
+<p>Resume/image/archive มีขนาดและ sensitivity ต่างจาก JSON ต้องคิด storage mode, lifetime, multi-worker access, backup, malware/file validation และ deletion การเห็น binary ใน node ไม่ได้แปลว่าปลอดภัยหรือ durable</p>
+<h2 id="lesson-19-concurrency-rate-limits">Concurrency และ Rate Limits</h2>
+<pre><code class="language-text">incoming rate &gt; worker/provider capacity
+        ↓
+queue age โต → timeout/retry เพิ่ม → duplicate/incident risk
+</code></pre>
+<p>ใช้ concurrency limit, batching, provider quota, backpressure และ alert จาก oldest age ไม่แก้ด้วยเพิ่ม retry อย่างเดียว</p>
+<h2 id="lesson-19-security-baseline">Security Baseline</h2>
+<ul>
+<li>TLS/reverse proxy/base URL ถูกต้อง</li>
+<li>authentication/RBAC/projects ตาม plan</li>
+<li>credentials least privilege และ rotation</li>
+<li>block/restrict risky nodes ตาม policy</li>
+<li>SSRF/file/path risks ถูกควบคุม</li>
+<li>execution data/log redaction</li>
+<li>backup มี encryption และ restore test</li>
+<li>community/custom node ผ่าน review</li>
+</ul>
+<h2 id="lesson-19-operations-dashboard">Operations Dashboard ที่มีความหมาย</h2>
+<pre><code class="language-text">trigger received
+→ accepted/rejected by category
+→ execution success/failed/waiting
+→ queue depth + oldest age
+→ dependency latency/rate limit
+→ business outcome + side-effect duplicates
+</code></pre>
+<p>Workflow success rate อย่างเดียวซ่อน business failure ได้ โดยเฉพาะเมื่อ Continue On Fail/Never Error เปลี่ยน error เป็น data</p>
+<h2 id="lesson-19-intern-boundary">Intern Boundary</h2>
+<p>คุณควรถาม architecture, เก็บ execution evidence, ทำ workflow safe และแจ้ง risk ได้ แต่ไม่ควรเปลี่ยน database, queue mode, retention, encryption key หรือ production credentials โดยไม่มี technical owner และ change procedure</p><a class="back" href="#top">↑ กลับสารบัญ</a></article><article id="lesson-20"><div class="source">drills/README.md</div><details class="local-toc"><summary>หัวข้อในบทนี้</summary><a href="#lesson-20-1-items-detective">1. Items Detective</a><a href="#lesson-20-2-expression-lab">2. Expression Lab</a><a href="#lesson-20-3-webhook-echo">3. Webhook Echo</a><a href="#lesson-20-4-api-connector">4. API Connector</a><a href="#lesson-20-5-batch-pagination">5. Batch และ Pagination</a><a href="#lesson-20-6-failure-recovery">6. Failure Recovery</a><a href="#lesson-20-_1">แบบบันทึกหลักฐาน</a></details><h1 id="lesson-20-drills">Drills — ฝึกแยกทีละทักษะ</h1>
 <p>ให้ใช้ workflow ใหม่สำหรับแต่ละข้อ บันทึก input/output และประโยคสั้น ๆ ว่าเหตุใดจึงได้ผลนั้น ไม่ต้องทำทั้งระบบให้เสร็จก่อนจึงค่อยทดสอบ</p>
-<h2 id="lesson-16-1-items-detective">1. Items Detective</h2>
+<h2 id="lesson-20-1-items-detective">1. Items Detective</h2>
 <p>สร้าง Code node คืน <code>[{json:{users:[{id:'U1'},{id:'U2'}]}}]</code> ทายจำนวน items ก่อนรัน จากนั้นเพิ่ม Split Out field users แล้วตรวจจำนวนใหม่</p>
 <p>ผ่านเมื่อ: ก่อน Split Out มี 1 item หลังมี 2 และแต่ละคนยังมี ID ของตนเอง เพิ่มกรณี users=[] แล้วบันทึกว่า node ถัดไปถูกเรียกหรือไม่</p>
 <p>คำใบ้: นับซอง <code>{json:...}</code> ชั้นนอก ไม่ใช่นับทุก object ที่อยู่ด้านใน</p>
-<h2 id="lesson-16-2-expression-lab">2. Expression Lab</h2>
+<h2 id="lesson-20-2-expression-lab">2. Expression Lab</h2>
 <p>สร้างสาม items: country ไม่มี key, country=null, country="" เพิ่ม field display_country ด้วย <code>??</code> แล้วเทียบกับ <code>||</code> จากนั้นเพิ่ม discount=0 และทายผลก่อนรัน</p>
 <p>ผ่านเมื่อ: อธิบายได้ว่าทำไม <code>??</code> ไม่แทนข้อความว่างหรือ 0 และไม่ใช้ fallback ซ่อน event_id ที่จำเป็น</p>
 <p>คำใบ้: ตาราง expected สำหรับ country ตามลำดับคือ UNKNOWN, UNKNOWN, ข้อความว่าง เมื่อใช้ <code>??</code></p>
-<h2 id="lesson-16-3-webhook-echo">3. Webhook Echo</h2>
+<h2 id="lesson-20-3-webhook-echo">3. Webhook Echo</h2>
 <p>สร้าง POST webhook รับ <code>{"event_id":"D3","amount_minor":100}</code> แล้วตอบ <code>{"received_event_id":"D3"}</code> ให้เพิ่ม Normalize คั่นกลาง ไม่อ่านจาก Webhook ย้อนหลังโดยไม่จำเป็น</p>
 <p>ทดสอบ event_id หาย: ต้องตอบ validation error ที่ออกแบบไว้ ไม่ตอบ 200 พร้อม null โดยไม่รู้ตัว ผ่านเมื่อทดสอบทั้ง Test URL และ production URL ของ workflow lab ที่เปิดใช้งาน แล้วปิดหลังทดลอง</p>
-<h2 id="lesson-16-4-api-connector">4. API Connector</h2>
+<h2 id="lesson-20-4-api-connector">4. API Connector</h2>
 <p>ใช้ HTTP Request เรียก mock <code>/events</code> เปิด full response และ Never Error ตั้ง route 201/200 ไปผลสำเร็จ; 422 ไป rejected</p>
 <p>ส่ง amount=-1 และ amount="100" ต้องเป็น 422 ทั้งคู่ใน mock ที่ strict ผ่านเมื่อไม่มี record ถูกสร้าง ตรวจ GET <code>/events/{id}</code> แล้วได้ 404 สำหรับ invalid cases</p>
-<h2 id="lesson-16-5-batch-pagination">5. Batch และ Pagination</h2>
+<h2 id="lesson-20-5-batch-pagination">5. Batch และ Pagination</h2>
 <p>ดึง <code>/records</code> จนครบ 5 record ไม่หยุดที่หน้าแรก จากนั้นให้ Loop Over Items batch size=2 ส่งข้อมูลผ่าน Edit Fields เพิ่ม <code>processed=true</code> แล้วรวมสรุปหลัง done</p>
 <p>ผ่านเมื่อ IDs คือ R1–R5 ครบไม่ซ้ำ และอธิบายได้ว่า pagination 3 หน้าไม่ใช่ batch 3 ชุด แม้จำนวนรอบบังเอิญเท่ากัน</p>
-<h2 id="lesson-16-6-failure-recovery">6. Failure Recovery</h2>
+<h2 id="lesson-20-6-failure-recovery">6. Failure Recovery</h2>
 <p>ใช้ mode=transient กับ ID ใหม่ เพิ่ม retry แบบสูงสุด 3 attempts รวมครั้งแรก รออย่างน้อย 1 วินาทีต่อการลองใหม่ และใช้ ID เดิมทั้งหมด</p>
 <p>ผ่านเมื่อเห็น 503,503,201 และ audit มี created เพียงหนึ่งครั้ง เปลี่ยนเป็น permanent แล้วต้องหยุดที่สาม ไม่วนไม่สิ้นสุด เปลี่ยนเป็น invalid amount แล้วต้องไม่ retry</p>
-<h2 id="lesson-16-_1">แบบบันทึกหลักฐาน</h2>
+<h2 id="lesson-20-_1">แบบบันทึกหลักฐาน</h2>
 <div class="table-scroll"><table>
 <thead>
 <tr>
@@ -1179,16 +1402,16 @@ execution evidence + service state ตรงกัน
 </tr>
 </tbody>
 </table></div>
-<p>อย่านำ expected ไปใส่ actual โดยยังไม่ได้รัน ถ้าผิดให้บันทึกผลผิดก่อน แล้วค่อยเพิ่มผลหลังแก้ จะเห็นพัฒนาการและสาเหตุได้ชัดกว่า</p><a class="back" href="#top">↑ กลับสารบัญ</a></article><article id="lesson-17"><div class="source">flowguard/HINTS.md</div><details class="local-toc"><summary>หัวข้อในบทนี้</summary><a href="#lesson-17-1">ระดับ 1: ดูข้อมูลก่อนดูเส้น</a><a href="#lesson-17-2-identity">ระดับ 2: รักษา identity</a><a href="#lesson-17-3-success">ระดับ 3: เปลี่ยน success จากคำประกาศเป็นข้อสรุป</a><a href="#lesson-17-4">ระดับ 4: ทดลองวงรอบสั้นที่สุด</a><a href="#lesson-17-5">ระดับ 5: เส้นทางแก้ที่เป็นไปได้</a></details><h1 id="lesson-17-flowguard">FlowGuard — คำใบ้เป็นลำดับ</h1>
-<h2 id="lesson-17-1">ระดับ 1: ดูข้อมูลก่อนดูเส้น</h2>
+<p>อย่านำ expected ไปใส่ actual โดยยังไม่ได้รัน ถ้าผิดให้บันทึกผลผิดก่อน แล้วค่อยเพิ่มผลหลังแก้ จะเห็นพัฒนาการและสาเหตุได้ชัดกว่า</p><a class="back" href="#top">↑ กลับสารบัญ</a></article><article id="lesson-21"><div class="source">flowguard/HINTS.md</div><details class="local-toc"><summary>หัวข้อในบทนี้</summary><a href="#lesson-21-1">ระดับ 1: ดูข้อมูลก่อนดูเส้น</a><a href="#lesson-21-2-identity">ระดับ 2: รักษา identity</a><a href="#lesson-21-3-success">ระดับ 3: เปลี่ยน success จากคำประกาศเป็นข้อสรุป</a><a href="#lesson-21-4">ระดับ 4: ทดลองวงรอบสั้นที่สุด</a><a href="#lesson-21-5">ระดับ 5: เส้นทางแก้ที่เป็นไปได้</a></details><h1 id="lesson-21-flowguard">FlowGuard — คำใบ้เป็นลำดับ</h1>
+<h2 id="lesson-21-1">ระดับ 1: ดูข้อมูลก่อนดูเส้น</h2>
 <p>เปิด Seed Batch มี items เท่าไร? <code>events</code> อยู่ตรงไหน? ถ้า HTTP Request อ่าน <code>$json.event_id</code> แต่ input มีเพียง <code>$json.events</code> แสดงว่าเส้นต่อถูกก็ยังส่งผิดได้</p>
-<h2 id="lesson-17-2-identity">ระดับ 2: รักษา identity</h2>
+<h2 id="lesson-21-2-identity">ระดับ 2: รักษา identity</h2>
 <p>อย่าสร้าง event_id จากเวลาปัจจุบันหรือ execution ID ให้ใช้ key จาก input ที่ stable แล้วเก็บ context แยกจาก HTTP response หลัง node เปลี่ยน output ให้ใช้ item linking อย่างถูกต้องหรือรวมกลับด้วย key ไม่ใช้ first() แก้ทุกปัญหา</p>
-<h2 id="lesson-17-3-success">ระดับ 3: เปลี่ยน success จากคำประกาศเป็นข้อสรุป</h2>
+<h2 id="lesson-21-3-success">ระดับ 3: เปลี่ยน success จากคำประกาศเป็นข้อสรุป</h2>
 <p>ตรวจ statusCode และ body ตาม contract ก่อนสร้าง success result หาก Never Error คืน 503 เป็นข้อมูลปกติ ต้องแยกทางเอง อย่ารอ Error Workflow จับปัญหาที่ workflow ของคุณถือว่าปกติไปแล้ว</p>
-<h2 id="lesson-17-4">ระดับ 4: ทดลองวงรอบสั้นที่สุด</h2>
+<h2 id="lesson-21-4">ระดับ 4: ทดลองวงรอบสั้นที่สุด</h2>
 <p>เริ่ม transient เพียง 1 item เก็บ attempt=1,2,3 ให้ถูกก่อนขยายเป็น batch ระวังการใช้ counter ร่วมกันทั้ง batch เพราะรายการที่สองอาจได้รับ attempt ต่อจากรายการแรก</p>
-<h2 id="lesson-17-5">ระดับ 5: เส้นทางแก้ที่เป็นไปได้</h2>
+<h2 id="lesson-21-5">ระดับ 5: เส้นทางแก้ที่เป็นไปได้</h2>
 <pre><code class="language-text">Seed/Webhook → Normalize list → Split Out → Validate
                                              ├─ invalid → rejected result
                                              └─ valid → HTTP
@@ -1197,12 +1420,12 @@ execution evidence + service state ตรงกัน
                                                           └─ retryable → bounded retry → result
 ทุกผล → Summary/Audit ตาม record_id → ตรวจจำนวนเท่ากับ input
 </code></pre>
-<p>ภาพนี้ไม่ใช่ผังสาย Merge ที่นำไปต่อได้โดยไม่ตั้งค่า ต้องตรวจว่า branch ใดมี items และเลือกวิธีรวมที่ไม่รอ input ที่ไม่มีการรัน หากเริ่มยากให้ทำ per-item sub-workflow คืนหนึ่ง result เสมอแล้วรวมที่ workflow หลัก</p><a class="back" href="#top">↑ กลับสารบัญ</a></article><article id="lesson-18"><div class="source">flowguard/README.md</div><details class="local-toc"><summary>หัวข้อในบทนี้</summary><a href="#lesson-18-starter">Starter ที่ตั้งใจให้ผิด</a><a href="#lesson-18-_1">ข้อกำหนดของฉบับแก้</a><a href="#lesson-18-test-matrix">Test matrix</a><a href="#lesson-18-100">เกณฑ์คะแนน 100</a><a href="#lesson-18-_2">ส่งอะไร</a></details><h1 id="lesson-18-special-challenge-flowguard">Special Challenge — FlowGuard</h1>
+<p>ภาพนี้ไม่ใช่ผังสาย Merge ที่นำไปต่อได้โดยไม่ตั้งค่า ต้องตรวจว่า branch ใดมี items และเลือกวิธีรวมที่ไม่รอ input ที่ไม่มีการรัน หากเริ่มยากให้ทำ per-item sub-workflow คืนหนึ่ง result เสมอแล้วรวมที่ workflow หลัก</p><a class="back" href="#top">↑ กลับสารบัญ</a></article><article id="lesson-22"><div class="source">flowguard/README.md</div><details class="local-toc"><summary>หัวข้อในบทนี้</summary><a href="#lesson-22-starter">Starter ที่ตั้งใจให้ผิด</a><a href="#lesson-22-_1">ข้อกำหนดของฉบับแก้</a><a href="#lesson-22-test-matrix">Test matrix</a><a href="#lesson-22-100">เกณฑ์คะแนน 100</a><a href="#lesson-22-_2">ส่งอะไร</a></details><h1 id="lesson-22-special-challenge-flowguard">Special Challenge — FlowGuard</h1>
 <p>ทีม Ops มี flow รับเหตุการณ์แล้วส่ง API แต่รายงานว่าสำเร็จทั้งที่ API ปฏิเสธ บางรายการซ้ำ บางรายการหาย หน้าที่คุณคือซ่อมและอธิบายหลักฐาน ไม่ใช่เพียงทำให้ execution จบ</p>
-<h2 id="lesson-18-starter">Starter ที่ตั้งใจให้ผิด</h2>
+<h2 id="lesson-22-starter">Starter ที่ตั้งใจให้ผิด</h2>
 <p>Import <a href="week-3-assets/workflows/flowguard_broken.json">flowguard_broken.json</a> เป็น workflow ใหม่ อ่านชื่อ node และ code ก่อนรัน ทุก URL ต้องยังเป็น localhost ของ mock ไม่มี external notification</p>
 <p>ข้อผิดใน starter มีอย่างน้อย: list ถูกเก็บใน item เดียว, อ่าน field ผิด path, เปลี่ยน business key ทุก execution, request ไม่รักษารูปแบบที่ API ต้องการ และรายงาน succeeded โดยไม่อ่าน HTTP response ยังไม่มี bounded retry/durable review จึงเป็นสิ่งที่ผู้เรียนต้องเพิ่ม ไม่ใช่ความสามารถที่มีแล้ว</p>
-<h2 id="lesson-18-_1">ข้อกำหนดของฉบับแก้</h2>
+<h2 id="lesson-22-_1">ข้อกำหนดของฉบับแก้</h2>
 <ol>
 <li>รับหนึ่งหรือหลาย events แล้วไม่ทิ้ง record</li>
 <li>ใช้ event_id เดิมข้าม retries; payload เปลี่ยนกับ key เดิมต้อง review</li>
@@ -1211,7 +1434,7 @@ execution evidence + service state ตรงกัน
 <li>ผลสรุปแยก succeeded/rejected/retry_exhausted/needs_review</li>
 <li>export ไม่มี secrets และมี runbook ส่งต่อได้</li>
 </ol>
-<h2 id="lesson-18-test-matrix">Test matrix</h2>
+<h2 id="lesson-22-test-matrix">Test matrix</h2>
 <div class="table-scroll"><table>
 <thead>
 <tr>
@@ -1273,21 +1496,21 @@ execution evidence + service state ตรงกัน
 </tr>
 </tbody>
 </table></div>
-<h2 id="lesson-18-100">เกณฑ์คะแนน 100</h2>
+<h2 id="lesson-22-100">เกณฑ์คะแนน 100</h2>
 <p>Data shape/expressions 20, routing ตามข้อเท็จจริง 20, retry/recovery 20, idempotency/audit 20, tests/runbook/privacy 20 ผ่าน 80 และ <strong>ห้ามมี false success, retry ไม่สิ้นสุด หรือ secret ใน export</strong> แม้คะแนนรวมถึง</p>
-<h2 id="lesson-18-_2">ส่งอะไร</h2>
+<h2 id="lesson-22-_2">ส่งอะไร</h2>
 <p><code>flowguard_fixed.json</code>, <code>test_results.md</code>, <code>runbook.md</code> และคำอธิบาย before/after ของอย่างน้อย 3 bugs ตัวอย่างชื่อไฟล์เป็นสิ่งที่คุณต้องสร้าง ไม่ได้ใส่เฉลยสำเร็จไว้ล่วงหน้า</p>
-<p>อ่าน <a href="#lesson-17">Hints</a> เมื่อทดลองเองแล้วติด ไม่จำเป็นต้องแก้ครบในครั้งเดียว</p><a class="back" href="#top">↑ กลับสารบัญ</a></article><article id="lesson-19"><div class="source">flowguard/runbook_template.md</div><details class="local-toc"><summary>หัวข้อในบทนี้</summary><a href="#lesson-19-environment">Environment</a><a href="#lesson-19-smoke-test">ขั้นตอน smoke test</a><a href="#lesson-19-_1">เมื่อเกิดเหตุ</a><a href="#lesson-19-replay">Replay และหยุดระบบ</a></details><h1 id="lesson-19-flowguard-runbook-template">FlowGuard — Runbook Template</h1>
+<p>อ่าน <a href="#lesson-21">Hints</a> เมื่อทดลองเองแล้วติด ไม่จำเป็นต้องแก้ครบในครั้งเดียว</p><a class="back" href="#top">↑ กลับสารบัญ</a></article><article id="lesson-23"><div class="source">flowguard/runbook_template.md</div><details class="local-toc"><summary>หัวข้อในบทนี้</summary><a href="#lesson-23-environment">Environment</a><a href="#lesson-23-smoke-test">ขั้นตอน smoke test</a><a href="#lesson-23-_1">เมื่อเกิดเหตุ</a><a href="#lesson-23-replay">Replay และหยุดระบบ</a></details><h1 id="lesson-23-flowguard-runbook-template">FlowGuard — Runbook Template</h1>
 <p>คัดลอกไฟล์นี้เป็น <code>runbook.md</code> ในผลงานของคุณ แล้วแทนช่องที่ระบุ “กรอก” ด้วยสิ่งที่รันจริง ไม่ใส่ secrets</p>
-<h2 id="lesson-19-environment">Environment</h2>
+<h2 id="lesson-23-environment">Environment</h2>
 <ul>
 <li>n8n version: กรอก</li>
 <li>Workflow name และ ID: กรอก</li>
 <li>Mock base URL: กรอก</li>
 <li>Test date/timezone: กรอก</li>
-<li>วิธีเริ่ม API: ดู <a href="#lesson-22">Lab</a> และระบุ environment ที่ใช้จริง</li>
+<li>วิธีเริ่ม API: ดู <a href="#lesson-26">Lab</a> และระบุ environment ที่ใช้จริง</li>
 </ul>
-<h2 id="lesson-19-smoke-test">ขั้นตอน smoke test</h2>
+<h2 id="lesson-23-smoke-test">ขั้นตอน smoke test</h2>
 <ol>
 <li>GET /health ต้องตอบ status=ok</li>
 <li>Import workflow เป็นสำเนาใหม่และตรวจ URL</li>
@@ -1295,7 +1518,7 @@ execution evidence + service state ตรงกัน
 <li>ตรวจ API record แล้ว replay ด้วย key เดิม</li>
 <li>ตรวจว่า created ครั้งเดียวและ duplicate ไม่สร้างผลข้างเคียงซ้ำ</li>
 </ol>
-<h2 id="lesson-19-_1">เมื่อเกิดเหตุ</h2>
+<h2 id="lesson-23-_1">เมื่อเกิดเหตุ</h2>
 <div class="table-scroll"><table>
 <thead>
 <tr>
@@ -1332,10 +1555,10 @@ execution evidence + service state ตรงกัน
 </tr>
 </tbody>
 </table></div>
-<h2 id="lesson-19-replay">Replay และหยุดระบบ</h2>
-<p>เขียนว่าเลือกเฉพาะ failed IDs อย่างไร, ทำไม key ต้องเดิม, ตรวจ notification ซ้ำอย่างไร และปิด trigger โดยไม่ลบ workflow/history อย่างไร ถ้ามีจุดที่ยังทำไม่ได้ให้บอกข้อจำกัดตรง ๆ</p><a class="back" href="#top">↑ กลับสารบัญ</a></article><article id="lesson-20"><div class="source">hr_intake/README.md</div><details class="local-toc"><summary>หัวข้อในบทนี้</summary><a href="#lesson-20-identity">Identity สามแบบที่ต้องไม่ปนกัน</a><a href="#lesson-20-_1">ทางเดินข้อมูล</a><a href="#lesson-20-lab-resume">Lab ที่รันได้โดยไม่ต้องมี resume จริง</a><a href="#lesson-20-binary-n8n">ถ้ารับ binary จริงใน n8n</a><a href="#lesson-20-file-validation">File validation ยังไม่ใช่เอกสารปลอดภัย</a><a href="#lesson-20-test">Test ที่ต้องทำ</a><a href="#lesson-20-human-review">Human Review และสิ่งที่ต้องทำต่อ</a></details><h1 id="lesson-20-add-on-hr-resume-intake-ai">Add-on — HR Resume Intake ก่อนเพิ่ม AI</h1>
+<h2 id="lesson-23-replay">Replay และหยุดระบบ</h2>
+<p>เขียนว่าเลือกเฉพาะ failed IDs อย่างไร, ทำไม key ต้องเดิม, ตรวจ notification ซ้ำอย่างไร และปิด trigger โดยไม่ลบ workflow/history อย่างไร ถ้ามีจุดที่ยังทำไม่ได้ให้บอกข้อจำกัดตรง ๆ</p><a class="back" href="#top">↑ กลับสารบัญ</a></article><article id="lesson-24"><div class="source">hr_intake/README.md</div><details class="local-toc"><summary>หัวข้อในบทนี้</summary><a href="#lesson-24-identity">Identity สามแบบที่ต้องไม่ปนกัน</a><a href="#lesson-24-_1">ทางเดินข้อมูล</a><a href="#lesson-24-lab-resume">Lab ที่รันได้โดยไม่ต้องมี resume จริง</a><a href="#lesson-24-binary-n8n">ถ้ารับ binary จริงใน n8n</a><a href="#lesson-24-file-validation">File validation ยังไม่ใช่เอกสารปลอดภัย</a><a href="#lesson-24-test">Test ที่ต้องทำ</a><a href="#lesson-24-human-review">Human Review และสิ่งที่ต้องทำต่อ</a></details><h1 id="lesson-24-add-on-hr-resume-intake-ai">Add-on — HR Resume Intake ก่อนเพิ่ม AI</h1>
 <p>เราจะช่วย HR รับและจัดคิวเอกสาร ไม่จัดอันดับหรือคัดคนออก สัปดาห์นี้ผลสำเร็จหมายถึง “ได้ processing task ที่ตรวจสอบได้” ไม่ใช่ “AI อ่าน resume แล้ว”</p>
-<h2 id="lesson-20-identity">Identity สามแบบที่ต้องไม่ปนกัน</h2>
+<h2 id="lesson-24-identity">Identity สามแบบที่ต้องไม่ปนกัน</h2>
 <div class="table-scroll"><table>
 <thead>
 <tr>
@@ -1363,7 +1586,7 @@ execution evidence + service state ตรงกัน
 </tbody>
 </table></div>
 <p>ใน lab ใช้ unique <code>(candidate_id, file_hash)</code> ผู้สมัครเดิมส่งไฟล์เดิมไม่สร้าง task ใหม่ คนละ candidate ส่งไฟล์เดียวกันได้คนละ task ไม่ใช้ hash ระบุตัวบุคคล ในงานหลายตำแหน่งอาจต้องเพิ่ม job_id หรือ processing_version ตามความหมายงาน</p>
-<h2 id="lesson-20-_1">ทางเดินข้อมูล</h2>
+<h2 id="lesson-24-_1">ทางเดินข้อมูล</h2>
 <pre><code class="language-text">รับ metadata + bytes สังเคราะห์
         ↓
 ตรวจ extension + ขนาด decoded bytes + signature เบื้องต้น
@@ -1377,16 +1600,16 @@ execution evidence + service state ตรงกัน
                          ↓
                Week 4 ค่อยมี worker/AI
 </code></pre>
-<h2 id="lesson-20-lab-resume">Lab ที่รันได้โดยไม่ต้องมี resume จริง</h2>
+<h2 id="lesson-24-lab-resume">Lab ที่รันได้โดยไม่ต้องมี resume จริง</h2>
 <p>นำเข้า <a href="week-3-assets/workflows/03_hr_intake.json">03_hr_intake.json</a> เปิด mock ก่อน แล้วรัน ตัวอย่างส่ง bytes ทดสอบที่ขึ้นต้น PDF แต่ไม่ใช่เอกสารสำหรับอ่านจริง เพื่อทดสอบ intake contract เท่านั้น</p>
 <p>POST <code>/resume-intake</code> รับ candidate_id, filename, content_base64 API decode → ตรวจขนาด → คำนวณ hash เอง ห้ามเชื่อ file_hash จาก client โดยไม่ตรวจ bytes</p>
 <p>Base64 เป็น encoding ไม่ใช่ encryption ใครเห็นก็ decode ได้ จึงยังเป็นข้อมูลที่ต้องปกป้อง และขนาด base64 ใหญ่กว่า binary จึงใช้เฉพาะไฟล์เล็กใน lab นี้</p>
-<h2 id="lesson-20-binary-n8n">ถ้ารับ binary จริงใน n8n</h2>
+<h2 id="lesson-24-binary-n8n">ถ้ารับ binary จริงใน n8n</h2>
 <p>ไฟล์อยู่ใน binary property ซึ่งแยกจาก json ตรวจชื่อ property ใน output เช่น <code>data</code> อย่าคิดว่า <code>data</code> เป็นชื่อบังคับทุก node ถ้าปลายทางรับ multipart ให้ HTTP Request เลือก Form-Data → n8n Binary File แล้วตั้ง Input Data Field Name ตาม property จริง</p>
 <p>endpoint ใน mock นี้รับ JSON/base64 <strong>ไม่ใช่ multipart</strong> ดังนั้นการฝึก binary upload ต้องสร้าง endpoint multipart เพิ่มเป็น stretch หรือแปลงด้วยวิธีที่ runtime รองรับก่อน อย่าตั้ง Form-Data แล้วยิง endpoint นี้แล้วคาดว่าจะผ่าน</p>
-<h2 id="lesson-20-file-validation">File validation ยังไม่ใช่เอกสารปลอดภัย</h2>
+<h2 id="lesson-24-file-validation">File validation ยังไม่ใช่เอกสารปลอดภัย</h2>
 <p>mock ตรวจ PDF header และโครงชื่อไฟล์หลักใน ZIP ของ DOCX แต่ไม่ได้ parse เอกสาร, ตรวจ malware, encrypted PDF, zip bomb หรือเนื้อหาภายใน ใช้ข้อมูลสังเคราะห์เท่านั้น งานจริงต้องมีขนาดจำกัดตั้งแต่ชั้นรับ request และ isolated parser/scanner ตามนโยบายบริษัท</p>
-<h2 id="lesson-20-test">Test ที่ต้องทำ</h2>
+<h2 id="lesson-24-test">Test ที่ต้องทำ</h2>
 <ol>
 <li>ไฟล์เดิมชื่อใหม่ candidate เดิม → task เดิม</li>
 <li>ไฟล์เดิมคนละ candidate → task ใหม่ แต่ hash เท่ากัน</li>
@@ -1395,15 +1618,15 @@ execution evidence + service state ตรงกัน
 <li>ไฟล์ใหญ่เกิน 100000 decoded bytes → 422 สำหรับ lab</li>
 <li>API ล่ม → ไม่บอก HR ว่า queued ถ้ายังไม่ได้บันทึก</li>
 </ol>
-<h2 id="lesson-20-human-review">Human Review และสิ่งที่ต้องทำต่อ</h2>
+<h2 id="lesson-24-human-review">Human Review และสิ่งที่ต้องทำต่อ</h2>
 <p>ให้สร้างคิว review สำหรับ invalid file หรือ intake failure โดยเก็บ reason และ reference ที่ไม่เปิดเผยเอกสารต่อสาธารณะ ตัว mock ยังไม่มี endpoint ตัดสินใจของ HR; ผู้เรียนต้องออกแบบ task state, reviewer identity และ audit เป็น deliverable ไม่สมมติว่ามีครบแล้ว</p>
-<p>สิ่งที่ส่งท้ายบท: export ใหม่, test evidence และคำตอบ “ทำไมไฟล์ซ้ำจึงไม่เท่ากับคนเดียวกัน?” ขั้นนี้ปูทางให้ Week 4 เพิ่ม extraction, evidence validation และ human review โดยไม่ต้องรื้อ intake ใหม่</p><a class="back" href="#top">↑ กลับสารบัญ</a></article><article id="lesson-21"><div class="source">lab/.pytest_cache/README.md</div><details class="local-toc"><summary>หัวข้อในบทนี้</summary></details><h1 id="lesson-21-pytest-cache-directory">pytest cache directory</h1>
+<p>สิ่งที่ส่งท้ายบท: export ใหม่, test evidence และคำตอบ “ทำไมไฟล์ซ้ำจึงไม่เท่ากับคนเดียวกัน?” ขั้นนี้ปูทางให้ Week 4 เพิ่ม extraction, evidence validation และ human review โดยไม่ต้องรื้อ intake ใหม่</p><a class="back" href="#top">↑ กลับสารบัญ</a></article><article id="lesson-25"><div class="source">lab/.pytest_cache/README.md</div><details class="local-toc"><summary>หัวข้อในบทนี้</summary></details><h1 id="lesson-25-pytest-cache-directory">pytest cache directory</h1>
 <p>This directory contains data from the pytest's cache plugin,
 which provides the <code>--lf</code> and <code>--ff</code> options, as well as the <code>cache</code> fixture.</p>
 <p><strong>Do not</strong> commit this to version control.</p>
-<p>See <a href="https://docs.pytest.org/en/stable/how-to/cache.html">the docs</a> for more information.</p><a class="back" href="#top">↑ กลับสารบัญ</a></article><article id="lesson-22"><div class="source">lab/README.md</div><details class="local-toc"><summary>หัวข้อในบทนี้</summary><a href="#lesson-22-_1">เริ่มบริการ</a><a href="#lesson-22-contract-failure-modes">Contract และ failure modes</a><a href="#lesson-22-reset">Reset แบบไม่ลบหลักฐาน</a><a href="#lesson-22-_2">ข้อจำกัดที่ตั้งใจไว้</a></details><h1 id="lesson-22-lab-mock-api-week-3">Lab — Mock API สำหรับ Week 3</h1>
+<p>See <a href="https://docs.pytest.org/en/stable/how-to/cache.html">the docs</a> for more information.</p><a class="back" href="#top">↑ กลับสารบัญ</a></article><article id="lesson-26"><div class="source">lab/README.md</div><details class="local-toc"><summary>หัวข้อในบทนี้</summary><a href="#lesson-26-_1">เริ่มบริการ</a><a href="#lesson-26-contract-failure-modes">Contract และ failure modes</a><a href="#lesson-26-reset">Reset แบบไม่ลบหลักฐาน</a><a href="#lesson-26-_2">ข้อจำกัดที่ตั้งใจไว้</a></details><h1 id="lesson-26-lab-mock-api-week-3">Lab — Mock API สำหรับ Week 3</h1>
 <p>บริการนี้จำลองเหตุการณ์ด้วย SQLite บนเครื่อง ไม่ทำธุรกรรมจริง ไม่ส่งข้อความออก และไม่มี authentication จึงรันเฉพาะ loopback ห้าม deploy API นี้ไป Vercel หรือเปิดรับข้อมูลจริง</p>
-<h2 id="lesson-22-_1">เริ่มบริการ</h2>
+<h2 id="lesson-26-_1">เริ่มบริการ</h2>
 <p>เปิด PowerShell ที่โฟลเดอร์ <code>lab</code> แล้วใช้ environment ใหม่:</p>
 <pre><code class="language-powershell">python -m venv .venv
 .\.venv\Scripts\python.exe -m pip install -r requirements.txt
@@ -1411,7 +1634,7 @@ which provides the <code>--lf</code> and <code>--ff</code> options, as well as t
 .\.venv\Scripts\python.exe -m uvicorn app:app --host 127.0.0.1 --port 8013
 </code></pre>
 <p>เปิด <code>http://127.0.0.1:8013/docs</code> เพื่อทดลอง API หากมี environment ที่ติดตั้ง dependencies อยู่แล้ว ใช้ environment นั้นได้ ไม่ต้องติดตั้งซ้ำ requirements ระบุช่วงที่รองรับ ไม่ใช่ lockfile สำหรับ production</p>
-<h2 id="lesson-22-contract-failure-modes">Contract และ failure modes</h2>
+<h2 id="lesson-26-contract-failure-modes">Contract และ failure modes</h2>
 <p>POST <code>/events</code> รับ event_id แบบ string, amount_minor แบบ integer บวก และ mode ตัวเลือก ขนาดเงินใช้หน่วยย่อย เช่น 1200 สตางค์ = 12 บาท ตัวอย่างนี้ไม่คำนวณเงินจริง</p>
 <div class="table-scroll"><table>
 <thead>
@@ -1445,11 +1668,11 @@ Invoke-RestMethod -Method Post -Uri 'http://127.0.0.1:8013/events' -ContentType 
 Invoke-RestMethod -Uri 'http://127.0.0.1:8013/events/LAB-NEW-1'
 Invoke-RestMethod -Uri 'http://127.0.0.1:8013/audit/LAB-NEW-1'
 </code></pre>
-<h2 id="lesson-22-reset">Reset แบบไม่ลบหลักฐาน</h2>
+<h2 id="lesson-26-reset">Reset แบบไม่ลบหลักฐาน</h2>
 <p>หยุดบริการด้วย Ctrl+C แล้วตั้ง <code>$env:W3_DB_PATH = 'week3_round2.sqlite3'</code> ก่อนเปิดใหม่ จะเริ่ม database lab ใหม่ เก็บไฟล์เก่าไว้ตรวจสอบ ไม่ลบฐานข้อมูลอื่นในเครื่อง</p>
-<h2 id="lesson-22-_2">ข้อจำกัดที่ตั้งใจไว้</h2>
-<p>ไม่มี background worker: resume task queued จะไม่ถูกประมวลผลเอง ไม่มี notification, OCR, malware scan หรือระบบ HR login เป็นชุดฝึก contract และ failure handling ไม่ใช่ระบบพร้อมใช้จริง การตรวจ signature ของไฟล์เป็นเพียงเบื้องต้น ไม่ยืนยันว่า parse ได้หรือปลอดภัย</p><a class="back" href="#top">↑ กลับสารบัญ</a></article><article id="lesson-23"><div class="source">SOURCES.md</div><details class="local-toc"><summary>หัวข้อในบทนี้</summary><a href="#lesson-23-textbook">อ้างอิงเพิ่มเติมสำหรับฉบับ Textbook</a><a href="#lesson-23-lab">การออกแบบเฉพาะ lab</a><a href="#lesson-23-_2">คำที่ไม่ควรสรุปเกินหลักฐาน</a></details><h1 id="lesson-23-_1">แหล่งอ้างอิงและขอบเขตของบทเรียน</h1>
-<h2 id="lesson-23-textbook">อ้างอิงเพิ่มเติมสำหรับฉบับ Textbook</h2>
+<h2 id="lesson-26-_2">ข้อจำกัดที่ตั้งใจไว้</h2>
+<p>ไม่มี background worker: resume task queued จะไม่ถูกประมวลผลเอง ไม่มี notification, OCR, malware scan หรือระบบ HR login เป็นชุดฝึก contract และ failure handling ไม่ใช่ระบบพร้อมใช้จริง การตรวจ signature ของไฟล์เป็นเพียงเบื้องต้น ไม่ยืนยันว่า parse ได้หรือปลอดภัย</p><a class="back" href="#top">↑ กลับสารบัญ</a></article><article id="lesson-27"><div class="source">SOURCES.md</div><details class="local-toc"><summary>หัวข้อในบทนี้</summary><a href="#lesson-27-textbook">อ้างอิงเพิ่มเติมสำหรับฉบับ Textbook</a><a href="#lesson-27-lab">การออกแบบเฉพาะ lab</a><a href="#lesson-27-_2">คำที่ไม่ควรสรุปเกินหลักฐาน</a></details><h1 id="lesson-27-_1">แหล่งอ้างอิงและขอบเขตของบทเรียน</h1>
+<h2 id="lesson-27-textbook">อ้างอิงเพิ่มเติมสำหรับฉบับ Textbook</h2>
 <ul>
 <li><a href="https://docs.n8n.io/data/data-mapping/data-mapping-ui/">n8n Docs — Referencing data in the UI</a></li>
 <li><a href="https://docs.n8n.io/workflows/executions/all-executions/">n8n Docs — All executions and retry/debug behavior</a></li>
@@ -1465,18 +1688,18 @@ Invoke-RestMethod -Uri 'http://127.0.0.1:8013/audit/LAB-NEW-1'
 <li>บท 04: <a href="https://docs.n8n.io/integrations/builtin/core-nodes/n8n-nodes-base.webhook/">Webhook</a> — request/response configuration และ test/production workflow</li>
 </ul>
 <p>ชื่อ UI และความสามารถอาจต่างจาก n8n 1.115.3 ที่พบในเครื่อง ให้ดู output และ version จริงประกอบ หาก documentation URL เปลี่ยน ให้ค้นชื่อ node จากหน้าเอกสารหลัก ไม่ใช้ภาพหน้าจอเก่าเป็นข้อยืนยันว่า option ยังอยู่ตำแหน่งเดิม</p>
-<h2 id="lesson-23-lab">การออกแบบเฉพาะ lab</h2>
+<h2 id="lesson-27-lab">การออกแบบเฉพาะ lab</h2>
 <p>นโยบาย 3 attempts, endpoint port 8013, SQLite schema, mode จำลอง failure, ขนาดไฟล์ 100000 bytes และ dedup <code>(candidate_id,file_hash)</code> เป็นการตัดสินใจสำหรับแบบฝึกนี้ ไม่ใช่ข้อบังคับของ n8n หรือบริษัท</p>
-<h2 id="lesson-23-_2">คำที่ไม่ควรสรุปเกินหลักฐาน</h2>
-<p>Production-style หมายถึงฝึกแนวคิด reliability และ handoff ไม่ใช่รับรอง production-ready; queued ไม่ใช่ processed; file signature ผ่านไม่ใช่ safe document; mock tests ผ่านไม่เท่ากับการเชื่อมระบบบริษัทผ่าน</p><a class="back" href="#top">↑ กลับสารบัญ</a></article><article id="lesson-24"><div class="source">VERIFICATION.md</div><details class="local-toc"><summary>หัวข้อในบทนี้</summary><a href="#lesson-24-_1">ตรวจแล้ว</a><a href="#lesson-24-workflow-runtime">Workflow runtime</a><a href="#lesson-24-_2">หนังสือและชุดดาวน์โหลด</a><a href="#lesson-24-_3">สิ่งที่ผู้เรียนต้องทำเองตามโจทย์</a></details><h1 id="lesson-24-verification">Verification — สถานะการตรวจชุดเรียน</h1>
+<h2 id="lesson-27-_2">คำที่ไม่ควรสรุปเกินหลักฐาน</h2>
+<p>Production-style หมายถึงฝึกแนวคิด reliability และ handoff ไม่ใช่รับรอง production-ready; queued ไม่ใช่ processed; file signature ผ่านไม่ใช่ safe document; mock tests ผ่านไม่เท่ากับการเชื่อมระบบบริษัทผ่าน</p><a class="back" href="#top">↑ กลับสารบัญ</a></article><article id="lesson-28"><div class="source">VERIFICATION.md</div><details class="local-toc"><summary>หัวข้อในบทนี้</summary><a href="#lesson-28-_1">ตรวจแล้ว</a><a href="#lesson-28-workflow-runtime">Workflow runtime</a><a href="#lesson-28-_2">หนังสือและชุดดาวน์โหลด</a><a href="#lesson-28-_3">สิ่งที่ผู้เรียนต้องทำเองตามโจทย์</a></details><h1 id="lesson-28-verification">Verification — สถานะการตรวจชุดเรียน</h1>
 <p>วันที่ตรวจ runtime เดิม: 10 กันยายน 2026<br/>
 วันที่ rebuild/ตรวจหนังสือฉบับ Textbook: 12 กันยายน 2026</p>
-<h2 id="lesson-24-_1">ตรวจแล้ว</h2>
+<h2 id="lesson-28-_1">ตรวจแล้ว</h2>
 <ul>
 <li>Mock API tests: 18 tests ผ่าน รวม strict validation, duplicate/conflict, concurrent duplicate, 429/503, pagination และ resume identity/hash</li>
 <li>ใช้ test database แยก ไม่แตะฐานข้อมูลฝึกเดิมของผู้เรียน</li>
 </ul>
-<h2 id="lesson-24-workflow-runtime">Workflow runtime</h2>
+<h2 id="lesson-28-workflow-runtime">Workflow runtime</h2>
 <ul>
 <li>นำเข้า workflow JSON ทั้ง 4 ไฟล์ผ่าน n8n CLI 1.115.3 สำเร็จ โดยใช้ user folder และ database สำหรับตรวจชุดนี้แยกจาก instance เดิม</li>
 <li>Items Lab: ได้ needs_review เป็น false และ true ตาม amounts ของสอง items</li>
@@ -1484,7 +1707,7 @@ Invoke-RestMethod -Uri 'http://127.0.0.1:8013/audit/LAB-NEW-1'
 <li>HR Synthetic Intake: สร้าง queued task จาก bytes สังเคราะห์ได้</li>
 <li>FlowGuard BROKEN: ยืนยันว่า API ตอบ 422 แต่ node สุดท้ายรายงาน succeeded จริง นี่คือ bug ที่โจทย์ต้องการให้แก้ ไม่ใช่ผลผ่านของ workflow ที่ถูกต้อง</li>
 </ul>
-<h2 id="lesson-24-_2">หนังสือและชุดดาวน์โหลด</h2>
+<h2 id="lesson-28-_2">หนังสือและชุดดาวน์โหลด</h2>
 <ul>
 <li>รวมเอกสาร Markdown 25 ไฟล์เป็น HTML; ตรวจ 201 anchors ทุกจุด ไม่มี ID ซ้ำหรือ internal link ขาด</li>
 <li>มี code/flow blocks 68 ชุด และ archive source 36 ไฟล์</li>
@@ -1492,6 +1715,6 @@ Invoke-RestMethod -Uri 'http://127.0.0.1:8013/audit/LAB-NEW-1'
 <li>ยังไม่ได้ทดสอบการคลิก UI ทุกขั้นตอนใน browser หรือ workflow บน n8n รุ่นอื่น</li>
 </ul>
 <p>ฉบับ Textbook เพิ่ม Core/Practice/Deep Dive, node contract, Canvas/Input/Parameters/Output mock, debug ladder และ architecture cases โดยไม่เปลี่ยน workflow JSON หรือ Mock API ที่เคยผ่าน runtime tests</p>
-<h2 id="lesson-24-_3">สิ่งที่ผู้เรียนต้องทำเองตามโจทย์</h2>
+<h2 id="lesson-28-_3">สิ่งที่ผู้เรียนต้องทำเองตามโจทย์</h2>
 <p>FlowGuard starter จงใจมีข้อผิดพลาด ไม่ใช่ reference solution; bounded retry, production webhook, schedule, Error Workflow และ human review ต้องประกอบและทดสอบตาม Drills/Challenge ชุด API tests ไม่ได้พิสูจน์ว่า workflow ที่ผู้เรียนสร้างผ่านกรณีเหล่านี้แล้ว</p>
 <p>ไฟล์ PDF bytes ตัวอย่างเป็น fixture สำหรับ intake validation ไม่ใช่ resume ที่เปิดอ่านได้ และ mock ไม่มี AI worker</p><a class="back" href="#top">↑ กลับสารบัญ</a></article></main></div><footer>ข้อมูลสังเคราะห์สำหรับ local lab • อ่านสถานะการทดสอบใน Verification</footer></body></html>

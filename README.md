@@ -1,6 +1,6 @@
 # AI & Automation Internship Learning Portal
 
-Static portal containing the Book 00–07 textbook collection, the original five-week learning path, a reusable project-delivery template pack and quick-reference atlases.
+Static portal containing the Book 00–07 textbook collection, the original five-week learning path, embedded visual notes, a reusable project-delivery template pack and quick-reference atlases.
 
 ## Files
 
