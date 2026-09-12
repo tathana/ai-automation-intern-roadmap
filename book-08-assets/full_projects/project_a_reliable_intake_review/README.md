@@ -1,5 +1,7 @@
 # Capstone Lab — Native ก่อน แล้วค่อย Compose
 
+ถ้าเพิ่งเรียน API/worker/transaction และเปิด source แล้วรู้สึกว่าโค้ดแน่น ให้เริ่ม [GUIDED_CODE_TOUR.md](GUIDED_CODE_TOUR.md) ก่อน เอกสารนั้นแปลศัพท์และไล่ request หนึ่งก้อนผ่าน `models.py → api.py → repository.py → service.py → worker.py` ทีละช่วง
+
 ## ขอบเขต
 
 ระบบ local-only สำหรับข้อมูลสังเคราะห์ มี API, worker, SQLite queue, mock AI, audit และ review decision ไม่มีการเรียก paid API ไม่มีอีเมลหรือการจ้างงานอัตโนมัติ เว็บบทเรียนไม่ได้ host backend นี้ ต้องดาวน์โหลด ZIP แล้วรันในเครื่อง

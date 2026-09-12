@@ -2,6 +2,8 @@
 
 Reference implementation สำหรับข้อมูลสังเคราะห์ รับ event เป็น batch จาก CSV/JSON หรือ API ตรวจด้วย Pydantic บันทึกทั้ง batch แบบ atomic ใน SQLite ป้องกันการส่งซ้ำ แล้วสร้างรายงานรายวันผ่าน CLI/API
 
+ถ้าเพิ่งเริ่มเรื่อง Pydantic/transaction/idempotency ให้อ่าน [GUIDED_CODE_TOUR.md](GUIDED_CODE_TOUR.md) คู่กับ source เอกสารจะไล่ CSV หนึ่งแถวจนกลายเป็นรายงานและแปลศัพท์เทคนิคทุก boundary
+
 > Local educational system • no real customer/payment data • no money movement • no production authentication
 
 ## Architecture
