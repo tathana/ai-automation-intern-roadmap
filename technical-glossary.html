@@ -1,0 +1,67 @@
+<!doctype html><html lang="th"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>Technical Glossary</title><style>
+:root{color-scheme:light;--ink:#203149;--muted:#5b6b7d;--line:#dbe3e9;--accent:#096b63}
+*{box-sizing:border-box}html{scroll-behavior:smooth;scroll-padding-top:24px}body{margin:0;background:#f3f6f8;color:var(--ink);font-family:"Leelawadee UI",Tahoma,sans-serif;font-size:17px;line-height:1.9}a{color:var(--accent);text-underline-offset:4px}header{background:#173b43;color:white;padding:56px max(24px,calc((100vw - 1240px)/2));}header h1{font-size:clamp(28px,4vw,46px);line-height:1.35;margin:12px 0}header p{max-width:780px;color:#d9e9eb}.eyebrow{letter-spacing:2px;font-size:13px;color:#a8dfd5}.layout{max-width:1300px;margin:auto;display:grid;grid-template-columns:280px minmax(0,1fr);gap:30px;padding:30px 24px}aside{position:sticky;top:20px;align-self:start;max-height:92vh;overflow:auto;padding-right:12px}aside h2{font-size:18px}nav a{display:block;padding:9px 10px;border-bottom:1px solid var(--line);text-decoration:none;font-size:14px;line-height:1.6}nav a:hover{background:#e1eeeb}article{background:white;padding:clamp(20px,4vw,48px);border:1px solid var(--line);border-radius:12px;margin-bottom:28px;overflow-wrap:anywhere}article h1{font-size:29px;line-height:1.5;margin:20px 0 28px}h2{font-size:24px;margin-top:40px}h3{font-size:20px;margin-top:28px}pre{background:#152c3b;color:#eaf2f7;padding:20px;border-radius:8px;overflow:auto;line-height:1.65;font-size:14px;white-space:pre;overflow-wrap:normal}code{font-family:Consolas,"Courier New",monospace}p code,li code,td code{background:#edf2f5;padding:2px 5px;border-radius:4px;font-size:.9em}blockquote{margin:24px 0;padding:4px 20px;border-left:4px solid #138779;background:#eff8f5}table{border-collapse:collapse;width:100%;font-size:15px}th,td{border:1px solid var(--line);padding:12px;text-align:left;vertical-align:top}th{background:#eaf2f2}.table-scroll{overflow:auto;margin:20px 0}hr{border:0;border-top:1px solid var(--line);margin:32px 0}.source{font-size:12px;color:var(--muted)}.local-toc{margin-top:18px;font-size:14px;background:#f5f8fa;padding:10px 14px;border-radius:6px}.local-toc a{display:block;margin:7px 0}summary{cursor:pointer}.back{display:inline-block;margin-top:24px;font-size:14px}button{border:1px solid #aac8c5;background:white;color:#175c54;padding:9px 16px;border-radius:6px;cursor:pointer;font:inherit;font-size:14px}footer{max-width:1000px;margin:20px auto;padding:24px;color:var(--muted);font-size:14px}@media(max-width:850px){.layout{display:block;padding:16px}aside{position:static;max-height:none;padding:0 0 20px}nav{max-height:280px;overflow:auto}article h1{font-size:25px}body{font-size:16px}}@media print{body{background:white;font-size:11pt}header{background:white;color:black;padding:0}header p{color:black}.layout{display:block;padding:0}aside,button,.local-toc,.back{display:none}article{border:0;padding:0;break-before:page}pre{white-space:pre-wrap;background:#f0f2f4;color:black;font-size:9pt}a{color:inherit}h1,h2,h3{break-after:avoid}.table-scroll{overflow:visible}}
+</style></head><body><header id="top"><div class="eyebrow">QUICK REFERENCE</div><h1>Technical Glossary</h1><p><a style="color:white" href="book-00.html">Book 00</a> · <a style="color:white" href="book-06.html">Book 06</a> · <a style="color:white" href="index.html">หน้าหลัก</a></p><button onclick="window.print()">พิมพ์ / บันทึกเป็น PDF</button></header><div class="layout"><aside><h2>Reference</h2><nav><a href="#content">Technical Glossary</a></nav></aside><main><article id="content"><h1 id="technical-glossary">Technical Glossary — ศัพท์ที่ใช้คุยกับทีม</h1>
+<h2 id="ac">A–C</h2>
+<p><strong>Acceptance criteria</strong> — เงื่อนไขตรวจได้ว่างานตอบ requirement เช่น Given/When/Then</p>
+<p><strong>Adapter</strong> — ชั้นแปลง interface ของเราไปหา DB/SDK/provider ภายนอก</p>
+<p><strong>API contract</strong> — method/path/input/output/status/error ที่ producer และ consumer ตกลง</p>
+<p><strong>Artifact</strong> — ผล build ที่นำไปใช้/เผยแพร่ เช่น wheel, Docker image, HTML, ZIP</p>
+<p><strong>ASGI</strong> — interface มาตรฐานของ Python async web application ที่ FastAPI/Uvicorn ใช้</p>
+<p><strong>Audit trail</strong> — ประวัติ actor/action/time/resource/result ที่ย้อนตรวจได้</p>
+<p><strong>Backoff</strong> — เพิ่มช่วงรอก่อน retry รอบถัดไป; มักใช้ jitter ลดการยิงพร้อมกัน</p>
+<p><strong>Backpressure</strong> — กลไกชะลอ input เมื่อ downstream รับไม่ทัน</p>
+<p><strong>Business key</strong> — identity ของเหตุการณ์/งานในความหมายธุรกิจ ไม่ใช่ execution ID</p>
+<p><strong>CI/CD</strong> — automation สำหรับตรวจ/build และนำ artifact ไป environment ต่าง ๆ</p>
+<p><strong>Correlation ID / Trace ID</strong> — รหัสเชื่อม logs/events ข้าม component</p>
+<h2 id="di">D–I</h2>
+<p><strong>Dependency injection</strong> — ส่ง dependency ให้ component แทนสร้าง/หา global ภายใน ช่วย test/สลับ implementation</p>
+<p><strong>Deterministic</strong> — input/state เดิมภายใต้เงื่อนไขเดียวให้ผลเดิม เหมาะกับ rules/tests</p>
+<p><strong>Durable state</strong> — state ที่ยังอยู่หลัง process/container restart ตาม guarantee ที่ระบุ</p>
+<p><strong>Embedding</strong> — vector representation สำหรับเปรียบเทียบความใกล้เชิงความหมาย ไม่ใช่ข้อเท็จจริงหรือสิทธิ์เข้าถึง</p>
+<p><strong>Evaluation (Eval)</strong> — ชุดข้อมูล/เกณฑ์/metric สำหรับวัดคุณภาพ AI system</p>
+<p><strong>Evidence validation</strong> — ตรวจว่า claim/output มีหลักฐานจาก source ที่กำหนด</p>
+<p><strong>Execution</strong> — รอบการทำงานหนึ่งรอบของ workflow/process; อาจมีหลาย business items</p>
+<p><strong>Exit code</strong> — เลขที่ process คืนให้ caller; 0 มักสำเร็จ non-zero มัก failure</p>
+<p><strong>Health vs Readiness</strong> — health บอก process ยังทำงาน; readiness บอกพร้อมรับ traffic ตาม dependencies/policy</p>
+<p><strong>Human-in-the-loop</strong> — จุดที่คนตรวจ/ตัดสินพร้อมข้อมูล สิทธิ์ state และ audit ไม่ใช่แค่ส่งแจ้งเตือน</p>
+<p><strong>Idempotency</strong> — การเรียกซ้ำใน scope/key เดิมไม่สร้างผลธุรกิจซ้ำที่ไม่ตั้งใจ</p>
+<p><strong>Invariant</strong> — เงื่อนไขที่ต้องจริงเสมอ เช่น succeeded ต้องมี result reference</p>
+<h2 id="lr">L–R</h2>
+<p><strong>Lease</strong> — สิทธิ์ครอบครองงานชั่วคราวที่หมดอายุเพื่อให้ worker อื่นกู้ได้</p>
+<p><strong>LLM</strong> — โมเดลภาษาที่สร้าง output ตามบริบทแบบ probabilistic; output ยังต้องตรวจ</p>
+<p><strong>Migration</strong> — การเปลี่ยน schema/data แบบ versioned และ deployable</p>
+<p><strong>Mock</strong> — ตัวแทน dependency ที่ควบคุม output/failure ได้ ไม่พิสูจน์ dependency จริง</p>
+<p><strong>Node contract</strong> — input/process/output/failure ของ node ใน workflow</p>
+<p><strong>Observability</strong> — ความสามารถเข้าใจ state ภายในจาก logs/metrics/traces และ domain signals</p>
+<p><strong>Orchestration</strong> — การประสานหลายขั้นตอน/services ให้เป็น flow เดียว</p>
+<p><strong>PII</strong> — ข้อมูลที่ระบุหรือเชื่อมโยงบุคคล ต้องจัดการตามนโยบาย/กฎหมายองค์กร</p>
+<p><strong>Prompt injection</strong> — input ภายนอกพยายามเปลี่ยนพฤติกรรม/อำนาจของ LLM application</p>
+<p><strong>RAG</strong> — retrieval-augmented generation: ค้น evidence แล้วให้โมเดลตอบจากบริบทนั้น</p>
+<p><strong>Repository pattern</strong> — abstraction สำหรับ persistence/query ไม่ใช่ชื่อ Git repository ในบริบทนี้</p>
+<p><strong>Retry</strong> — ลอง operation ใหม่ตาม policy; ไม่เท่ากับ recovery และอาจทำ side effect ซ้ำ</p>
+<p><strong>Rollback</strong> — กลับ deployment/config เมื่อทำได้; database/data change อาจต้อง forward fix/restore</p>
+<h2 id="sz">S–Z</h2>
+<p><strong>Schema validation</strong> — ตรวจ shape/type/constraints ไม่พิสูจน์ความจริงหรือ authorization</p>
+<p><strong>Side effect</strong> — การเปลี่ยนสิ่งภายนอก function เช่นเขียน DB ส่งอีเมล เรียก payment</p>
+<p><strong>Source of truth</strong> — แหล่ง state ที่ระบบถือเป็นหลักเมื่อข้อมูลหลายสำเนาขัดกัน</p>
+<p><strong>Structured output</strong> — output ที่มี schema/fields ให้ parse/validate ได้</p>
+<p><strong>Synthetic data</strong> — ข้อมูลสร้างเพื่อทดสอบที่ไม่ใช่ข้อมูลบุคคล/ธุรกิจจริง</p>
+<p><strong>Throughput</strong> — จำนวนงานต่อหน่วยเวลา; ต่างจาก latency ของงานหนึ่งชิ้น</p>
+<p><strong>Timeout</strong> — เพดานเวลารอ; เมื่อหมดเวลา outcome ของ remote side effect อาจยังไม่รู้</p>
+<p><strong>Transaction</strong> — กลุ่ม database operations ที่ commit/rollback ตาม atomic boundary</p>
+<p><strong>Trust boundary</strong> — จุดที่ข้อมูล/identity/authority ข้ามขอบเขตและต้องตรวจ</p>
+<p><strong>Webhook</strong> — HTTP callback ที่ระบบต้นทางส่งเมื่อ event เกิด; อาจถูกส่งซ้ำ/สลับลำดับ</p>
+<p><strong>Worker</strong> — process ที่หยิบ queued task มาประมวลผล แยกจาก API intake ได้</p>
+<h2 id="_1">คำที่มักพูดผิด</h2>
+<pre><code class="language-text">HTTP 200             ≠ business succeeded เสมอ
+queued               ≠ processed
+schema valid         ≠ factually correct
+quote exists         ≠ claim supported
+confidence 0.9       ≠ ถูก 90% หากไม่ calibration
+mock tests pass      ≠ integration/production pass
+container running    ≠ service ready
+Git revert code      ≠ database rollback
+human notified       ≠ human review workflow สมบูรณ์
+AI agent             ≠ ควรมีสิทธิ์ทำทุก action
+</code></pre><a class="back" href="#top">↑ กลับด้านบน</a></article></main></div><footer>Quick reference ไม่แทน project runbook หรือ policy ของบริษัท</footer></body></html>

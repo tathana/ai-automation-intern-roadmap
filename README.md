@@ -1,10 +1,11 @@
 # AI & Automation Internship Learning Portal
 
-Static learning portal containing the generated Week 1 through Week 5 HTML books.
+Static portal containing the Book 00–06 textbook collection, the original five-week learning path and quick-reference atlases.
 
 ## Files
 
 - `index.html` — landing page
+- `book-00.html` / `book-00-materials.zip` — Developer Toolkit and command-line foundation
 - `week-1.html` — Week 1 learning book
 - `week-2.html` — Week 2 learning book
 - `week-2-materials.zip` — Week 2 Markdown, drills and API Sentinel starter
@@ -18,6 +19,11 @@ Static learning portal containing the generated Week 1 through Week 5 HTML books
 - `week-5.html` — Git, Docker, clean code, durable workers, documentation and capstones
 - `week-5-materials.zip` — source lessons, local capstone/tests, Compose and ReleaseGuard starter
 - `week-5-assets/` — individual source and workflow downloads linked from the book
+- `book-06.html` / `book-06-materials.zip` — System Design & Delivery Playbook
+- `command-atlas.html` — searchable command reference
+- `debugging-atlas.html` — symptom-to-layer debugging reference
+- `technical-glossary.html` — Thai/English engineering vocabulary
+- `reference-atlases.zip` — Markdown source of all three reference pages
 
 ## Preview locally
 

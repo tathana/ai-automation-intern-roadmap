@@ -1,0 +1,160 @@
+<!doctype html><html lang="th"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>Debugging Atlas</title><style>
+:root{color-scheme:light;--ink:#203149;--muted:#5b6b7d;--line:#dbe3e9;--accent:#096b63}
+*{box-sizing:border-box}html{scroll-behavior:smooth;scroll-padding-top:24px}body{margin:0;background:#f3f6f8;color:var(--ink);font-family:"Leelawadee UI",Tahoma,sans-serif;font-size:17px;line-height:1.9}a{color:var(--accent);text-underline-offset:4px}header{background:#173b43;color:white;padding:56px max(24px,calc((100vw - 1240px)/2));}header h1{font-size:clamp(28px,4vw,46px);line-height:1.35;margin:12px 0}header p{max-width:780px;color:#d9e9eb}.eyebrow{letter-spacing:2px;font-size:13px;color:#a8dfd5}.layout{max-width:1300px;margin:auto;display:grid;grid-template-columns:280px minmax(0,1fr);gap:30px;padding:30px 24px}aside{position:sticky;top:20px;align-self:start;max-height:92vh;overflow:auto;padding-right:12px}aside h2{font-size:18px}nav a{display:block;padding:9px 10px;border-bottom:1px solid var(--line);text-decoration:none;font-size:14px;line-height:1.6}nav a:hover{background:#e1eeeb}article{background:white;padding:clamp(20px,4vw,48px);border:1px solid var(--line);border-radius:12px;margin-bottom:28px;overflow-wrap:anywhere}article h1{font-size:29px;line-height:1.5;margin:20px 0 28px}h2{font-size:24px;margin-top:40px}h3{font-size:20px;margin-top:28px}pre{background:#152c3b;color:#eaf2f7;padding:20px;border-radius:8px;overflow:auto;line-height:1.65;font-size:14px;white-space:pre;overflow-wrap:normal}code{font-family:Consolas,"Courier New",monospace}p code,li code,td code{background:#edf2f5;padding:2px 5px;border-radius:4px;font-size:.9em}blockquote{margin:24px 0;padding:4px 20px;border-left:4px solid #138779;background:#eff8f5}table{border-collapse:collapse;width:100%;font-size:15px}th,td{border:1px solid var(--line);padding:12px;text-align:left;vertical-align:top}th{background:#eaf2f2}.table-scroll{overflow:auto;margin:20px 0}hr{border:0;border-top:1px solid var(--line);margin:32px 0}.source{font-size:12px;color:var(--muted)}.local-toc{margin-top:18px;font-size:14px;background:#f5f8fa;padding:10px 14px;border-radius:6px}.local-toc a{display:block;margin:7px 0}summary{cursor:pointer}.back{display:inline-block;margin-top:24px;font-size:14px}button{border:1px solid #aac8c5;background:white;color:#175c54;padding:9px 16px;border-radius:6px;cursor:pointer;font:inherit;font-size:14px}footer{max-width:1000px;margin:20px auto;padding:24px;color:var(--muted);font-size:14px}@media(max-width:850px){.layout{display:block;padding:16px}aside{position:static;max-height:none;padding:0 0 20px}nav{max-height:280px;overflow:auto}article h1{font-size:25px}body{font-size:16px}}@media print{body{background:white;font-size:11pt}header{background:white;color:black;padding:0}header p{color:black}.layout{display:block;padding:0}aside,button,.local-toc,.back{display:none}article{border:0;padding:0;break-before:page}pre{white-space:pre-wrap;background:#f0f2f4;color:black;font-size:9pt}a{color:inherit}h1,h2,h3{break-after:avoid}.table-scroll{overflow:visible}}
+</style></head><body><header id="top"><div class="eyebrow">QUICK REFERENCE</div><h1>Debugging Atlas</h1><p><a style="color:white" href="book-00.html">Book 00</a> · <a style="color:white" href="book-06.html">Book 06</a> · <a style="color:white" href="index.html">หน้าหลัก</a></p><button onclick="window.print()">พิมพ์ / บันทึกเป็น PDF</button></header><div class="layout"><aside><h2>Reference</h2><nav><a href="#content">Debugging Atlas</a></nav></aside><main><article id="content"><h1 id="debugging-atlas">Debugging Atlas — จากอาการไปหาชั้นที่ผิด</h1>
+<h2 id="_1">กฎแรก</h2>
+<pre><code class="language-text">บันทึกอาการจริง + command + directory + version + input + expected
+       ↓
+หา failure ชั้นแรก
+       ↓
+เปลี่ยนตัวแปรเดียว
+       ↓
+รันกรณีเล็กและเก็บ evidence
+</code></pre>
+<p>อย่าเปลี่ยน code/config/dependency/network พร้อมกัน</p>
+<h2 id="command-not-found">Command Not Found</h2>
+<p>ตรวจ:</p>
+<pre><code class="language-powershell">Get-Command &lt;name&gt; -All
+$env:PATH
+</code></pre>
+<p>สาเหตุ: ยังไม่ติดตั้ง, PATH ไม่รวม executable, ใช้ shell คนละแบบ หรือเปิด terminal ก่อนติดตั้งแล้ว environment ยังไม่ refresh</p>
+<h2 id="python-import-error">Python Import Error</h2>
+<pre><code class="language-powershell">Get-Location
+python -c "import sys; print(sys.executable); print(*sys.path, sep='\n')"
+python -m pip show &lt;package&gt;
+</code></pre>
+<ul>
+<li><code>ModuleNotFoundError</code>: environment/path/package ไม่พบ</li>
+<li><code>ImportError</code>: module พบแต่ object/import cycle/version อาจผิด</li>
+<li>local file ชื่อชน package เช่น <code>fastapi.py</code>, <code>json.py</code> ทำให้ import ผิดตัว</li>
+</ul>
+<h2 id="file-not-found">File Not Found</h2>
+<p>ตรวจ current directory และ absolute target:</p>
+<pre><code class="language-powershell">Get-Location
+Test-Path -LiteralPath '.\data\input.json'
+Resolve-Path -LiteralPath '.\data' -ErrorAction SilentlyContinue
+</code></pre>
+<p>อย่าแก้ด้วย hardcode path ส่วนตัวทันที ให้ตัดสินว่า path ควรสัมพันธ์กับ CWD, project root หรือไฟล์ module</p>
+<h2 id="portconnection">Port/Connection</h2>
+<pre><code class="language-powershell">Get-NetTCPConnection -LocalPort 8000 -State Listen -ErrorAction SilentlyContinue
+curl.exe -i http://127.0.0.1:8000/health
+</code></pre>
+<div class="table-scroll"><table>
+<thead>
+<tr>
+<th>อาการ</th>
+<th>ชั้นที่น่าตรวจ</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>connection refused</td>
+<td>process/listener/host/port</td>
+</tr>
+<tr>
+<td>DNS failure</td>
+<td>hostname/resolver/network</td>
+</tr>
+<tr>
+<td>TLS/certificate</td>
+<td>scheme/certificate/trust/proxy</td>
+</tr>
+<tr>
+<td>timeout</td>
+<td>network/service/dependency; outcome อาจ unknown</td>
+</tr>
+<tr>
+<td>404</td>
+<td>ถึง HTTP server แต่ path/prefix ผิด</td>
+</tr>
+<tr>
+<td>405</td>
+<td>method ผิด</td>
+</tr>
+<tr>
+<td>422</td>
+<td>request schema/type/field</td>
+</tr>
+<tr>
+<td>500</td>
+<td>application bug/unhandled dependency error</td>
+</tr>
+<tr>
+<td>502/503</td>
+<td>gateway/upstream/readiness/capacity</td>
+</tr>
+</tbody>
+</table></div>
+<h2 id="fastapi-422">FastAPI 422</h2>
+<p>อ่าน <code>detail[].loc</code>, <code>type</code>, <code>msg</code>, <code>input</code> แล้วเทียบ path/query/header/body กับ model อย่าแก้ service เพราะ route ยังไม่ถูกเรียก</p>
+<h2 id="asynctimeout">Async/Timeout</h2>
+<p>แยก client timeout, SDK timeout, reverse-proxy timeout และ task deadline การ timeout หลังส่ง request ไม่บอกว่า server ไม่ทำ side effect ตรวจ business/idempotency state ก่อน retry</p>
+<h2 id="pytest">Pytest</h2>
+<pre><code class="language-powershell">python -m pytest tests\test_file.py::test_name -vv
+python -m pytest -x
+</code></pre>
+<ul>
+<li>0 collected: naming/config/path</li>
+<li>import error: environment/project install</li>
+<li>flaky: เวลา/network/shared state/order/randomness</li>
+<li>mock ผ่าน real fail: boundary/contract/config/network ไม่ได้ถูกทดสอบ</li>
+</ul>
+<h2 id="sqlsqlite">SQL/SQLite</h2>
+<ul>
+<li>database locked: transaction นาน/concurrent writers/connection lifecycle</li>
+<li>no such table: database path ผิดหรือ migration ไม่รัน</li>
+<li>data ไม่คง: commit/transaction/ใช้ DB คนละไฟล์</li>
+<li>duplicate race: check-then-insert ไม่มี unique constraint/atomic transaction</li>
+</ul>
+<p>พิมพ์ resolved database path และ environment ก่อนแก้ schema</p>
+<h2 id="n8n">n8n</h2>
+<pre><code class="language-text">ไม่มี execution → trigger/active/test URL
+execution มี     → เปิด node แรกที่ output ต่าง expected
+0 items          → filter/route/array-vs-items
+expression undefined → field path/type/item linking
+HTTP เขียวแต่ธุรกิจ fail → statusCode + body.status
+replay ส่งซ้ำ → side-effect idempotency
+</code></pre>
+<p>ดู Input/Parameters/Output ของ node ไม่สรุปจากสีเขียว</p>
+<h2 id="llmai-pipeline">LLM/AI Pipeline</h2>
+<pre><code class="language-text">input schema → prompt/context → provider call
+→ JSON parse → schema → evidence → policy → downstream
+</code></pre>
+<p>reason codes: <code>invalid_request</code>, <code>provider_timeout</code>, <code>invalid_json</code>, <code>invalid_schema</code>, <code>unsupported_claim</code>, <code>blocked</code>, <code>needs_review</code> แก้ชั้นแรกที่ fail ไม่เปลี่ยน prompt ทุกกรณี</p>
+<h2 id="docker">Docker</h2>
+<pre><code class="language-powershell">docker version
+docker compose config
+docker compose ps
+docker compose logs --tail 200 api
+docker inspect &lt;container&gt;
+</code></pre>
+<ul>
+<li>client มี/server error: Engine ไม่พร้อม</li>
+<li>build context ใหญ่/ไฟล์หาไม่พบ: <code>Dockerfile</code>, context, <code>.dockerignore</code>, COPY paths</li>
+<li>container ออกทันที: process exit/logs/entrypoint/config</li>
+<li>localhost ผิด: network namespace/service name/port mapping</li>
+<li>permission denied volume: UID/GID/host mount permissions</li>
+<li>unhealthy: healthcheck command/dependency/readiness</li>
+</ul>
+<h2 id="git">Git</h2>
+<pre><code class="language-powershell">git status
+git diff
+git diff --staged
+git log --oneline --decorate --graph --all -15
+git reflog
+</code></pre>
+<ul>
+<li>detached HEAD: ตรวจ commit/branch ก่อนสร้างงาน</li>
+<li>rejected push: fetch แล้วอ่าน divergence ไม่ force ทันที</li>
+<li>conflict: แก้ markers, test, stage resolution</li>
+<li>file ดูหาย: หยุด mutation ตรวจ status/log/reflog/tracked-untracked</li>
+</ul>
+<h2 id="production-incident-minimum">Production Incident Minimum</h2>
+<ol>
+<li>ลดผลกระทบ/หยุด side effect อันตราย</li>
+<li>เก็บ trace/task/execution/deployment IDs และ timestamps</li>
+<li>ตรวจ dependency health/recent changes</li>
+<li>ห้ามทดลอง destructive บน production เพื่อหาเหตุ</li>
+<li>recovery ก่อน permanent fix เมื่อเหมาะ</li>
+<li>verify state และสื่อสาร limitation</li>
+</ol><a class="back" href="#top">↑ กลับด้านบน</a></article></main></div><footer>Quick reference ไม่แทน project runbook หรือ policy ของบริษัท</footer></body></html>

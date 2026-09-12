@@ -1,0 +1,833 @@
+<!doctype html><html lang="th"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>Book 06 — System Design &amp; Delivery</title><style>
+:root{color-scheme:light;--ink:#203149;--muted:#5b6b7d;--line:#dbe3e9;--accent:#096b63}
+*{box-sizing:border-box}html{scroll-behavior:smooth;scroll-padding-top:24px}body{margin:0;background:#f3f6f8;color:var(--ink);font-family:"Leelawadee UI",Tahoma,sans-serif;font-size:17px;line-height:1.9}a{color:var(--accent);text-underline-offset:4px}header{background:#173b43;color:white;padding:56px max(24px,calc((100vw - 1240px)/2));}header h1{font-size:clamp(28px,4vw,46px);line-height:1.35;margin:12px 0}header p{max-width:780px;color:#d9e9eb}.eyebrow{letter-spacing:2px;font-size:13px;color:#a8dfd5}.layout{max-width:1300px;margin:auto;display:grid;grid-template-columns:280px minmax(0,1fr);gap:30px;padding:30px 24px}aside{position:sticky;top:20px;align-self:start;max-height:92vh;overflow:auto;padding-right:12px}aside h2{font-size:18px}nav a{display:block;padding:9px 10px;border-bottom:1px solid var(--line);text-decoration:none;font-size:14px;line-height:1.6}nav a:hover{background:#e1eeeb}article{background:white;padding:clamp(20px,4vw,48px);border:1px solid var(--line);border-radius:12px;margin-bottom:28px;overflow-wrap:anywhere}article h1{font-size:29px;line-height:1.5;margin:20px 0 28px}h2{font-size:24px;margin-top:40px}h3{font-size:20px;margin-top:28px}pre{background:#152c3b;color:#eaf2f7;padding:20px;border-radius:8px;overflow:auto;line-height:1.65;font-size:14px;white-space:pre;overflow-wrap:normal}code{font-family:Consolas,"Courier New",monospace}p code,li code,td code{background:#edf2f5;padding:2px 5px;border-radius:4px;font-size:.9em}blockquote{margin:24px 0;padding:4px 20px;border-left:4px solid #138779;background:#eff8f5}table{border-collapse:collapse;width:100%;font-size:15px}th,td{border:1px solid var(--line);padding:12px;text-align:left;vertical-align:top}th{background:#eaf2f2}.table-scroll{overflow:auto;margin:20px 0}hr{border:0;border-top:1px solid var(--line);margin:32px 0}.source{font-size:12px;color:var(--muted)}.local-toc{margin-top:18px;font-size:14px;background:#f5f8fa;padding:10px 14px;border-radius:6px}.local-toc a{display:block;margin:7px 0}summary{cursor:pointer}.back{display:inline-block;margin-top:24px;font-size:14px}button{border:1px solid #aac8c5;background:white;color:#175c54;padding:9px 16px;border-radius:6px;cursor:pointer;font:inherit;font-size:14px}footer{max-width:1000px;margin:20px auto;padding:24px;color:var(--muted);font-size:14px}@media(max-width:850px){.layout{display:block;padding:16px}aside{position:static;max-height:none;padding:0 0 20px}nav{max-height:280px;overflow:auto}article h1{font-size:25px}body{font-size:16px}}@media print{body{background:white;font-size:11pt}header{background:white;color:black;padding:0}header p{color:black}.layout{display:block;padding:0}aside,button,.local-toc,.back{display:none}article{border:0;padding:0;break-before:page}pre{white-space:pre-wrap;background:#f0f2f4;color:black;font-size:9pt}a{color:inherit}h1,h2,h3{break-after:avoid}.table-scroll{overflow:visible}}
+</style></head><body><header id="top"><div class="eyebrow">PREMIUM TEXTBOOK COLLECTION</div><h1>Book 06 — System Design &amp; Delivery</h1><p>จาก requirement ไปสู่ architecture, state, security, testing และ handoff</p><p><a style="color:white" href="command-atlas.html">Command Atlas</a> · <a style="color:white" href="debugging-atlas.html">Debugging Atlas</a> · <a style="color:white" href="technical-glossary.html">Technical Glossary</a></p><button onclick="window.print()">พิมพ์ / บันทึกเป็น PDF</button> <a style="color:white" href="book-06-materials.zip">ดาวน์โหลด Markdown</a></header><div class="layout"><aside><h2>สารบัญ</h2><nav><a href="#lesson-0">Book 06 — System Design &amp; Delivery Playbook</a><a href="#lesson-1">00 — Requirement, Scope และ Acceptance Criteria</a><a href="#lesson-2">01 — Project Layout Patterns</a><a href="#lesson-3">02 — Layers, Dependencies และ Contracts</a><a href="#lesson-4">03 — Data Model, State, Queue และ Idempotency</a><a href="#lesson-5">04 — Configuration, Security, Privacy และ Trust Boundaries</a><a href="#lesson-6">05 — Testing, Observability, CI/CD และ Rollout</a><a href="#lesson-7">06 — Architecture Gallery</a><a href="#lesson-8">07 — ADR, Design Review, Documentation และ Handoff</a><a href="#lesson-9">08 — Sources, Verification และ Maturity Model</a></nav></aside><main><article id="lesson-0"><div class="source">README.md</div><details class="local-toc"><summary>หัวข้อในบทนี้</summary><a href="#lesson-0-_1">เป้าหมาย</a><a href="#lesson-0-_2">บทเรียน</a><a href="#lesson-0-_3">วิธีใช้</a></details><h1 id="lesson-0-book-06-system-design-delivery-playbook">Book 06 — System Design &amp; Delivery Playbook</h1>
+<p>เล่มนี้ใช้หลังรู้เครื่องมือพื้นฐานแล้ว เพื่อเปลี่ยน requirement ที่ยังคลุมเครือให้เป็นระบบที่มีขอบเขต, contracts, state, failure policy, tests และผู้รับผิดชอบ เหมาะกลับมาเปิดก่อนเริ่มโปรเจกต์หรือส่ง design ให้ทีมตรวจ</p>
+<h2 id="lesson-0-_1">เป้าหมาย</h2>
+<pre><code class="language-text">ปัญหาธุรกิจ → scope/metrics → data + contracts → components
+          → failures/security → tests/observability → rollout/handoff
+</code></pre>
+<h2 id="lesson-0-_2">บทเรียน</h2>
+<div class="table-scroll"><table>
+<thead>
+<tr>
+<th>บท</th>
+<th>เนื้อหา</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>00</td>
+<td>Requirement, scope และ acceptance criteria</td>
+</tr>
+<tr>
+<td>01</td>
+<td>Project layouts สำหรับ script/API/worker/n8n/AI</td>
+</tr>
+<tr>
+<td>02</td>
+<td>Layers, dependencies และ API contracts</td>
+</tr>
+<tr>
+<td>03</td>
+<td>Data model, state machine, queue และ idempotency</td>
+</tr>
+<tr>
+<td>04</td>
+<td>Configuration, security, privacy และ trust boundaries</td>
+</tr>
+<tr>
+<td>05</td>
+<td>Testing, observability, CI/CD และ rollout</td>
+</tr>
+<tr>
+<td>06</td>
+<td>Architecture gallery: HR, report, ticket, transaction, RAG</td>
+</tr>
+<tr>
+<td>07</td>
+<td>ADR, design review, documentation และ handoff</td>
+</tr>
+<tr>
+<td>08</td>
+<td>Sources, verification และ maturity model</td>
+</tr>
+</tbody>
+</table></div>
+<h2 id="lesson-0-_3">วิธีใช้</h2>
+<p>อ่านบท 00 แล้วสร้าง design pack ของโปรเจกต์หนึ่งชิ้น จากนั้นเปิดเฉพาะบทที่สัมพันธ์กับความเสี่ยง เช่นมี webhook ให้อ่าน state/idempotency, มี AI ให้อ่าน trust boundary/evaluation และมี side effect ให้เพิ่ม authorization/human approval</p>
+<p>เล่มนี้ไม่บังคับทุกโปรเจกต์ใช้โครงสร้างใหญ่ เริ่ม architecture ที่เล็กที่สุดซึ่งรองรับ risk/ทีม แล้วเพิ่มความซับซ้อนเมื่อมีเหตุผลและหลักฐาน</p><a class="back" href="#top">↑ กลับสารบัญ</a></article><article id="lesson-1"><div class="source">00_requirements_scope_acceptance.md</div><details class="local-toc"><summary>หัวข้อในบทนี้</summary><a href="#lesson-1-_1">เริ่มจากปัญหา ไม่ใช่เทคโนโลยี</a><a href="#lesson-1-problem-statement-template">Problem Statement Template</a><a href="#lesson-1-functional-vs-non-functional-requirements">Functional vs Non-functional Requirements</a><a href="#lesson-1-acceptance-criteria">Acceptance Criteria ที่ตรวจได้</a><a href="#lesson-1-success-metrics-guardrails">Success Metrics และ Guardrails</a><a href="#lesson-1-constraint-assumption-log">Constraint และ Assumption Log</a><a href="#lesson-1-scope-ladder">Scope Ladder</a><a href="#lesson-1-design-exercise">Design Exercise</a></details><h1 id="lesson-1-00-requirement-scope-acceptance-criteria">00 — Requirement, Scope และ Acceptance Criteria</h1>
+<h2 id="lesson-1-_1">เริ่มจากปัญหา ไม่ใช่เทคโนโลยี</h2>
+<p>Requirement ที่ว่า “ใช้ AI ช่วยอ่าน resume” ยังไม่พอ ต้องถามว่าใครทำงานอะไร ใช้เวลาตรงไหน output ถูกใช้ตัดสินใจอะไร และความผิดพลาดแบบใดรับไม่ได้</p>
+<pre><code class="language-text">ปัจจุบัน HR เปิดไฟล์ → ค้น skill → คัดลอก quote → สร้าง note
+ปัญหา: เวลาเฉลี่ย/งานซ้ำ/ตามหลักฐานยาก
+เป้าหมาย: สร้าง evidence draft ให้ตรวจเร็วขึ้น
+ไม่ทำ: auto-rank, auto-reject, auto-hire
+</code></pre>
+<h2 id="lesson-1-problem-statement-template">Problem Statement Template</h2>
+<pre><code class="language-text">ผู้ใช้หลัก:
+งานปัจจุบัน:
+pain/เวลา/ข้อผิดพลาด:
+ผลลัพธ์ที่ต้องการ:
+สิ่งที่ระบบไม่ทำ:
+ข้อมูลที่เกี่ยวข้อง:
+ข้อจำกัดเวลา/นโยบาย/ระบบเดิม:
+</code></pre>
+<h2 id="lesson-1-functional-vs-non-functional-requirements">Functional vs Non-functional Requirements</h2>
+<p><strong>Functional</strong> บอกระบบทำอะไร เช่นรับ resume reference, สร้าง task, แสดง evidence</p>
+<p><strong>Non-functional</strong> บอกคุณภาพ/ข้อจำกัด เช่น response ภายใน 300 ms สำหรับ intake, ไม่ log raw resume, กู้ queued tasks หลัง restart, จำกัด file size</p>
+<h2 id="lesson-1-acceptance-criteria">Acceptance Criteria ที่ตรวจได้</h2>
+<p>ไม่ใช้ “ระบบรวดเร็วและแม่น” ให้เขียน Given/When/Then:</p>
+<pre><code class="language-text">Given event_id เดิมและ payload เดิมเคยสร้าง task แล้ว
+When caller ส่งซ้ำ
+Then คืน task_id เดิม, duplicate=true และไม่มี task ใหม่
+</code></pre>
+<pre><code class="language-text">Given AI claim อ้าง quote ที่ไม่มีใน source segment
+When validator ตรวจผล
+Then status=needs_review และ validated_profile ไม่มีค่า
+</code></pre>
+<h2 id="lesson-1-success-metrics-guardrails">Success Metrics และ Guardrails</h2>
+<div class="table-scroll"><table>
+<thead>
+<tr>
+<th>ประเภท</th>
+<th>ตัวอย่าง</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Outcome</td>
+<td>เวลาที่ HR ใช้ค้นหลักฐานต่อเอกสารลดลง</td>
+</tr>
+<tr>
+<td>Quality</td>
+<td>unsupported-claim rate บนชุดประเมิน</td>
+</tr>
+<tr>
+<td>Reliability</td>
+<td>task loss หลัง restart = 0 ใน crash test ที่กำหนด</td>
+</tr>
+<tr>
+<td>Capacity</td>
+<td>review queue age ไม่เกิน SLA</td>
+</tr>
+<tr>
+<td>Guardrail</td>
+<td>ไม่มี auto-reject/hire; PII access ถูก audit</td>
+</tr>
+</tbody>
+</table></div>
+<p>การลดเวลารวมต้องรวมเวลาตรวจ/แก้ output AI ไม่วัดเฉพาะ latency API</p>
+<h2 id="lesson-1-constraint-assumption-log">Constraint และ Assumption Log</h2>
+<p>แยกสิ่งที่รู้กับสิ่งที่สมมติ เช่น “ไฟล์ทั้งหมดเป็น searchable PDF” เป็น assumption ที่อาจผิดและเปลี่ยน architecture ไปสู่ OCR เก็บ owner/วันที่ที่จะพิสูจน์</p>
+<h2 id="lesson-1-scope-ladder">Scope Ladder</h2>
+<pre><code class="language-text">V0 manual baseline + วัดเวลา
+V1 intake + queue + human-only review
+V2 extraction mock + validators
+V3 real model synthetic eval
+V4 staging integration
+V5 limited production rollout
+</code></pre>
+<p>แต่ละขั้นต้องมี exit criteria ไม่สร้างระบบใหญ่ทั้งหมดก่อนเรียนรู้จากผู้ใช้</p>
+<h2 id="lesson-1-design-exercise">Design Exercise</h2>
+<p>เขียน one-page brief ของโปรเจกต์ลดเวลาหนึ่งงาน: problem, current flow, target flow, out-of-scope, metrics, five acceptance cases, privacy risk และ owner จากนั้นให้คนที่ไม่รู้โปรเจกต์อ่านแล้วทวนกลับ</p><a class="back" href="#top">↑ กลับสารบัญ</a></article><article id="lesson-2"><div class="source">01_project_layout_patterns.md</div><details class="local-toc"><summary>หัวข้อในบทนี้</summary><a href="#lesson-2-pattern-a-automation-script">Pattern A: Automation Script</a><a href="#lesson-2-pattern-b-fastapi-service">Pattern B: FastAPI Service</a><a href="#lesson-2-pattern-c-api-durable-worker">Pattern C: API + Durable Worker</a><a href="#lesson-2-pattern-d-n8n-backend">Pattern D: n8n + Backend</a><a href="#lesson-2-pattern-e-ai-integration">Pattern E: AI Integration</a><a href="#lesson-2-monorepo-repo">Monorepo หรือหลาย Repo</a><a href="#lesson-2-files">Files ที่ควรมีตามเหตุผล</a><a href="#lesson-2-decision-questions">Decision Questions</a></details><h1 id="lesson-2-01-project-layout-patterns">01 — Project Layout Patterns</h1>
+<p>โครงสร้างโฟลเดอร์คือเครื่องมือสื่อ ownership/dependencies ไม่ใช่คะแนนความเป็นมืออาชีพ เลือกให้เหมาะกับขนาดงานและทีม</p>
+<h2 id="lesson-2-pattern-a-automation-script">Pattern A: Automation Script</h2>
+<pre><code class="language-text">report_job/
+├── README.md
+├── pyproject.toml
+├── src/report_job/
+│   ├── __init__.py
+│   ├── main.py          # orchestration/CLI entry
+│   ├── config.py
+│   ├── extract.py
+│   ├── transform.py
+│   └── load.py
+├── tests/
+└── fixtures/
+</code></pre>
+<p>เหมาะกับ scheduled/batch job ที่ไม่เปิด HTTP API แยก pure transforms ออกจาก file/network side effects เพื่อทดสอบง่าย</p>
+<h2 id="lesson-2-pattern-b-fastapi-service">Pattern B: FastAPI Service</h2>
+<pre><code class="language-text">resume_api/
+├── pyproject.toml
+├── src/resume_api/
+│   ├── main.py
+│   ├── api/
+│   │   ├── dependencies.py
+│   │   └── routes/
+│   ├── schemas/
+│   ├── services/
+│   ├── repositories/
+│   └── core/
+│       ├── config.py
+│       └── logging.py
+├── tests/
+│   ├── unit/
+│   ├── integration/
+│   └── contract/
+└── migrations/
+</code></pre>
+<p><code>main.py</code> ประกอบ app/lifecycle ไม่ควรมี business logic ทั้งระบบ routes map HTTP, services ทำ use cases, repositories จัด persistence</p>
+<h2 id="lesson-2-pattern-c-api-durable-worker">Pattern C: API + Durable Worker</h2>
+<pre><code class="language-text">automation_service/
+├── src/automation_service/
+│   ├── api/
+│   ├── worker/
+│   ├── domain/
+│   ├── repositories/
+│   └── shared/
+├── tests/
+├── migrations/
+├── Dockerfile
+├── compose.yaml
+└── docs/
+</code></pre>
+<p>API persist task แล้วตอบ 202; worker claim/process/complete ด้วย transaction/lease ทั้งคู่แชร์ domain contracts แต่มี entry point และ process lifecycle แยก</p>
+<h2 id="lesson-2-pattern-d-n8n-backend">Pattern D: n8n + Backend</h2>
+<pre><code class="language-text">hr_automation/
+├── backend/
+├── workflows/
+│   ├── native/
+│   └── compose/
+├── fixtures/
+├── docs/
+│   ├── workflow-contracts.md
+│   └── runbook.md
+└── compose.yaml
+</code></pre>
+<p>n8n จัด trigger/integration/routing ส่วนกฎธุรกิจที่ซับซ้อนและต้อง unit test อยู่ backend เก็บ workflow JSON ใน Gitโดยไม่มี credentials</p>
+<h2 id="lesson-2-pattern-e-ai-integration">Pattern E: AI Integration</h2>
+<pre><code class="language-text">ai_service/
+├── src/ai_service/
+│   ├── prompts/
+│   ├── schemas/
+│   ├── providers/
+│   ├── validators/
+│   ├── services/
+│   └── tools/
+├── evaluations/
+│   ├── datasets/
+│   └── reports/
+├── fixtures/
+├── tests/
+└── docs/
+    ├── threat-model.md
+    └── model-change-log.md
+</code></pre>
+<p>แยก prompt/schema/provider/eval เพื่อเปลี่ยนและวัดผลได้ ไม่วาง API call, parsing, policy และ side effect ใน function เดียว</p>
+<h2 id="lesson-2-monorepo-repo">Monorepo หรือหลาย Repo</h2>
+<p>เริ่มหนึ่ง repo เมื่อ component เปลี่ยนพร้อมกัน ทีม/permissions/release cycle เดียว แยก repo เมื่อ ownership, security boundary หรือ deployment lifecycle แยกจริง Monorepo ไม่ได้หมายถึงทุก code import กันได้ ต้องรักษา module boundaries</p>
+<h2 id="lesson-2-files">Files ที่ควรมีตามเหตุผล</h2>
+<div class="table-scroll"><table>
+<thead>
+<tr>
+<th>File</th>
+<th>หน้าที่</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>README</td>
+<td>setup/run/test/architecture/limitations</td>
+</tr>
+<tr>
+<td>pyproject.toml</td>
+<td>package/dependencies/tool config</td>
+</tr>
+<tr>
+<td><code>.env.example</code></td>
+<td>ชื่อ config ที่ต้องใช้ ไม่มี secret</td>
+</tr>
+<tr>
+<td><code>.gitignore</code></td>
+<td>generated/local/secret patterns</td>
+</tr>
+<tr>
+<td>Dockerfile</td>
+<td>วิธีสร้าง image</td>
+</tr>
+<tr>
+<td>compose.yaml</td>
+<td>local multi-service topology</td>
+</tr>
+<tr>
+<td>migrations</td>
+<td>schema changes ที่ versioned</td>
+</tr>
+<tr>
+<td>RUNBOOK</td>
+<td>operate/recover/rollback</td>
+</tr>
+</tbody>
+</table></div>
+<p>อย่าสร้างโฟลเดอร์ว่างสิบชั้นล่วงหน้า เริ่มจาก module ที่มี responsibility จริง เมื่อไฟล์โตหรือมี dependency boundary จึง split พร้อม tests</p>
+<h2 id="lesson-2-decision-questions">Decision Questions</h2>
+<pre><code class="language-text">มี HTTP caller?       → API entry point
+งานนาน/ต้องกู้หลังตาย? → durable queue + worker
+หลาย integrations?    → orchestrator/n8n
+มี probabilistic output? → provider + schema + validator + eval
+มี DB schema เปลี่ยน?  → migration workflow
+หลายทีม/สิทธิ์ต่างกัน? → explicit service/repo boundary
+</code></pre><a class="back" href="#top">↑ กลับสารบัญ</a></article><article id="lesson-3"><div class="source">02_layers_dependencies_contracts.md</div><details class="local-toc"><summary>หัวข้อในบทนี้</summary><a href="#lesson-3-dependency-direction">Dependency Direction</a><a href="#lesson-3-thin-route">Thin Route</a><a href="#lesson-3-portadapter-interface">Port/Adapter Interface</a><a href="#lesson-3-contract">Contract มีหลายระดับ</a><a href="#lesson-3-versioning">Versioning</a><a href="#lesson-3-boundary-validation">Boundary Validation</a><a href="#lesson-3-error-taxonomy">Error Taxonomy</a><a href="#lesson-3-dependency-review">Dependency Review</a></details><h1 id="lesson-3-02-layers-dependencies-contracts">02 — Layers, Dependencies และ Contracts</h1>
+<h2 id="lesson-3-dependency-direction">Dependency Direction</h2>
+<pre><code class="language-text">API/n8n/CLI adapters
+        ↓ เรียก
+Application services/use cases
+        ↓ ใช้ interface
+Domain rules/models
+        ↑ implemented by
+DB/provider/email adapters
+</code></pre>
+<p>เป้าหมายไม่ใช่ทำ Clean Architecture เต็มรูปทุกโปรเจกต์ แต่ป้องกัน business rule ผูกกับ FastAPI, SQL หรือ SDK จน test/เปลี่ยนไม่ได้</p>
+<h2 id="lesson-3-thin-route">Thin Route</h2>
+<pre><code class="language-python">@router.post("/tasks", response_model=TaskAccepted, status_code=202)
+def create_task(request: TaskCreate, service: ServiceDep) -&gt; TaskAccepted:
+    try:
+        return service.create(request)
+    except IdempotencyConflict as exc:
+        raise HTTPException(status_code=409, detail={"code": exc.code}) from exc
+</code></pre>
+<p>route จัด HTTP/model/error mapping; service จัด use case; repository จัด transaction/persistence</p>
+<h2 id="lesson-3-portadapter-interface">Port/Adapter Interface</h2>
+<pre><code class="language-python">from typing import Protocol
+
+
+class AnalysisProvider(Protocol):
+    def analyze(self, prompt: str) -&gt; str: ...
+</code></pre>
+<p>service พึ่งพาความสามารถ <code>analyze</code> ไม่พึ่ง SDK class เฉพาะ Mock/real adapter จึงสลับได้ แต่ interface ต้องสะท้อน errors/timeouts/metadata ที่งานต้องใช้จริง</p>
+<h2 id="lesson-3-contract">Contract มีหลายระดับ</h2>
+<ul>
+<li><strong>Function contract:</strong> parameters, return, exceptions</li>
+<li><strong>API contract:</strong> method/path/headers/body/status</li>
+<li><strong>Event contract:</strong> event type/key/schema/version/order expectations</li>
+<li><strong>Database contract:</strong> schema/constraints/transaction semantics</li>
+<li><strong>Workflow contract:</strong> node/sub-workflow input/output/status</li>
+<li><strong>AI contract:</strong> prompt scope/output schema/evidence/fallback</li>
+</ul>
+<h2 id="lesson-3-versioning">Versioning</h2>
+<p>เปลี่ยนชื่อ field/meaning/status อาจกระทบ caller แม้ endpoint เดิม ใช้ backward-compatible additive change เมื่อเหมาะ กำหนด deprecation/consumer tests และ version event/prompt/schema ตามความหมาย</p>
+<h2 id="lesson-3-boundary-validation">Boundary Validation</h2>
+<pre><code class="language-text">external input → parse/schema → business rules → authorization
+external output ← response schema ← safe error mapping
+</code></pre>
+<p>ตรวจที่ boundary แต่ไม่ duplicate rule แบบขัดกันทุกชั้น Pydantic ตรวจ shape, service ตรวจ state/policy, DB constraint เป็น safety net สำหรับ concurrency</p>
+<h2 id="lesson-3-error-taxonomy">Error Taxonomy</h2>
+<div class="table-scroll"><table>
+<thead>
+<tr>
+<th>Error</th>
+<th>ตัวอย่าง</th>
+<th>เจ้าของการตัดสินใจ</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Input</td>
+<td>missing/invalid field</td>
+<td>caller แก้</td>
+</tr>
+<tr>
+<td>Domain</td>
+<td>duplicate conflict/invalid transition</td>
+<td>service policy</td>
+</tr>
+<tr>
+<td>Dependency</td>
+<td>DB/provider unavailable</td>
+<td>retry/recovery policy</td>
+</tr>
+<tr>
+<td>Authorization</td>
+<td>ไม่มีสิทธิ์ resource</td>
+<td>security boundary</td>
+</tr>
+<tr>
+<td>Unexpected</td>
+<td>bug/invariant broken</td>
+<td>incident/engineering</td>
+</tr>
+</tbody>
+</table></div>
+<p>อย่า map ทุก exception เป็น 500 ข้อความเดียวภายใน logs และอย่าส่ง internal stack/SQL/secrets ให้ client</p>
+<h2 id="lesson-3-dependency-review">Dependency Review</h2>
+<p>สำหรับ component ทุกตัวให้เขียน:</p>
+<pre><code class="language-text">name/purpose
+owner
+input/output contract
+timeout/retry/idempotency
+authentication/authorization
+data classification
+health/monitoring
+failure fallback
+</code></pre>
+<p>ถ้าตอบไม่ได้ architecture diagram ยังเป็นเพียงกล่องและลูกศร</p><a class="back" href="#top">↑ กลับสารบัญ</a></article><article id="lesson-4"><div class="source">03_data_state_async_idempotency.md</div><details class="local-toc"><summary>หัวข้อในบทนี้</summary><a href="#lesson-4-data-model-identity">Data Model เริ่มจาก Identity</a><a href="#lesson-4-state-machine">State Machine</a><a href="#lesson-4-transaction-boundary">Transaction Boundary</a><a href="#lesson-4-worker-claim-lease">Worker Claim และ Lease</a><a href="#lesson-4-retry-policy">Retry Policy</a><a href="#lesson-4-idempotency-scope">Idempotency Scope</a><a href="#lesson-4-outbox-pattern-mental-model">Outbox Pattern Mental Model</a><a href="#lesson-4-schema-migration">Schema Migration</a><a href="#lesson-4-data-design-checklist">Data Design Checklist</a></details><h1 id="lesson-4-03-data-model-state-queue-idempotency">03 — Data Model, State, Queue และ Idempotency</h1>
+<h2 id="lesson-4-data-model-identity">Data Model เริ่มจาก Identity</h2>
+<p>แยก identifiers:</p>
+<pre><code class="language-text">candidate_id  ตัวบุคคลในระบบธุรกิจ
+document_id   เอกสารหนึ่งฉบับ
+document_hash snapshot เนื้อหา
+task_id       งานประมวลผลหนึ่งงาน
+execution_id  รอบที่ workflow/worker รัน
+review_id     งานตรวจโดยคน
+</code></pre>
+<p>การใช้ ID เดียวแทนทุกอย่างทำให้ upload ใหม่/retry/review ผูกกันผิด</p>
+<h2 id="lesson-4-state-machine">State Machine</h2>
+<pre><code class="language-text">queued → processing → succeeded
+   │         │          └→ review (ถ้าผลต้องคนยืนยัน)
+   │         ├→ retry_pending → queued
+   │         └→ failed
+   └→ cancelled
+</code></pre>
+<p>กำหนด allowed transitions, actor, timestamp และ invariant เช่น succeeded ต้องมี result reference; decided review ต้องมี reviewer/decision time</p>
+<h2 id="lesson-4-transaction-boundary">Transaction Boundary</h2>
+<pre><code class="language-text">BEGIN
+  insert task
+  insert audit event
+COMMIT
+ตอบ 202
+</code></pre>
+<p>หากตอบก่อน commit แล้ว process ตาย caller เชื่อว่ารับงานแต่ task หาย Transaction ควรครอบการเปลี่ยน state ที่ต้องเกิดร่วมกัน แต่ไม่ถือ lock ข้าม network call ยาวโดยไม่จำเป็น</p>
+<h2 id="lesson-4-worker-claim-lease">Worker Claim และ Lease</h2>
+<pre><code class="language-text">worker A: atomically claim queued task + lease_until
+          ↓ process
+heartbeat/extend ตาม policy
+          ↓ complete หรือ retry
+
+worker A ตาย → lease หมด → worker B reclaim
+</code></pre>
+<p>claim ต้อง atomic มิฉะนั้น worker สองตัวอาจทำ task เดียวพร้อมกัน Lease ไม่แทน idempotency ของ side effects</p>
+<h2 id="lesson-4-retry-policy">Retry Policy</h2>
+<pre><code class="language-text">retryable: timeout, 429, selected 5xx
+non-retryable: invalid input, auth failure, policy rejection
+</code></pre>
+<p>ใช้ attempt ceiling, exponential backoff + jitter, deadline และ dead-letter/manual review เมื่อเกินเพดาน เก็บ last error แบบปลอดภัย</p>
+<h2 id="lesson-4-idempotency-scope">Idempotency Scope</h2>
+<pre><code class="language-text">request key: create-task:EVENT-1
+analysis key: document_hash + prompt/model/schema version
+notification key: notify:TASK-7:needs-review:v1
+</code></pre>
+<p>key หนึ่งจุดไม่ทำให้ pipeline exactly-once ทุก side effect ต้องมี identity/constraint ของตัวเอง</p>
+<h2 id="lesson-4-outbox-pattern-mental-model">Outbox Pattern Mental Model</h2>
+<pre><code class="language-text">DB transaction: update task + insert outbox event
+                         ↓ commit
+publisher อ่าน outbox → ส่ง → mark sent
+</code></pre>
+<p>ช่วยไม่ให้ DB state เปลี่ยนแต่ event หาย อย่างไรก็ตาม downstream ยังต้องรับ duplicate ได้เพราะส่งแล้วแต่ mark sent อาจล้ม</p>
+<h2 id="lesson-4-schema-migration">Schema Migration</h2>
+<p>การแก้ model code ไม่เปลี่ยน production DB อัตโนมัติ Migration ต้อง versioned, review, backup/rollback/forward-fix plan และทดสอบกับข้อมูลรูปแบบใกล้จริง การย้อน Git ไม่ได้ย้อนข้อมูลที่ถูก transform เสมอ</p>
+<h2 id="lesson-4-data-design-checklist">Data Design Checklist</h2>
+<ul>
+<li>business identity และ unique constraints</li>
+<li>state transitions/invariants</li>
+<li>timestamps/timezone และ audit history</li>
+<li>transaction/locking/concurrency</li>
+<li>retention/deletion/privacy</li>
+<li>migration/backup/recovery</li>
+<li>indexes จาก query pattern ไม่ใช่เดา</li>
+</ul><a class="back" href="#top">↑ กลับสารบัญ</a></article><article id="lesson-5"><div class="source">04_config_security_privacy.md</div><details class="local-toc"><summary>หัวข้อในบทนี้</summary><a href="#lesson-5-configuration-code">Configuration แยกจาก Code</a><a href="#lesson-5-authentication-authorization">Authentication กับ Authorization</a><a href="#lesson-5-trust-boundary-diagram">Trust Boundary Diagram</a><a href="#lesson-5-ai-specific-boundary">AI-specific Boundary</a><a href="#lesson-5-data-classification">Data Classification</a><a href="#lesson-5-fileurl-safety">File/URL Safety</a><a href="#lesson-5-logging-privacy">Logging Privacy</a><a href="#lesson-5-threat-modeling-questions">Threat Modeling Questions</a><a href="#lesson-5-security-review-gate">Security Review Gate</a></details><h1 id="lesson-5-04-configuration-security-privacy-trust-boundaries">04 — Configuration, Security, Privacy และ Trust Boundaries</h1>
+<h2 id="lesson-5-configuration-code">Configuration แยกจาก Code</h2>
+<p>ค่าที่เปลี่ยนตาม environment เช่น database URL, provider endpoint, timeout และ feature flag อยู่ configuration layer พร้อม validation ตอน startup Secret ไม่ควรมี default ที่ดูเหมือนใช้งานจริง</p>
+<pre><code class="language-text">environment/secret store
+        ↓ load + parse + validate
+Settings object
+        ↓ inject
+API/service/worker/provider
+</code></pre>
+<p><code>.env.example</code> บอกชื่อและตัวอย่างที่ไม่ลับ; <code>.env</code> local ถูก ignore; production ใช้ mechanism ของ platform/องค์กร</p>
+<h2 id="lesson-5-authentication-authorization">Authentication กับ Authorization</h2>
+<ul>
+<li><strong>Authentication:</strong> ผู้เรียกคือใคร</li>
+<li><strong>Authorization:</strong> identity นี้ทำ action นี้กับ resource นี้ได้หรือไม่</li>
+</ul>
+<p>token ถูกต้องไม่ได้แปลว่าอ่าน candidate/task ทุกตัวได้ Downstream service ต้องตรวจ authorization ทุก request ไม่ให้ LLM/n8n flag เป็นผู้ตัดสินสิทธิ์</p>
+<h2 id="lesson-5-trust-boundary-diagram">Trust Boundary Diagram</h2>
+<pre><code class="language-text">Internet/user document (untrusted)
+        ↓ validate/size/type/auth
+API boundary
+        ↓ authorized normalized data
+internal service
+        ├→ DB (sensitive state)
+        ├→ provider (external data processor)
+        └→ n8n/tool output (untrusted response)
+</code></pre>
+<p>ทุกลูกศรข้าม boundary ต้องมี contract, identity, minimization, timeout และ safe logging</p>
+<h2 id="lesson-5-ai-specific-boundary">AI-specific Boundary</h2>
+<pre><code class="language-text">trusted application policy
+       + untrusted resume/web/tool data
+                    ↓
+                  LLM
+                    ↓ untrusted candidate output
+parse/schema/evidence/policy/authorization
+                    ↓
+draft/review; restricted side effect
+</code></pre>
+<p>Prompt ไม่ใช่ security boundary ระบบต้องจำกัด functionality, permissions และ autonomy จริง</p>
+<h2 id="lesson-5-data-classification">Data Classification</h2>
+<div class="table-scroll"><table>
+<thead>
+<tr>
+<th>ระดับตัวอย่าง</th>
+<th>ข้อมูล</th>
+<th>แนวทาง</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Public</td>
+<td>docs เผยแพร่แล้ว</td>
+<td>integrity/version ยังสำคัญ</td>
+</tr>
+<tr>
+<td>Internal</td>
+<td>workflow/config ที่ไม่ลับ</td>
+<td>จำกัดตามทีม</td>
+</tr>
+<tr>
+<td>Confidential</td>
+<td>resume, transaction details</td>
+<td>minimization/access/audit/retention</td>
+</tr>
+<tr>
+<td>Secret</td>
+<td>keys/password/private key</td>
+<td>secret store/rotation/no logs</td>
+</tr>
+</tbody>
+</table></div>
+<p>ใช้ classification policy ของบริษัทจริง ไม่คิดเองจากตารางตัวอย่างนี้</p>
+<h2 id="lesson-5-fileurl-safety">File/URL Safety</h2>
+<p>อย่ารับ local path หรือ URL ใดก็ได้แล้วให้ server เปิดทันที ต้องจำกัด scheme/host/storage scope, ป้องกัน path traversal/SSRF, จำกัด size/pages/time และแยก parser ที่รับไฟล์ไม่เชื่อถือ</p>
+<h2 id="lesson-5-logging-privacy">Logging Privacy</h2>
+<p>เก็บ trace/task/reason/version/duration แทน raw payload ไม่ log authorization header, resume text หรือ provider response ทั้งก้อนเพื่อความสะดวก กำหนด retention/access และ redaction tests</p>
+<h2 id="lesson-5-threat-modeling-questions">Threat Modeling Questions</h2>
+<ul>
+<li>ใครส่ง input ปลอม/ซ้ำ/ใหญ่มากได้</li>
+<li>ถ้า credential รั่วเข้าถึงอะไรได้บ้าง</li>
+<li>LLM/tool ถูกชักนำให้ทำอะไรได้บ้าง</li>
+<li>ข้อมูลข้ามผู้ใช้/tenant ได้อย่างไร</li>
+<li>replay side effect ใดเสียหาย</li>
+<li>dependency ถูกยึด/ล่มแล้ว fallback เป็นอย่างไร</li>
+<li>audit พิสูจน์ actor/action/time/resource ได้หรือไม่</li>
+</ul>
+<h2 id="lesson-5-security-review-gate">Security Review Gate</h2>
+<p>ก่อนข้อมูลจริง: owner/data policy, consent/legal basis ตามองค์กร, provider retention/training terms, access scopes, incident procedure, deletion request และ human review สำหรับ high-impact decisions</p><a class="back" href="#top">↑ กลับสารบัญ</a></article><article id="lesson-6"><div class="source">05_testing_observability_cicd_rollout.md</div><details class="local-toc"><summary>หัวข้อในบทนี้</summary><a href="#lesson-6-test-strategy-boundary">Test Strategy ตาม Boundary</a><a href="#lesson-6-acceptance-matrix">Acceptance Matrix</a><a href="#lesson-6-logs-metrics-traces">Logs, Metrics, Traces</a><a href="#lesson-6-useful-metrics">Useful Metrics</a><a href="#lesson-6-ci-pipeline">CI Pipeline</a><a href="#lesson-6-cd-environment-promotion">CD และ Environment Promotion</a><a href="#lesson-6-rollout-patterns">Rollout Patterns</a><a href="#lesson-6-release-evidence">Release Evidence</a><a href="#lesson-6-incident-debug-order">Incident Debug Order</a></details><h1 id="lesson-6-05-testing-observability-cicd-rollout">05 — Testing, Observability, CI/CD และ Rollout</h1>
+<h2 id="lesson-6-test-strategy-boundary">Test Strategy ตาม Boundary</h2>
+<pre><code class="language-text">Unit           pure rule/service; เร็วและ deterministic
+Integration    DB/parser/provider adapter กับ controlled dependency
+Contract       API/event/schema ระหว่าง producer-consumer
+End-to-end     topology/config/network สำคัญใน staging
+Evaluation     model quality/retrieval/security cases
+Chaos/recovery restart/crash/timeout/replay ตามความเสี่ยง
+</code></pre>
+<p>test เยอะที่ชั้นเดียวไม่แทนชั้นอื่น MockProvider ผ่านไม่พิสูจน์โมเดลจริง; TestClient ผ่านไม่พิสูจน์ container network</p>
+<h2 id="lesson-6-acceptance-matrix">Acceptance Matrix</h2>
+<div class="table-scroll"><table>
+<thead>
+<tr>
+<th>Case</th>
+<th>Expected state</th>
+<th>Side effect</th>
+<th>Evidence</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>happy path</td>
+<td>succeeded/review</td>
+<td>ตาม policy 1 ครั้ง</td>
+<td>response + DB + audit</td>
+</tr>
+<tr>
+<td>invalid</td>
+<td>rejected</td>
+<td>0</td>
+<td>422/reason</td>
+</tr>
+<tr>
+<td>duplicate same</td>
+<td>task เดิม</td>
+<td>0 เพิ่ม</td>
+<td>duplicate=true</td>
+</tr>
+<tr>
+<td>duplicate conflict</td>
+<td>needs review/409</td>
+<td>0</td>
+<td>payload hash mismatch</td>
+</tr>
+<tr>
+<td>timeout</td>
+<td>retry/unknown</td>
+<td>dedup</td>
+<td>attempts/log</td>
+</tr>
+<tr>
+<td>crash after claim</td>
+<td>reclaim หลัง lease</td>
+<td>dedup</td>
+<td>restart test</td>
+</tr>
+</tbody>
+</table></div>
+<h2 id="lesson-6-logs-metrics-traces">Logs, Metrics, Traces</h2>
+<ul>
+<li><strong>Logs:</strong> เหตุการณ์ที่มี fields/บริบท</li>
+<li><strong>Metrics:</strong> จำนวน/อัตรา/latency/backlog แนวโน้ม</li>
+<li><strong>Trace:</strong> เส้นทาง request/task ข้าม components</li>
+</ul>
+<pre><code class="language-text">trace_id=T1
+API received → task_id=Q7 queued → worker attempt=2
+→ provider latency=820ms → review_id=R3 created
+</code></pre>
+<p>อย่าใช้ candidate email เป็น correlation key ใน logs ใช้ opaque IDs และควบคุม lookup</p>
+<h2 id="lesson-6-useful-metrics">Useful Metrics</h2>
+<p>API request/status/latency; queue depth/oldest age; worker throughput/retry/dead-letter; provider latency/error/cost; validation/review rate; human review age/outcome โดยระวัง privacy/fairness ของ metric</p>
+<h2 id="lesson-6-ci-pipeline">CI Pipeline</h2>
+<pre><code class="language-text">checkout
+  → install locked dependencies
+  → format check/lint/type check
+  → unit/integration/contract tests
+  → build image/artifact
+  → scan/policy gates
+  → publish immutable artifact
+</code></pre>
+<p>CI ควรใช้ commands เดียวกับ local และคืน non-zero เมื่อ gate fail ไม่เก็บ production secrets ใน pull-request jobs ที่ไม่ไว้ใจ</p>
+<h2 id="lesson-6-cd-environment-promotion">CD และ Environment Promotion</h2>
+<pre><code class="language-text">commit SHA → artifact/image digest
+     dev → staging → limited production → broader rollout
+</code></pre>
+<p>โปรโมต artifact เดิมแทน rebuild ต่าง environment ถ้า workflow รองรับ แยก config/secrets และบันทึก version ที่ deploy</p>
+<h2 id="lesson-6-rollout-patterns">Rollout Patterns</h2>
+<ul>
+<li>shadow/dry-run: คำนวณแต่ไม่ทำ side effect</li>
+<li>feature flag: เปิดเฉพาะกลุ่ม/งาน</li>
+<li>canary: traffic ส่วนน้อย</li>
+<li>human approval: ก่อน external/high-impact action</li>
+<li>rollback/forward fix: มี criteria และ data migration consideration</li>
+</ul>
+<h2 id="lesson-6-release-evidence">Release Evidence</h2>
+<p>commit/image/prompt/schema/migration versions, test/eval reports, config diff, owner, monitoring dashboard, rollback steps และ known limitations</p>
+<h2 id="lesson-6-incident-debug-order">Incident Debug Order</h2>
+<pre><code class="language-text">impact/scope → stop unsafe side effects
+→ preserve IDs/logs/state → dependency health
+→ recent changes → reproduce synthetic/staging
+→ recover state → fix/test → rollout → post-incident actions
+</code></pre><a class="back" href="#top">↑ กลับสารบัญ</a></article><article id="lesson-7"><div class="source">06_architecture_gallery.md</div><details class="local-toc"><summary>หัวข้อในบทนี้</summary><a href="#lesson-7-a-daily-operations-report">A. Daily Operations Report</a><a href="#lesson-7-b-hr-resume-evidence-assistant">B. HR Resume Evidence Assistant</a><a href="#lesson-7-c-support-ticket-triage">C. Support Ticket Triage</a><a href="#lesson-7-d-transaction-review-explanation">D. Transaction Review Explanation</a><a href="#lesson-7-e-internal-knowledge-assistant">E. Internal Knowledge Assistant</a><a href="#lesson-7-component-allocation-table">Component Allocation Table</a><a href="#lesson-7-unified-capstone">Unified Capstone</a><a href="#lesson-7-architecture-review-questions">Architecture Review Questions</a></details><h1 id="lesson-7-06-architecture-gallery">06 — Architecture Gallery</h1>
+<p>ตัวอย่างเหล่านี้เป็น starting points ต้องปรับตามระบบ/นโยบายจริง</p>
+<h2 id="lesson-7-a-daily-operations-report">A. Daily Operations Report</h2>
+<pre><code class="language-text">Schedule → Fetch paginated data → Python/SQL compute facts
+        → validate counts/totals → LLM draft narrative (optional)
+        → human review → idempotent publish
+</code></pre>
+<p>Key design: report business key ต่อวัน/timezone, pagination guard, source counts, no AI arithmetic, publish key และ rerun policy</p>
+<h2 id="lesson-7-b-hr-resume-evidence-assistant">B. HR Resume Evidence Assistant</h2>
+<pre><code class="language-text">Upload reference → intake API → durable task → parser segments
+→ LLM extraction → schema/evidence validators → review UI
+→ HR decision in authorized system
+</code></pre>
+<p>ไม่ทำ auto-rank/reject/hire Data model แยก candidate/document/version/task/review; privacy/access/retention และ parser isolation เป็น production gates</p>
+<h2 id="lesson-7-c-support-ticket-triage">C. Support Ticket Triage</h2>
+<pre><code class="language-text">Webhook → auth/normalize/redact → rules → classifier
+       ├→ known low-risk queue
+       ├→ ambiguous/urgent review
+       └→ unsafe/invalid quarantine
+</code></pre>
+<p>AI แนะนำ category/draft; external reply ผ่าน approval ในรุ่นแรก Metrics แยก category และตรวจ false urgent downgrade</p>
+<h2 id="lesson-7-d-transaction-review-explanation">D. Transaction Review Explanation</h2>
+<pre><code class="language-text">transaction facts → deterministic rule engine → flags/reason codes
+→ LLM draft explanation → number/fact validation → reviewer
+</code></pre>
+<p>การ freeze/refund/approval อยู่ใน policy service ที่ authenticate/authorize แล้ว ไม่ให้ model tool มีสิทธิ์กว้าง</p>
+<h2 id="lesson-7-e-internal-knowledge-assistant">E. Internal Knowledge Assistant</h2>
+<pre><code class="language-text">identity + question → authorized retrieval → current chunks
+→ LLM answer from evidence → citation validation
+→ not found/escalate owner
+</code></pre>
+<p>แยก indexing/query pipeline, document versions, ACL filtering, deletion/re-index และ retrieval evaluation</p>
+<h2 id="lesson-7-component-allocation-table">Component Allocation Table</h2>
+<div class="table-scroll"><table>
+<thead>
+<tr>
+<th>ความรับผิดชอบ</th>
+<th>เครื่องมือที่เหมาะเริ่มต้น</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>deterministic calculation/rules</td>
+<td>Python/SQL</td>
+</tr>
+<tr>
+<td>HTTP contract/auth</td>
+<td>FastAPI/service</td>
+</tr>
+<tr>
+<td>trigger/integration/routing</td>
+<td>n8n</td>
+</tr>
+<tr>
+<td>language extraction/draft</td>
+<td>LLM ผ่าน adapter/validator</td>
+</tr>
+<tr>
+<td>durable state/concurrency</td>
+<td>DB/repository/worker</td>
+</tr>
+<tr>
+<td>high-impact decision</td>
+<td>authorized human/policy system</td>
+</tr>
+</tbody>
+</table></div>
+<h2 id="lesson-7-unified-capstone">Unified Capstone</h2>
+<pre><code class="language-text">Client
+  ↓ POST /intakes (idempotency key)
+FastAPI ──transaction──&gt; SQLite/Postgres task+audit
+  ↓ 202 task_id
+n8n monitors/coordinates        Worker claims task
+        │                            ↓
+        └──────────────→ parser → AI service
+                                     ↓ schema/evidence
+                              result or review task
+                                     ↓
+                            HR/ops UI + audited decision
+</code></pre>
+<h2 id="lesson-7-architecture-review-questions">Architecture Review Questions</h2>
+<ol>
+<li>Source of truth อยู่ที่ไหน</li>
+<li>queued/succeeded/approved หมายถึงอะไรต่างกัน</li>
+<li>failure จุดใด retry ได้และ side effect ซ้ำอย่างไร</li>
+<li>ใครมีสิทธิ์อ่าน/เขียนข้อมูลใด</li>
+<li>restart แล้วงาน/state อยู่หรือไม่</li>
+<li>ตรวจ version ของ code/schema/prompt/model อย่างไร</li>
+<li>วัด outcome และ guardrails อย่างไร</li>
+<li>disable/rollback โดยไม่ทำข้อมูลเสียอย่างไร</li>
+</ol><a class="back" href="#top">↑ กลับสารบัญ</a></article><article id="lesson-8"><div class="source">07_adr_review_docs_handoff.md</div><details class="local-toc"><summary>หัวข้อในบทนี้</summary><a href="#lesson-8-architecture-decision-record-adr">Architecture Decision Record (ADR)</a><a href="#lesson-8-design-pack">Design Pack ขั้นต่ำ</a><a href="#lesson-8-diagram">Diagram ระดับต่าง ๆ</a><a href="#lesson-8-readme">README สำหรับผู้พัฒนา</a><a href="#lesson-8-runbook-operate">Runbook สำหรับผู้ operate</a><a href="#lesson-8-handoff-rehearsal">Handoff Rehearsal</a><a href="#lesson-8-demo-script">Demo Script</a><a href="#lesson-8-review-checklist">Review Checklist</a></details><h1 id="lesson-8-07-adr-design-review-documentation-handoff">07 — ADR, Design Review, Documentation และ Handoff</h1>
+<h2 id="lesson-8-architecture-decision-record-adr">Architecture Decision Record (ADR)</h2>
+<p>ADR บันทึกเหตุผลและ trade-offs ไม่ใช่แค่ผลลัพธ์:</p>
+<pre><code class="language-text">Title: Use durable task table before returning 202
+Status: Accepted
+Context: Resume analysis takes longer than request timeout
+Decision: Persist task+audit in one transaction, worker processes later
+Alternatives: synchronous request; in-process background task
+Consequences: adds worker/state/monitoring; survives API restart
+Validation: crash/restart and duplicate tests
+</code></pre>
+<p>เมื่อเปลี่ยน decision ให้สร้าง ADR ใหม่ที่ supersede เดิม ไม่แก้ประวัติจนไม่รู้เหตุผล ณ เวลานั้น</p>
+<h2 id="lesson-8-design-pack">Design Pack ขั้นต่ำ</h2>
+<ul>
+<li>one-page problem/scope/out-of-scope/metrics</li>
+<li>context/component/data-flow diagrams</li>
+<li>API/event/data contracts</li>
+<li>state machine และ failure matrix</li>
+<li>threat/privacy notes</li>
+<li>test/evaluation strategy</li>
+<li>rollout/monitoring/rollback</li>
+<li>open questions/assumptions/owners</li>
+</ul>
+<h2 id="lesson-8-diagram">Diagram ระดับต่าง ๆ</h2>
+<pre><code class="language-text">Context: User/System A → ระบบเรา → Provider/System B
+Container/Component: API, n8n, worker, DB, AI service
+Sequence: request หนึ่งรอบเรียกอะไรก่อนหลัง
+State: queued → processing → ...
+Deployment: process/container/network/volume อยู่ที่ไหน
+</code></pre>
+<p>เลือก diagram ที่ตอบคำถาม ไม่ใส่กล่องละเอียดทุก class ลงภาพ context</p>
+<h2 id="lesson-8-readme">README สำหรับผู้พัฒนา</h2>
+<pre><code class="language-text">What/why/scope
+architecture summary
+prerequisites/setup
+commands: run/test/lint/build
+configuration names (no secrets)
+sample requests/expected responses
+failure drills
+known limitations
+links to runbook/ADR/eval
+</code></pre>
+<h2 id="lesson-8-runbook-operate">Runbook สำหรับผู้ operate</h2>
+<p>health/readiness, normal start/stop, dashboards/alerts, common incidents, safe replay, backup/restore, migration/rollback, escalation owner และ evidence ที่ต้องเก็บ</p>
+<h2 id="lesson-8-handoff-rehearsal">Handoff Rehearsal</h2>
+<p>ให้เพื่อนเริ่มจาก clone/empty environment โดยไม่ใช้คำบอกปาก ทดลอง setup, tests, API probe, one failure case และ recovery ถ้าเขาต้องถาม path/secret/command ที่ควรอยู่ใน docs ให้แก้ docs แล้วลองใหม่</p>
+<h2 id="lesson-8-demo-script">Demo Script</h2>
+<pre><code class="language-text">1 ปัญหาและ baseline เวลา
+2 architecture และขอบเขต AI
+3 happy path พร้อม trace/task ID
+4 failure + retry/review
+5 replay/idempotency หรือ restart recovery
+6 metrics/tests/eval evidence
+7 limitations และ next safe step
+</code></pre>
+<p>ไม่สาธิตด้วยข้อมูลจริงถ้าไม่จำเป็น และไม่กล่าว “production-ready” หาก environment/runtime/security gates ยังไม่ผ่าน</p>
+<h2 id="lesson-8-review-checklist">Review Checklist</h2>
+<ul>
+<li>requirement/acceptance cases ตรวจได้</li>
+<li>responsibilities/dependencies ชัด</li>
+<li>status/identity/source of truth ไม่กำกวม</li>
+<li>failure/concurrency/replay ครบ</li>
+<li>privacy/auth/secrets/trust boundaries ครบ</li>
+<li>tests/eval/observability วัดสิ่งสำคัญ</li>
+<li>deploy/migration/rollback/handoff มี owner</li>
+<li>complexity ทุกชิ้นมีเหตุผล</li>
+</ul><a class="back" href="#top">↑ กลับสารบัญ</a></article><article id="lesson-9"><div class="source">08_sources_verification_maturity.md</div><details class="local-toc"><summary>หัวข้อในบทนี้</summary><a href="#lesson-9-sources">Sources</a><a href="#lesson-9-maturity-model">Maturity Model สำหรับโปรเจกต์ฝึกงาน</a><a href="#lesson-9-verification">Verification ของหนังสือ</a><a href="#lesson-9-definition-of-done-design-pack">Definition of Done ของ Design Pack</a></details><h1 id="lesson-9-08-sources-verification-maturity-model">08 — Sources, Verification และ Maturity Model</h1>
+<p>ตรวจแหล่งอ้างอิงเมื่อ 12 กันยายน 2026 รูปแบบ architecture ในเล่มเป็นแนวทางการออกแบบ ไม่ใช่มาตรฐานบังคับของทุกบริษัท</p>
+<h2 id="lesson-9-sources">Sources</h2>
+<ul>
+<li><a href="https://packaging.python.org/en/latest/discussions/src-layout-vs-flat-layout/">Python Packaging: src vs flat layout</a></li>
+<li><a href="https://fastapi.tiangolo.com/tutorial/dependencies/">FastAPI Dependencies</a></li>
+<li><a href="https://fastapi.tiangolo.com/tutorial/response-model/">FastAPI Response Models</a></li>
+<li><a href="https://docs.docker.com/reference/compose-file/">Docker Compose Specification</a></li>
+<li><a href="https://12factor.net/config">The Twelve-Factor App: Config</a></li>
+<li><a href="https://c4model.com/">C4 Model</a></li>
+<li><a href="https://owasp.org/API-Security/">OWASP API Security Top 10</a></li>
+<li><a href="https://genai.owasp.org/llmrisk/llm01-prompt-injection/">OWASP GenAI Security: Prompt Injection</a></li>
+<li><a href="https://genai.owasp.org/llmrisk/llm062025-excessive-agency/">OWASP GenAI Security: Excessive Agency</a></li>
+<li><a href="https://opentelemetry.io/docs/concepts/">OpenTelemetry Concepts</a></li>
+<li><a href="https://docs.github.com/actions">GitHub Actions Documentation</a></li>
+</ul>
+<h2 id="lesson-9-maturity-model">Maturity Model สำหรับโปรเจกต์ฝึกงาน</h2>
+<div class="table-scroll"><table>
+<thead>
+<tr>
+<th>Level</th>
+<th>หลักฐาน</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>0 Prototype</td>
+<td>happy path synthetic demo; limitations ชัด</td>
+</tr>
+<tr>
+<td>1 Tested</td>
+<td>contracts + negative unit/API tests</td>
+</tr>
+<tr>
+<td>2 Integrated</td>
+<td>staging dependencies/network/config ผ่าน</td>
+</tr>
+<tr>
+<td>3 Recoverable</td>
+<td>durable state, retry/idempotency, restart/replay tests</td>
+</tr>
+<tr>
+<td>4 Operable</td>
+<td>logs/metrics/runbook/alerts/owner/rollback</td>
+</tr>
+<tr>
+<td>5 Governed</td>
+<td>privacy/security/evaluation/change approval ตามองค์กร</td>
+</tr>
+</tbody>
+</table></div>
+<p>ไม่ต้องเริ่ม Level 5 ในวันแรก แต่ห้ามนำ Level 0 ไปอ้างว่า production-ready ระบุ level ต่อ component ได้ เพราะ API อาจ Level 3 แต่ AI eval ยัง Level 1</p>
+<h2 id="lesson-9-verification">Verification ของหนังสือ</h2>
+<ul>
+<li>ตรวจ Markdown links/HTML anchors/ZIP integrity</li>
+<li>parse Python code blocks ที่เป็นตัวอย่างสมบูรณ์</li>
+<li>architecture cases ใช้ synthetic data และระบุ high-impact boundary</li>
+<li>ไม่อ้างว่าทดสอบ cloud/provider/production runtime</li>
+<li>เชื่อมกลับ Books 00–05 โดยไม่เปลี่ยน URL เดิม</li>
+</ul>
+<h2 id="lesson-9-definition-of-done-design-pack">Definition of Done ของ Design Pack</h2>
+<p>ผู้อ่านใหม่ตอบได้ว่าแก้ปัญหาอะไร, component ไหนรับผิดชอบอะไร, source of truth อยู่ไหน, failure/replay ทำอย่างไร, ใครมีสิทธิ์ทำ side effect, วัดผลอย่างไร และ rollback/ส่งต่ออย่างไร</p><a class="back" href="#top">↑ กลับสารบัญ</a></article></main></div><footer>Core → Practice → Deep Dive • ตรวจ Sources/Verification ก่อนใช้กับระบบจริง</footer></body></html>
