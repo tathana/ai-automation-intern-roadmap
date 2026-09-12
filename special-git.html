@@ -1,0 +1,2425 @@
+<!doctype html><html lang="th"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><meta name="description" content="Git Foundation and Safe Workflow special track"><title>Special Track 00 — Git Foundation & Safe Workflow</title><style>
+:root{color-scheme:light;--ink:#203149;--muted:#5b6b7d;--line:#dbe3e9;--accent:#096b63}
+*{box-sizing:border-box}html{scroll-behavior:smooth;scroll-padding-top:24px}body{margin:0;background:#f3f6f8;color:var(--ink);font-family:"Leelawadee UI",Tahoma,sans-serif;font-size:17px;line-height:1.9}a{color:var(--accent);text-underline-offset:4px}header{background:#173b43;color:white;padding:56px max(24px,calc((100vw - 1240px)/2));}header h1{font-size:clamp(28px,4vw,46px);line-height:1.35;margin:12px 0}header p{max-width:780px;color:#d9e9eb}.eyebrow{letter-spacing:2px;font-size:13px;color:#a8dfd5}.layout{max-width:1300px;margin:auto;display:grid;grid-template-columns:280px minmax(0,1fr);gap:30px;padding:30px 24px}aside{position:sticky;top:20px;align-self:start;max-height:92vh;overflow:auto;padding-right:12px}aside h2{font-size:18px}nav a{display:block;padding:9px 10px;border-bottom:1px solid var(--line);text-decoration:none;font-size:14px;line-height:1.6}nav a:hover{background:#e1eeeb}article{background:white;padding:clamp(20px,4vw,48px);border:1px solid var(--line);border-radius:12px;margin-bottom:28px;overflow-wrap:anywhere}article h1{font-size:29px;line-height:1.5;margin:20px 0 28px}h2{font-size:24px;margin-top:40px}h3{font-size:20px;margin-top:28px}pre{background:#152c3b;color:#eaf2f7;padding:20px;border-radius:8px;overflow:auto;line-height:1.65;font-size:14px;white-space:pre;overflow-wrap:normal}code{font-family:Consolas,"Courier New",monospace}p code,li code,td code{background:#edf2f5;padding:2px 5px;border-radius:4px;font-size:.9em}blockquote{margin:24px 0;padding:4px 20px;border-left:4px solid #138779;background:#eff8f5}table{border-collapse:collapse;width:100%;font-size:15px}th,td{border:1px solid var(--line);padding:12px;text-align:left;vertical-align:top}th{background:#eaf2f2}.table-scroll{overflow:auto;margin:20px 0}hr{border:0;border-top:1px solid var(--line);margin:32px 0}.source{font-size:12px;color:var(--muted)}.local-toc{margin-top:18px;font-size:14px;background:#f5f8fa;padding:10px 14px;border-radius:6px}.local-toc a{display:block;margin:7px 0}summary{cursor:pointer}.back{display:inline-block;margin-top:24px;font-size:14px}button{border:1px solid #aac8c5;background:white;color:#175c54;padding:9px 16px;border-radius:6px;cursor:pointer;font:inherit;font-size:14px}footer{max-width:1000px;margin:20px auto;padding:24px;color:var(--muted);font-size:14px}.visual-board{margin:20px 0;padding:16px;border:1px solid #cbd9df;border-radius:12px;background:#f7fafb;overflow:auto}.visual-flow{min-width:620px;display:flex;align-items:center;justify-content:center;gap:8px;padding:14px}.visual-box{min-width:112px;padding:11px;background:white;border:1px solid #9eb3bd;border-radius:9px;text-align:center;box-shadow:0 3px 8px rgba(20,50,60,.07)}.visual-arrow{font-weight:700;color:var(--accent)}.visual-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:10px}.visual-pane{background:white;border:1px solid #cbd9df;border-radius:8px;padding:12px}.visual-label{font-size:12px;letter-spacing:.08em;color:#527080;font-weight:700}.visual-lane{display:grid;grid-template-columns:130px 1fr;gap:12px;align-items:center;margin:8px 0}.visual-track{padding:9px;background:#e6f1ef;border-radius:7px}.visual-note{padding:11px 15px;border-left:4px solid var(--accent);background:#eaf5f3;margin:14px 0}@media(max-width:850px){.layout{display:block;padding:16px}aside{position:static;max-height:none;padding:0 0 20px}nav{max-height:280px;overflow:auto}article h1{font-size:25px}body{font-size:16px}.visual-grid{grid-template-columns:1fr}.visual-lane{grid-template-columns:1fr}}@media print{body{background:white;font-size:11pt}header{background:white;color:black;padding:0}header p{color:black}.layout{display:block;padding:0}aside,button,.local-toc,.back{display:none}article{border:0;padding:0;break-before:page}pre{white-space:pre-wrap;background:#f0f2f4;color:black;font-size:9pt}a{color:inherit}h1,h2,h3{break-after:avoid}.table-scroll{overflow:visible}}
+</style></head><body><header id="top"><div class="eyebrow">SPECIAL TRACK 00 · FOUNDATION</div><h1>Git Foundation<br>& Safe Workflow</h1><p>Working tree, staging, commits, branches, conflicts, remotes, recovery, secrets, pull requests, drills และ Git Rescue Challenge</p><p><a style="color:white" href="index.html">หน้าหลัก</a> · <a style="color:white" href="book-00.html">Developer Toolkit</a> · <a style="color:white" href="week-5.html">Production Engineering</a></p><button onclick="window.print()">พิมพ์ / บันทึกเป็น PDF</button> <a style="color:white" href="special-git-materials.zip">ดาวน์โหลด Markdown, Drills และ Challenge</a></header><div class="layout"><aside><h2>สารบัญ Git</h2><nav><a href="#lesson-0">Special Track 00 — Git Foundation &amp; Safe Workflow</a><a href="#lesson-1">00 — Git Mental Model</a><a href="#lesson-2">01 — Setup and First Repository</a><a href="#lesson-3">02 — Working Tree, Staging and Commit</a><a href="#lesson-4">03 — Inspect History and Changes</a><a href="#lesson-5">04 — Branches and Merging</a><a href="#lesson-6">05 — Merge Conflicts</a><a href="#lesson-7">06 — Remotes, GitHub, Pull and Push</a><a href="#lesson-8">07 — Undo and Recovery</a><a href="#lesson-9">08 — Gitignore, Secrets and Repository Hygiene</a><a href="#lesson-10">09 — Team Workflow and Pull Requests</a><a href="#lesson-11">10 — Git Cheat Sheet by Situation</a><a href="#lesson-12">11 — Real Project Practical Playbook</a><a href="#lesson-13">Git Drills</a><a href="#lesson-14">Drill 01 — Status Detective</a><a href="#lesson-15">Drill 02 — Atomic Commits</a><a href="#lesson-16">Drill 03 — Branch and Merge</a><a href="#lesson-17">Drill 04 — Conflict Resolution</a><a href="#lesson-18">Drill 05 — Safe Recovery</a><a href="#lesson-19">Special Challenge — Git Rescue Mission</a><a href="#lesson-20">Git Rescue — Grading Rubric</a><a href="#lesson-21">Git Rescue — Progressive Hints</a><a href="#lesson-22">Git Rescue Mission — Mission Brief</a><a href="#lesson-23">Git Rescue — Safe Runbook</a></nav></aside><main><article id="lesson-0"><div class="source">README.md</div><details class="local-toc"><summary>หัวข้อในบทนี้</summary><a href="#lesson-0-git-week-5">ทำไมเรียน Git ก่อน Week 5</a><a href="#lesson-0-learning-outcomes">Learning Outcomes</a><a href="#lesson-0-_1">แผนที่บทเรียน</a><a href="#lesson-0-_2">เส้นทางเรียนแบบละเอียดสำหรับคนที่ยังไม่มั่นใจ</a><a href="#lesson-0-_4">คู่มือสถานการณ์จริง</a><a href="#lesson-0-_5">ลำดับเรียนแนะนำ</a><a href="#lesson-0-safety-rules">Safety Rules</a><a href="#lesson-0-definition-of-done">Definition of Done</a><a href="#lesson-0-track-week-1">ใช้ Track นี้ร่วมกับ Week 1 อย่างไร</a></details><h1 id="lesson-0-special-track-00-git-foundation-safe-workflow">Special Track 00 — Git Foundation &amp; Safe Workflow</h1>
+<h2 id="lesson-0-git-week-5">ทำไมเรียน Git ก่อน Week 5</h2>
+<p>Git ไม่ใช่วิชาสำหรับตกแต่งโปรเจกต์ตอนส่งงาน แต่เป็นระบบบันทึกการเปลี่ยนแปลงที่ควรใช้ตั้งแต่วันแรก หากเริ่มตอนนี้ งานทุก Week จะกลายเป็นหลักฐานว่าเราคิด แก้ bug และพัฒนาอย่างไร</p>
+<p>Track นี้แยกเฉพาะ Git ออกจาก Week 5 เพื่อสอนตั้งแต่ mental model จนถึง team workflow ส่วน Docker, Clean Code, Documentation และ Capstone Delivery ยังคงเรียนใน Week 5</p>
+<blockquote>
+<p>เป้าหมายไม่ใช่จำคำสั่งจำนวนมาก แต่ต้องตรวจสถานะก่อนทำ เข้าใจผลของคำสั่ง และกู้สถานการณ์โดยไม่ทำงานหาย</p>
+</blockquote>
+<hr/>
+<h2 id="lesson-0-learning-outcomes">Learning Outcomes</h2>
+<p>เมื่อจบ Track คุณควรสามารถ:</p>
+<ol>
+<li>อธิบาย Working Tree, Staging Area, Commit, HEAD และ Branch ได้</li>
+<li>สร้าง repository และ commit แบบเป็นเรื่องเดียวกันได้</li>
+<li>อ่าน <code>status</code>, <code>diff</code>, <code>log</code> และ <code>show</code> ก่อนตัดสินใจ</li>
+<li>แบ่งการเปลี่ยนแปลงด้วย <code>git add -p</code> ได้</li>
+<li>สร้าง branch และ merge ได้</li>
+<li>แก้ merge conflict โดยไม่ลบงานอีกฝั่งโดยไม่ตั้งใจ</li>
+<li>แยก fetch, pull และ push ได้</li>
+<li>เลือก undo/recovery method ตามสถานะของงานได้</li>
+<li>ใช้ <code>.gitignore</code> และป้องกัน secrets ได้</li>
+<li>เขียน commit/PR/handoff ที่ทีมอ่านรู้เรื่องได้</li>
+</ol>
+<hr/>
+<h2 id="lesson-0-_1">แผนที่บทเรียน</h2>
+<div class="table-scroll"><table>
+<thead>
+<tr>
+<th>ลำดับ</th>
+<th>บทเรียน</th>
+<th>ผลลัพธ์</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>00</td>
+<td><a href="#lesson-1">Git Mental Model</a></td>
+<td>เห็นภาพฐานข้อมูล snapshot และ pointers</td>
+</tr>
+<tr>
+<td>01</td>
+<td><a href="#lesson-2">Setup and First Repository</a></td>
+<td>ตั้งค่าและสร้าง repo อย่างปลอดภัย</td>
+</tr>
+<tr>
+<td>02</td>
+<td><a href="#lesson-3">Working Tree, Staging and Commit</a></td>
+<td>แบ่งการเปลี่ยนแปลงเป็น atomic commits</td>
+</tr>
+<tr>
+<td>03</td>
+<td><a href="#lesson-4">Inspect History and Changes</a></td>
+<td>อ่านสถานะ, diff และ history</td>
+</tr>
+<tr>
+<td>04</td>
+<td><a href="#lesson-5">Branches and Merging</a></td>
+<td>ทำงานแยก branch และรวมกลับ</td>
+</tr>
+<tr>
+<td>05</td>
+<td><a href="#lesson-6">Merge Conflicts</a></td>
+<td>เข้าใจและแก้ conflict อย่างมีหลักฐาน</td>
+</tr>
+<tr>
+<td>06</td>
+<td><a href="#lesson-7">Remotes, GitHub, Pull and Push</a></td>
+<td>แยก local/remote และ sync อย่างปลอดภัย</td>
+</tr>
+<tr>
+<td>07</td>
+<td><a href="#lesson-8">Undo and Recovery</a></td>
+<td>เลือก restore/revert/reflog ตามสถานการณ์</td>
+</tr>
+<tr>
+<td>08</td>
+<td><a href="#lesson-9">Gitignore, Secrets and Hygiene</a></td>
+<td>ป้องกันไฟล์ขยะและ credential</td>
+</tr>
+<tr>
+<td>09</td>
+<td><a href="#lesson-10">Team Workflow and Pull Requests</a></td>
+<td>ส่งงานให้ review และรับ feedback</td>
+</tr>
+<tr>
+<td>10</td>
+<td><a href="#lesson-11">Git Cheat Sheet</a></td>
+<td>คู่มือเลือกคำสั่งตามสถานการณ์</td>
+</tr>
+</tbody>
+</table></div>
+<p>แบบฝึกอยู่ใน <a href="#lesson-13"><code>drills/</code></a> และข้อสอบจบ Track อยู่ใน <a href="#lesson-19"><code>special_challenge_git_rescue/</code></a></p>
+<hr/>
+<h2 id="lesson-0-_2">เส้นทางเรียนแบบละเอียดสำหรับคนที่ยังไม่มั่นใจ</h2>
+<p>Track นี้อ่านได้สองรอบ โดยไม่ต้องพยายามจำทุกคำสั่งในครั้งแรก:</p>
+<h3 id="lesson-0-1">รอบที่ 1 — สร้างภาพในหัว</h3>
+<ol>
+<li>อ่านบท 00–01 เพื่อแยก Git, GitHub, working tree, staging และ commit</li>
+<li>ทดลองเฉพาะ repository ฝึก</li>
+<li>ทุกครั้งก่อนใช้คำสั่ง ให้พูดออกมาว่า “คำสั่งนี้ย้ายหรือเปลี่ยนอะไร”</li>
+<li>ถ้าอธิบายไม่ได้ ให้กลับไปดู state map ก่อนรัน</li>
+</ol>
+<h3 id="lesson-0-2-workflow">รอบที่ 2 — ฝึก workflow จริง</h3>
+<ol>
+<li>อ่านบท 02–10 พร้อมทำ drills</li>
+<li>ใช้ <a href="#lesson-12"><code>11_real_project_practical_playbook.md</code></a> เป็นคู่มือประกอบ</li>
+<li>หลังแต่ละ session เขียน learning log สั้น ๆ: ก่อนทำอยู่ state ไหน, ทำอะไร, ผลเป็นอย่างไร, กู้ได้อย่างไร</li>
+<li>ทำ Git Rescue Mission เมื่ออ่าน status/diff/log ได้ ไม่ใช่เมื่อจำ command ครบ</li>
+</ol>
+<h3 id="lesson-0-_3">รูปแบบการเรียนในแต่ละบท</h3>
+<pre><code class="language-text">อ่านแนวคิด → ทายผลคำสั่ง → รันใน repo ฝึก → อ่าน output
+→ อธิบายด้วยภาษาตัวเอง → ทำให้ผิดอย่างควบคุม → ฝึกกู้
+</code></pre>
+<p>หากกำลังทำโปรเจกต์จริงและไม่แน่ใจ ให้หยุดที่คำสั่ง read-only ก่อน ได้แก่ <code>status</code>, <code>diff</code>, <code>log</code>, <code>show</code>, <code>branch -vv</code> และ <code>remote -v</code> แล้วค่อยตัดสินใจ</p>
+<hr/>
+<h2 id="lesson-0-_4">คู่มือสถานการณ์จริง</h2>
+<p>บท <a href="#lesson-12"><code>11 — Real Project Practical Playbook</code></a> เพิ่มคำอธิบายและตัวอย่างใช้งานแบบ end-to-end:</p>
+<ul>
+<li>วิธีอ่านคำว่า <code>working tree clean</code> อย่างถูกต้อง</li>
+<li>local repo ที่ต้องเชื่อมกับ GitHub repo ใหม่</li>
+<li>วิธีสำรวจ remote ด้วย <code>fetch</code> ก่อนรวม history</li>
+<li>daily workflow ตั้งแต่เริ่มงานจน handoff</li>
+<li>วิธีอ่าน short status และ diff</li>
+<li>atomic commit กับ <code>git add -p</code></li>
+<li>non-fast-forward, conflict และ recovery decision table</li>
+<li><code>.gitignore</code>/secret hygiene สำหรับ Python และ AI projects</li>
+<li>วิธีใช้ AI ช่วยวิเคราะห์ Git อย่างปลอดภัย</li>
+<li>diagnostic templates สำหรับส่งข้อมูลให้แชทช่วยตรวจ</li>
+</ul>
+<hr/>
+<h2 id="lesson-0-_5">ลำดับเรียนแนะนำ</h2>
+<div class="table-scroll"><table>
+<thead>
+<tr>
+<th>Session</th>
+<th>เนื้อหา</th>
+<th style="text-align: right;">เวลา</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>1</td>
+<td>บท 00–01 + สร้าง repo ทดลอง</td>
+<td style="text-align: right;">1.5–2 ชม.</td>
+</tr>
+<tr>
+<td>2</td>
+<td>บท 02–03 + Atomic Commit Drill</td>
+<td style="text-align: right;">2–3 ชม.</td>
+</tr>
+<tr>
+<td>3</td>
+<td>บท 04–05 + Branch/Conflict Drills</td>
+<td style="text-align: right;">2–3 ชม.</td>
+</tr>
+<tr>
+<td>4</td>
+<td>บท 07–08 + Safe Recovery Drill</td>
+<td style="text-align: right;">2–3 ชม.</td>
+</tr>
+<tr>
+<td>5</td>
+<td>บท 06, 09–10 + Rescue Mission</td>
+<td style="text-align: right;">3–5 ชม.</td>
+</tr>
+</tbody>
+</table></div>
+<p>บท 06 เรื่อง remote สามารถเรียนหลังบท 07 ได้ เพราะการกู้ local repository สำคัญกว่าการรีบ push</p>
+<hr/>
+<h2 id="lesson-0-safety-rules">Safety Rules</h2>
+<ul>
+<li>ใช้ repository จำลองของ Track นี้ในการทดลอง destructive-looking operations</li>
+<li>ก่อน undo ให้รัน <code>git status</code> และ <code>git diff</code></li>
+<li>อย่าใช้ <code>git reset --hard</code>, <code>git clean -fd</code> หรือ force push เป็นคำตอบแรก</li>
+<li>อย่าคัดลอกคำสั่งที่ไม่เข้าใจผลกระทบ</li>
+<li>หากมี uncommitted work ที่สำคัญ ให้ทำสำเนาหรือ commit บน rescue branch ก่อน</li>
+<li>ถ้า secret เคย commit แล้ว การเพิ่ม <code>.gitignore</code> ไม่ทำให้ secret ปลอดภัย ต้อง rotate</li>
+<li>ห้ามทดลอง rewrite history กับ shared repository โดยไม่มีข้อตกลง</li>
+</ul>
+<hr/>
+<h2 id="lesson-0-definition-of-done">Definition of Done</h2>
+<ul>
+<li>[ ] อธิบาย state ของไฟล์จาก <code>git status</code> ได้</li>
+<li>[ ] แยก unstaged diff กับ staged diff ได้</li>
+<li>[ ] สร้าง atomic commits อย่างน้อย 3 commits</li>
+<li>[ ] ใช้ branch และ merge ได้</li>
+<li>[ ] แก้ conflict พร้อมทดสอบผลลัพธ์ได้</li>
+<li>[ ] undo staged/committed change โดยเลือกวิธีถูกสถานการณ์</li>
+<li>[ ] กู้ commit/file ด้วย <code>reflog</code> หรือ <code>restore --source</code></li>
+<li>[ ] ป้องกัน <code>.env</code>, runtime DB, cache และ logs</li>
+<li>[ ] แยก fetch/pull/push ได้</li>
+<li>[ ] เขียน PR summary และ test evidence ได้</li>
+<li>[ ] Git Rescue Mission ได้อย่างน้อย 75/100 และไม่มี Critical Failure</li>
+</ul>
+<hr/>
+<h2 id="lesson-0-track-week-1">ใช้ Track นี้ร่วมกับ Week 1 อย่างไร</h2>
+<pre><code class="language-text">Session 1–2 ของ Git
+        ↓
+สร้าง repo สำหรับงาน Week 1
+        ↓
+Commit หลัง milestone เล็ก ๆ
+        ↓
+Session 3–4 ก่อน OpsGuard
+        ↓
+ทำ OpsGuard ด้วย branch + tests
+        ↓
+Session 5 และ Rescue Mission
+</code></pre>
+<p>เมื่อถึง Week 5 จะเรียนต่อในระดับ production/team delivery ไม่ย้อนสอน <code>git add</code> ใหม่</p><a class="back" href="#top">↑ กลับสารบัญ</a></article><article id="lesson-1"><div class="source">00_git_mental_model.md</div><details class="local-toc"><summary>หัวข้อในบทนี้</summary><a href="#lesson-1-1-git-github">1. Git ไม่ใช่ GitHub</a><a href="#lesson-1-2-git-snapshot-undo">2. Git เก็บ Snapshot ไม่ใช่คำสั่ง Undo ต่อกัน</a><a href="#lesson-1-3">3. พื้นที่สำคัญสามส่วน</a><a href="#lesson-1-4">4. สถานะไฟล์</a><a href="#lesson-1-5-head-branch">5. HEAD และ Branch</a><a href="#lesson-1-6-commit-graph">6. Commit Graph</a><a href="#lesson-1-7-object-identity">7. Object Identity แบบพอใช้งาน</a><a href="#lesson-1-8-local-remote">8. Local กับ Remote</a><a href="#lesson-1-9-git">9. Git ไม่ได้ปกป้องทุกอย่าง</a><a href="#lesson-1-10-checkpoint">10. Checkpoint</a></details><h1 id="lesson-1-00-git-mental-model">00 — Git Mental Model</h1>
+<h2 id="lesson-1-1-git-github">1. Git ไม่ใช่ GitHub</h2>
+<h3 id="lesson-1-git">Git</h3>
+<p>โปรแกรม version control ที่ทำงานในเครื่อง เก็บประวัติใน directory <code>.git</code></p>
+<h3 id="lesson-1-githubgitlabbitbucket">GitHub/GitLab/Bitbucket</h3>
+<p>บริการเก็บ Git repository บน server พร้อม collaboration เช่น Pull Request, Issue และ CI</p>
+<p>คุณใช้ Git ได้โดยไม่มีอินเทอร์เน็ตหรือ GitHub แต่ใช้ GitHub โดยไม่เข้าใจ Git จะสับสนทันทีเมื่อ conflict หรือ undo</p>
+<hr/>
+<h2 id="lesson-1-2-git-snapshot-undo">2. Git เก็บ Snapshot ไม่ใช่คำสั่ง Undo ต่อกัน</h2>
+<p>Commit เปรียบเหมือน snapshot ของไฟล์ tracked ณ เวลาหนึ่ง ถ้าไฟล์ไม่เปลี่ยน Git เชื่อมกลับไปใช้ content เดิมอย่างมีประสิทธิภาพ</p>
+<pre><code class="language-text">Commit A ──&gt; Commit B ──&gt; Commit C
+  files        files        files
+</code></pre>
+<p>แต่ละ commit มี:</p>
+<ul>
+<li>snapshot/tree</li>
+<li>parent commit</li>
+<li>author/committer</li>
+<li>timestamp</li>
+<li>message</li>
+<li>hash identifier</li>
+</ul>
+<p>Commit hash เปลี่ยนหาก content หรือ metadata สำคัญเปลี่ยน</p>
+<hr/>
+<h2 id="lesson-1-3">3. พื้นที่สำคัญสามส่วน</h2>
+<pre><code class="language-text">Working Tree
+    │ git add
+    ▼
+Staging Area / Index
+    │ git commit
+    ▼
+Local Repository (.git)
+</code></pre>
+<h3 id="lesson-1-working-tree">Working Tree</h3>
+<p>ไฟล์ที่คุณกำลังแก้ใน folder</p>
+<h3 id="lesson-1-staging-area">Staging Area</h3>
+<p>รายการ snapshot ที่ตั้งใจจะใส่ commit ถัดไป ไม่ใช่เพียง “ไฟล์ที่ Git รู้จัก”</p>
+<h3 id="lesson-1-local-repository">Local Repository</h3>
+<p>commits, branches, tags และ metadata ใน <code>.git</code></p>
+<p>ความเข้าใจ staging สำคัญที่สุด เพราะทำให้แยกงานที่แก้ปนกันเป็น commits ที่อ่านง่ายได้</p>
+<hr/>
+<h2 id="lesson-1-4">4. สถานะไฟล์</h2>
+<h3 id="lesson-1-untracked">Untracked</h3>
+<p>ไฟล์มีใน Working Tree แต่ยังไม่เคยถูก Git track</p>
+<h3 id="lesson-1-tracked-unmodified">Tracked + Unmodified</h3>
+<p>ตรงกับ snapshot ที่ checkout</p>
+<h3 id="lesson-1-modified">Modified</h3>
+<p>ไฟล์ tracked ถูกแก้ แต่ยังไม่ได้ stage การแก้ล่าสุด</p>
+<h3 id="lesson-1-staged">Staged</h3>
+<p>content version หนึ่งถูกใส่ใน index เพื่อ commit</p>
+<p>ไฟล์หนึ่งสามารถเป็น staged และ modified พร้อมกันได้:</p>
+<pre><code class="language-text">แก้ version A → git add → staged A
+แก้อีกเป็น version B → working tree B
+</code></pre>
+<p>Commit ตอนนี้จะเก็บ A ไม่ใช่ B</p>
+<hr/>
+<h2 id="lesson-1-5-head-branch">5. HEAD และ Branch</h2>
+<p>Branch เป็นชื่อที่ชี้ commit ไม่ใช่สำเนา folder ทั้งก้อน</p>
+<pre><code class="language-text">A ── B ── C   main
+          ▲
+         HEAD
+</code></pre>
+<p>โดยทั่วไป HEAD ชี้ branch ปัจจุบัน และ branch ชี้ commit ล่าสุด</p>
+<p>สร้าง feature branch:</p>
+<pre><code class="language-text">A ── B ── C   main
+          └── D ── E   feature/report
+                    ▲
+                   HEAD
+</code></pre>
+<p>Commit ใหม่เลื่อน pointer ของ branch ปัจจุบัน</p>
+<hr/>
+<h2 id="lesson-1-6-commit-graph">6. Commit Graph</h2>
+<p>Git history เป็น directed acyclic graph ไม่ใช่เส้นเดียวเสมอ:</p>
+<pre><code class="language-text">          D ── E   feature
+         /      \
+A ── B ── C ───── M   main
+</code></pre>
+<p><code>M</code> เป็น merge commit มี parents มากกว่าหนึ่ง</p>
+<p>การเห็น graph ช่วยเข้าใจ merge, rebase และ recovery มากกว่าจำคำสั่ง</p>
+<hr/>
+<h2 id="lesson-1-7-object-identity">7. Object Identity แบบพอใช้งาน</h2>
+<p>Git ใช้ content-addressed objects เช่น blob, tree, commit และ tag คุณไม่จำเป็นต้องใช้ plumbing commands แต่ควรรู้ว่า:</p>
+<ul>
+<li>hash ระบุ object/content</li>
+<li>branch เป็น movable reference</li>
+<li>tag มักเป็นชื่อคงที่สำหรับจุดสำคัญ</li>
+<li>commit ไม่ถูกแก้ “ภายใน”; การ amend สร้าง commit ใหม่</li>
+</ul>
+<p>นี่อธิบายว่าทำไม rewriting history เปลี่ยน hashes ของ commit ต่อเนื่อง</p>
+<hr/>
+<h2 id="lesson-1-8-local-remote">8. Local กับ Remote</h2>
+<pre><code class="language-text">Working Tree / Index / Local Commits
+                 │ push
+                 ▼
+            Remote Repository
+                 │ fetch
+                 ▼
+       Remote-tracking References
+</code></pre>
+<p><code>origin/main</code> เป็น reference ในเครื่องที่บอกว่า “ครั้งล่าสุดที่ fetch มา remote main อยู่ตรงไหน” ไม่ใช่ server ที่อัปเดตสดตลอดเวลา</p>
+<hr/>
+<h2 id="lesson-1-9-git">9. Git ไม่ได้ปกป้องทุกอย่าง</h2>
+<p>Git ปกป้องได้ดีเมื่อ:</p>
+<ul>
+<li>ไฟล์ tracked</li>
+<li>การเปลี่ยนแปลงถูก commit</li>
+<li>commit ยัง reachable หรือหาได้ด้วย reflog</li>
+</ul>
+<p>Git อาจช่วยไม่ได้เมื่อ:</p>
+<ul>
+<li>untracked file ถูกลบ</li>
+<li>ignored file ถูกลบ</li>
+<li>secret ถูกเผยแพร่แล้ว</li>
+<li>destructive command ลบ uncommitted work</li>
+</ul>
+<p>ดังนั้น “เดี๋ยว Git กู้ได้” ไม่ใช่ใบอนุญาตให้ใช้คำสั่งเสี่ยง</p>
+<hr/>
+<h2 id="lesson-1-10-checkpoint">10. Checkpoint</h2>
+<p>อธิบายด้วยภาษาตัวเอง:</p>
+<ol>
+<li>Git ต่างจาก GitHub อย่างไร?</li>
+<li>Staging Area มีประโยชน์อะไร?</li>
+<li>ไฟล์เป็น staged และ modified พร้อมกันได้อย่างไร?</li>
+<li>Branch ชี้ไปที่อะไร?</li>
+<li>HEAD คืออะไร?</li>
+<li><code>origin/main</code> อัปเดตเมื่อใด?</li>
+<li>ทำไม amend จึงสร้าง commit ใหม่?</li>
+<li>Untracked file ได้รับการปกป้องจาก Git แล้วหรือยัง?</li>
+</ol><a class="back" href="#top">↑ กลับสารบัญ</a></article><article id="lesson-2"><div class="source">01_setup_and_first_repository.md</div><details class="local-toc"><summary>หัวข้อในบทนี้</summary><a href="#lesson-2-1-git">1. ตรวจ Git</a><a href="#lesson-2-2-config-levels">2. Config Levels</a><a href="#lesson-2-3-repository">3. สร้าง Repository</a><a href="#lesson-2-4-repo">4. ตรวจว่าตอนนี้อยู่ Repo ใด</a><a href="#lesson-2-5-nested-repository-trap">5. Nested Repository Trap</a><a href="#lesson-2-6-first-commit">6. First Commit</a><a href="#lesson-2-7-clone-init">7. Clone กับ Init</a><a href="#lesson-2-8-repository-baseline">8. Repository Baseline</a><a href="#lesson-2-9-exercise">9. Exercise</a><a href="#lesson-2-10-checkpoint">10. Checkpoint</a></details><h1 id="lesson-2-01-setup-and-first-repository">01 — Setup and First Repository</h1>
+<h2 id="lesson-2-1-git">1. ตรวจ Git</h2>
+<pre><code class="language-powershell">git --version
+</code></pre>
+<p>ดู config พร้อมแหล่งที่มา:</p>
+<pre><code class="language-powershell">git config --list --show-origin
+</code></pre>
+<p>ตั้ง identity:</p>
+<pre><code class="language-powershell">git config --global user.name "Your Name"
+git config --global user.email "you@example.com"
+</code></pre>
+<p>Identity อยู่ใน commit metadata ไม่ใช่ GitHub login/password</p>
+<hr/>
+<h2 id="lesson-2-2-config-levels">2. Config Levels</h2>
+<ul>
+<li>system: ทั้งเครื่อง</li>
+<li>global: ผู้ใช้ปัจจุบัน</li>
+<li>local: repository นี้</li>
+</ul>
+<p>ค่าที่ specific กว่าทับค่ากว้างกว่า</p>
+<p>ดูเฉพาะ repo:</p>
+<pre><code class="language-powershell">git config --local --list
+</code></pre>
+<p>สำหรับอีเมลบริษัท/ส่วนตัวอาจใช้ local config แยก repo</p>
+<hr/>
+<h2 id="lesson-2-3-repository">3. สร้าง Repository</h2>
+<p>ใน folder ทดลอง:</p>
+<pre><code class="language-powershell">git init
+git status
+</code></pre>
+<p>กำหนดชื่อ branch เริ่มต้นหากต้องการ:</p>
+<pre><code class="language-powershell">git branch -M main
+</code></pre>
+<p><code>.git</code> คือฐานข้อมูล repository อย่าแก้ไฟล์ภายในด้วยมือโดยไม่รู้จริง</p>
+<hr/>
+<h2 id="lesson-2-4-repo">4. ตรวจว่าตอนนี้อยู่ Repo ใด</h2>
+<pre><code class="language-powershell">git rev-parse --show-toplevel
+git status --short --branch
+</code></pre>
+<p>หากคำสั่งบอก <code>not a git repository</code> ให้ตรวจ CWD</p>
+<p>สำคัญมาก: Git เดินหา <code>.git</code> ขึ้นไปยัง parent directories จึงอาจทำงานกับ repo ใหญ่กว่าที่คิด</p>
+<hr/>
+<h2 id="lesson-2-5-nested-repository-trap">5. Nested Repository Trap</h2>
+<p>โครงสร้างนี้อาจเกิดโดยไม่ตั้งใจ:</p>
+<pre><code class="language-text">course/.git
+course/week1/project/.git
+</code></pre>
+<p>parent repo จะมอง child repo ต่างจาก folder ปกติ และอาจเกิด embedded repository warning</p>
+<p>ก่อน <code>git init</code> ถาม:</p>
+<ul>
+<li>มี <code>.git</code> ใน parent แล้วหรือไม่?</li>
+<li>ต้องการ repo แยกจริงไหม?</li>
+<li>folder นี้ควรเป็นส่วนหนึ่งของ course repo หรือ standalone project?</li>
+</ul>
+<p>ใช้:</p>
+<pre><code class="language-powershell">git rev-parse --show-toplevel
+</code></pre>
+<p>ก่อน init เสมอเมื่อไม่แน่ใจ</p>
+<hr/>
+<h2 id="lesson-2-6-first-commit">6. First Commit</h2>
+<p>สร้าง <code>README.md</code>, ตรวจสถานะ แล้ว:</p>
+<pre><code class="language-powershell">git add README.md
+git diff --staged
+git commit -m "docs: add project overview"
+</code></pre>
+<p>ตรวจ:</p>
+<pre><code class="language-powershell">git log --oneline --decorate --graph --all
+</code></pre>
+<p>ลำดับสำคัญ:</p>
+<pre><code class="language-text">status → diff → add → diff --staged → commit → log
+</code></pre>
+<hr/>
+<h2 id="lesson-2-7-clone-init">7. Clone กับ Init</h2>
+<h3 id="lesson-2-git-init"><code>git init</code></h3>
+<p>สร้าง repo จาก folder local ที่มี/ไม่มีไฟล์อยู่แล้ว</p>
+<h3 id="lesson-2-git-clone"><code>git clone</code></h3>
+<p>ดาวน์โหลด repository พร้อม history และตั้ง remote โดยปกติชื่อ <code>origin</code></p>
+<p>อย่า <code>git init</code> ภายใน folder ที่เพิ่ง clone โดยไม่ตั้งใจ</p>
+<hr/>
+<h2 id="lesson-2-8-repository-baseline">8. Repository Baseline</h2>
+<p>ก่อนเขียน feature ควรมี:</p>
+<ul>
+<li>README เบื้องต้น</li>
+<li><code>.gitignore</code></li>
+<li>dependency/config samples</li>
+<li>initial commit ที่สะอาด</li>
+</ul>
+<p>แต่ไม่ต้องรอ README สมบูรณ์จึงเริ่ม เพราะ documentation พัฒนาตามโปรเจกต์ได้</p>
+<hr/>
+<h2 id="lesson-2-9-exercise">9. Exercise</h2>
+<p>สร้าง repo ทดลองแยกจากงานจริง:</p>
+<ol>
+<li>ตรวจว่า parent ไม่ใช่ repo</li>
+<li>init และตั้ง main</li>
+<li>สร้าง README</li>
+<li>ตรวจ untracked state</li>
+<li>stage เฉพาะ README</li>
+<li>อ่าน staged diff</li>
+<li>commit</li>
+<li>แสดง graph</li>
+<li>อธิบายว่า HEAD/main ชี้ที่ใด</li>
+</ol>
+<hr/>
+<h2 id="lesson-2-10-checkpoint">10. Checkpoint</h2>
+<ul>
+<li>[ ] รู้ config system/global/local</li>
+<li>[ ] ตรวจ repo root ได้</li>
+<li>[ ] ป้องกัน nested repo โดยไม่ตั้งใจ</li>
+<li>[ ] แยก init กับ clone</li>
+<li>[ ] ทำ first commit หลังตรวจ staged diff</li>
+<li>[ ] อ่าน log graph พื้นฐานได้</li>
+</ul><a class="back" href="#top">↑ กลับสารบัญ</a></article><article id="lesson-3"><div class="source">02_working_tree_staging_commit.md</div><details class="local-toc"><summary>หัวข้อในบทนี้</summary><a href="#lesson-3-1-git-status-dashboard">1. git status คือ Dashboard</a><a href="#lesson-3-2-git-add-add-file">2. git add ไม่ได้แปลว่า Add File อย่างเดียว</a><a href="#lesson-3-3-stage">3. Stage อย่างตั้งใจ</a><a href="#lesson-3-4-interactive-patch">4. Interactive Patch</a><a href="#lesson-3-5-atomic-commit">5. Atomic Commit</a><a href="#lesson-3-6-commit-message">6. Commit Message</a><a href="#lesson-3-7-pre-commit-ritual">7. Pre-commit Ritual</a><a href="#lesson-3-8-partial-work">8. Partial Work</a><a href="#lesson-3-9-exercise-three-changes-three-commits">9. Exercise — Three Changes, Three Commits</a><a href="#lesson-3-10-checkpoint">10. Checkpoint</a></details><h1 id="lesson-3-02-working-tree-staging-and-commit">02 — Working Tree, Staging and Commit</h1>
+<h2 id="lesson-3-1-git-status-dashboard">1. <code>git status</code> คือ Dashboard</h2>
+<p>ใช้แบบเต็มเมื่อเรียน:</p>
+<pre><code class="language-powershell">git status
+</code></pre>
+<p>ใช้แบบย่อเมื่อคุ้น:</p>
+<pre><code class="language-powershell">git status --short --branch
+</code></pre>
+<p>ตัวอย่าง short status:</p>
+<pre><code class="language-text"> M app.py
+M  README.md
+MM config.py
+?? notes.txt
+</code></pre>
+<p>สองคอลัมน์คือ index/staging และ working tree:</p>
+<ul>
+<li><code>M</code>: modified แต่ unstaged</li>
+<li><code>M</code>: staged</li>
+<li><code>MM</code>: staged version แล้วแก้ต่ออีก</li>
+<li><code>??</code>: untracked</li>
+</ul>
+<hr/>
+<h2 id="lesson-3-2-git-add-add-file">2. <code>git add</code> ไม่ได้แปลว่า Add File อย่างเดียว</h2>
+<p><code>git add</code> นำ content ปัจจุบันไปใส่ staging area:</p>
+<pre><code class="language-powershell">git add app.py
+</code></pre>
+<p>หากแก้ app.py ต่อ ต้อง add ใหม่หากต้องการ version ล่าสุดใน commit</p>
+<p>ดู staged:</p>
+<pre><code class="language-powershell">git diff --staged
+</code></pre>
+<p>ดู unstaged:</p>
+<pre><code class="language-powershell">git diff
+</code></pre>
+<hr/>
+<h2 id="lesson-3-3-stage">3. Stage อย่างตั้งใจ</h2>
+<p>แนะนำ:</p>
+<pre><code class="language-powershell">git add path/to/file
+git add -p
+</code></pre>
+<p>ระวัง:</p>
+<pre><code class="language-powershell">git add .
+</code></pre>
+<p>ไม่ใช่คำสั่งผิด แต่ควรใช้หลังตรวจ status และรู้ว่าทุกการเปลี่ยนแปลงควรอยู่ commit เดียวกัน</p>
+<hr/>
+<h2 id="lesson-3-4-interactive-patch">4. Interactive Patch</h2>
+<pre><code class="language-powershell">git add -p
+</code></pre>
+<p>Git แบ่ง diff เป็น hunks ให้เลือก เช่น:</p>
+<ul>
+<li><code>y</code>: stage hunk</li>
+<li><code>n</code>: ไม่ stage</li>
+<li><code>s</code>: split hunk</li>
+<li><code>e</code>: edit hunk อย่างระวัง</li>
+<li><code>q</code>: quit</li>
+<li><code>?</code>: help</li>
+</ul>
+<p>เหมาะเมื่อไฟล์เดียวมีทั้ง feature และ typo fix</p>
+<hr/>
+<h2 id="lesson-3-5-atomic-commit">5. Atomic Commit</h2>
+<p>Commit หนึ่งควรตอบคำถามได้ว่า “ทำเรื่องอะไรหนึ่งเรื่อง”</p>
+<p>ตัวอย่างดี:</p>
+<pre><code class="language-text">feat: validate payment currency
+test: cover unsupported currency cases
+docs: document environment setup
+</code></pre>
+<p>ตัวอย่างกว้างเกิน:</p>
+<pre><code class="language-text">update files
+fix stuff
+final
+</code></pre>
+<p>Atomic ไม่ได้แปลว่าหนึ่งไฟล์ต่อ commit บาง feature ต้องมี source + tests + docs ใน commit เดียวเพื่อให้ snapshot ใช้งานได้</p>
+<hr/>
+<h2 id="lesson-3-6-commit-message">6. Commit Message</h2>
+<p>รูปแบบง่าย:</p>
+<pre><code class="language-text">&lt;type&gt;: &lt;imperative summary&gt;
+</code></pre>
+<p>Types ที่ใช้ได้:</p>
+<ul>
+<li><code>feat</code>: ความสามารถใหม่</li>
+<li><code>fix</code>: แก้ bug</li>
+<li><code>test</code>: tests</li>
+<li><code>docs</code>: documentation</li>
+<li><code>refactor</code>: เปลี่ยนโครงโดยไม่เปลี่ยน behavior</li>
+<li><code>chore</code>: maintenance</li>
+</ul>
+<p>Body ใช้อธิบาย “ทำไม” และผลกระทบเมื่อจำเป็น</p>
+<p>อย่าฝืน Conventional Commits หากทีมใช้มาตรฐานอื่น ให้ตามทีม</p>
+<hr/>
+<h2 id="lesson-3-7-pre-commit-ritual">7. Pre-commit Ritual</h2>
+<p>ก่อน commit:</p>
+<pre><code class="language-text">1. git status
+2. git diff
+3. run relevant tests
+4. git add อย่างตั้งใจ
+5. git diff --staged
+6. ตรวจ secrets/debug output
+7. git commit
+8. git status
+</code></pre>
+<p>หลัง commit working tree ไม่จำเป็นต้อง clean เสมอ ถ้าตั้งใจเหลืองานสำหรับ commit ถัดไป แต่ต้องรู้ว่าค้างอะไร</p>
+<hr/>
+<h2 id="lesson-3-8-partial-work">8. Partial Work</h2>
+<p>หาก feature ยังไม่เสร็จ:</p>
+<ul>
+<li>commit บน private feature branch พร้อม message ชัดได้</li>
+<li>หรือเก็บโดยยังไม่ commitหากระยะสั้นและปลอดภัย</li>
+<li>อย่าฝืนสร้าง “fake complete” commit บน main</li>
+</ul>
+<p>ทีมต่างกันเรื่อง WIP commits ให้เรียน workflow ของทีม</p>
+<hr/>
+<h2 id="lesson-3-9-exercise-three-changes-three-commits">9. Exercise — Three Changes, Three Commits</h2>
+<p>แก้ไฟล์จำลองให้มี:</p>
+<ol>
+<li>เพิ่ม validation</li>
+<li>เพิ่ม test</li>
+<li>แก้ README ที่ไม่เกี่ยว</li>
+</ol>
+<p>แบ่งเป็น commits อย่างมีเหตุผล ใช้ <code>git add -p</code> อย่างน้อยหนึ่งครั้ง และบันทึก staged diff ก่อน commit</p>
+<hr/>
+<h2 id="lesson-3-10-checkpoint">10. Checkpoint</h2>
+<ul>
+<li>[ ] อ่าน short status สองคอลัมน์ได้</li>
+<li>[ ] แยก <code>diff</code> กับ <code>diff --staged</code></li>
+<li>[ ] รู้ว่า add เก็บ content version ปัจจุบัน</li>
+<li>[ ] ใช้ patch staging ได้</li>
+<li>[ ] อธิบาย atomic commit</li>
+<li>[ ] ตรวจ staged diff และ tests ก่อน commit</li>
+</ul><a class="back" href="#top">↑ กลับสารบัญ</a></article><article id="lesson-4"><div class="source">03_inspect_history_and_changes.md</div><details class="local-toc"><summary>หัวข้อในบทนี้</summary><a href="#lesson-4-1">1. อ่านก่อนแก้</a><a href="#lesson-4-2-diff-anatomy">2. Diff Anatomy</a><a href="#lesson-4-3-diff">3. Diff หลายขอบเขต</a><a href="#lesson-4-4-log">4. Log</a><a href="#lesson-4-5-show-commit">5. Show Commit</a><a href="#lesson-4-6-compare-file-across-commits">6. Compare File Across Commits</a><a href="#lesson-4-7-blame">7. Blame ใช้อย่างไรไม่ให้เป็นการโทษคน</a><a href="#lesson-4-8-search-history">8. Search History</a><a href="#lesson-4-9-exercise-history-investigation">9. Exercise — History Investigation</a><a href="#lesson-4-10-checkpoint">10. Checkpoint</a></details><h1 id="lesson-4-03-inspect-history-and-changes">03 — Inspect History and Changes</h1>
+<h2 id="lesson-4-1">1. อ่านก่อนแก้</h2>
+<p>Git workflow ที่ปลอดภัยเริ่มจาก observation:</p>
+<pre><code class="language-powershell">git status --short --branch
+git diff
+git diff --staged
+git log --oneline --decorate --graph --all
+</code></pre>
+<p>หากไม่รู้ current state อย่ารีบ undo/merge/pull</p>
+<hr/>
+<h2 id="lesson-4-2-diff-anatomy">2. Diff Anatomy</h2>
+<p>Diff แสดง:</p>
+<ul>
+<li>old/new file</li>
+<li>hunk header เช่น <code>@@ -3,4 +3,5 @@</code></li>
+<li>บรรทัดลบ <code>-</code></li>
+<li>บรรทัดเพิ่ม <code>+</code></li>
+<li>context</li>
+</ul>
+<p><code>-</code> และ <code>+</code> ไม่ได้หมายถึง error แต่เป็นมุมมอง old/new</p>
+<hr/>
+<h2 id="lesson-4-3-diff">3. Diff หลายขอบเขต</h2>
+<pre><code class="language-powershell">git diff
+</code></pre>
+<p>Working Tree เทียบ Staging Area</p>
+<pre><code class="language-powershell">git diff --staged
+</code></pre>
+<p>Staging Area เทียบ HEAD</p>
+<pre><code class="language-powershell">git diff HEAD
+</code></pre>
+<p>ทุกการเปลี่ยนแปลงเทียบ commit ปัจจุบัน</p>
+<pre><code class="language-powershell">git diff main...feature/report
+</code></pre>
+<p>การเปลี่ยนแปลงบน feature เทียบจุดร่วม เหมาะ review PR</p>
+<hr/>
+<h2 id="lesson-4-4-log">4. Log</h2>
+<pre><code class="language-powershell">git log --oneline --decorate --graph --all
+</code></pre>
+<p>ละเอียด:</p>
+<pre><code class="language-powershell">git log --stat
+git log -p -- path/to/file
+git log --author="Name"
+git log --since="1 week ago"
+</code></pre>
+<p>หยุด pager ด้วย <code>q</code></p>
+<hr/>
+<h2 id="lesson-4-5-show-commit">5. Show Commit</h2>
+<pre><code class="language-powershell">git show &lt;commit&gt;
+git show --stat &lt;commit&gt;
+git show &lt;commit&gt;:path/to/file
+</code></pre>
+<p>ใช้ตรวจว่า commit ทำอะไรจริง ไม่เชื่อ message อย่างเดียว</p>
+<hr/>
+<h2 id="lesson-4-6-compare-file-across-commits">6. Compare File Across Commits</h2>
+<pre><code class="language-powershell">git diff &lt;old&gt; &lt;new&gt; -- path/to/file
+</code></pre>
+<p>ดูไฟล์เวอร์ชันเก่าโดยไม่เปลี่ยน working tree:</p>
+<pre><code class="language-powershell">git show &lt;commit&gt;:path/to/file
+</code></pre>
+<p>ปลอดภัยกว่าการ checkout ไปมาเมื่อเพียงต้องการอ่าน</p>
+<hr/>
+<h2 id="lesson-4-7-blame">7. Blame ใช้อย่างไรไม่ให้เป็นการโทษคน</h2>
+<pre><code class="language-powershell">git blame path/to/file
+</code></pre>
+<p>ใช้หา commit/context ที่เพิ่มบรรทัด ไม่ใช่หา “คนผิด” จากนั้นอ่าน commit/PR เพื่อเข้าใจเหตุผล</p>
+<p><code>blame</code> อาจเข้าใจผิดหลัง refactor หรือ move จึงไม่ใช่คำตอบสุดท้าย</p>
+<hr/>
+<h2 id="lesson-4-8-search-history">8. Search History</h2>
+<p>หา commit message:</p>
+<pre><code class="language-powershell">git log --grep="validation"
+</code></pre>
+<p>หา commit ที่เพิ่ม/ลบ string:</p>
+<pre><code class="language-powershell">git log -S "DISCORD_WEBHOOK_URL" -p
+</code></pre>
+<p>หา diff ตรง regex:</p>
+<pre><code class="language-powershell">git log -G "password|token" -p
+</code></pre>
+<p>มีประโยชน์ตอนตรวจ secret history แต่หากเคยรั่วต้อง rotate</p>
+<hr/>
+<h2 id="lesson-4-9-exercise-history-investigation">9. Exercise — History Investigation</h2>
+<p>เลือก commit สามตัวใน repo ทดลองแล้วตอบ:</p>
+<ol>
+<li>parent คือ commit ใด?</li>
+<li>files ใดเปลี่ยน?</li>
+<li>message ตรงกับ patch หรือไม่?</li>
+<li>test เปลี่ยนพร้อม behavior หรือไม่?</li>
+<li>หาก bug เริ่มตรงนี้ มีหลักฐานอะไร?</li>
+</ol>
+<hr/>
+<h2 id="lesson-4-10-checkpoint">10. Checkpoint</h2>
+<ul>
+<li>[ ] เลือก diff scope ถูก</li>
+<li>[ ] อ่าน patch ได้</li>
+<li>[ ] ดู graph/branches ได้</li>
+<li>[ ] inspect commit โดยไม่เปลี่ยน working tree</li>
+<li>[ ] ค้น history ด้วย message/content</li>
+<li>[ ] ใช้ blame เพื่อหา context ไม่ใช่กล่าวโทษ</li>
+</ul><a class="back" href="#top">↑ กลับสารบัญ</a></article><article id="lesson-5"><div class="source">04_branches_and_merging.md</div><details class="local-toc"><summary>หัวข้อในบทนี้</summary><a href="#lesson-5-1-branch-pointer">1. Branch คือ Pointer ราคาถูก</a><a href="#lesson-5-2-branch">2. ตั้งชื่อ Branch</a><a href="#lesson-5-3-switch">3. Switch อย่างปลอดภัย</a><a href="#lesson-5-4-fast-forward-merge">4. Fast-forward Merge</a><a href="#lesson-5-5-three-way-merge">5. Three-way Merge</a><a href="#lesson-5-6-merge-workflow">6. Merge Workflow</a><a href="#lesson-5-7-delete-branch">7. Delete Branch</a><a href="#lesson-5-8-merge-rebase">8. Merge หรือ Rebase</a><a href="#lesson-5-9-exercise">9. Exercise</a><a href="#lesson-5-10-checkpoint">10. Checkpoint</a></details><h1 id="lesson-5-04-branches-and-merging">04 — Branches and Merging</h1>
+<h2 id="lesson-5-1-branch-pointer">1. Branch คือ Pointer ราคาถูก</h2>
+<p>การสร้าง branch ไม่ได้ copy ทุกไฟล์ แต่สร้างชื่อชี้ commit:</p>
+<pre><code class="language-powershell">git switch -c feature/report
+</code></pre>
+<p>ตรวจ:</p>
+<pre><code class="language-powershell">git branch --show-current
+git log --oneline --decorate --graph --all
+</code></pre>
+<hr/>
+<h2 id="lesson-5-2-branch">2. ตั้งชื่อ Branch</h2>
+<p>ตัวอย่าง:</p>
+<pre><code class="language-text">feature/resume-parser
+fix/currency-validation
+docs/setup-guide
+test/idempotency-cases
+</code></pre>
+<p>ตาม convention ของทีม และหลีกเลี่ยงชื่อกว้าง เช่น <code>mybranch</code>, <code>new</code>, <code>test2</code></p>
+<hr/>
+<h2 id="lesson-5-3-switch">3. Switch อย่างปลอดภัย</h2>
+<pre><code class="language-powershell">git status
+git switch main
+</code></pre>
+<p>Git อาจไม่ยอม switch หาก uncommitted changes จะถูกทับ นี่เป็น safety feature</p>
+<p>ตัวเลือก:</p>
+<ul>
+<li>commit งานบน branch ปัจจุบัน</li>
+<li>เก็บการแก้ไว้และ switch หากไม่ชน</li>
+<li>stash อย่างเข้าใจ (ไม่ใช้เป็นโกดังถาวร)</li>
+<li>สร้าง branch ใหม่จาก current state</li>
+</ul>
+<hr/>
+<h2 id="lesson-5-4-fast-forward-merge">4. Fast-forward Merge</h2>
+<p>ถ้า main ไม่มี commit ใหม่หลังแตก branch:</p>
+<pre><code class="language-text">A ── B   main
+      └── C ── D   feature
+</code></pre>
+<p>merge สามารถเลื่อน main ไป D:</p>
+<pre><code class="language-text">A ── B ── C ── D   main, feature
+</code></pre>
+<p>ไม่มี merge commit ใหม่</p>
+<hr/>
+<h2 id="lesson-5-5-three-way-merge">5. Three-way Merge</h2>
+<p>ถ้าทั้งสองฝั่งเดินต่อ:</p>
+<pre><code class="language-text">      C ── D   feature
+     /
+A ── B ── E   main
+</code></pre>
+<p>Git รวมเป็น:</p>
+<pre><code class="language-text">      C ── D
+     /      \
+A ── B ── E ── M   main
+</code></pre>
+<p><code>M</code> มี parents สองตัว</p>
+<hr/>
+<h2 id="lesson-5-6-merge-workflow">6. Merge Workflow</h2>
+<pre><code class="language-powershell">git switch main
+git status
+git merge feature/report
+</code></pre>
+<p>หลัง merge:</p>
+<pre><code class="language-powershell">git log --oneline --decorate --graph --all
+</code></pre>
+<p>รัน tests แม้ Git บอก merge สำเร็จ เพราะ syntactic merge ไม่รับประกัน behavior</p>
+<hr/>
+<h2 id="lesson-5-7-delete-branch">7. Delete Branch</h2>
+<p>หลัง merge และตรวจแล้ว:</p>
+<pre><code class="language-powershell">git branch -d feature/report
+</code></pre>
+<p><code>-d</code> ป้องกันลบ branch ที่ยังไม่ merge ส่วน <code>-D</code> บังคับและเสี่ยงกว่า</p>
+<p>ลบชื่อ branch ไม่ได้ลบ commits ที่ยัง reachable จาก main</p>
+<hr/>
+<h2 id="lesson-5-8-merge-rebase">8. Merge หรือ Rebase</h2>
+<p>Track นี้ใช้ merge เป็นฐานก่อน</p>
+<p>Rebase ย้าย/สร้าง commits ใหม่บนฐานใหม่ ทำ history เส้นตรงได้แต่เปลี่ยน hashes ไม่ควร rebase shared commits โดยไม่มีข้อตกลง</p>
+<p>เรียน mental model ของ merge ให้แน่นก่อนใช้ rebase</p>
+<hr/>
+<h2 id="lesson-5-9-exercise">9. Exercise</h2>
+<ol>
+<li>จาก main สร้าง <code>feature/report</code></li>
+<li>ทำสอง atomic commits</li>
+<li>กลับ main และทำ docs commit ที่ไม่ชน</li>
+<li>merge feature</li>
+<li>วาด graph ก่อน/หลัง</li>
+<li>รัน tests</li>
+<li>ลบ branch ด้วย <code>-d</code></li>
+</ol>
+<hr/>
+<h2 id="lesson-5-10-checkpoint">10. Checkpoint</h2>
+<ul>
+<li>[ ] branch เป็น pointer ไม่ใช่ copy folder</li>
+<li>[ ] ตรวจ current branch/working tree ก่อน switch</li>
+<li>[ ] แยก fast-forward กับ merge commit</li>
+<li>[ ] รัน tests หลัง merge</li>
+<li>[ ] ใช้ <code>-d</code> ก่อน <code>-D</code></li>
+<li>[ ] รู้ว่า rebase rewrite commits</li>
+</ul><a class="back" href="#top">↑ กลับสารบัญ</a></article><article id="lesson-6"><div class="source">05_merge_conflicts.md</div><details class="local-toc"><summary>หัวข้อในบทนี้</summary><a href="#lesson-6-1-conflict-git">1. Conflict ไม่ใช่ Git พัง</a><a href="#lesson-6-2-status">2. เริ่มจาก Status</a><a href="#lesson-6-3-conflict-markers">3. Conflict Markers</a><a href="#lesson-6-4-resolution-workflow">4. Resolution Workflow</a><a href="#lesson-6-5">5. ดูแต่ละฝั่ง</a><a href="#lesson-6-6-abort">6. Abort</a><a href="#lesson-6-7-semantic-conflict">7. Semantic Conflict</a><a href="#lesson-6-8-conflict">8. ป้องกัน Conflict</a><a href="#lesson-6-9-exercise">9. Exercise</a><a href="#lesson-6-10-checkpoint">10. Checkpoint</a></details><h1 id="lesson-6-05-merge-conflicts">05 — Merge Conflicts</h1>
+<h2 id="lesson-6-1-conflict-git">1. Conflict ไม่ใช่ Git พัง</h2>
+<p>Conflict หมายถึง Git ไม่มีข้อมูลพอจะตัดสินใจว่าผลลัพธ์ที่ถูกต้องคืออะไร จึงหยุดให้มนุษย์เลือก</p>
+<p>เกิดได้เมื่อ:</p>
+<ul>
+<li>แก้บรรทัดใกล้กันคนละ branch</li>
+<li>branch หนึ่งลบไฟล์ อีก branch แก้ไฟล์</li>
+<li>rename/delete/modify ซับซ้อน</li>
+<li>binary files ต่างกัน</li>
+</ul>
+<hr/>
+<h2 id="lesson-6-2-status">2. เริ่มจาก Status</h2>
+<p>หลัง conflict:</p>
+<pre><code class="language-powershell">git status
+</code></pre>
+<p>Git บอก:</p>
+<ul>
+<li>กำลัง merge อะไร</li>
+<li>files ใด unmerged</li>
+<li>วิธี continue/abort</li>
+</ul>
+<p>อย่าเริ่มลบ marker แบบสุ่มก่อนอ่าน context</p>
+<hr/>
+<h2 id="lesson-6-3-conflict-markers">3. Conflict Markers</h2>
+<pre><code class="language-text">&lt;&lt;&lt;&lt;&lt;&lt;&lt; HEAD
+ข้อความจาก branch ปัจจุบัน
+=======
+ข้อความจาก branch ที่กำลัง merge
+&gt;&gt;&gt;&gt;&gt;&gt;&gt; feature/report
+</code></pre>
+<p>ผลลัพธ์ต้อง:</p>
+<ul>
+<li>เลือกฝั่งหนึ่ง</li>
+<li>ผสมทั้งสองอย่างมีเหตุผล</li>
+<li>หรือเขียนคำตอบใหม่</li>
+<li>ลบ markers ทุกตัว</li>
+</ul>
+<p>คำว่า ours/theirs ขึ้นกับ operation/context จึงควรอ่านชื่อ branches และ diff ไม่เดา</p>
+<hr/>
+<h2 id="lesson-6-4-resolution-workflow">4. Resolution Workflow</h2>
+<pre><code class="language-text">1. git status
+2. อ่าน requirement ของทั้งสองฝั่ง
+3. เปิด conflicted file
+4. เลือก semantic result
+5. ลบ markers
+6. syntax/lint/test
+7. git add resolved files
+8. git status
+9. git commit/continue
+10. inspect final diff/log
+</code></pre>
+<p>Git รู้ว่า resolved เมื่อ stage file แล้ว แต่ stage ไม่ได้พิสูจน์ว่าคำตอบถูก จึงต้อง test ก่อนจบ</p>
+<hr/>
+<h2 id="lesson-6-5">5. ดูแต่ละฝั่ง</h2>
+<p>ระหว่าง merge สามารถใช้:</p>
+<pre><code class="language-powershell">git diff
+git show :1:path/to/file
+git show :2:path/to/file
+git show :3:path/to/file
+</code></pre>
+<p>แนวคิด stages:</p>
+<ul>
+<li>1: common base</li>
+<li>2: ours</li>
+<li>3: theirs</li>
+</ul>
+<p>ใช้เมื่อ marker ใหญ่หรือเครื่องมือ editor ทำให้สับสน</p>
+<hr/>
+<h2 id="lesson-6-6-abort">6. Abort</h2>
+<p>หากเริ่ม merge ผิด branch หรือยังไม่พร้อม:</p>
+<pre><code class="language-powershell">git merge --abort
+</code></pre>
+<p>เป้าหมายคือกลับ state ก่อน merge แต่ควรตรวจ status/diff และไม่ควรมี unrelated uncommitted work ก่อนเริ่ม merge</p>
+<p>Abort ไม่ใช่ความล้มเหลว เป็นการหยุดเพื่อจัดสถานการณ์ให้ถูก</p>
+<hr/>
+<h2 id="lesson-6-7-semantic-conflict">7. Semantic Conflict</h2>
+<p>Git อาจ merge ได้โดยไม่มี marker แต่ระบบผิด เช่น:</p>
+<ul>
+<li>branch A เปลี่ยนชื่อ function</li>
+<li>branch B เพิ่ม call ด้วยชื่อเดิมในไฟล์อื่น</li>
+<li>files ไม่ชน แต่ tests fail</li>
+</ul>
+<p>เรียกว่า semantic conflict จึงต้องรัน tests หลัง merge ทุกครั้ง</p>
+<hr/>
+<h2 id="lesson-6-8-conflict">8. ป้องกัน Conflict</h2>
+<ul>
+<li>branches อายุสั้น</li>
+<li>sync บ่อยตาม workflow ทีม</li>
+<li>commits เล็ก</li>
+<li>แบ่ง ownership/ไฟล์อย่างชัด</li>
+<li>คุยก่อน refactor ใหญ่</li>
+<li>format changes แยกจาก behavior changes</li>
+<li>ไม่แก้ generated/binary files พร้อมกันโดยไม่จำเป็น</li>
+</ul>
+<p>ไม่สามารถและไม่จำเป็นต้องกำจัด conflict ทั้งหมด เป้าหมายคือแก้อย่างมั่นใจ</p>
+<hr/>
+<h2 id="lesson-6-9-exercise">9. Exercise</h2>
+<p>สร้าง conflict โดยตั้งใจ:</p>
+<ol>
+<li>main แก้ข้อความ config หนึ่งแบบ</li>
+<li>feature แก้บรรทัดเดียวกันอีกแบบ</li>
+<li>merge</li>
+<li>อ่าน status และ marker</li>
+<li>เขียนผลลัพธ์ที่รักษาความตั้งใจทั้งสองฝั่ง</li>
+<li>รัน test/check</li>
+<li>stage และจบ merge</li>
+<li>แสดง graph</li>
+</ol>
+<p>เพิ่มรอบที่สองแล้วใช้ abort</p>
+<hr/>
+<h2 id="lesson-6-10-checkpoint">10. Checkpoint</h2>
+<ul>
+<li>[ ] อธิบายว่าทำไม conflict เกิด</li>
+<li>[ ] อ่าน marker ได้</li>
+<li>[ ] ตรวจ base/ours/theirs ได้</li>
+<li>[ ] test ก่อนจบ merge</li>
+<li>[ ] abort merge ได้</li>
+<li>[ ] รู้จัก semantic conflict</li>
+</ul><a class="back" href="#top">↑ กลับสารบัญ</a></article><article id="lesson-7"><div class="source">06_remotes_github_pull_push.md</div><details class="local-toc"><summary>หัวข้อในบทนี้</summary><a href="#lesson-7-1-remote-url">1. Remote คือชื่ออ้างอิง URL</a><a href="#lesson-7-2-clone">2. Clone ทำอะไร</a><a href="#lesson-7-3-fetch">3. Fetch</a><a href="#lesson-7-4-pull">4. Pull</a><a href="#lesson-7-5-push">5. Push</a><a href="#lesson-7-6-tracking-branch">6. Tracking Branch</a><a href="#lesson-7-7-authentication">7. Authentication</a><a href="#lesson-7-8-force-push">8. Force Push</a><a href="#lesson-7-9-offline-remote-lab">9. Offline Remote Lab</a><a href="#lesson-7-10-checkpoint">10. Checkpoint</a></details><h1 id="lesson-7-06-remotes-github-pull-and-push">06 — Remotes, GitHub, Pull and Push</h1>
+<h2 id="lesson-7-1-remote-url">1. Remote คือชื่ออ้างอิง URL</h2>
+<p>ดู remotes:</p>
+<pre><code class="language-powershell">git remote -v
+</code></pre>
+<p><code>origin</code> เป็น convention ไม่ใช่ keyword พิเศษ</p>
+<pre><code class="language-powershell">git remote add origin &lt;url&gt;
+</code></pre>
+<p>Repository หนึ่งมีหลาย remotes ได้ เช่น <code>origin</code> และ <code>upstream</code></p>
+<hr/>
+<h2 id="lesson-7-2-clone">2. Clone ทำอะไร</h2>
+<pre><code class="language-powershell">git clone &lt;url&gt;
+</code></pre>
+<p>โดยทั่วไป:</p>
+<ul>
+<li>สร้าง folder</li>
+<li>ดาวน์โหลด objects/history</li>
+<li>ตั้ง <code>origin</code></li>
+<li>สร้าง local branch ที่ track default remote branch</li>
+<li>checkout working tree</li>
+</ul>
+<p>Clone ไม่ใช่การ download ZIP เพราะได้ history และ remote relationships</p>
+<hr/>
+<h2 id="lesson-7-3-fetch">3. Fetch</h2>
+<pre><code class="language-powershell">git fetch origin
+</code></pre>
+<p>ดาวน์โหลด commits/refs ใหม่ แต่ไม่ merge เข้า branch ปัจจุบันโดยอัตโนมัติ</p>
+<p>หลัง fetch ตรวจ:</p>
+<pre><code class="language-powershell">git log --oneline --graph --decorate --all
+git diff main..origin/main
+</code></pre>
+<p>Fetch เหมาะเมื่ออยาก “ดูก่อนรวม”</p>
+<hr/>
+<h2 id="lesson-7-4-pull">4. Pull</h2>
+<p><code>git pull</code> คือ fetch แล้ว integrate ตาม config (merge/rebase)</p>
+<p>เพราะ pull เปลี่ยน branch/working state จึงควร:</p>
+<pre><code class="language-text">status clean
+→ รู้ current branch
+→ fetch/inspect เมื่อเสี่ยง
+→ pull ตาม team policy
+→ test
+</code></pre>
+<p>อย่าใช้ pull เป็นคำสั่งแก้ทุกปัญหา เพราะอาจเพิ่ม merge/rebase ที่ยังไม่เข้าใจ</p>
+<hr/>
+<h2 id="lesson-7-5-push">5. Push</h2>
+<pre><code class="language-powershell">git push -u origin feature/report
+</code></pre>
+<p><code>-u</code> ตั้ง upstream ให้ครั้งถัดไปใช้ <code>git push</code>/<code>git pull</code> สั้นได้</p>
+<p>Push อาจถูก reject หาก remote branch มี commits ที่ local ไม่มี เป็น safety เพื่อป้องกัน history หาย</p>
+<p>เมื่อ reject:</p>
+<ol>
+<li>fetch</li>
+<li>inspect divergence</li>
+<li>integrate ตาม team workflow</li>
+<li>resolve/test</li>
+<li>push ใหม่</li>
+</ol>
+<p>อย่า force push ทันที</p>
+<hr/>
+<h2 id="lesson-7-6-tracking-branch">6. Tracking Branch</h2>
+<p>ดู:</p>
+<pre><code class="language-powershell">git branch -vv
+</code></pre>
+<p>ข้อความ ahead/behind เทียบ upstream:</p>
+<ul>
+<li>ahead 2: local มี 2 commits ที่ remote tracking ref ไม่มี</li>
+<li>behind 1: remote tracking ref มี 1 commitที่ local ไม่มี</li>
+<li>diverged: ทั้งสองมี commits ของตัวเอง</li>
+</ul>
+<p>ต้อง fetch ก่อนเพื่อให้ข้อมูล remote tracking สด</p>
+<hr/>
+<h2 id="lesson-7-7-authentication">7. Authentication</h2>
+<p>Git host สมัยใหม่มักใช้:</p>
+<ul>
+<li>credential manager/token สำหรับ HTTPS</li>
+<li>SSH keys</li>
+<li>enterprise SSO policies</li>
+</ul>
+<p>ห้ามใส่ token ใน remote URL ที่ commit/log/shared output อาจเผยแพร่</p>
+<p>ทำตามระบบของบริษัทเมื่อเริ่มฝึกงาน ไม่สร้าง workaround ข้าม policy</p>
+<hr/>
+<h2 id="lesson-7-8-force-push">8. Force Push</h2>
+<p>Force push rewrite remote branch และอาจลบ commits ของคนอื่น</p>
+<p>ถ้าจำเป็นบน private feature branch ทีมอาจใช้:</p>
+<pre><code class="language-powershell">git push --force-with-lease
+</code></pre>
+<p><code>--force-with-lease</code> ปลอดภัยกว่า <code>--force</code> เพราะตรวจว่าปลายทางยังอยู่จุดที่คาด แต่ยังเป็น operation rewrite history</p>
+<p>สำหรับ Track นี้ไม่ต้องใช้เพื่อผ่าน</p>
+<hr/>
+<h2 id="lesson-7-9-offline-remote-lab">9. Offline Remote Lab</h2>
+<p>เรียน remote โดยไม่ต้อง GitHub ด้วย bare repository local:</p>
+<pre><code class="language-text">remote.git     ← จำลอง server
+alice/         ← clone 1
+bob/           ← clone 2
+</code></pre>
+<p>ใช้ฝึก:</p>
+<ul>
+<li>push</li>
+<li>fetch</li>
+<li>remote change</li>
+<li>non-fast-forward rejection</li>
+<li>conflict</li>
+</ul>
+<p>Repository generator ใน Challenge จะสร้าง environment นี้ให้</p>
+<hr/>
+<h2 id="lesson-7-10-checkpoint">10. Checkpoint</h2>
+<ul>
+<li>[ ] แยก remote กับ remote-tracking ref</li>
+<li>[ ] อธิบาย fetch/pull/push</li>
+<li>[ ] ตรวจ ahead/behind</li>
+<li>[ ] ไม่ force push เมื่อ push rejected</li>
+<li>[ ] ไม่เผย token ใน URL/log</li>
+<li>[ ] ใช้ local bare remote ฝึกได้</li>
+</ul><a class="back" href="#top">↑ กลับสารบัญ</a></article><article id="lesson-8"><div class="source">07_undo_and_recovery.md</div><details class="local-toc"><summary>หัวข้อในบทนี้</summary><a href="#lesson-8-1-undo-state">1. ก่อน Undo ต้องจำแนก State</a><a href="#lesson-8-2-staged">2. ยังไม่ Staged</a><a href="#lesson-8-3-staged">3. Staged ผิด แต่ต้องการเก็บไฟล์</a><a href="#lesson-8-4-commit">4. กู้ไฟล์จาก Commit</a><a href="#lesson-8-5-commit-share">5. แก้ Commit ล่าสุดก่อน Share</a><a href="#lesson-8-6-revert-shared-history">6. Revert สำหรับ Shared History</a><a href="#lesson-8-7-reset-mental-model">7. Reset Mental Model</a><a href="#lesson-8-8-reflog">8. Reflog</a><a href="#lesson-8-9-detached-head">9. Detached HEAD</a><a href="#lesson-8-10-stash">10. Stash</a><a href="#lesson-8-11-decision-table">11. Decision Table</a><a href="#lesson-8-12-checkpoint">12. Checkpoint</a></details><h1 id="lesson-8-07-undo-and-recovery">07 — Undo and Recovery</h1>
+<h2 id="lesson-8-1-undo-state">1. ก่อน Undo ต้องจำแนก State</h2>
+<p>ถามตามลำดับ:</p>
+<ol>
+<li>งานอยู่ใน Working Tree หรือไม่?</li>
+<li>Staged แล้วหรือยัง?</li>
+<li>Commit แล้วหรือยัง?</li>
+<li>Push/shared แล้วหรือยัง?</li>
+<li>ต้องการเก็บ content หรือทิ้งจริง?</li>
+</ol>
+<p>คำว่า “ย้อนกลับ” อาจหมายถึงหลายอย่าง จึงไม่มีคำสั่งเดียวสำหรับทุกกรณี</p>
+<hr/>
+<h2 id="lesson-8-2-staged">2. ยังไม่ Staged</h2>
+<p>ดูก่อน:</p>
+<pre><code class="language-powershell">git diff -- path/to/file
+</code></pre>
+<p>หากตั้งใจทิ้งการแก้ tracked file:</p>
+<pre><code class="language-powershell">git restore path/to/file
+</code></pre>
+<p>คำสั่งนี้ทำ uncommitted changes ในไฟล์นั้นหาย ใช้หลังอ่าน diff เท่านั้น</p>
+<p>Untracked file ไม่ได้รับผลจาก restore และ Git อาจกู้ไม่ได้หากลบ</p>
+<hr/>
+<h2 id="lesson-8-3-staged">3. Staged ผิด แต่ต้องการเก็บไฟล์</h2>
+<pre><code class="language-powershell">git restore --staged path/to/file
+</code></pre>
+<p>เอาออกจาก index แต่ Working Tree content ยังอยู่</p>
+<p>ตรวจ:</p>
+<pre><code class="language-powershell">git status
+git diff
+git diff --staged
+</code></pre>
+<hr/>
+<h2 id="lesson-8-4-commit">4. กู้ไฟล์จาก Commit</h2>
+<p>นำเวอร์ชันจาก commit มาใส่ Working Tree:</p>
+<pre><code class="language-powershell">git restore --source=&lt;commit&gt; -- path/to/file
+</code></pre>
+<p>นี่สร้าง uncommitted change ให้ตรวจ/commit ไม่ได้ย้าย branch ไป commit เก่า</p>
+<hr/>
+<h2 id="lesson-8-5-commit-share">5. แก้ Commit ล่าสุดก่อน Share</h2>
+<p>หากลืมไฟล์หรือ message ผิด:</p>
+<pre><code class="language-powershell">git commit --amend
+</code></pre>
+<p>Amend สร้าง commit ใหม่ hash ใหม่</p>
+<p>ใช้ได้ดีเมื่อ commit ยังไม่ shared หาก push แล้ว amend จะทำ history diverge และอาจต้อง rewrite remote</p>
+<hr/>
+<h2 id="lesson-8-6-revert-shared-history">6. Revert สำหรับ Shared History</h2>
+<pre><code class="language-powershell">git revert &lt;bad-commit&gt;
+</code></pre>
+<p>สร้าง commit ใหม่ที่ย้อนผลของ commit เป้าหมาย ประวัติยังโปร่งใส เหมาะกับ commits ที่ push/shared แล้ว</p>
+<p>Revert อาจ conflict หาก code ภายหลังพึ่ง change นั้น ต้องแก้และ test</p>
+<hr/>
+<h2 id="lesson-8-7-reset-mental-model">7. Reset Mental Model</h2>
+<p><code>git reset</code> เลื่อน branch pointer และอาจเปลี่ยน index/working treeตาม mode:</p>
+<ul>
+<li><code>--soft</code>: เลื่อน pointer, เก็บ changes staged</li>
+<li>default/<code>--mixed</code>: เลื่อน pointer, เก็บ changes unstaged</li>
+<li><code>--hard</code>: เลื่อน pointerและทิ้ง tracked working changes</li>
+</ul>
+<p>Track นี้ไม่ใช้ <code>reset --hard</code> ในงานจริง เพราะความเสี่ยงสูง ใช้ sandbox เท่านั้นหากต้องศึกษา</p>
+<p>ก่อน reset ต้องรู้ commit target และตรวจว่า commits/changes ต้องเก็บหรือไม่</p>
+<hr/>
+<h2 id="lesson-8-8-reflog">8. Reflog</h2>
+<p>Reflog เก็บการเคลื่อนของ local refs/HEAD ชั่วระยะหนึ่ง:</p>
+<pre><code class="language-powershell">git reflog
+</code></pre>
+<p>หาก branch ถูกลบหรือ reset ผิด อาจหา commit แล้วสร้าง rescue branch:</p>
+<pre><code class="language-powershell">git branch rescue/recovered-work &lt;commit&gt;
+</code></pre>
+<p>สร้าง branch ก่อนสำรวจต่อเพื่อให้ commit reachable ชัดเจน</p>
+<p>Reflog เป็น local ไม่ได้ push ไป remote และไม่ใช่ backup ถาวร</p>
+<hr/>
+<h2 id="lesson-8-9-detached-head">9. Detached HEAD</h2>
+<p>เมื่อ checkout/switch ไป commit โดยตรง HEAD ไม่ได้อยู่บน branch:</p>
+<pre><code class="language-text">HEAD → commit X
+</code></pre>
+<p>สามารถอ่าน/test ได้ หากสร้าง commits ใหม่และต้องการเก็บ:</p>
+<pre><code class="language-powershell">git switch -c rescue/my-work
+</code></pre>
+<p>อย่าตื่นตกใจ อ่าน status/log ก่อน</p>
+<hr/>
+<h2 id="lesson-8-10-stash">10. Stash</h2>
+<pre><code class="language-powershell">git stash push -m "WIP validation"
+git stash list
+git stash show -p stash@{0}
+</code></pre>
+<p>ใช้พัก tracked changes ชั่วคราว แต่:</p>
+<ul>
+<li>ไม่ใช่ replacement สำหรับ commits</li>
+<li>untracked files ไม่รวมโดย default</li>
+<li>stash conflict ได้ตอน apply/pop</li>
+<li>stash เก่าลืมง่าย</li>
+</ul>
+<p>Prefer <code>apply</code> ก่อน <code>pop</code> เมื่ออยากตรวจแล้วค่อย drop</p>
+<hr/>
+<h2 id="lesson-8-11-decision-table">11. Decision Table</h2>
+<div class="table-scroll"><table>
+<thead>
+<tr>
+<th>สถานการณ์</th>
+<th>แนวทางเริ่มต้น</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>unstaged tracked change ต้องทิ้ง</td>
+<td>diff แล้ว <code>restore</code></td>
+</tr>
+<tr>
+<td>staged ผิดแต่เก็บ content</td>
+<td><code>restore --staged</code></td>
+</tr>
+<tr>
+<td>ต้องการไฟล์จาก commit เก่า</td>
+<td><code>restore --source</code></td>
+</tr>
+<tr>
+<td>commit ล่าสุดยังไม่ share</td>
+<td>amend ตามกรณี</td>
+</tr>
+<tr>
+<td>bad commit shared แล้ว</td>
+<td>revert</td>
+</tr>
+<tr>
+<td>commit ดูเหมือนหาย</td>
+<td>reflog + rescue branch</td>
+</tr>
+<tr>
+<td>ต้องพักงานชั่วคราว</td>
+<td>commit branch หรือ stash อย่างมีชื่อ</td>
+</tr>
+</tbody>
+</table></div>
+<hr/>
+<h2 id="lesson-8-12-checkpoint">12. Checkpoint</h2>
+<ul>
+<li>[ ] จำแนก working/staged/committed/shared</li>
+<li>[ ] unstage โดยไม่ลบ content</li>
+<li>[ ] restore file จาก commit</li>
+<li>[ ] รู้ว่า amend เปลี่ยน hash</li>
+<li>[ ] ใช้ revert กับ shared history</li>
+<li>[ ] อธิบาย reset modes โดยไม่รีบใช้ hard</li>
+<li>[ ] กู้ commitผ่าน reflog/rescue branch</li>
+<li>[ ] ใช้ stashอย่างจำกัด</li>
+</ul><a class="back" href="#top">↑ กลับสารบัญ</a></article><article id="lesson-9"><div class="source">08_gitignore_secrets_and_repo_hygiene.md</div><details class="local-toc"><summary>หัวข้อในบทนี้</summary><a href="#lesson-9-1-gitignore-untracked-files">1. .gitignore ใช้กับ Untracked Files</a><a href="#lesson-9-2-ignore-untrack">2. Ignore ไม่ได้ Untrack ของเดิม</a><a href="#lesson-9-3-rule-ignore">3. ตรวจว่า Rule ไหน Ignore</a><a href="#lesson-9-4-secret-hygiene">4. Secret Hygiene</a><a href="#lesson-9-5-secret-incident-response">5. Secret Incident Response</a><a href="#lesson-9-6-runtime-artifacts">6. Runtime Artifacts</a><a href="#lesson-9-7-largebinary-files">7. Large/Binary Files</a><a href="#lesson-9-8-pre-push-hygiene-checklist">8. Pre-push Hygiene Checklist</a><a href="#lesson-9-9-exercise">9. Exercise</a><a href="#lesson-9-10-checkpoint">10. Checkpoint</a></details><h1 id="lesson-9-08-gitignore-secrets-and-repository-hygiene">08 — Gitignore, Secrets and Repository Hygiene</h1>
+<h2 id="lesson-9-1-gitignore-untracked-files">1. <code>.gitignore</code> ใช้กับ Untracked Files</h2>
+<p>ตัวอย่าง Python:</p>
+<pre><code class="language-gitignore">__pycache__/
+*.py[cod]
+.pytest_cache/
+.coverage
+htmlcov/
+.venv/
+.env
+*.log
+*.db
+*.db-journal
+dist/
+build/
+</code></pre>
+<p>Pattern ต้องตรงกับสิ่งที่โปรเจกต์สร้างจริง อย่า copy template ขนาดใหญ่จนซ่อนไฟล์ที่ควรเก็บ</p>
+<hr/>
+<h2 id="lesson-9-2-ignore-untrack">2. Ignore ไม่ได้ Untrack ของเดิม</h2>
+<p>หาก <code>.env</code> ถูก track แล้ว การเพิ่ม <code>.env</code> ลง <code>.gitignore</code> ไม่เอาออกจาก index/history</p>
+<p>หยุด track แต่เก็บ local file:</p>
+<pre><code class="language-powershell">git rm --cached .env
+</code></pre>
+<p>จากนั้น commit การลบจาก repository</p>
+<p>แต่ถ้ามี secret จริงเคย commit ต้อง rotate/revoke เพราะยังอยู่ใน history/clone อื่น</p>
+<hr/>
+<h2 id="lesson-9-3-rule-ignore">3. ตรวจว่า Rule ไหน Ignore</h2>
+<pre><code class="language-powershell">git check-ignore -v path/to/file
+</code></pre>
+<p>ช่วยหา pattern ที่ซ่อนไฟล์โดยไม่ตั้งใจ</p>
+<p>ดู ignored files:</p>
+<pre><code class="language-powershell">git status --ignored
+</code></pre>
+<hr/>
+<h2 id="lesson-9-4-secret-hygiene">4. Secret Hygiene</h2>
+<p>ถือเป็น secret:</p>
+<ul>
+<li>API keys</li>
+<li>passwords</li>
+<li>access/refresh tokens</li>
+<li>private keys</li>
+<li>webhook URLs ที่มี credential</li>
+<li>connection strings</li>
+<li>session cookies</li>
+</ul>
+<p>ใช้:</p>
+<pre><code class="language-text">.env              ← local, ignored
+.env.example      ← committed, placeholders only
+</code></pre>
+<p>อย่าใส่ค่าจริงใน test fixtures, screenshots, logs หรือ README</p>
+<hr/>
+<h2 id="lesson-9-5-secret-incident-response">5. Secret Incident Response</h2>
+<p>ถ้า secret ถูก commit:</p>
+<ol>
+<li>หยุดใช้/rotate/revoke ทันที</li>
+<li>ประเมินว่า push/shared หรือยัง</li>
+<li>ลบจาก current files</li>
+<li>ป้องกันด้วย ignore/config</li>
+<li>ถ้าต้อง rewrite history ให้ทำตามผู้ดูแล repoและประสานผู้ร่วมงาน</li>
+<li>ตรวจ logs/actions/artifacts</li>
+<li>บันทึก incident ตาม policy</li>
+</ol>
+<p>การลบ commit local ไม่เพียงพอหาก secret ถูกส่งไปแล้ว</p>
+<hr/>
+<h2 id="lesson-9-6-runtime-artifacts">6. Runtime Artifacts</h2>
+<p>โดยทั่วไปไม่ commit:</p>
+<ul>
+<li>virtual environment</li>
+<li>cache</li>
+<li>generated logs</li>
+<li>local runtime DB</li>
+<li>downloaded private resumes</li>
+<li>temporary exports</li>
+<li>coverage output</li>
+</ul>
+<p>อาจ commit:</p>
+<ul>
+<li>schema/migrations</li>
+<li>small synthetic sample data</li>
+<li><code>.env.example</code></li>
+<li>deterministic fixtures</li>
+<li>lock/dependency filesตาม tooling</li>
+</ul>
+<p>ตัดสินตาม reproducibility และ privacy</p>
+<hr/>
+<h2 id="lesson-9-7-largebinary-files">7. Large/Binary Files</h2>
+<p>Git ไม่เหมาะกับ binary ที่เปลี่ยนบ่อย เช่น model weights, datasets, office filesขนาดใหญ่</p>
+<p>พิจารณา:</p>
+<ul>
+<li>artifact storage</li>
+<li>object storage</li>
+<li>Git LFS ตาม policy</li>
+<li>download scripts/checksums</li>
+</ul>
+<p>อย่า commit Resume จริงของผู้สมัครใน training repository</p>
+<hr/>
+<h2 id="lesson-9-8-pre-push-hygiene-checklist">8. Pre-push Hygiene Checklist</h2>
+<pre><code class="language-text">git status
+git diff
+git diff --staged
+ตรวจ .env/token/password/webhook
+รัน tests
+ตรวจ generated/private files
+อ่าน commit history
+</code></pre>
+<p>ใช้ secret scanning ของทีมเมื่อมี แต่ไม่แทนการรับผิดชอบของผู้พัฒนา</p>
+<hr/>
+<h2 id="lesson-9-9-exercise">9. Exercise</h2>
+<p>สร้างไฟล์จำลอง:</p>
+<ul>
+<li><code>.env</code></li>
+<li><code>.env.example</code></li>
+<li><code>app.db</code></li>
+<li><code>debug.log</code></li>
+<li><code>tests/fixtures/sample.json</code></li>
+</ul>
+<p>เขียน <code>.gitignore</code> ให้ ignore เฉพาะ runtime/private files แล้วใช้ <code>git check-ignore -v</code> พิสูจน์</p>
+<hr/>
+<h2 id="lesson-9-10-checkpoint">10. Checkpoint</h2>
+<ul>
+<li>[ ] รู้ว่า ignore ไม่กระทบ tracked file</li>
+<li>[ ] untrack โดยเก็บ local content ได้</li>
+<li>[ ] ตรวจ ignore rule ได้</li>
+<li>[ ] แยก secret/config sample</li>
+<li>[ ] rotate secret เมื่อเคยเผยแพร่</li>
+<li>[ ] ไม่ commit private resumes/runtime artifacts</li>
+</ul><a class="back" href="#top">↑ กลับสารบัญ</a></article><article id="lesson-10"><div class="source">09_team_workflow_and_pull_requests.md</div><details class="local-toc"><summary>หัวข้อในบทนี้</summary><a href="#lesson-10-1-pull-request-git-command">1. Pull Request ไม่ใช่ Git Command หลัก</a><a href="#lesson-10-2-typical-flow">2. Typical Flow</a><a href="#lesson-10-3-before-coding">3. Before Coding</a><a href="#lesson-10-4-pr-description">4. PR Description</a><a href="#lesson-10-5-commit-series-review">5. Commit Series สำหรับ Review</a><a href="#lesson-10-6-feedback">6. รับ Feedback</a><a href="#lesson-10-7-review">7. Review คนอื่น</a><a href="#lesson-10-8-keeping-branch-updated">8. Keeping Branch Updated</a><a href="#lesson-10-9-handoff">9. Handoff</a><a href="#lesson-10-10-checkpoint">10. Checkpoint</a></details><h1 id="lesson-10-09-team-workflow-and-pull-requests">09 — Team Workflow and Pull Requests</h1>
+<h2 id="lesson-10-1-pull-request-git-command">1. Pull Request ไม่ใช่ Git Command หลัก</h2>
+<p>PR เป็น collaboration feature ของ hosting platform เพื่อ:</p>
+<ul>
+<li>review diff</li>
+<li>discussion</li>
+<li>checks/CI</li>
+<li>approvals</li>
+<li>merge policy</li>
+</ul>
+<p>Git จัด commits/branches ส่วน platform จัด review workflow</p>
+<hr/>
+<h2 id="lesson-10-2-typical-flow">2. Typical Flow</h2>
+<pre><code class="language-text">รับ task/issue
+→ ทวน requirement
+→ update local base
+→ create branch
+→ implement in small commits
+→ test
+→ push branch
+→ open PR
+→ address review
+→ merge
+→ cleanup
+</code></pre>
+<p>รายละเอียด merge/rebase/squash ขึ้นกับทีม อย่าบังคับ preference ส่วนตัว</p>
+<hr/>
+<h2 id="lesson-10-3-before-coding">3. Before Coding</h2>
+<ul>
+<li>อ่าน acceptance criteria</li>
+<li>ยืนยัน branch base</li>
+<li>ดู related code/tests</li>
+<li>ระบุ out of scope</li>
+<li>แจ้ง assumption ที่มีผล</li>
+</ul>
+<p>Git history ที่ดีเริ่มจาก scope ที่ดี</p>
+<hr/>
+<h2 id="lesson-10-4-pr-description">4. PR Description</h2>
+<p>Template:</p>
+<pre><code class="language-markdown">## What
+- เปลี่ยนอะไร
+
+## Why
+- ปัญหา/requirement คืออะไร
+
+## How
+- design decision สำคัญ
+
+## Testing
+- tests/commands/results
+
+## Risks
+- ผลกระทบและ rollback
+
+## Screenshots/Samples
+- ถ้าจำเป็น
+</code></pre>
+<p>อย่าเขียนเพียง “please review” แล้วให้ reviewerสืบทุกอย่างเอง</p>
+<hr/>
+<h2 id="lesson-10-5-commit-series-review">5. Commit Series สำหรับ Review</h2>
+<p>ตัวอย่าง:</p>
+<pre><code class="language-text">feat: add normalized resume schema
+feat: validate extracted resume evidence
+test: cover missing and fabricated evidence
+docs: explain human review states
+</code></pre>
+<p>Reviewer อ่าน intention ทีละขั้นได้ แต่ไม่จำเป็นต้องแยก source/test ทุกครั้งหากทำให้ commit หนึ่งไม่สมบูรณ์</p>
+<hr/>
+<h2 id="lesson-10-6-feedback">6. รับ Feedback</h2>
+<p>เมื่อได้ comment:</p>
+<ol>
+<li>ทำความเข้าใจปัญหา</li>
+<li>ถ้าไม่ชัด ถามพร้อม evidence</li>
+<li>แก้และเพิ่ม test เมื่อเป็น bug</li>
+<li>ตอบว่าเปลี่ยนตรงไหน</li>
+<li>ไม่ resolve comment ก่อนจัดการจริง</li>
+</ol>
+<p>ไม่ต้องเห็นด้วยทุกข้อ แต่ต้องอธิบาย trade-off อย่างมืออาชีพ</p>
+<hr/>
+<h2 id="lesson-10-7-review">7. Review คนอื่น</h2>
+<p>ตรวจ:</p>
+<ul>
+<li>correctness</li>
+<li>edge cases</li>
+<li>security/privacy</li>
+<li>tests</li>
+<li>readability</li>
+<li>compatibility</li>
+<li>docs/operations</li>
+</ul>
+<p>เขียน comment เฉพาะเจาะจง:</p>
+<pre><code class="language-text">กรณี event ID เดิมแต่ payload ต่าง code path นี้จะ overwrite original หรือไม่?
+ขอเพิ่ม conflict test เพื่อยืนยัน behavior นี้ครับ
+</code></pre>
+<p>ดีกว่า “โค้ดไม่ดี”</p>
+<hr/>
+<h2 id="lesson-10-8-keeping-branch-updated">8. Keeping Branch Updated</h2>
+<p>ใช้วิธีทีมกำหนด:</p>
+<ul>
+<li>merge base branch เข้า feature</li>
+<li>rebase private feature branch</li>
+</ul>
+<p>ก่อน integrate:</p>
+<ul>
+<li>working tree clean</li>
+<li>fetch</li>
+<li>inspect divergence</li>
+<li>backup/rescue หากไม่มั่นใจ</li>
+</ul>
+<p>หลัง integrate ต้อง test</p>
+<hr/>
+<h2 id="lesson-10-9-handoff">9. Handoff</h2>
+<p>ก่อนหยุดงานหรือส่งต่อ:</p>
+<pre><code class="language-text">Status
+Completed
+Remaining
+How to run/test
+Known failures
+Branch/commit/PR
+Config needed (no secret values)
+Next recommended action
+</code></pre>
+<p>Handoff ที่ดีช่วยให้ทีมไม่ต้อง reverse-engineerงานครึ่งวัน</p>
+<hr/>
+<h2 id="lesson-10-10-checkpoint">10. Checkpoint</h2>
+<ul>
+<li>[ ] อธิบาย Git vs PR platform</li>
+<li>[ ] สร้าง branch จาก base ที่ถูก</li>
+<li>[ ] เขียน PR What/Why/How/Testing/Risks</li>
+<li>[ ] รับและตอบ review พร้อม evidence</li>
+<li>[ ] review โดยเน้น behavior/risks</li>
+<li>[ ] ทำ handoff ที่คนอื่นทำต่อได้</li>
+</ul><a class="back" href="#top">↑ กลับสารบัญ</a></article><article id="lesson-11"><div class="source">10_git_cheat_sheet.md</div><details class="local-toc"><summary>หัวข้อในบทนี้</summary><a href="#lesson-11-_1">ฉันอยู่ที่ไหนและมีอะไรเปลี่ยน</a><a href="#lesson-11-_2">ดูการเปลี่ยนแปลง</a><a href="#lesson-11-stage">Stage อย่างตั้งใจ</a><a href="#lesson-11-commit">Commit</a><a href="#lesson-11-history">History</a><a href="#lesson-11-branch">Branch</a><a href="#lesson-11-merge">Merge</a><a href="#lesson-11-remote">Remote</a><a href="#lesson-11-undorecovery">Undo/Recovery</a><a href="#lesson-11-ignore">Ignore</a><a href="#lesson-11-conflict-checklist">Conflict Checklist</a><a href="#lesson-11-pushpr">ก่อน Push/PR</a><a href="#lesson-11-_3">หยุดก่อนใช้</a></details><h1 id="lesson-11-10-git-cheat-sheet-by-situation">10 — Git Cheat Sheet by Situation</h1>
+<h2 id="lesson-11-_1">ฉันอยู่ที่ไหนและมีอะไรเปลี่ยน</h2>
+<pre><code class="language-powershell">git rev-parse --show-toplevel
+git branch --show-current
+git status --short --branch
+</code></pre>
+<h2 id="lesson-11-_2">ดูการเปลี่ยนแปลง</h2>
+<pre><code class="language-powershell">git diff
+git diff --staged
+git diff HEAD
+</code></pre>
+<h2 id="lesson-11-stage">Stage อย่างตั้งใจ</h2>
+<pre><code class="language-powershell">git add path/to/file
+git add -p
+git restore --staged path/to/file
+</code></pre>
+<h2 id="lesson-11-commit">Commit</h2>
+<pre><code class="language-powershell">git commit -m "feat: add payment validation"
+git show --stat HEAD
+</code></pre>
+<h2 id="lesson-11-history">History</h2>
+<pre><code class="language-powershell">git log --oneline --decorate --graph --all
+git show &lt;commit&gt;
+git log -p -- path/to/file
+</code></pre>
+<h2 id="lesson-11-branch">Branch</h2>
+<pre><code class="language-powershell">git switch -c feature/name
+git switch main
+git branch -vv
+git branch -d feature/name
+</code></pre>
+<h2 id="lesson-11-merge">Merge</h2>
+<pre><code class="language-powershell">git switch main
+git merge feature/name
+git merge --abort
+</code></pre>
+<p>หลัง merge รัน tests และดู graph</p>
+<h2 id="lesson-11-remote">Remote</h2>
+<pre><code class="language-powershell">git remote -v
+git fetch origin
+git branch -vv
+git push -u origin feature/name
+</code></pre>
+<h2 id="lesson-11-undorecovery">Undo/Recovery</h2>
+<pre><code class="language-powershell"># unstage แต่เก็บ content
+git restore --staged path/to/file
+
+# ทิ้ง unstaged tracked change หลังอ่าน diff
+git restore path/to/file
+
+# เอา file version จาก commit มาเป็น working change
+git restore --source=&lt;commit&gt; -- path/to/file
+
+# shared bad commit
+git revert &lt;commit&gt;
+
+# หา local commit ที่ดูเหมือนหาย
+git reflog
+git branch rescue/name &lt;commit&gt;
+</code></pre>
+<h2 id="lesson-11-ignore">Ignore</h2>
+<pre><code class="language-powershell">git check-ignore -v path/to/file
+git status --ignored
+git rm --cached .env
+</code></pre>
+<h2 id="lesson-11-conflict-checklist">Conflict Checklist</h2>
+<pre><code class="language-text">status
+อ่าน requirement ทั้งสองฝั่ง
+แก้ markers/semantic result
+test
+add resolved files
+status
+commit/continue
+inspect graph
+</code></pre>
+<h2 id="lesson-11-pushpr">ก่อน Push/PR</h2>
+<pre><code class="language-text">status
+diff/staged diff
+tests
+secret/private file check
+commit history
+PR summary + risks + evidence
+</code></pre>
+<h2 id="lesson-11-_3">หยุดก่อนใช้</h2>
+<p>คำสั่งเหล่านี้ต้องเข้าใจและใช้เฉพาะ sandbox/กรณีจำเป็น:</p>
+<pre><code class="language-text">git reset --hard
+git clean -fd
+git push --force
+git branch -D
+</code></pre>
+<p>หากไม่แน่ใจ ให้สร้าง rescue branch/copy และตรวจ state ก่อน</p><a class="back" href="#top">↑ กลับสารบัญ</a></article><article id="lesson-12"><div class="source">11_real_project_practical_playbook.md</div><details class="local-toc"><summary>หัวข้อในบทนี้</summary><a href="#lesson-12-1-git">1. วิธีคิดก่อนใช้ Git ทุกครั้ง</a><a href="#lesson-12-2-state-map">2. State Map: คำสั่งหนึ่งย้ายข้อมูลไปไหน</a><a href="#lesson-12-3-case-a-local-repo-github-repo">3. Case A — มี Local Repo แล้ว แต่ GitHub Repo เพิ่งสร้าง</a><a href="#lesson-12-4-case-b">4. Case B — เริ่มวันทำงานใหม่ในโปรเจกต์จริง</a><a href="#lesson-12-5-case-c-commit">5. Case C — แก้หลายอย่าง แต่ต้องการ commit ให้อ่านง่าย</a><a href="#lesson-12-6-diff-commit">6. วิธีอ่าน Diff ให้รู้ว่ากำลังจะ commit อะไร</a><a href="#lesson-12-7-commit-message">7. Commit Message ที่ช่วยตัวเราในอนาคต</a><a href="#lesson-12-8-case-d-push">8. Case D — Push แล้วถูกปฏิเสธ</a><a href="#lesson-12-9-case-e-undo">9. Case E — ทำผิด แต่ยังไม่รู้ว่าควร Undo แบบไหน</a><a href="#lesson-12-10-case-f-merge-conflict">10. Case F — Merge Conflict แบบไม่เดาสุ่ม</a><a href="#lesson-12-11-gitignore-secrets-aipython">11. .gitignore และ Secrets ในโปรเจกต์ AI/Python</a><a href="#lesson-12-12-end-of-day-workflow">12. End-of-Day Workflow</a><a href="#lesson-12-13-ai-git-ai">13. วิธีใช้ AI ช่วย Git โดยไม่มอบพวงมาลัยให้ AI</a><a href="#lesson-12-14-diagnostic-templates">14. Diagnostic Templates — ส่งอะไรมาให้คนช่วยดู</a><a href="#lesson-12-15-practice-scenario-pull-request">15. Practice Scenario — จากโปรเจกต์ว่างถึง Pull Request</a><a href="#lesson-12-16-checkpoint">16. Checkpoint แบบอธิบายด้วยภาษาตัวเอง</a></details><h1 id="lesson-12-11-real-project-practical-playbook">11 — Real Project Practical Playbook</h1>
+<p>บทนี้ทำหน้าที่เชื่อมความรู้ Git ทุกบทเข้ากับการทำโปรเจกต์จริง เหมาะสำหรับกลับมาเปิดอ่านเมื่อจำคำสั่งได้บ้าง แต่ยังไม่แน่ใจว่า <strong>ต้องใช้คำสั่งใด เมื่อไร และเพราะอะไร</strong></p>
+<p>ตัวอย่างหลักใช้โปรเจกต์สมมติชื่อ <code>dentalAI</code> ซึ่งมี local repository อยู่แล้ว และมี GitHub repository ใหม่ชื่อ <code>dental-caries-ai</code></p>
+<blockquote>
+<p>หลักสำคัญ: Git ที่ปลอดภัยไม่เริ่มจากการพิมพ์คำสั่งแก้ไข แต่เริ่มจากการอ่านสถานะและสร้างภาพในหัวก่อน</p>
+</blockquote>
+<hr/>
+<h2 id="lesson-12-1-git">1. วิธีคิดก่อนใช้ Git ทุกครั้ง</h2>
+<p>ก่อนพิมพ์คำสั่ง ให้ตอบ 5 คำถามนี้:</p>
+<ol>
+<li><strong>ฉันอยู่ repository ไหน?</strong> — อย่าสันนิษฐานจากชื่อหน้าต่าง Terminal</li>
+<li><strong>ฉันอยู่ branch ไหน?</strong> — งานควรลง <code>main</code> หรือ feature branch</li>
+<li><strong>มีไฟล์อะไรเปลี่ยนอยู่?</strong> — tracked, untracked, staged หรือ unstaged</li>
+<li><strong>local กับ remote ใครอยู่ข้างหน้า?</strong> — อาจมี commit บน GitHub ที่ local ยังไม่มี</li>
+<li><strong>คำสั่งถัดไปเปลี่ยน state ใด?</strong> — working tree, staging, local history หรือ remote history</li>
+</ol>
+<p>ชุดคำสั่งตรวจสุขภาพที่ใช้ได้เกือบทุกครั้ง:</p>
+<pre><code class="language-bash">git rev-parse --show-toplevel
+git status
+git branch -vv
+git remote -v
+git log --oneline --decorate --graph --all -n 15
+</code></pre>
+<p>แต่ละคำสั่งตอบคนละคำถาม:</p>
+<div class="table-scroll"><table>
+<thead>
+<tr>
+<th>คำสั่ง</th>
+<th>สิ่งที่ต้องดู</th>
+<th>ความหมาย</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>git rev-parse --show-toplevel</code></td>
+<td>absolute path</td>
+<td>root ของ repo ที่ Git กำลังควบคุม</td>
+</tr>
+<tr>
+<td><code>git status</code></td>
+<td>branch และ file states</td>
+<td>งานที่ยังไม่ commit และสถานะโดยรวม</td>
+</tr>
+<tr>
+<td><code>git branch -vv</code></td>
+<td><code>*</code>, upstream, ahead/behind</td>
+<td>branch ปัจจุบันและ branch ที่ติดตาม</td>
+</tr>
+<tr>
+<td><code>git remote -v</code></td>
+<td>remote name + URL</td>
+<td>local repo เชื่อมไปที่ใด</td>
+</tr>
+<tr>
+<td><code>git log ... --all</code></td>
+<td>commit graph</td>
+<td>ประวัติทุก ref ที่ local มองเห็น</td>
+</tr>
+</tbody>
+</table></div>
+<p>คำว่า <code>working tree clean</code> แปลเพียงว่าไม่มี tracked change/untracked file ที่ Git ต้องรายงานใน checkout ปัจจุบัน <strong>ไม่ได้แปลว่า</strong>:</p>
+<ul>
+<li>เชื่อม GitHub แล้ว</li>
+<li>local และ GitHub มี commit เท่ากัน</li>
+<li>push สำเร็จแล้ว</li>
+<li>branch มี upstream แล้ว</li>
+<li>repository มีไฟล์หรือ commit อยู่จริง</li>
+</ul>
+<hr/>
+<h2 id="lesson-12-2-state-map">2. State Map: คำสั่งหนึ่งย้ายข้อมูลไปไหน</h2>
+<pre><code class="language-text">ไฟล์ที่เราแก้
+Working Tree
+     │ git add
+     ▼
+Staging Area / Index
+     │ git commit
+     ▼
+Local Repository
+     │ git push
+     ▼
+Remote Repository เช่น GitHub
+</code></pre>
+<p>ทิศทางกลับที่ใช้บ่อย:</p>
+<pre><code class="language-text">Remote ──git fetch──&gt; remote-tracking refs ใน Local
+Staging ──git restore --staged──&gt; เอาออกจาก staged แต่ไฟล์ยังอยู่
+Commit ──git restore --source──&gt; นำเนื้อหาเก่ามาวางใน working tree
+Shared bad commit ──git revert──&gt; สร้าง commit ใหม่ที่หักล้างของเดิม
+</code></pre>
+<p>ข้อสังเกตสำคัญ:</p>
+<ul>
+<li><code>git add</code> ไม่ได้ส่งอะไรขึ้น GitHub</li>
+<li><code>git commit</code> ไม่ได้ส่งอะไรขึ้น GitHub</li>
+<li><code>git fetch</code> ไม่แก้ไฟล์งานปัจจุบัน</li>
+<li><code>git push</code> เปลี่ยน remote จึงต้องตรวจให้มากกว่าคำสั่ง local</li>
+<li><code>git pull</code> เป็นคำสั่งผสม โดยทั่วไปคือ fetch แล้ว integrate จึงมีผลต่อ branch ปัจจุบัน</li>
+</ul>
+<hr/>
+<h2 id="lesson-12-3-case-a-local-repo-github-repo">3. Case A — มี Local Repo แล้ว แต่ GitHub Repo เพิ่งสร้าง</h2>
+<h3 id="lesson-12-31-local">3.1 ตรวจ local ก่อน</h3>
+<pre><code class="language-bash">git rev-parse --show-toplevel
+git status
+git log --oneline --decorate --graph --all -n 10
+git remote -v
+</code></pre>
+<p>แยกได้เป็น 3 กรณี:</p>
+<h4 id="lesson-12-a-git-remote-v-output">กรณี A: <code>git remote -v</code> ไม่มี output</h4>
+<p>แปลว่ายังไม่มี remote ที่ตั้งชื่อไว้ ไม่ใช่ error และไม่ใช่หลักฐานว่า GitHub repo ไม่มีอยู่</p>
+<pre><code class="language-bash">git remote add origin https://github.com/tathana/dental-caries-ai.git
+git remote -v
+</code></pre>
+<p><code>origin</code> เป็นเพียงชื่อเล่นที่นิยมใช้ จะตั้งชื่ออื่นก็ได้ แต่ในทีมควรใช้ convention เดียวกัน</p>
+<h4 id="lesson-12-b-origin-url">กรณี B: มี <code>origin</code> แต่ URL ผิด</h4>
+<p>อย่า <code>add</code> ซ้ำ ให้ตรวจและแก้:</p>
+<pre><code class="language-bash">git remote get-url origin
+git remote set-url origin https://github.com/tathana/dental-caries-ai.git
+git remote -v
+</code></pre>
+<h4 id="lesson-12-c-url">กรณี C: มี URL ถูกแล้ว</h4>
+<p>ไม่ต้อง add ใหม่ ให้ไปขั้น fetch เพื่อขอข้อมูลจาก remote</p>
+<h3 id="lesson-12-32-github-history">3.2 ตรวจ GitHub โดยไม่รีบรวม history</h3>
+<pre><code class="language-bash">git fetch origin
+git branch -a
+git log --oneline --decorate --graph --all -n 20
+</code></pre>
+<p>เหตุผลที่ใช้ <code>fetch</code> ก่อน <code>pull</code>: เราต้องการรู้ว่า GitHub มี commit เริ่มต้น เช่น README, LICENSE หรือ <code>.gitignore</code> หรือไม่ โดยยังไม่ให้ Gitแก้ branch ปัจจุบันอัตโนมัติ</p>
+<h3 id="lesson-12-33-history">3.3 ตัดสินใจจาก history</h3>
+<p><strong>Remote ว่าง และ local มี commit:</strong></p>
+<pre><code class="language-bash">git push -u origin main
+</code></pre>
+<p><code>-u</code> หรือ <code>--set-upstream</code> ผูก local <code>main</code> ให้ติดตาม <code>origin/main</code> หลังจากนั้นมักใช้ <code>git push</code> และ <code>git pull</code> แบบไม่ระบุชื่อได้</p>
+<p><strong>Remote มี commit และ local เริ่มจาก history เดียวกัน:</strong></p>
+<pre><code class="language-bash">git branch -vv
+git log --oneline --left-right main...origin/main
+</code></pre>
+<p>หาก local เพียง behind และไม่มีงานชนกัน อาจใช้:</p>
+<pre><code class="language-bash">git pull --ff-only
+</code></pre>
+<p><code>--ff-only</code> ยอมให้เลื่อน pointer ไปข้างหน้าอย่างเดียว หากต้องสร้าง merge commit คำสั่งจะหยุดให้เราตรวจแทน</p>
+<p><strong>Local และ remote ถูกสร้างแยกกันคนละ root commit:</strong></p>
+<p>อย่า force push เพื่อให้ “ผ่าน” ทันที นี่คือ unrelated histories ต้องเลือกอย่างมีสติว่าจะ:</p>
+<ul>
+<li>เก็บทั้งสอง history แล้ว integrate</li>
+<li>clone remote ใหม่ แล้วนำไฟล์ local เข้ามาเป็น commit</li>
+<li>ลบ/สร้าง remote ใหม่ หากแน่ใจว่า remote ไม่มีข้อมูลสำคัญและเป็น repo ส่วนตัว</li>
+</ul>
+<p>ทางเลือกมีผลต่อประวัติ จึงควรสำรองและตรวจ graph ก่อนเสมอ</p>
+<hr/>
+<h2 id="lesson-12-4-case-b">4. Case B — เริ่มวันทำงานใหม่ในโปรเจกต์จริง</h2>
+<p>Routine ที่แนะนำ:</p>
+<pre><code class="language-bash">git status
+git branch -vv
+git fetch origin
+git log --oneline --decorate --graph --all -n 12
+</code></pre>
+<p>จากนั้น:</p>
+<ol>
+<li>ถ้ามีงานค้าง ให้เข้าใจก่อนว่าเป็นงานอะไร</li>
+<li>ถ้า <code>main</code> behind และ clean ให้อัปเดตอย่างปลอดภัย</li>
+<li>สร้าง branch สำหรับงานใหม่</li>
+</ol>
+<pre><code class="language-bash">git switch main
+git pull --ff-only
+git switch -c feat/resume-parser
+</code></pre>
+<p>ทำไมไม่เขียน feature ยาว ๆ บน <code>main</code>:</p>
+<ul>
+<li>แยกขอบเขตงานได้</li>
+<li>เปรียบเทียบกับ baseline ง่าย</li>
+<li>ทิ้ง branch ได้โดยไม่รบกวน main</li>
+<li>เปิด PR และขอ review ได้</li>
+<li>สลับไปแก้ urgent bug ได้สะดวกกว่า</li>
+</ul>
+<p>ตัวอย่างชื่อ branch:</p>
+<pre><code class="language-text">feat/resume-parser
+fix/pdf-empty-page
+docs/setup-guide
+test/extraction-edge-cases
+chore/update-gitignore
+</code></pre>
+<p>ชื่อควรบอกชนิดและเจตนา ไม่ต้องใส่รายละเอียดทุกอย่างลงชื่อ branch</p>
+<hr/>
+<h2 id="lesson-12-5-case-c-commit">5. Case C — แก้หลายอย่าง แต่ต้องการ commit ให้อ่านง่าย</h2>
+<p>สมมติแก้ <code>parser.py</code>, เพิ่ม test, แก้ README และมี debug print ปนอยู่</p>
+<h3 id="lesson-12-51">5.1 อ่านภาพรวม</h3>
+<pre><code class="language-bash">git status --short
+git diff --stat
+git diff
+</code></pre>
+<p>ตัวอักษรสองคอลัมน์ใน <code>git status --short</code>:</p>
+<pre><code class="language-text"> M parser.py      # working tree modified แต่ยังไม่ staged
+M  README.md      # staged แล้ว
+MM config.py      # staged เวอร์ชันหนึ่ง แล้วแก้เพิ่มอีก
+?? test_parser.py # untracked
+</code></pre>
+<p>คอลัมน์ซ้ายคือ index/staging ส่วนคอลัมน์ขวาคือ working tree</p>
+<h3 id="lesson-12-52-commit">5.2 แบ่ง commit ตามเหตุผล</h3>
+<pre><code class="language-bash">git add -p parser.py
+git add test_parser.py
+git diff --staged
+git commit -m "feat: parse candidate skills from resume text"
+</code></pre>
+<p>แล้วจึงทำ documentation เป็นอีก commit:</p>
+<pre><code class="language-bash">git add README.md
+git diff --staged
+git commit -m "docs: explain resume parser usage"
+</code></pre>
+<p><code>git add -p</code> ให้เลือกทีละ hunk คำตอบหลัก:</p>
+<div class="table-scroll"><table>
+<thead>
+<tr>
+<th>ปุ่ม</th>
+<th>ความหมาย</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>y</code></td>
+<td>stage hunk นี้</td>
+</tr>
+<tr>
+<td><code>n</code></td>
+<td>ยังไม่ stage hunk นี้</td>
+</tr>
+<tr>
+<td><code>s</code></td>
+<td>แบ่ง hunk ให้เล็กลง</td>
+</tr>
+<tr>
+<td><code>e</code></td>
+<td>แก้ patch ด้วยตนเอง; ใช้เมื่อเข้าใจแล้ว</td>
+</tr>
+<tr>
+<td><code>q</code></td>
+<td>หยุด</td>
+</tr>
+<tr>
+<td><code>?</code></td>
+<td>ดูความช่วยเหลือ</td>
+</tr>
+</tbody>
+</table></div>
+<p>Atomic commit ไม่ได้แปลว่า commit ต้องเล็กที่สุด แต่หมายถึงมี “เหตุผลเดียวที่สอดคล้องกัน” และสามารถ review/revert ได้เป็นหน่วย</p>
+<hr/>
+<h2 id="lesson-12-6-diff-commit">6. วิธีอ่าน Diff ให้รู้ว่ากำลังจะ commit อะไร</h2>
+<pre><code class="language-diff">diff --git a/parser.py b/parser.py
+index 91ab123..73cd456 100644
+--- a/parser.py
++++ b/parser.py
+@@ -10,3 +10,5 @@ def parse_resume(text):
+-    return {}
++    skills = extract_skills(text)
++    return {"skills": skills}
+</code></pre>
+<ul>
+<li><code>--- a/...</code> คือเวอร์ชันก่อน</li>
+<li><code>+++ b/...</code> คือเวอร์ชันหลัง</li>
+<li>บรรทัดขึ้นต้น <code>-</code> ถูกนำออก</li>
+<li>บรรทัดขึ้นต้น <code>+</code> ถูกเพิ่ม</li>
+<li><code>@@</code> บอกตำแหน่งโดยประมาณของ hunk</li>
+</ul>
+<p>คำสั่งที่คนเริ่มต้นมักสลับกัน:</p>
+<pre><code class="language-bash">git diff           # working tree เทียบ staging
+git diff --staged  # staging เทียบ HEAD; สิ่งที่จะเข้า commit
+git diff HEAD      # working tree + staged เทียบ commit ปัจจุบัน
+</code></pre>
+<p>ก่อน commit ให้ยึด <code>git diff --staged</code> เป็นหลัก เพราะมันคือเนื้อหาที่ Git กำลังจะบันทึกจริง</p>
+<hr/>
+<h2 id="lesson-12-7-commit-message">7. Commit Message ที่ช่วยตัวเราในอนาคต</h2>
+<p>รูปแบบง่าย:</p>
+<pre><code class="language-text">&lt;type&gt;: &lt;สิ่งที่เปลี่ยนและเจตนา&gt;
+</code></pre>
+<p>ตัวอย่าง:</p>
+<pre><code class="language-text">feat: add structured output for resume extraction
+fix: handle PDF pages with missing text
+test: cover duplicate candidate identifiers
+docs: add local setup instructions
+refactor: separate parsing from scoring logic
+chore: ignore local model cache
+</code></pre>
+<p>หลีกเลี่ยงข้อความแบบ:</p>
+<pre><code class="language-text">update
+fix bug
+ล่าสุด
+final final
+งานวันนี้
+</code></pre>
+<p>คำถามทดสอบคุณภาพ: หากอ่าน message นี้อีก 3 เดือนโดยไม่เปิด diff จะพอรู้หรือไม่ว่า commit ทำอะไรและทำไม</p>
+<p>Pre-commit ritual:</p>
+<pre><code class="language-bash">git status
+git diff
+git diff --staged
+# รัน tests/linter ที่เกี่ยวข้อง
+git commit -m "..."
+git show --stat --oneline HEAD
+</code></pre>
+<hr/>
+<h2 id="lesson-12-8-case-d-push">8. Case D — Push แล้วถูกปฏิเสธ</h2>
+<p>ข้อความ non-fast-forward มักแปลว่า remote มี commit ที่ local ยังไม่มี ไม่ได้แปลว่า Git พัง</p>
+<p>หยุดก่อน แล้วตรวจ:</p>
+<pre><code class="language-bash">git status
+git fetch origin
+git branch -vv
+git log --oneline --decorate --graph --all -n 20
+</code></pre>
+<p>หากทำงานบน feature branch และต้องการรวม remote changes ให้ทำตาม policy ทีม เช่น merge หรือ rebase ส่วนถ้าเป็น <code>main</code> ให้หลีกเลี่ยงการ force push</p>
+<p>หลักการ:</p>
+<ul>
+<li><code>fetch</code> ก่อน เพื่อดูข้อเท็จจริง</li>
+<li>อ่าน graph ว่าแตกแขนงตรงไหน</li>
+<li>ตรวจว่า remote commit เป็นของใคร/ทำอะไร</li>
+<li>integrate และ test</li>
+<li>push หลัง history ถูกต้อง</li>
+</ul>
+<p>อย่าแก้ non-fast-forward ด้วย <code>git push --force</code> แบบอัตโนมัติ เพราะอาจทำให้ commit ของคนอื่นหายจาก branch ที่แชร์กัน</p>
+<hr/>
+<h2 id="lesson-12-9-case-e-undo">9. Case E — ทำผิด แต่ยังไม่รู้ว่าควร Undo แบบไหน</h2>
+<p>เริ่มจากจำแนก state:</p>
+<div class="table-scroll"><table>
+<thead>
+<tr>
+<th>เหตุการณ์</th>
+<th>วิธีคิด</th>
+<th>คำสั่งที่มักเหมาะ</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>แก้ tracked file แต่ยังไม่ stage</td>
+<td>ทิ้ง working change</td>
+<td><code>git restore &lt;file&gt;</code></td>
+</tr>
+<tr>
+<td>stage ผิด แต่ต้องเก็บเนื้อหา</td>
+<td>เอาออกจาก index</td>
+<td><code>git restore --staged &lt;file&gt;</code></td>
+</tr>
+<tr>
+<td>commit ล่าสุดผิดและยังไม่ share</td>
+<td>แก้ local history</td>
+<td><code>git commit --amend</code> หรือ reset ตามกรณี</td>
+</tr>
+<tr>
+<td>bad commit ถูก push/share แล้ว</td>
+<td>เพิ่มประวัติหักล้าง</td>
+<td><code>git revert &lt;commit&gt;</code></td>
+</tr>
+<tr>
+<td>branch/commit ดูเหมือนหาย</td>
+<td>หา pointer เก่า</td>
+<td><code>git reflog</code> แล้วสร้าง rescue branch</td>
+</tr>
+<tr>
+<td>merge ยังไม่เสร็จและต้องย้อน</td>
+<td>กลับก่อนเริ่ม merge</td>
+<td><code>git merge --abort</code></td>
+</tr>
+</tbody>
+</table></div>
+<p>ก่อนใช้ <code>restore</code> กับ working tree ให้ดู <code>git diff</code> เพราะเนื้อหาที่ทิ้งอาจกู้ยากหากไม่เคย commit</p>
+<p>Safe rescue pattern เมื่อไม่มั่นใจ:</p>
+<pre><code class="language-bash">git status
+git diff
+git diff --staged
+git switch -c rescue/before-recovery
+git add -A
+git commit -m "wip: preserve state before recovery"
+</code></pre>
+<p>WIP commit บน rescue branch ไม่จำเป็นต้อง push หรือ merge จุดประสงค์คือทำให้ข้อมูลมี object ใน Git ก่อนทดลองกู้</p>
+<hr/>
+<h2 id="lesson-12-10-case-f-merge-conflict">10. Case F — Merge Conflict แบบไม่เดาสุ่ม</h2>
+<p>เมื่อ merge แล้ว conflict:</p>
+<pre><code class="language-bash">git status
+git diff --name-only --diff-filter=U
+</code></pre>
+<p>เปิดไฟล์จะเห็น:</p>
+<pre><code class="language-text">&lt;&lt;&lt;&lt;&lt;&lt;&lt; HEAD
+เนื้อหาจาก branch ปัจจุบัน
+=======
+เนื้อหาจากอีกฝั่ง
+&gt;&gt;&gt;&gt;&gt;&gt;&gt; feat/example
+</code></pre>
+<p>อย่าเลือก ours/theirs เพียงเพราะอยากให้ marker หาย ขั้นตอนที่ถูกต้อง:</p>
+<ol>
+<li>เข้าใจเจตนาทั้งสองฝั่ง</li>
+<li>เขียนผลลัพธ์สุดท้าย ซึ่งอาจรวมทั้งสองฝั่งหรือเขียนใหม่</li>
+<li>ลบ marker ทุกตัว</li>
+<li>รัน test</li>
+<li>stage เฉพาะไฟล์ที่แก้เสร็จ</li>
+<li>ตรวจ status/diff แล้วจบ merge</li>
+</ol>
+<pre><code class="language-bash">git add path/to/resolved_file
+git diff --check
+git status
+git commit
+</code></pre>
+<p>ถ้าพบว่าเริ่ม merge ผิด branch หรือยังไม่พร้อม:</p>
+<pre><code class="language-bash">git merge --abort
+</code></pre>
+<p>Abort ไม่ใช่ความล้มเหลว แต่เป็นการกลับไปเก็บข้อมูลก่อนตัดสินใจใหม่</p>
+<hr/>
+<h2 id="lesson-12-11-gitignore-secrets-aipython">11. <code>.gitignore</code> และ Secrets ในโปรเจกต์ AI/Python</h2>
+<p>ตัวอย่าง baseline ซึ่งต้องปรับตามโปรเจกต์:</p>
+<pre><code class="language-gitignore"># Python
+__pycache__/
+*.py[cod]
+.pytest_cache/
+.mypy_cache/
+.ruff_cache/
+
+# Virtual environments
+.venv/
+venv/
+
+# Secrets and local config
+.env
+.env.*
+!.env.example
+
+# IDE / OS
+.vscode/
+.idea/
+.DS_Store
+Thumbs.db
+
+# Runtime artifacts
+*.log
+tmp/
+outputs/
+
+# Models/data: ตัดสินตาม policy ไม่ใช่ ignore ทุกอย่างอัตโนมัติ
+models/local/
+data/private/
+</code></pre>
+<p>ตรวจว่าไฟล์ถูก ignore เพราะ rule ใด:</p>
+<pre><code class="language-bash">git check-ignore -v .env
+</code></pre>
+<p>ถ้าไฟล์เคย tracked แล้ว การเพิ่ม <code>.gitignore</code> อย่างเดียวไม่ทำให้ Git เลิกติดตาม:</p>
+<pre><code class="language-bash">git rm --cached .env
+</code></pre>
+<p>แต่ถ้า secret เคย commit หรือ push แล้ว ต้องถือว่า secret รั่ว:</p>
+<ol>
+<li>revoke/rotate credential ก่อน</li>
+<li>ประเมินว่าอยู่ใน remote/history/log ที่ใดบ้าง</li>
+<li>แจ้งผู้รับผิดชอบตาม incident process</li>
+<li>ค่อยจัดการ history ตามข้อตกลงทีม</li>
+</ol>
+<p>การลบข้อความจากไฟล์ล่าสุดไม่ทำให้ credential เดิมปลอดภัย</p>
+<hr/>
+<h2 id="lesson-12-12-end-of-day-workflow">12. End-of-Day Workflow</h2>
+<p>ก่อนเลิกงาน:</p>
+<pre><code class="language-bash">git status
+git diff
+git diff --staged
+</code></pre>
+<p>เลือกอย่างใดอย่างหนึ่ง:</p>
+<ul>
+<li>งานเป็นหน่วยสมบูรณ์: test แล้ว commit</li>
+<li>งานยังไม่สมบูรณ์แต่ต้องเก็บ: WIP commit บน feature branch ตาม policy ทีม</li>
+<li>ต้องย้าย branch ชั่วคราว: ใช้ stash เมื่อเข้าใจและตั้ง message ชัดเจน</li>
+<li>มีไฟล์ขยะ/secret: แก้ hygiene ก่อน push</li>
+</ul>
+<p>ตรวจ history และ upstream:</p>
+<pre><code class="language-bash">git log --oneline --decorate -n 8
+git branch -vv
+git status
+</code></pre>
+<p>ถ้า push feature branch:</p>
+<pre><code class="language-bash">git push -u origin feat/resume-parser
+</code></pre>
+<p>Handoff ที่ดีควรบอก:</p>
+<ul>
+<li>ทำอะไรเสร็จแล้ว</li>
+<li>branch/commit/PR ใด</li>
+<li>รัน test อะไรและผลเป็นอย่างไร</li>
+<li>ยังมีข้อจำกัดหรือ TODO อะไร</li>
+<li>ผู้รับควรทำอะไรต่อ</li>
+</ul>
+<hr/>
+<h2 id="lesson-12-13-ai-git-ai">13. วิธีใช้ AI ช่วย Git โดยไม่มอบพวงมาลัยให้ AI</h2>
+<p>AI เหมาะกับ:</p>
+<ul>
+<li>อธิบาย <code>git status</code>, <code>diff</code>, <code>log</code> ที่เราส่งให้</li>
+<li>เสนอ commit grouping จากรายชื่อไฟล์/diff</li>
+<li>ช่วยเขียน commit message หรือ PR description</li>
+<li>อธิบาย conflict ทั้งสองฝั่ง</li>
+<li>เสนอ recovery options พร้อมผลกระทบ</li>
+</ul>
+<p>ก่อนให้ AI แนะนำ ควรส่งข้อมูล read-only:</p>
+<pre><code class="language-bash">git status
+git branch -vv
+git remote -v
+git log --oneline --decorate --graph --all -n 20
+git diff
+git diff --staged
+</code></pre>
+<p>อย่าส่ง <code>.env</code>, token, private key หรือข้อมูลลูกค้า และอย่ารันคำสั่ง destructive ที่ AI เสนอจนกว่าจะอธิบายได้ว่า:</p>
+<ol>
+<li>คำสั่งเปลี่ยน state ใด</li>
+<li>ข้อมูลใดอาจหาย</li>
+<li>มี backup/recovery path หรือไม่</li>
+<li>กระทบ remote/shared history หรือไม่</li>
+</ol>
+<p>Prompt ที่ใช้ถามได้ดี:</p>
+<pre><code class="language-text">นี่คือ git status, branch -vv และ commit graph ของผม
+ช่วยอธิบาย current state ก่อน โดยยังไม่เสนอคำสั่งแก้ไข
+จากนั้นเสนอทางเลือกที่ปลอดภัย 2 วิธี พร้อมผลกระทบและวิธีกู้คืน
+ห้ามใช้ force push หรือ reset --hard
+</code></pre>
+<hr/>
+<h2 id="lesson-12-14-diagnostic-templates">14. Diagnostic Templates — ส่งอะไรมาให้คนช่วยดู</h2>
+<h3 id="lesson-12-localremote-sync">ปัญหา local/remote sync</h3>
+<pre><code class="language-bash">git status
+git branch -vv
+git remote -v
+git log --oneline --decorate --graph --all -n 25
+</code></pre>
+<h3 id="lesson-12-staged-commit">ปัญหา staged ผิดหรือ commit ปนกัน</h3>
+<pre><code class="language-bash">git status --short
+git diff
+git diff --staged
+git show --stat --oneline HEAD
+</code></pre>
+<h3 id="lesson-12-merge-conflict">ปัญหา merge conflict</h3>
+<pre><code class="language-bash">git status
+git diff --name-only --diff-filter=U
+git log --oneline --decorate --graph --all -n 15
+</code></pre>
+<h3 id="lesson-12-commitbranch">ปัญหา commit/branch หาย</h3>
+<pre><code class="language-bash">git status
+git branch -avv
+git reflog -n 30
+git log --oneline --decorate --graph --all -n 30
+</code></pre>
+<p>ก่อนส่ง output ให้ผู้อื่น ตรวจ URL, username, path และข้อมูลลับที่อาจปรากฏก่อนทุกครั้ง</p>
+<hr/>
+<h2 id="lesson-12-15-practice-scenario-pull-request">15. Practice Scenario — จากโปรเจกต์ว่างถึง Pull Request</h2>
+<p>ทำใน repository ทดลอง ไม่ใช่ repo งานสำคัญ:</p>
+<ol>
+<li>สร้าง repo และ baseline commit</li>
+<li>สร้าง bare/local remote หรือ GitHub test repo</li>
+<li>ผูก <code>origin</code> และ push <code>main</code></li>
+<li>สร้าง <code>feat/input-validation</code></li>
+<li>แก้ code + test + docs โดยตั้งใจให้มีหลาย concerns</li>
+<li>ใช้ <code>git add -p</code> แบ่งเป็น 2–3 atomic commits</li>
+<li>push feature branch</li>
+<li>เขียน PR description แม้ไม่ได้เปิด PR จริง</li>
+<li>จำลอง remote ahead แล้ว fetch/read graph</li>
+<li>สร้าง conflict เล็ก ๆ และแก้พร้อม test</li>
+<li>สร้าง bad commit แล้วฝึก <code>revert</code></li>
+<li>สร้าง branch ชั่วคราว ลบ แล้วกู้ด้วย reflog</li>
+</ol>
+<p>หลักฐานที่ควรเก็บ:</p>
+<pre><code class="language-text">git status ตอนสำคัญ
+commit graph ก่อน/หลัง merge
+commit messages
+diff ที่แบ่งด้วย add -p
+test output
+PR description
+recovery notes: เกิดอะไร เลือกวิธีไหน เพราะอะไร
+</code></pre>
+<hr/>
+<h2 id="lesson-12-16-checkpoint">16. Checkpoint แบบอธิบายด้วยภาษาตัวเอง</h2>
+<p>หากตอบไม่ได้ ให้ย้อนอ่านบทที่เกี่ยวข้องก่อนจำ command เพิ่ม:</p>
+<ol>
+<li>ทำไม <code>working tree clean</code> ยังไม่ยืนยันว่า sync กับ GitHub</li>
+<li><code>git diff</code> และ <code>git diff --staged</code> ต่างกันอย่างไร</li>
+<li>ทำไม fetch ปลอดภัยกว่าการ pull ทันทีเมื่อต้องการสำรวจ</li>
+<li>upstream/tracking branch ช่วยอะไร</li>
+<li>เมื่อ commit ถูก share แล้ว ทำไม revert มักเหมาะกว่า reset</li>
+<li>ทำไม <code>.gitignore</code> ไม่ช่วย secret ที่เคย commit แล้ว</li>
+<li>conflict marker บอกอะไร และเหตุใดไม่ควรเลือกฝั่งใดฝั่งหนึ่งแบบสุ่ม</li>
+<li><code>git add -p</code> ช่วย code review และ recovery อย่างไร</li>
+<li>reflog ช่วยกู้สถานการณ์ประเภทใด</li>
+<li>ก่อน push ควรตรวจอะไรอย่างน้อย 5 อย่าง</li>
+</ol>
+<p>เมื่ออธิบายได้โดยไม่ท่องจำ คุณจะเริ่มใช้ Git เป็นระบบคิด ไม่ใช่ชุดคาถาครับ</p><a class="back" href="#top">↑ กลับสารบัญ</a></article><article id="lesson-13"><div class="source">drills/README.md</div><details class="local-toc"><summary>หัวข้อในบทนี้</summary><a href="#lesson-13-_1">ลำดับ</a><a href="#lesson-13-evidence">Evidence ที่ต้องเก็บ</a></details><h1 id="lesson-13-git-drills">Git Drills</h1>
+<p>ทำทุก Drill ใน repository จำลองเท่านั้น ไม่ใช้ <code>Pre-coop</code>, <code>short_course</code> หรือ repository งานจริงเป็นสนามทดลอง</p>
+<h2 id="lesson-13-_1">ลำดับ</h2>
+<ol>
+<li><a href="#lesson-14">Status Detective</a></li>
+<li><a href="#lesson-15">Atomic Commits</a></li>
+<li><a href="#lesson-16">Branch and Merge</a></li>
+<li><a href="#lesson-17">Conflict Resolution</a></li>
+<li><a href="#lesson-18">Safe Recovery</a></li>
+</ol>
+<h2 id="lesson-13-evidence">Evidence ที่ต้องเก็บ</h2>
+<ul>
+<li>คำสั่งสำคัญที่ใช้</li>
+<li><code>git status --short --branch</code></li>
+<li><code>git log --oneline --decorate --graph --all</code></li>
+<li>เหตุผลที่เลือกคำสั่ง</li>
+<li>test/check หลัง merge หรือ recovery</li>
+</ul>
+<p>อย่าเก็บ token, absolute private paths หรือ secret ใน evidence</p><a class="back" href="#top">↑ กลับสารบัญ</a></article><article id="lesson-14"><div class="source">drills/drill_01_status_detective.md</div><details class="local-toc"><summary>หัวข้อในบทนี้</summary><a href="#lesson-14-tasks">Tasks</a><a href="#lesson-14-pass">Pass</a></details><h1 id="lesson-14-drill-01-status-detective">Drill 01 — Status Detective</h1>
+<p>สร้าง repo ทดลองที่มี:</p>
+<ul>
+<li>tracked unmodified file</li>
+<li>tracked modified unstaged file</li>
+<li>staged file</li>
+<li>staged แล้วแก้ต่อ (<code>MM</code>)</li>
+<li>untracked file</li>
+<li>ignored <code>.env</code></li>
+</ul>
+<h2 id="lesson-14-tasks">Tasks</h2>
+<ol>
+<li>อ่าน full status และ short status</li>
+<li>บอกว่า commit ถัดไปจะมี content version ใด</li>
+<li>แสดง unstaged diff</li>
+<li>แสดง staged diff</li>
+<li>ใช้ <code>git check-ignore -v .env</code></li>
+<li>unstage หนึ่งไฟล์โดยรักษา content</li>
+</ol>
+<h2 id="lesson-14-pass">Pass</h2>
+<ul>
+<li>ไม่ commit <code>.env</code></li>
+<li>อธิบาย short status สองคอลัมน์ได้</li>
+<li>แยก staged/unstaged content ได้ถูก</li>
+</ul><a class="back" href="#top">↑ กลับสารบัญ</a></article><article id="lesson-15"><div class="source">drills/drill_02_atomic_commits.md</div><details class="local-toc"><summary>หัวข้อในบทนี้</summary><a href="#lesson-15-tasks">Tasks</a><a href="#lesson-15-review">Review</a></details><h1 id="lesson-15-drill-02-atomic-commits">Drill 02 — Atomic Commits</h1>
+<p>ให้ไฟล์ <code>processor.py</code> มี changes ปนกัน:</p>
+<ul>
+<li>เพิ่ม validation</li>
+<li>เปลี่ยนข้อความ log ที่ไม่เกี่ยว</li>
+<li>แก้ typo ใน comment</li>
+</ul>
+<p>และมี <code>README.md</code> ที่เพิ่ม setup instructions</p>
+<h2 id="lesson-15-tasks">Tasks</h2>
+<ol>
+<li>ตรวจ diff</li>
+<li>ใช้ <code>git add -p</code> แบ่ง hunks</li>
+<li>สร้าง commits ที่ review ได้</li>
+<li>แต่ละ commit ต้องมี message บอก intention</li>
+<li>แสดง final graph และ <code>git show</code> ของแต่ละ commit</li>
+</ol>
+<h2 id="lesson-15-review">Review</h2>
+<ul>
+<li>Commit แต่ละตัว build/test ได้หรือไม่?</li>
+<li>Validation test อยู่กับ behavior หรือแยกอย่างมีเหตุผล?</li>
+<li>README change เกี่ยวกับ feature หรือควรเป็น docs commit?</li>
+</ul><a class="back" href="#top">↑ กลับสารบัญ</a></article><article id="lesson-16"><div class="source">drills/drill_03_branch_and_merge.md</div><details class="local-toc"><summary>หัวข้อในบทนี้</summary><a href="#lesson-16-scenario">Scenario</a><a href="#lesson-16-tasks">Tasks</a><a href="#lesson-16-questions">Questions</a></details><h1 id="lesson-16-drill-03-branch-and-merge">Drill 03 — Branch and Merge</h1>
+<h2 id="lesson-16-scenario">Scenario</h2>
+<pre><code class="language-text">main
+├── feature/report
+└── fix/validation
+</code></pre>
+<h2 id="lesson-16-tasks">Tasks</h2>
+<ol>
+<li>สร้าง branches จากฐานที่ถูกต้อง</li>
+<li>ทำ atomic commits แต่ละ branch</li>
+<li>merge <code>fix/validation</code> แบบ fast-forward ถ้า graph อนุญาต</li>
+<li>ทำ commit บน main แล้ว merge <code>feature/report</code> เพื่อเห็น three-way merge</li>
+<li>รัน tests/check</li>
+<li>ลบ merged branches ด้วย <code>-d</code></li>
+<li>วาด graph ก่อนและหลัง</li>
+</ol>
+<h2 id="lesson-16-questions">Questions</h2>
+<ul>
+<li>ทำไม merge หนึ่งเป็น fast-forward แต่อีกอันสร้าง merge commit?</li>
+<li>ถ้าลบชื่อ feature branch commits ยังอยู่หรือไม่?</li>
+</ul><a class="back" href="#top">↑ กลับสารบัญ</a></article><article id="lesson-17"><div class="source">drills/drill_04_conflict_resolution.md</div><details class="local-toc"><summary>หัวข้อในบทนี้</summary><a href="#lesson-17-scenario">Scenario</a><a href="#lesson-17-tasks">Tasks</a><a href="#lesson-17-_1">ห้าม</a></details><h1 id="lesson-17-drill-04-conflict-resolution">Drill 04 — Conflict Resolution</h1>
+<h2 id="lesson-17-scenario">Scenario</h2>
+<p>สร้าง branches สองฝั่งแก้ config/ข้อความเดียวกัน โดยแต่ละฝั่งมี requirement ที่ต้องรักษา</p>
+<h2 id="lesson-17-tasks">Tasks</h2>
+<ol>
+<li>ทำให้เกิด conflict</li>
+<li>หยุดและบันทึก <code>git status</code></li>
+<li>อ่าน base/ours/theirs</li>
+<li>แก้เป็น semantic result ที่รวม requirement</li>
+<li>รัน test/check</li>
+<li>stage และจบ merge</li>
+<li>ตรวจ final file และ graph</li>
+<li>สร้าง conflict รอบใหม่แล้วทดลอง <code>git merge --abort</code></li>
+</ol>
+<h2 id="lesson-17-_1">ห้าม</h2>
+<ul>
+<li>เลือก ours/theirs ทั้งไฟล์โดยไม่อ่าน</li>
+<li>ลบ markers แล้วถือว่าเสร็จโดยไม่ test</li>
+</ul><a class="back" href="#top">↑ กลับสารบัญ</a></article><article id="lesson-18"><div class="source">drills/drill_05_safe_recovery.md</div><details class="local-toc"><summary>หัวข้อในบทนี้</summary><a href="#lesson-18-cases">Cases</a><a href="#lesson-18-required-output">Required Output</a><a href="#lesson-18-critical-failure">Critical Failure</a></details><h1 id="lesson-18-drill-05-safe-recovery">Drill 05 — Safe Recovery</h1>
+<p>ทำใน sandbox repo เท่านั้น</p>
+<h2 id="lesson-18-cases">Cases</h2>
+<ol>
+<li>Stage file ผิด แต่ต้องเก็บ content</li>
+<li>แก้ tracked file ผิดและตั้งใจทิ้งหลังอ่าน diff</li>
+<li>ลบ tracked file แล้วกู้</li>
+<li>Commit ล่าสุด message ผิดและยังไม่ share</li>
+<li>Bad commit ถูกถือว่า shared แล้ว ต้อง revert</li>
+<li>Branch ถูกลบ แต่หา commit ผ่าน reflog</li>
+<li>Detached HEAD มี commit ใหม่ที่ต้องเก็บ</li>
+</ol>
+<h2 id="lesson-18-required-output">Required Output</h2>
+<p>แต่ละ case เขียน:</p>
+<pre><code class="language-text">Initial state
+Desired final state
+Command chosen
+Why safer than alternatives
+Verification
+</code></pre>
+<h2 id="lesson-18-critical-failure">Critical Failure</h2>
+<ul>
+<li>ใช้ hard reset แล้วทำ uncommitted work ที่โจทย์กำหนดให้เก็บหาย</li>
+<li>กู้ด้วยการเดา hash โดยไม่ตรวจ log/reflog</li>
+<li>rewrite shared history แทน revert</li>
+</ul><a class="back" href="#top">↑ กลับสารบัญ</a></article><article id="lesson-19"><div class="source">special_challenge_git_rescue/README.md</div><details class="local-toc"><summary>หัวข้อในบทนี้</summary><a href="#lesson-19-repair-a-broken-team-repository">Repair a Broken Team Repository</a><a href="#lesson-19-_1">เอกสาร</a><a href="#lesson-19-safety">Safety</a><a href="#lesson-19-recommended-flow">Recommended Flow</a></details><h1 id="lesson-19-special-challenge-git-rescue-mission">Special Challenge — Git Rescue Mission</h1>
+<h2 id="lesson-19-repair-a-broken-team-repository">Repair a Broken Team Repository</h2>
+<p>ข้อสอบนี้จำลอง repository ทีมที่มี history, branches, remote และ mistakes หลายชนิด คุณต้องตรวจและซ่อมโดยรักษาหลักฐานและไม่ทำงานหาย</p>
+<h2 id="lesson-19-_1">เอกสาร</h2>
+<ul>
+<li><a href="#lesson-22">Mission Brief</a></li>
+<li><a href="#lesson-23">Runbook</a></li>
+<li><a href="#lesson-20">Grading Rubric</a></li>
+<li><a href="#lesson-21">Progressive Hints</a></li>
+<li><a href="special-git-assets/special_challenge_git_rescue/setup_lab.ps1"><code>setup_lab.ps1</code></a> สร้าง lab ใหม่ใน directory ที่ระบุ</li>
+</ul>
+<h2 id="lesson-19-safety">Safety</h2>
+<ul>
+<li>Script ปฏิเสธ target ที่มีอยู่แล้ว</li>
+<li>ใช้ target ใหม่เฉพาะสำหรับ lab</li>
+<li>ห้ามชี้ target ไป <code>D:\COOP</code>, <code>Pre-coop</code>, <code>short_course</code>, home หรือ root drive</li>
+<li>Lab ใช้ local bare remote ไม่ต้องเชื่อมอินเทอร์เน็ต</li>
+<li>หาก lab พัง สร้าง target ใหม่ ไม่แก้ script ให้ลบ directory กว้าง ๆ</li>
+</ul>
+<h2 id="lesson-19-recommended-flow">Recommended Flow</h2>
+<ol>
+<li>อ่าน Mission โดยยังไม่เปิด Hints</li>
+<li>รัน setup script ไปยัง temp/lab directory ใหม่</li>
+<li>สำรวจอย่าง read-only ก่อน</li>
+<li>เขียน rescue plan</li>
+<li>ทำทีละ mission พร้อม evidence</li>
+<li>ส่ง Handoff Summary</li>
+</ol><a class="back" href="#top">↑ กลับสารบัญ</a></article><article id="lesson-20"><div class="source">special_challenge_git_rescue/GRADING_RUBRIC.md</div><details class="local-toc"><summary>หัวข้อในบทนี้</summary><a href="#lesson-20-100">คะแนนรวม 100</a><a href="#lesson-20-pass">Pass</a><a href="#lesson-20-critical-failures">Critical Failures</a><a href="#lesson-20-oral-review">Oral Review</a></details><h1 id="lesson-20-git-rescue-grading-rubric">Git Rescue — Grading Rubric</h1>
+<h2 id="lesson-20-100">คะแนนรวม 100</h2>
+<div class="table-scroll"><table>
+<thead>
+<tr>
+<th>หมวด</th>
+<th style="text-align: right;">คะแนน</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Mental model และ reconnaissance</td>
+<td style="text-align: right;">15</td>
+</tr>
+<tr>
+<td>Status/diff/staging accuracy</td>
+<td style="text-align: right;">15</td>
+</tr>
+<tr>
+<td>Atomic commit quality</td>
+<td style="text-align: right;">15</td>
+</tr>
+<tr>
+<td>Branch/merge workflow</td>
+<td style="text-align: right;">15</td>
+</tr>
+<tr>
+<td>Conflict resolution + verification</td>
+<td style="text-align: right;">15</td>
+</tr>
+<tr>
+<td>Undo/recovery/reflog</td>
+<td style="text-align: right;">10</td>
+</tr>
+<tr>
+<td>Secrets/repository hygiene</td>
+<td style="text-align: right;">10</td>
+</tr>
+<tr>
+<td>PR/handoff communication</td>
+<td style="text-align: right;">5</td>
+</tr>
+</tbody>
+</table></div>
+<h2 id="lesson-20-pass">Pass</h2>
+<ul>
+<li>75/100 ขึ้นไป</li>
+<li>ไม่มี Critical Failure</li>
+</ul>
+<h2 id="lesson-20-critical-failures">Critical Failures</h2>
+<ul>
+<li>commit <code>.env</code>/credential</li>
+<li>force push shared main</li>
+<li>rewrite shared bad commit แทน revert โดยไม่มี requirement</li>
+<li>ทำ recovered work สูญหาย</li>
+<li>ใช้ destructive command โดยไม่ตรวจ target/state</li>
+<li>แก้ conflict โดยทิ้ง requirement ฝั่งหนึ่งและไม่ test</li>
+<li>รายงาน success ทั้งที่ check fail</li>
+</ul>
+<h2 id="lesson-20-oral-review">Oral Review</h2>
+<p>ต้องตอบได้:</p>
+<ol>
+<li>HEAD และ branches ชี้อะไร?</li>
+<li>ทำไมใช้ revert กับ bad shared commit?</li>
+<li>staged diff ต่างจาก working diff อย่างไร?</li>
+<li>recovered commit หาเจอได้อย่างไร?</li>
+<li>conflict decision รักษา requirements ใด?</li>
+<li>หาก push rejected จะทำอย่างไร?</li>
+</ol><a class="back" href="#top">↑ กลับสารบัญ</a></article><article id="lesson-21"><div class="source">special_challenge_git_rescue/HINTS.md</div><details class="local-toc"><summary>หัวข้อในบทนี้</summary><a href="#lesson-21-level-1-observe">Level 1 — Observe</a><a href="#lesson-21-level-2-safety">Level 2 — Safety</a><a href="#lesson-21-level-3-conflict">Level 3 — Conflict</a><a href="#lesson-21-level-4-remote">Level 4 — Remote</a></details><h1 id="lesson-21-git-rescue-progressive-hints">Git Rescue — Progressive Hints</h1>
+<h2 id="lesson-21-level-1-observe">Level 1 — Observe</h2>
+<ul>
+<li>อ่าน <code>status</code>, <code>branch -vv</code>, graph และ reflog ก่อน</li>
+<li>ถามว่า state ใด local และ state ใด remote-tracking</li>
+<li>ตรวจ staged กับ unstaged แยกกัน</li>
+</ul>
+<h2 id="lesson-21-level-2-safety">Level 2 — Safety</h2>
+<ul>
+<li>ปกป้อง commit ที่ดูเหมือนหายด้วย branch ใหม่</li>
+<li>shared bad commit ควรสร้าง reversal commit</li>
+<li>untracked secret ต้อง ignore ก่อน broad add</li>
+</ul>
+<h2 id="lesson-21-level-3-conflict">Level 3 — Conflict</h2>
+<ul>
+<li>อ่าน common base/ours/theirs</li>
+<li>อย่าเลือกทั้งไฟล์ฝั่งเดียว</li>
+<li><code>check_app.py</code> คือ acceptance evidence</li>
+</ul>
+<h2 id="lesson-21-level-4-remote">Level 4 — Remote</h2>
+<ul>
+<li>fetch ทำให้เห็น remote stateโดยยังไม่รวม</li>
+<li>push reject ไม่ได้แปลว่าต้อง force</li>
+<li>integrate แล้ว test ก่อน push</li>
+</ul>
+<p>ไม่มี command sequence เฉลยเต็ม เพราะการให้คะแนนวัดการอ่าน state และเลือกคำสั่ง</p><a class="back" href="#top">↑ กลับสารบัญ</a></article><article id="lesson-22"><div class="source">special_challenge_git_rescue/MISSION.md</div><details class="local-toc"><summary>หัวข้อในบทนี้</summary><a href="#lesson-22-scenario">Scenario</a><a href="#lesson-22-mission-1-reconnaissance">Mission 1 — Reconnaissance</a><a href="#lesson-22-mission-2-secret-and-hygiene">Mission 2 — Secret and Hygiene</a><a href="#lesson-22-mission-3-atomic-history">Mission 3 — Atomic History</a><a href="#lesson-22-mission-4-recover-lost-work">Mission 4 — Recover Lost Work</a><a href="#lesson-22-mission-5-shared-bad-commit">Mission 5 — Shared Bad Commit</a><a href="#lesson-22-mission-6-feature-integration">Mission 6 — Feature Integration</a><a href="#lesson-22-mission-7-handoff">Mission 7 — Handoff</a><a href="#lesson-22-completion-conditions">Completion Conditions</a></details><h1 id="lesson-22-git-rescue-mission-mission-brief">Git Rescue Mission — Mission Brief</h1>
+<h2 id="lesson-22-scenario">Scenario</h2>
+<p>ทีม Automation มี repository จำลองสอง working copies (<code>alice</code>, <code>bob</code>) และ bare remote (<code>remote.git</code>) สถานการณ์ประกอบด้วย:</p>
+<ul>
+<li>feature branch ที่ยังไม่รวม</li>
+<li>remote main เดินหน้ากว่า local บางตัว</li>
+<li>conflict ที่ต้องแก้เชิงความหมาย</li>
+<li><code>.env</code> ที่ต้องถูก ignore และห้าม commit</li>
+<li>change หลายเรื่องปนกันใน Working Tree</li>
+<li>bad commit บน shared main ที่ต้อง revert</li>
+<li>branch ที่ถูกลบแต่ commit ยังหาได้ผ่าน reflog</li>
+<li>README ที่ต้องเขียน handoff ให้ทีม</li>
+</ul>
+<h2 id="lesson-22-mission-1-reconnaissance">Mission 1 — Reconnaissance</h2>
+<p>ใน <code>alice</code>:</p>
+<ul>
+<li>ระบุ repo root/current branch</li>
+<li>ตรวจ working/staged/untracked/ignored state</li>
+<li>แสดง graph ทุก refs</li>
+<li>ตรวจ remotes และ tracking branches</li>
+<li>ห้ามเปลี่ยน state ในขั้นนี้</li>
+</ul>
+<p>Deliverable: <code>recon.md</code></p>
+<h2 id="lesson-22-mission-2-secret-and-hygiene">Mission 2 — Secret and Hygiene</h2>
+<ul>
+<li>ตรวจว่า <code>.env</code> ไม่ tracked/staged</li>
+<li>เพิ่ม ignore rules ที่เหมาะสม</li>
+<li>เก็บ <code>.env.example</code> แบบ placeholder</li>
+<li>ตรวจ runtime log/cache</li>
+<li>commit hygiene change อย่างเป็นเรื่องเดียว</li>
+</ul>
+<p>หากพบ secret จริง ให้ปฏิบัติเป็น incident และไม่ copy ลง report</p>
+<h2 id="lesson-22-mission-3-atomic-history">Mission 3 — Atomic History</h2>
+<p>Working Tree มี source/docs changes ปนกัน:</p>
+<ul>
+<li>แบ่ง commits ด้วย explicit/patch staging</li>
+<li>ตรวจ staged diff</li>
+<li>messages ต้องบอก intention</li>
+</ul>
+<h2 id="lesson-22-mission-4-recover-lost-work">Mission 4 — Recover Lost Work</h2>
+<ul>
+<li>หา commit จาก branch ที่ถูกลบด้วย reflog</li>
+<li>สร้าง <code>rescue/recovered-notes</code></li>
+<li>ตรวจ content ก่อนตัดสินใจ merge/cherry-pick</li>
+</ul>
+<p>เป้าหมายคือรักษา commit ให้ reachable ก่อน ไม่ใช่รีบรวม</p>
+<h2 id="lesson-22-mission-5-shared-bad-commit">Mission 5 — Shared Bad Commit</h2>
+<p>บน remote/main มี commit ที่ทำ config ผิดและถือว่า shared แล้ว:</p>
+<ul>
+<li>อัปเดตข้อมูล remote อย่างปลอดภัย</li>
+<li>ตรวจ bad commit</li>
+<li>ใช้ history-preserving reversal</li>
+<li>เพิ่ม/รัน check ที่พิสูจน์ fix</li>
+<li>push โดยไม่ force</li>
+</ul>
+<h2 id="lesson-22-mission-6-feature-integration">Mission 6 — Feature Integration</h2>
+<ul>
+<li>ตรวจ <code>feature/resume-summary</code></li>
+<li>sync กับ main ตาม merge-based workflow</li>
+<li>แก้ conflict โดยรักษาทั้ง validation และ report requirement</li>
+<li>run <code>python check_app.py</code></li>
+<li>push feature และเตรียม PR summary</li>
+</ul>
+<h2 id="lesson-22-mission-7-handoff">Mission 7 — Handoff</h2>
+<p>สร้าง <code>HANDOFF.md</code>:</p>
+<pre><code class="language-markdown">## Status
+## Changes Made
+## Commits/Branches
+## Verification
+## Conflicts and Decisions
+## Risks/Remaining Work
+## Commands That Were Intentionally Avoided
+</code></pre>
+<h2 id="lesson-22-completion-conditions">Completion Conditions</h2>
+<ul>
+<li>working tree clean เว้นไฟล์ evidence ที่ตั้งใจ commit</li>
+<li>checks ผ่าน</li>
+<li>ไม่มี secret tracked</li>
+<li>shared bad commit ถูก revert ไม่ rewrite</li>
+<li>recovered commit มี branch ปกป้อง</li>
+<li>feature history review ได้</li>
+<li>push ไม่มี force</li>
+</ul><a class="back" href="#top">↑ กลับสารบัญ</a></article><article id="lesson-23"><div class="source">special_challenge_git_rescue/RUNBOOK.md</div><details class="local-toc"><summary>หัวข้อในบทนี้</summary><a href="#lesson-23-lab">สร้าง Lab</a><a href="#lesson-23-_1">เริ่มสำรวจ</a><a href="#lesson-23-verification-command">Verification Command</a><a href="#lesson-23-reset-lab">Reset Lab</a><a href="#lesson-23-evidence">Evidence</a></details><h1 id="lesson-23-git-rescue-safe-runbook">Git Rescue — Safe Runbook</h1>
+<h2 id="lesson-23-lab">สร้าง Lab</h2>
+<p>จาก directory ที่เก็บ Track:</p>
+<pre><code class="language-powershell">&amp; .\special_challenge_git_rescue\setup_lab.ps1 `
+  -TargetPath "$env:TEMP\git-rescue-lab-01"
+</code></pre>
+<p>Target ต้องยังไม่มี</p>
+<h2 id="lesson-23-_1">เริ่มสำรวจ</h2>
+<pre><code class="language-powershell">Set-Location "$env:TEMP\git-rescue-lab-01\alice"
+git rev-parse --show-toplevel
+git status --short --branch
+git remote -v
+git branch -vv
+git log --oneline --decorate --graph --all
+</code></pre>
+<h2 id="lesson-23-verification-command">Verification Command</h2>
+<pre><code class="language-powershell">python check_app.py
+</code></pre>
+<p>หาก Python command ต่างในเครื่อง ให้ใช้ interpreter ที่ environment กำหนด</p>
+<h2 id="lesson-23-reset-lab">Reset Lab</h2>
+<p>อย่าลบ target จาก script หรือ command ที่ประกอบ path แบบเสี่ยง ให้สร้าง lab ใหม่ด้วยชื่อใหม่ เช่น <code>git-rescue-lab-02</code></p>
+<h2 id="lesson-23-evidence">Evidence</h2>
+<p>เก็บเฉพาะ:</p>
+<ul>
+<li>status/log snippets</li>
+<li>hashes สั้นใน lab</li>
+<li>decisions</li>
+<li>verification result</li>
+</ul>
+<p>ไม่เก็บ user tokens, credentials หรือ paths ที่มีข้อมูลส่วนตัวเกินจำเป็น</p><a class="back" href="#top">↑ กลับสารบัญ</a></article></main></div><footer>ฝึกคำสั่งที่เปลี่ยน state ใน repository จำลอง • ตรวจ status/diff ก่อน undo หรือ recovery</footer></body></html>

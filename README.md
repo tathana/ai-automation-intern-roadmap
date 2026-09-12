@@ -6,6 +6,8 @@ Static portal containing the Book 00–08 textbook collection, the original five
 
 - `index.html` — landing page
 - `book-00.html` / `book-00-materials.zip` — Developer Toolkit and command-line foundation
+- `special-git.html` / `special-git-materials.zip` — Git Foundation & Safe Workflow, drills and Git Rescue Challenge
+- `special-git-assets/` — individually downloadable Git Rescue setup script
 - `week-1.html` — Week 1 learning book
 - `week-2.html` — Week 2 learning book
 - `week-2-materials.zip` — Week 2 Markdown, drills and API Sentinel starter
