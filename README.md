@@ -1,6 +1,6 @@
 # AI & Automation Internship Learning Portal
 
-Static portal containing the Book 00–07 textbook collection, the original five-week learning path, embedded visual notes, a reusable project-delivery template pack and quick-reference atlases.
+Static portal containing the Book 00–07 textbook collection, the original five-week learning path, embedded visual notes, a reusable project-delivery template pack, a guided end-to-end project and quick-reference atlases.
 
 ## Files
 
@@ -21,6 +21,7 @@ Static portal containing the Book 00–07 textbook collection, the original five
 - `week-5-assets/` — individual source and workflow downloads linked from the book
 - `book-06.html` / `book-06-materials.zip` — System Design & Delivery Playbook
 - `book-07.html` / `book-07-materials.zip` — intake-to-handoff textbook, reusable templates and two filled examples
+- `project-01.html` / `project-01-materials.zip` — Resume Evidence Assistant Lite guided build, synthetic fixtures, hints, acceptance matrix and delivery rubric
 - `command-atlas.html` — searchable command reference
 - `debugging-atlas.html` — symptom-to-layer debugging reference
 - `technical-glossary.html` — Thai/English engineering vocabulary
@@ -51,3 +52,5 @@ Week 3's mock API is **local-only**. This portal hosts the book and downloadable
 Week 4 also runs with a local-only mock provider by default. The optional paid-provider example is not enabled by the portal or the lab API. Read the Week 4 Verification section: mock regression results are not real-model accuracy, and DOCX parser tests do not certify a rendered DOCX sample.
 
 Week 5 provides local-only synthetic Transaction and HR capstones. The portal does not run their API, worker, database or n8n. Reference tests and native process checks are separate from the deliberately failing ReleaseGuard starter. Docker Compose configuration has been checked, but container runtime verification remains pending; see Verification in the book.
+
+Project 01 is a build-it-yourself exercise rather than a completed implementation. It uses synthetic resume text and a deterministic Mock AI; it must not be represented as a production hiring, ranking or rejection system.

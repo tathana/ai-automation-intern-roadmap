@@ -1,0 +1,978 @@
+<!doctype html><html lang="th"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><meta name="description" content="Guided end-to-end AI automation practice project"><title>Project 01 — Resume Evidence Assistant Lite</title><style>
+:root{color-scheme:light;--ink:#203149;--muted:#5b6b7d;--line:#dbe3e9;--accent:#096b63}
+*{box-sizing:border-box}html{scroll-behavior:smooth;scroll-padding-top:24px}body{margin:0;background:#f3f6f8;color:var(--ink);font-family:"Leelawadee UI",Tahoma,sans-serif;font-size:17px;line-height:1.9}a{color:var(--accent);text-underline-offset:4px}header{background:#173b43;color:white;padding:56px max(24px,calc((100vw - 1240px)/2));}header h1{font-size:clamp(28px,4vw,46px);line-height:1.35;margin:12px 0}header p{max-width:780px;color:#d9e9eb}.eyebrow{letter-spacing:2px;font-size:13px;color:#a8dfd5}.layout{max-width:1300px;margin:auto;display:grid;grid-template-columns:280px minmax(0,1fr);gap:30px;padding:30px 24px}aside{position:sticky;top:20px;align-self:start;max-height:92vh;overflow:auto;padding-right:12px}aside h2{font-size:18px}nav a{display:block;padding:9px 10px;border-bottom:1px solid var(--line);text-decoration:none;font-size:14px;line-height:1.6}nav a:hover{background:#e1eeeb}article{background:white;padding:clamp(20px,4vw,48px);border:1px solid var(--line);border-radius:12px;margin-bottom:28px;overflow-wrap:anywhere}article h1{font-size:29px;line-height:1.5;margin:20px 0 28px}h2{font-size:24px;margin-top:40px}h3{font-size:20px;margin-top:28px}pre{background:#152c3b;color:#eaf2f7;padding:20px;border-radius:8px;overflow:auto;line-height:1.65;font-size:14px;white-space:pre;overflow-wrap:normal}code{font-family:Consolas,"Courier New",monospace}p code,li code,td code{background:#edf2f5;padding:2px 5px;border-radius:4px;font-size:.9em}blockquote{margin:24px 0;padding:4px 20px;border-left:4px solid #138779;background:#eff8f5}table{border-collapse:collapse;width:100%;font-size:15px}th,td{border:1px solid var(--line);padding:12px;text-align:left;vertical-align:top}th{background:#eaf2f2}.table-scroll{overflow:auto;margin:20px 0}hr{border:0;border-top:1px solid var(--line);margin:32px 0}.source{font-size:12px;color:var(--muted)}.local-toc{margin-top:18px;font-size:14px;background:#f5f8fa;padding:10px 14px;border-radius:6px}.local-toc a{display:block;margin:7px 0}summary{cursor:pointer}.back{display:inline-block;margin-top:24px;font-size:14px}button{border:1px solid #aac8c5;background:white;color:#175c54;padding:9px 16px;border-radius:6px;cursor:pointer;font:inherit;font-size:14px}footer{max-width:1000px;margin:20px auto;padding:24px;color:var(--muted);font-size:14px}.visual-board{margin:20px 0;padding:16px;border:1px solid #cbd9df;border-radius:12px;background:#f7fafb;overflow:auto}.visual-flow{min-width:620px;display:flex;align-items:center;justify-content:center;gap:8px;padding:14px}.visual-box{min-width:112px;padding:11px;background:white;border:1px solid #9eb3bd;border-radius:9px;text-align:center;box-shadow:0 3px 8px rgba(20,50,60,.07)}.visual-arrow{font-weight:700;color:var(--accent)}.visual-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:10px}.visual-pane{background:white;border:1px solid #cbd9df;border-radius:8px;padding:12px}.visual-label{font-size:12px;letter-spacing:.08em;color:#527080;font-weight:700}.visual-lane{display:grid;grid-template-columns:130px 1fr;gap:12px;align-items:center;margin:8px 0}.visual-track{padding:9px;background:#e6f1ef;border-radius:7px}.visual-note{padding:11px 15px;border-left:4px solid var(--accent);background:#eaf5f3;margin:14px 0}@media(max-width:850px){.layout{display:block;padding:16px}aside{position:static;max-height:none;padding:0 0 20px}nav{max-height:280px;overflow:auto}article h1{font-size:25px}body{font-size:16px}.visual-grid{grid-template-columns:1fr}.visual-lane{grid-template-columns:1fr}}@media print{body{background:white;font-size:11pt}header{background:white;color:black;padding:0}header p{color:black}.layout{display:block;padding:0}aside,button,.local-toc,.back{display:none}article{border:0;padding:0;break-before:page}pre{white-space:pre-wrap;background:#f0f2f4;color:black;font-size:9pt}a{color:inherit}h1,h2,h3{break-after:avoid}.table-scroll{overflow:visible}}
+</style></head><body><header id="top"><div class="eyebrow">GUIDED PROJECT · BUILD IT YOURSELF</div><h1>Project 01 — Resume Evidence Assistant Lite</h1><p>โจทย์ end-to-end ขนาดเล็กแต่ครบวงจร: requirement, FastAPI, SQLite, worker, Mock AI, evidence validation, human review, n8n, Docker, tests และ handoff</p><p><a style="color:white" href="index.html">หน้าหลัก</a> · <a style="color:white" href="book-07.html">Delivery Template Book</a> · <a style="color:white" href="debugging-atlas.html">Debugging Atlas</a></p><button onclick="window.print()">พิมพ์ / บันทึกเป็น PDF</button> <a style="color:white" href="project-01-materials.zip">ดาวน์โหลดโจทย์และ Fixtures</a></header><div class="layout"><aside><h2>สารบัญโจทย์</h2><nav><a href="#lesson-0">Project 01 — Resume Evidence Assistant Lite</a><a href="#lesson-1">00 — Project Map และภาพปลายทาง</a><a href="#lesson-2">01 — Mission และข้อกำหนด</a><a href="#lesson-3">02 — Implementation Guideline ทีละ Milestone</a><a href="#lesson-4">03 — Acceptance Matrix และ Test Design</a><a href="#lesson-5">04 — Hint Ladder</a><a href="#lesson-6">05 — Grading Rubric และ Delivery Checklist</a><a href="#lesson-7">06 — n8n Canvas Guideline</a><a href="#lesson-8">Architecture Decision Log</a><a href="#lesson-9">Project Brief — เติมก่อนเขียน Code</a><a href="#lesson-10">Runbook — Resume Evidence Assistant Lite</a><a href="#lesson-11">Test and Demo Evidence</a><a href="#lesson-12">Requirement Traceability</a></nav></aside><main><article id="lesson-0"><div class="source">README.md</div><details class="local-toc"><summary>หัวข้อในบทนี้</summary><a href="#lesson-0-_1">เริ่มอย่างไร</a><a href="#lesson-0-_2">แผนเวลา</a><a href="#lesson-0-definition-of-done">Definition of Done แบบย่อ</a><a href="#lesson-0-_3">สิ่งที่ให้มา</a><a href="#lesson-0-_4">เอกสารหลักของชุดฝึก</a></details><h1 id="lesson-0-project-01-resume-evidence-assistant-lite">Project 01 — Resume Evidence Assistant Lite</h1>
+<p>โปรเจกต์ฝึกแบบ end-to-end สำหรับประกอบ Python, FastAPI, SQLite, Worker, n8n, Mock AI, validation, human review, tests, Docker และ documentation เข้าด้วยกัน โดยตั้งใจจำกัดขอบเขตให้เล็กพอทำ vertical slice ได้ภายในหนึ่งวันและขยายต่อได้ในวันที่สอง</p>
+<blockquote>
+<p>ข้อมูลสังเคราะห์เท่านั้น • Text input เท่านั้น • Mock AI เท่านั้น • ไม่ rank/reject/hire • ไม่มี production authentication</p>
+</blockquote>
+<h2 id="lesson-0-_1">เริ่มอย่างไร</h2>
+<ol>
+<li>อ่าน <a href="#lesson-2">Mission และข้อกำหนด</a> โดยยังไม่เปิด Hints</li>
+<li>เติม <a href="#lesson-9">Project Brief</a> และ <a href="#lesson-8">Decision Log</a></li>
+<li>สร้าง repository/virtual environmentตาม <a href="#lesson-3">Implementation Guideline</a></li>
+<li>ทำ Milestone 1–3 ให้ flow หลักครบก่อน</li>
+<li>รัน failure cases แล้วค่อยทำ n8n/Docker/docs</li>
+<li>เปิด <a href="#lesson-5">Hint Ladder</a> เฉพาะเมื่อบอกได้ว่าติด boundary ใด</li>
+</ol>
+<h2 id="lesson-0-_2">แผนเวลา</h2>
+<div class="table-scroll"><table>
+<thead>
+<tr>
+<th>รอบ</th>
+<th>เป้าหมาย</th>
+<th style="text-align: right;">ประมาณการสำหรับการฝึก</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>0</td>
+<td>อ่านโจทย์, brief, diagram, repo</td>
+<td style="text-align: right;">45–60 นาที</td>
+</tr>
+<tr>
+<td>1</td>
+<td>FastAPI intake + schemas</td>
+<td style="text-align: right;">60–90 นาที</td>
+</tr>
+<tr>
+<td>2</td>
+<td>SQLite + idempotency</td>
+<td style="text-align: right;">90–120 นาที</td>
+</tr>
+<tr>
+<td>3</td>
+<td>Worker + mock + evidence validator</td>
+<td style="text-align: right;">90–120 นาที</td>
+</tr>
+<tr>
+<td>4</td>
+<td>Review + audit + failure tests</td>
+<td style="text-align: right;">60–90 นาที</td>
+</tr>
+<tr>
+<td>5</td>
+<td>n8n + Docker + runbook + demo</td>
+<td style="text-align: right;">90–150 นาที</td>
+</tr>
+</tbody>
+</table></div>
+<p>เวลาเป็นเพียงกรอบ ถ้าติดให้เก็บหลักฐานและใช้ Debug Card ไม่ต้องเร่งจนข้าม test</p>
+<h2 id="lesson-0-definition-of-done">Definition of Done แบบย่อ</h2>
+<pre><code class="language-text">synthetic intake → durable task → worker → evidence validation
+→ needs_review → human action → audit
+</code></pre>
+<p>ต้องพิสูจน์ duplicate, payload conflict, unsupported quote, invalid transition และ restart/recovery อย่างน้อยตาม Acceptance Matrix</p>
+<h2 id="lesson-0-_3">สิ่งที่ให้มา</h2>
+<ul>
+<li>Mission, requirements และ architecture constraints</li>
+<li>Guideline ทีละ milestone</li>
+<li>Hint ladder สามระดับ</li>
+<li>Acceptance tests ที่ต้องออกแบบ</li>
+<li>Synthetic input/expected examples</li>
+<li>เอกสารตั้งต้นสำหรับ brief, decisions, test evidence และ runbook</li>
+<li>Grading rubric และ delivery checklist</li>
+<li>Traceability template และ n8n canvas checklist</li>
+</ul>
+<h2 id="lesson-0-_4">เอกสารหลักของชุดฝึก</h2>
+<ul>
+<li><a href="#lesson-1">ภาพรวมสถาปัตยกรรมและขอบเขต</a></li>
+<li><a href="#lesson-2">Mission และ contracts</a></li>
+<li><a href="#lesson-3">Guideline ทีละ milestone</a></li>
+<li><a href="#lesson-4">Acceptance Matrix</a></li>
+<li><a href="#lesson-5">Hint Ladder</a></li>
+<li><a href="#lesson-6">Rubric และการส่งมอบ</a></li>
+<li><a href="#lesson-7">คู่มือสร้าง n8n จาก canvas เปล่า</a></li>
+<li><a href="#lesson-12">Requirement Traceability Template</a></li>
+</ul>
+<p>ชุดนี้ไม่ให้ source-code solution เพราะเป้าหมายคือให้คุณอธิบายการตัดสินใจและเขียนแต่ละ boundary ได้เอง ใช้ AI ช่วยได้ แต่ทุก diff ต้องผ่าน AI Review Checklist</p><a class="back" href="#top">↑ กลับสารบัญ</a></article><article id="lesson-1"><div class="source">00_PROJECT_MAP.md</div><details class="local-toc"><summary>หัวข้อในบทนี้</summary><a href="#lesson-1-business-scenario">Business Scenario</a><a href="#lesson-1-boundary-ownership">Boundary Ownership</a><a href="#lesson-1-state-machine">State Machine</a><a href="#lesson-1-mock">Mock กับของจริง</a></details><h1 id="lesson-1-00-project-map">00 — Project Map และภาพปลายทาง</h1>
+<h2 id="lesson-1-business-scenario">Business Scenario</h2>
+<p>HR ต้องอ่าน resume จำนวนมากเพื่อหา evidence ของ skill ที่กำหนด ระบบนี้ช่วยสร้าง draft พร้อม quote ให้คนตรวจ ไม่ได้ตัดสินความเหมาะสมของผู้สมัคร</p>
+<pre><code class="language-text">Client / n8n
+  │ POST event_id + candidate_id + resume_text + required_skills
+  v
+FastAPI Intake ──transaction──&gt; SQLite Task + Audit
+  │ 202 task_id                         ▲
+  v                                     │ claim/result
+Client polls                        Worker --once
+                                        │
+                                 Mock AI Provider
+                                        │ raw output
+                                 Schema + Evidence Validator
+                                        │
+                                  needs_review
+                                        │
+                                 Human review API
+                                        │
+                              approved / edited / rejected
+</code></pre>
+<h2 id="lesson-1-boundary-ownership">Boundary Ownership</h2>
+<div class="table-scroll"><table>
+<thead>
+<tr>
+<th>ส่วน</th>
+<th>รับผิดชอบ</th>
+<th>ไม่ควรรับผิดชอบ</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>FastAPI</td>
+<td>HTTP/auth-placeholder/schema/status mapping</td>
+<td>evidence logic ยาว, provider SDK โดยตรง</td>
+</tr>
+<tr>
+<td>Service/domain</td>
+<td>use case, state rules, evidence validation</td>
+<td>HTTP/SQL syntax</td>
+</tr>
+<tr>
+<td>Repository</td>
+<td>transaction, query, unique constraint</td>
+<td>business wording</td>
+</tr>
+<tr>
+<td>Worker</td>
+<td>claim, invoke provider, validate, persist outcome</td>
+<td>รับ HTTP request</td>
+</tr>
+<tr>
+<td>Mock provider</td>
+<td>คืน scenario ที่ควบคุมได้</td>
+<td>เขียน DB/approve</td>
+</tr>
+<tr>
+<td>n8n</td>
+<td>trigger, normalize, call API, truthful route</td>
+<td>source of truth/state machine</td>
+</tr>
+</tbody>
+</table></div>
+<h2 id="lesson-1-state-machine">State Machine</h2>
+<pre><code class="language-text">queued → processing → needs_review → approved
+            │              ├────────→ approved_with_edits
+            │              └────────→ rejected
+            ├→ retry_wait → queued
+            └→ failed_terminal
+</code></pre>
+<p>Transition ทุกเส้นต้องระบุ actor และบันทึก audit ไม่มีเส้นจาก model output ไป <code>approved</code></p>
+<h2 id="lesson-1-mock">Mock กับของจริง</h2>
+<div class="table-scroll"><table>
+<thead>
+<tr>
+<th>ในโปรเจกต์</th>
+<th>ถ้าเป็นระบบจริง</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>resume_text</code> สังเคราะห์ใน SQLite</td>
+<td>document reference ใน approved store + retention/access controls</td>
+</tr>
+<tr>
+<td><code>reviewer_id</code> ใน body</td>
+<td>identity จาก authentication/authorization layer</td>
+</tr>
+<tr>
+<td>Mock provider</td>
+<td>approved provider + secrets + rate limit/cost/privacy</td>
+</tr>
+<tr>
+<td>manual <code>worker --once</code></td>
+<td>supervised worker/queue/concurrency/monitoring</td>
+</tr>
+<tr>
+<td>SQLite</td>
+<td>database choice ตาม volume/concurrency/backup requirements</td>
+</tr>
+</tbody>
+</table></div><a class="back" href="#top">↑ กลับสารบัญ</a></article><article id="lesson-2"><div class="source">01_MISSION.md</div><details class="local-toc"><summary>หัวข้อในบทนี้</summary><a href="#lesson-2-mission">Mission</a><a href="#lesson-2-input-contract">Input Contract</a><a href="#lesson-2-required-api">Required API</a><a href="#lesson-2-idempotency-contract">Idempotency Contract</a><a href="#lesson-2-evidence-contract">Evidence Contract</a><a href="#lesson-2-review-contract">Review Contract</a><a href="#lesson-2-must-not">Must Not</a></details><h1 id="lesson-2-01-mission">01 — Mission และข้อกำหนด</h1>
+<h2 id="lesson-2-mission">Mission</h2>
+<p>สร้างระบบที่รับ resume text สังเคราะห์พร้อมรายการ skill แล้วสร้าง task แบบ durable ให้ worker ประมวลผลเป็น evidence draft จากนั้นให้คน approve/edit/reject พร้อม audit โดยไม่สร้างหลักฐานที่ไม่มีใน source</p>
+<h2 id="lesson-2-input-contract">Input Contract</h2>
+<pre><code class="language-json">{
+  "event_id": "HR-DEMO-001",
+  "candidate_id": "C001",
+  "resume_text": "Built Python ETL pipelines and automated daily reports.",
+  "required_skills": ["Python", "FastAPI", "Docker"],
+  "mock_scenario": "normal"
+}
+</code></pre>
+<p>Rules:</p>
+<ul>
+<li><code>event_id</code>, <code>candidate_id</code>, <code>resume_text</code> ต้องไม่เป็นข้อความว่าง</li>
+<li><code>required_skills</code> มี 1–10 ค่า; trim; ไม่รับค่าซ้ำแบบ case-insensitive</li>
+<li><code>mock_scenario</code>: <code>normal</code>, <code>hallucination</code>, <code>transient</code>, <code>invalid_json</code></li>
+<li>จำกัดความยาว input ตามค่าที่คุณประกาศและทดสอบ</li>
+</ul>
+<h2 id="lesson-2-required-api">Required API</h2>
+<div class="table-scroll"><table>
+<thead>
+<tr>
+<th>Method/path</th>
+<th>ความหมาย</th>
+<th>ผลหลัก</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>GET /health</code></td>
+<td>process alive</td>
+<td><code>200</code></td>
+</tr>
+<tr>
+<td><code>GET /ready</code></td>
+<td>DB/schema พร้อม</td>
+<td><code>200</code> หรือ truthful <code>503</code></td>
+</tr>
+<tr>
+<td><code>POST /intakes</code></td>
+<td>validate + persist task</td>
+<td><code>202</code>; duplicate เดิมคืน task เดิม; conflict <code>409</code></td>
+</tr>
+<tr>
+<td><code>GET /tasks/{task_id}</code></td>
+<td>ดู state/result/flags</td>
+<td><code>200</code> หรือ <code>404</code></td>
+</tr>
+<tr>
+<td><code>POST /tasks/{task_id}/reviews</code></td>
+<td>approve/edit/reject</td>
+<td><code>200</code>, invalid transition <code>409</code></td>
+</tr>
+</tbody>
+</table></div>
+<p>Worker ใช้ CLI เช่น:</p>
+<pre><code class="language-powershell">python -m resume_evidence.worker --once
+</code></pre>
+<p><code>--once</code> claim ได้สูงสุดหนึ่ง task แล้วจบ เพื่อให้ทดสอบและ debug ง่าย</p>
+<h2 id="lesson-2-idempotency-contract">Idempotency Contract</h2>
+<pre><code class="language-text">event_id ใหม่
+  → create task, 202 duplicate=false
+
+event_id เดิม + canonical payload hash เดิม
+  → same task_id, duplicate=true, ห้ามสร้าง audit task_created ซ้ำ
+
+event_id เดิม + payload hash ต่าง
+  → 409 EVENT_PAYLOAD_CONFLICT
+</code></pre>
+<p>กำหนดเองและบันทึกว่า field ใดเข้า canonical hash ห้ามใช้ Python <code>hash()</code> เพราะค่าไม่ใช่ stable cross-process contract</p>
+<h2 id="lesson-2-evidence-contract">Evidence Contract</h2>
+<pre><code class="language-json">{
+  "skill": "Python",
+  "found": true,
+  "quote": "Built Python ETL pipelines",
+  "supported": true,
+  "reason": null
+}
+</code></pre>
+<ul>
+<li><code>found=true</code> ต้องมี quote ที่พบใน normalized source จริง</li>
+<li>ถ้าไม่มีหลักฐาน: <code>found=false</code>, <code>quote=null</code>, <code>supported=true</code></li>
+<li>ถ้า provider อ้าง quote ไม่มีจริง: <code>supported=false</code>, reason <code>UNSUPPORTED_EVIDENCE</code></li>
+<li>draft ที่มี unsupported evidence ยังต้อง <code>needs_review</code> พร้อม flags และห้าม approve จนแก้/ตัด claim ตาม policy ที่คุณประกาศ</li>
+</ul>
+<h2 id="lesson-2-review-contract">Review Contract</h2>
+<pre><code class="language-json">{
+  "reviewer_id": "reviewer-demo",
+  "action": "approve",
+  "reason": "Evidence verified",
+  "edited_evidence": null
+}
+</code></pre>
+<p><code>reviewer_id</code> เป็น demo input ไม่ใช่ authentication จริง ต้องระบุ limitation ใน README</p>
+<h2 id="lesson-2-must-not">Must Not</h2>
+<ul>
+<li>ไม่ใช้ resume จริงหรือข้อมูลบริษัท</li>
+<li>ไม่เรียก paid/real LLM</li>
+<li>ไม่ auto-rank, auto-reject หรือ auto-hire</li>
+<li>ไม่ log <code>resume_text</code> ทั้งฉบับ</li>
+<li>ไม่รับ arbitrary file path/URL</li>
+<li>ไม่ตอบ success หาก transaction ยังไม่ commit</li>
+<li>ไม่ retry validation/permanent error แบบไม่มีขอบเขต</li>
+</ul><a class="back" href="#top">↑ กลับสารบัญ</a></article><article id="lesson-3"><div class="source">02_GUIDELINE.md</div><details class="local-toc"><summary>หัวข้อในบทนี้</summary><a href="#lesson-3-milestone-0-brief-repository">Milestone 0 — Brief และ Repository</a><a href="#lesson-3-milestone-1-contract-first">Milestone 1 — Contract First</a><a href="#lesson-3-milestone-2-sqlite-idempotency">Milestone 2 — SQLite และ Idempotency</a><a href="#lesson-3-milestone-3-worker-evidence-validator">Milestone 3 — Worker และ Evidence Validator</a><a href="#lesson-3-milestone-4-human-review-audit">Milestone 4 — Human Review และ Audit</a><a href="#lesson-3-milestone-5-n8n">Milestone 5 — n8n</a><a href="#lesson-3-milestone-6-docker-delivery">Milestone 6 — Docker และ Delivery</a><a href="#lesson-3-ai-assisted-coding-ritual">AI-assisted Coding Ritual</a></details><h1 id="lesson-3-02-implementation-guideline-milestone">02 — Implementation Guideline ทีละ Milestone</h1>
+<p>Guideline บอกลำดับและหลักฐาน ไม่บอก source-code solution ทุกบรรทัด ให้ commit เมื่อ milestone ผ่านและอธิบาย diff ได้</p>
+<h2 id="lesson-3-milestone-0-brief-repository">Milestone 0 — Brief และ Repository</h2>
+<ol>
+<li>คัดลอก/เติม <code>docs/PROJECT_BRIEF.md</code></li>
+<li>เขียน ADR แรกใน <code>docs/DECISION_LOG.md</code>: ทำไมใช้ text-only + mock ก่อน</li>
+<li>สร้าง repo และโครงขั้นต่ำ</li>
+<li>สร้าง <code>.venv</code>, <code>pyproject.toml</code>, <code>.gitignore</code>, <code>.env.example</code></li>
+<li>commit: <code>docs: define project scope and acceptance plan</code></li>
+</ol>
+<p>โครงเริ่มต้นแนะนำ:</p>
+<pre><code class="language-text">src/resume_evidence/
+├── main.py
+├── models.py
+├── domain.py
+├── repository.py
+├── service.py
+├── provider.py
+└── worker.py
+tests/
+├── unit/
+├── integration/
+└── fixtures/
+</code></pre>
+<p>อย่าแยกโฟลเดอร์หลายชั้นก่อนมีหลายไฟล์/หลาย responsibility จริง</p>
+<h2 id="lesson-3-milestone-1-contract-first">Milestone 1 — Contract First</h2>
+<p>สร้าง Pydantic request/response models, <code>/health</code>, <code>/ready</code> และ <code>POST /intakes</code> ที่ยังใช้ in-memory fake repository ได้ชั่วคราว</p>
+<p>หลักฐาน:</p>
+<ul>
+<li>valid request คืน shape/status ที่ตกลง</li>
+<li>missing/blank/duplicate skills ถูก reject อย่างอธิบายได้</li>
+<li>route ไม่ log raw resume</li>
+<li>test schema/error mapping ผ่าน</li>
+</ul>
+<p>Commit: <code>feat: add validated intake contract</code></p>
+<h2 id="lesson-3-milestone-2-sqlite-idempotency">Milestone 2 — SQLite และ Idempotency</h2>
+<p>ออกแบบ schema <code>tasks</code>, <code>audit_events</code> และภายหลัง <code>reviews</code> ใช้ unique constraint บน <code>event_id</code> และ transaction สำหรับ task + audit</p>
+<p>ทำ canonical payload hash ด้วย deterministic serialization เช่น normalized JSON + SHA-256 บันทึกเหตุผลของ fields ที่รวมใน hash</p>
+<p>หลักฐาน:</p>
+<ul>
+<li>restart process แล้วยัง GET task ได้</li>
+<li>replay payload เดิมคืน task เดิม</li>
+<li>event ID เดิม payload ต่างคืน 409</li>
+<li>concurrent duplicate อย่างน้อยพิสูจน์ด้วย integration test หรือบันทึก limitation หาก SQLite/test setup ยังไม่ครอบคลุม</li>
+</ul>
+<p>Commit: <code>feat: persist idempotent intake tasks</code></p>
+<h2 id="lesson-3-milestone-3-worker-evidence-validator">Milestone 3 — Worker และ Evidence Validator</h2>
+<p>แยก provider interface จาก mock implementation Mock ต้องสร้างสี่ scenario แบบ deterministic</p>
+<pre><code class="language-text">claim queued → mark processing/attempt
+→ call mock provider
+→ parse schema
+→ verify every quote against normalized source
+→ persist result + state + audit atomically
+</code></pre>
+<p>เริ่ม worker <code>--once</code> ก่อน loop ตลอดเวลา สำหรับ <code>transient</code> ให้ retry แบบมี budget; จะใช้ <code>retry_wait</code> + <code>next_attempt_at</code> หรือ simplified requeue ก็ได้แต่ต้องเขียน semantics</p>
+<p>หลักฐาน:</p>
+<ul>
+<li>normal สร้าง supported evidence</li>
+<li>hallucination ถูก flag</li>
+<li>invalid JSON ไม่กลายเป็น success</li>
+<li>transient ไม่ retry ไม่สิ้นสุด</li>
+</ul>
+<p>Commit: <code>feat: process tasks with evidence validation</code></p>
+<h2 id="lesson-3-milestone-4-human-review-audit">Milestone 4 — Human Review และ Audit</h2>
+<p>สร้าง review endpoint และ transition guard อนุญาตเฉพาะ task <code>needs_review</code> การ edit ต้องเก็บ before/after หรือ final evidence อย่างอธิบายได้</p>
+<p>หลักฐาน:</p>
+<ul>
+<li>approve/edit/reject paths</li>
+<li>duplicate/invalid review ถูก reject หรือ idempotent ตาม contract</li>
+<li>audit มี actor/action/time โดยไม่เก็บ raw resume</li>
+</ul>
+<p>Commit: <code>feat: add audited human review</code></p>
+<h2 id="lesson-3-milestone-5-n8n">Milestone 5 — n8n</h2>
+<p>สร้าง workflow จาก canvas เปล่า:</p>
+<pre><code class="language-text">Webhook → Normalize → POST /intakes → Switch
+        ├─ accepted/duplicate → Respond truthful task state
+        ├─ conflict → review/error response
+        └─ unavailable/timeout → truthful failure
+</code></pre>
+<p>ทดสอบ Test URL ก่อน แล้ว production URL เฉพาะ local environment ที่ควบคุม Export workflow แบบ inactive ไม่มี credentials/pinned PII</p>
+<p>Commit: <code>feat: add n8n intake workflow</code></p>
+<h2 id="lesson-3-milestone-6-docker-delivery">Milestone 6 — Docker และ Delivery</h2>
+<p>สร้าง Dockerfile แบบไม่ฝัง secrets และ Compose ตาม scope เลือกว่าจะรัน API/worker แยก service หรือเริ่ม native worker พร้อมบันทึก trade-off หาก share SQLite volume ต้องอธิบาย concurrency/locking limitation</p>
+<p>เติม README, runbook, test evidence และ demo script ทำ failure drill หนึ่งกรณีจาก clean start</p>
+<p>Commit: <code>docs: add verified runbook and demo evidence</code></p>
+<h2 id="lesson-3-ai-assisted-coding-ritual">AI-assisted Coding Ritual</h2>
+<p>ก่อนให้ AI ช่วย ส่งเฉพาะ synthetic context และระบุ contract/test หลังรับคำตอบ:</p>
+<pre><code class="language-text">อ่าน diff → อธิบายเอง → ตรวจ API/version → รัน focused test
+→ รัน full test → ตรวจ secret/PII/log → commit เล็ก
+</code></pre><a class="back" href="#top">↑ กลับสารบัญ</a></article><article id="lesson-4"><div class="source">03_ACCEPTANCE_TESTS.md</div><details class="local-toc"><summary>หัวข้อในบทนี้</summary><a href="#lesson-4-unit-tests">Unit Tests</a><a href="#lesson-4-integration-tests">Integration Tests</a><a href="#lesson-4-failure-drill">Failure Drill</a><a href="#lesson-4-evidence-table">Evidence Table</a></details><h1 id="lesson-4-03-acceptance-matrix-test-design">03 — Acceptance Matrix และ Test Design</h1>
+<p>อย่าเขียน test ทั้งหมดทีเดียวก่อนเข้าใจ feature ให้เพิ่มทีละ milestone แต่ ID/expected behavior ต้องคงที่</p>
+<div class="table-scroll"><table>
+<thead>
+<tr>
+<th>ID</th>
+<th>Case</th>
+<th>Expected</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>TEST-01</td>
+<td>health</td>
+<td><code>200</code>, ไม่มี dependency claim เกินจริง</td>
+</tr>
+<tr>
+<td>TEST-02</td>
+<td>ready + DB/schema พร้อม</td>
+<td><code>200</code>; เมื่อ DB ใช้ไม่ได้ต้องไม่คืน ready</td>
+</tr>
+<tr>
+<td>TEST-03</td>
+<td>valid intake</td>
+<td><code>202</code>, durable <code>task_id</code>, <code>queued</code></td>
+</tr>
+<tr>
+<td>TEST-04</td>
+<td>invalid/blank input</td>
+<td><code>422</code>, ไม่มี task/audit side effect</td>
+</tr>
+<tr>
+<td>TEST-05</td>
+<td>duplicate same payload</td>
+<td>same task ID, <code>duplicate=true</code>, task count ไม่เพิ่ม</td>
+</tr>
+<tr>
+<td>TEST-06</td>
+<td>same event/different payload</td>
+<td><code>409 EVENT_PAYLOAD_CONFLICT</code></td>
+</tr>
+<tr>
+<td>TEST-07</td>
+<td>normal mock</td>
+<td>supported quote พบใน source</td>
+</tr>
+<tr>
+<td>TEST-08</td>
+<td>skill absent</td>
+<td><code>found=false</code>, <code>quote=null</code> โดยไม่ invent</td>
+</tr>
+<tr>
+<td>TEST-09</td>
+<td>hallucinated quote</td>
+<td>unsupported flag; no automatic approval</td>
+</tr>
+<tr>
+<td>TEST-10</td>
+<td>invalid provider JSON</td>
+<td>controlled error/retry/review state, no false success</td>
+</tr>
+<tr>
+<td>TEST-11</td>
+<td>transient provider failure</td>
+<td>bounded attempt; visible state/reason</td>
+</tr>
+<tr>
+<td>TEST-12</td>
+<td>valid review</td>
+<td>final transition + review + audit</td>
+</tr>
+<tr>
+<td>TEST-13</td>
+<td>invalid transition</td>
+<td><code>409</code>; state/audit ไม่เสีย</td>
+</tr>
+<tr>
+<td>TEST-14</td>
+<td>restart</td>
+<td>accepted task/result ยังอ่านได้</td>
+</tr>
+<tr>
+<td>TEST-15</td>
+<td>log inspection</td>
+<td>ไม่มี raw resume/full provider payload</td>
+</tr>
+<tr>
+<td>TEST-16</td>
+<td>n8n duplicate/conflict/failure</td>
+<td>route และ HTTP response ตรง API truth</td>
+</tr>
+</tbody>
+</table></div>
+<h2 id="lesson-4-unit-tests">Unit Tests</h2>
+<ul>
+<li>normalize skill uniqueness</li>
+<li>canonical payload/hash</li>
+<li>allowed state transitions</li>
+<li>evidence quote normalization/matching</li>
+<li>error classification และ retry decision</li>
+</ul>
+<h2 id="lesson-4-integration-tests">Integration Tests</h2>
+<ul>
+<li>SQLite transaction + unique constraint</li>
+<li>API/Pydantic/error mapping</li>
+<li>worker claim/process/persist</li>
+<li>review + audit</li>
+<li>process/repository restart</li>
+</ul>
+<h2 id="lesson-4-failure-drill">Failure Drill</h2>
+<p>เลือกอย่างน้อยหนึ่ง:</p>
+<ol>
+<li>provider transient สองครั้งแล้วสำเร็จ/หมด budget</li>
+<li>process หยุดหลัง intake commit ก่อน worker</li>
+<li>worker หยุดหลัง claim แล้วทำ recovery ตาม lease/contract</li>
+<li>replay event หลังไม่แน่ใจว่า client ได้ response หรือไม่</li>
+</ol>
+<p>บันทึก exact commands, task ID, state ก่อน/หลัง, audit events, expected/actual และ limitation</p>
+<h2 id="lesson-4-evidence-table">Evidence Table</h2>
+<div class="table-scroll"><table>
+<thead>
+<tr>
+<th>Test/requirement</th>
+<th>Command/request</th>
+<th>Expected</th>
+<th>Actual</th>
+<th>Evidence/version</th>
+<th>Result</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+</tr>
+</tbody>
+</table></div><a class="back" href="#top">↑ กลับสารบัญ</a></article><article id="lesson-5"><div class="source">04_HINTS.md</div><details class="local-toc"><summary>หัวข้อในบทนี้</summary><a href="#lesson-5-milestone-1-hints">Milestone 1 Hints</a><a href="#lesson-5-milestone-2-hints">Milestone 2 Hints</a><a href="#lesson-5-milestone-3-hints">Milestone 3 Hints</a><a href="#lesson-5-milestone-4-hints">Milestone 4 Hints</a><a href="#lesson-5-n8n-hints">n8n Hints</a><a href="#lesson-5-debug-card">Debug Card</a></details><h1 id="lesson-5-04-hint-ladder">04 — Hint Ladder</h1>
+<p>เปิดทีละระดับและจดว่าติดเพราะ mental model, syntax, environment หรือ design</p>
+<h2 id="lesson-5-milestone-1-hints">Milestone 1 Hints</h2>
+<h3 id="lesson-5-level-1">Level 1</h3>
+<p>เริ่มด้วย <code>BaseModel</code> แยก IntakeRequest/Response อย่าใช้ dict ไหลทุก layer ให้ route เรียก service ผ่าน dependency ที่เปลี่ยนเป็น fake ใน test ได้</p>
+<h3 id="lesson-5-level-2">Level 2</h3>
+<p>Pydantic validator สามารถ normalize skills แล้วตรวจค่าซ้ำ ควรตัดสินว่าเก็บ display casing อย่างไรและ hash ใช้รูป normalized แบบใด</p>
+<h3 id="lesson-5-level-3">Level 3</h3>
+<p>ถ้า <code>422</code> test ยาก ให้เขียน request JSON จริงผ่าน FastAPI TestClient/HTTPX transport และ inspect error body อย่าเรียก function route ตรงจนข้าม framework validation</p>
+<h2 id="lesson-5-milestone-2-hints">Milestone 2 Hints</h2>
+<h3 id="lesson-5-level-1_1">Level 1</h3>
+<p>วาง unique constraint ที่ DB ไม่ใช่ <code>SELECT</code> แล้วหวังว่าไม่มี request พร้อมกัน</p>
+<h3 id="lesson-5-level-2_1">Level 2</h3>
+<p>ใช้ <code>json.dumps(..., sort_keys=True, separators=(",", ":"), ensure_ascii=False)</code> กับ canonical dict แล้ว <code>hashlib.sha256(bytes).hexdigest()</code>; เขียน test field order ต่างแต่ logical payload เดิม</p>
+<h3 id="lesson-5-level-3_1">Level 3</h3>
+<p>เมื่อ insert ชน unique ให้ query task เดิมภายใน error handling แล้วเทียบ payload hash: เท่ากันคือ duplicate ต่างกันคือ conflict ระวัง transaction state หลัง integrity error</p>
+<h2 id="lesson-5-milestone-3-hints">Milestone 3 Hints</h2>
+<h3 id="lesson-5-level-1_2">Level 1</h3>
+<p>Provider คืน raw candidate draft; validator เป็นคนตัดสิน supported อย่าให้ mock providerตั้ง <code>supported=true</code> แล้วเชื่อทันที</p>
+<h3 id="lesson-5-level-2_2">Level 2</h3>
+<p>normalize quote/source สำหรับ comparison อย่างระมัดระวัง เช่น whitespace/case แต่เก็บ quote ต้นฉบับสำหรับแสดง อย่า fuzzy match กว้างจนคำแต่งผ่าน</p>
+<h3 id="lesson-5-level-3_2">Level 3</h3>
+<p>แยก exception เป็น <code>TransientProviderError</code>, <code>PermanentProviderError</code>, <code>InvalidProviderOutput</code> แล้ว map ไป state/retry policy ที่ test ได้</p>
+<h2 id="lesson-5-milestone-4-hints">Milestone 4 Hints</h2>
+<h3 id="lesson-5-level-1_3">Level 1</h3>
+<p>สร้าง pure function <code>transition(current, action)</code> ก่อน repository transaction จะเห็น allowed/invalid cases ชัด</p>
+<h3 id="lesson-5-level-2_3">Level 2</h3>
+<p>review write, task state update และ audit ควรสำเร็จ/ล้มเหลวร่วมกัน</p>
+<h3 id="lesson-5-level-3_3">Level 3</h3>
+<p>ถ้าต้องป้องกัน double submit review เพิ่ม review request ID/idempotency rule หรือประกาศว่า second action on final state คืน 409 พร้อม test</p>
+<h2 id="lesson-5-n8n-hints">n8n Hints</h2>
+<ul>
+<li>ดู Output pane ของ HTTP node ก่อนเขียน Switch path</li>
+<li>ถ้าเปิด Never Error ให้ HTTP failure กลายเป็น data; ต้อง route เอง</li>
+<li>timeout outcome อาจ unknown ใช้ event ID เดิม ไม่สร้างใหม่สุ่ม</li>
+<li>unpin ก่อน whole-flow evidence</li>
+<li>localhost จาก container ไม่ใช่ Windows host</li>
+</ul>
+<h2 id="lesson-5-debug-card">Debug Card</h2>
+<pre><code class="language-text">Expected:
+Actual:
+Exact command/request:
+CWD/interpreter/version:
+Small synthetic reproduction:
+Last known correct boundary:
+First incorrect boundary:
+Evidence collected:
+One variable to change next:
+</code></pre><a class="back" href="#top">↑ กลับสารบัญ</a></article><article id="lesson-6"><div class="source">05_GRADING_AND_DELIVERY.md</div><details class="local-toc"><summary>หัวข้อในบทนี้</summary><a href="#lesson-6-rubric-100">Rubric 100 คะแนน</a><a href="#lesson-6-minimum-pass">Minimum Pass</a><a href="#lesson-6-delivery-checklist">Delivery Checklist</a><a href="#lesson-6-demo-7">Demo 7 นาที</a><a href="#lesson-6-reflection">Reflection</a></details><h1 id="lesson-6-05-grading-rubric-delivery-checklist">05 — Grading Rubric และ Delivery Checklist</h1>
+<h2 id="lesson-6-rubric-100">Rubric 100 คะแนน</h2>
+<div class="table-scroll"><table>
+<thead>
+<tr>
+<th>หมวด</th>
+<th style="text-align: right;">คะแนน</th>
+<th>หลักฐาน</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Requirement/traceability</td>
+<td style="text-align: right;">10</td>
+<td>brief, REQ→TEST mapping</td>
+</tr>
+<tr>
+<td>API contracts/validation</td>
+<td style="text-align: right;">12</td>
+<td>schemas, status/error tests</td>
+</tr>
+<tr>
+<td>SQLite transaction/idempotency</td>
+<td style="text-align: right;">15</td>
+<td>duplicate/conflict/restart tests</td>
+</tr>
+<tr>
+<td>Worker/state/recovery</td>
+<td style="text-align: right;">15</td>
+<td>state transitions, bounded retry/drill</td>
+</tr>
+<tr>
+<td>Evidence/AI safety</td>
+<td style="text-align: right;">15</td>
+<td>hallucination/absence validators</td>
+</tr>
+<tr>
+<td>Human review/audit</td>
+<td style="text-align: right;">10</td>
+<td>transition, actor/action/time evidence</td>
+</tr>
+<tr>
+<td>n8n orchestration</td>
+<td style="text-align: right;">8</td>
+<td>inactive export, execution evidence, truthful routes</td>
+</tr>
+<tr>
+<td>Tests/code quality</td>
+<td style="text-align: right;">7</td>
+<td>focused + full commands, readable boundaries</td>
+</tr>
+<tr>
+<td>Docker/config/security</td>
+<td style="text-align: right;">4</td>
+<td>no secrets, health/readiness, limitation</td>
+</tr>
+<tr>
+<td>Documentation/demo/handoff</td>
+<td style="text-align: right;">4</td>
+<td>README, runbook, clean-start rehearsal</td>
+</tr>
+</tbody>
+</table></div>
+<h2 id="lesson-6-minimum-pass">Minimum Pass</h2>
+<ul>
+<li>อย่างน้อย 70/100</li>
+<li>ห้ามตก critical gate: duplicate creates side effect, unsupported quote approved, raw resume logged, accepted task lost silently หรือ tests ไม่ reproducible</li>
+</ul>
+<h2 id="lesson-6-delivery-checklist">Delivery Checklist</h2>
+<ul>
+<li>[ ] <code>git status</code> clean และ commit history แบ่งตาม milestone</li>
+<li>[ ] README มี prerequisites/setup/run/test/demo/limitations</li>
+<li>[ ] <code>.env.example</code> ไม่มี secret</li>
+<li>[ ] schema/state/architecture ตรง code ปัจจุบัน</li>
+<li>[ ] test matrix มี actual evidence ไม่ใช่ช่องว่าง</li>
+<li>[ ] n8n export inactive ไม่มี pinned PII/credentials/internal secret URLs</li>
+<li>[ ] Docker/native commands แสดง expected output</li>
+<li>[ ] failure drill และ safe replay อธิบายได้</li>
+<li>[ ] reviewer/handoff rehearsal ทำจาก clean start</li>
+<li>[ ] ระบุชัดว่า synthetic, mock และไม่ใช่ production system</li>
+</ul>
+<h2 id="lesson-6-demo-7">Demo 7 นาที</h2>
+<pre><code class="language-text">0:00 problem, scope, architecture
+1:00 valid intake → task ID
+2:00 worker → evidence draft
+3:00 unsupported quote ถูกบล็อก
+4:00 duplicate/conflict
+5:00 human review + audit
+6:00 tests, recovery, limitation, next step
+</code></pre>
+<h2 id="lesson-6-reflection">Reflection</h2>
+<p>ตอบหลังจบ:</p>
+<ol>
+<li>จุดใดที่ตอนแรกคิดว่า n8n ควรทำ แต่ย้ายไป Python/DB เพราะอะไร</li>
+<li>test ใดพบ bug ที่ demo ปกติไม่พบ</li>
+<li>state/transaction ใดช่วย recovery</li>
+<li>ถ้าใช้ resume จริง ต้องเพิ่ม approval/control อะไร</li>
+<li>ถ้ามีเวลาอีกหนึ่งวัน จะเพิ่มอะไรโดยไม่ทำ scope หลุด</li>
+</ol><a class="back" href="#top">↑ กลับสารบัญ</a></article><article id="lesson-7"><div class="source">06_N8N_CANVAS_GUIDE.md</div><details class="local-toc"><summary>หัวข้อในบทนี้</summary><a href="#lesson-7-canvas">ภาพที่ควรเห็นบน Canvas</a><a href="#lesson-7-node">สร้างทีละ Node</a><a href="#lesson-7-execution-checklist">Execution Checklist</a><a href="#lesson-7-boundary">ถ้าติด ให้ไล่ Boundary</a></details><h1 id="lesson-7-06-n8n-canvas-guideline">06 — n8n Canvas Guideline</h1>
+<p>บทนี้เป็นแนวทางสร้าง workflow เอง ไม่ใช่ไฟล์เฉลยสำเร็จ จุดประสงค์คือฝึกมองว่า n8n เป็น orchestration layer ที่รับ event, เรียก API และส่งคำตอบตามข้อเท็จจริงของระบบ</p>
+<h2 id="lesson-7-canvas">ภาพที่ควรเห็นบน Canvas</h2>
+<pre><code class="language-text">[Webhook]
+    ↓
+[Normalize Input]
+    ↓
+[POST /intakes]
+    ↓
+[Switch by HTTP status/body]
+    ├── accepted/duplicate ──→ [Respond 202]
+    ├── payload conflict  ──→ [Respond 409]
+    └── timeout/unavailable ─→ [Respond 502/503]
+</code></pre>
+<p>ไม่ต้องนำ worker, evidence validator หรือ database rule ไปเขียนซ้ำใน Code node เพราะ business truth ควรอยู่ใน Python/API และตรวจด้วย automated tests ได้</p>
+<h2 id="lesson-7-node">สร้างทีละ Node</h2>
+<h3 id="lesson-7-1-webhook">1. Webhook</h3>
+<ul>
+<li>Method: <code>POST</code></li>
+<li>Path: ตั้งชื่อสื่อความหมาย เช่น <code>resume-evidence-intake</code></li>
+<li>เริ่มจาก Test URL</li>
+<li>เตรียม synthetic payload จาก <code>fixtures/intake_normal.json</code></li>
+</ul>
+<p>Expected: Output pane ต้องเห็น body ที่ส่งเข้ามาจริง ถ้า shape เป็น <code>items[0].json.body</code> ให้จด shape นี้ก่อนเขียน expression</p>
+<h3 id="lesson-7-2-normalize-input">2. Normalize Input</h3>
+<p>ใช้ Edit Fields/Set node เพื่อสร้าง contract ที่ API ต้องการเท่านั้น:</p>
+<pre><code class="language-text">Webhook body
+    ↓ เลือกเฉพาะ field ที่อนุญาต
+event_id, candidate_id, resume_text, required_skills, mock_scenario
+    ↓
+HTTP Request JSON body
+</code></pre>
+<p>อย่าส่ง headers, query หรือ metadata ทั้งก้อนไป API โดยไม่จำเป็น</p>
+<h3 id="lesson-7-3-http-request">3. HTTP Request</h3>
+<ul>
+<li>Method: <code>POST</code></li>
+<li>URL: ใช้ environment/config ที่เหมาะกับวิธีรัน</li>
+<li>Body type: JSON</li>
+<li>Timeout: กำหนดค่า ไม่ปล่อยให้รอไม่สิ้นสุด</li>
+<li>เก็บ full response/status เพื่อใช้ route</li>
+</ul>
+<p>เมื่อ n8n อยู่ใน container คำว่า <code>localhost</code> หมายถึง container ของ n8n เอง ไม่ใช่ API บน Windows host ใช้ service name ใน Compose network หรือ host address ที่ environment รองรับ</p>
+<h3 id="lesson-7-4-switch">4. Switch</h3>
+<p>route จากค่าที่ node ก่อนหน้าส่งออกจริง ไม่เดาชื่อ fieldจากความจำ โดยต้องแยกอย่างน้อย:</p>
+<div class="table-scroll"><table>
+<thead>
+<tr>
+<th>Outcome</th>
+<th>ความหมาย</th>
+<th>คำตอบที่ควร truthful</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>202</code>, duplicate false</td>
+<td>รับงานใหม่แล้ว</td>
+<td>task ID + queued</td>
+</tr>
+<tr>
+<td><code>202</code>, duplicate true</td>
+<td>เคยรับ event เดิม</td>
+<td>task ID เดิม</td>
+</tr>
+<tr>
+<td><code>409</code></td>
+<td>event เดิมแต่ payload เปลี่ยน</td>
+<td>conflict; ห้ามสร้าง event ID ใหม่อัตโนมัติ</td>
+</tr>
+<tr>
+<td>timeout/network</td>
+<td>ไม่รู้ว่า API commit หรือไม่</td>
+<td>แจ้ง unknown/failure; retry ด้วย event ID เดิม</td>
+</tr>
+<tr>
+<td>validation error</td>
+<td>input ไม่ผ่าน contract</td>
+<td>ส่ง error ที่อ่านได้; ไม่ retry</td>
+</tr>
+</tbody>
+</table></div>
+<h3 id="lesson-7-5-respond-to-webhook">5. Respond to Webhook</h3>
+<p>ให้ HTTP status และ body สอดคล้องกับ API truth ห้ามเปลี่ยน timeout เป็น <code>200 success</code> เพียงเพื่อให้ workflow เป็นสีเขียว</p>
+<h2 id="lesson-7-execution-checklist">Execution Checklist</h2>
+<ul>
+<li>[ ] normal input ผ่านและคืน task ID</li>
+<li>[ ] replay payload เดิมคืน task ID เดิม</li>
+<li>[ ] event เดิม payload ต่างเป็น conflict</li>
+<li>[ ] invalid inputไม่เกิด task</li>
+<li>[ ] API ปิดอยู่แล้ว workflow ไม่อ้างว่าสำเร็จ</li>
+<li>[ ] เปิดดู input/output ของทุก node แล้ว</li>
+<li>[ ] unpin data ก่อนรันหลักฐานทั้ง flow</li>
+<li>[ ] workflow export เป็น inactive</li>
+<li>[ ] export ไม่มี credentials, token, real PII หรือ internal secret URL</li>
+<li>[ ] บันทึก execution ID/เวลา/expected/actual ใน Test Evidence</li>
+</ul>
+<h2 id="lesson-7-boundary">ถ้าติด ให้ไล่ Boundary</h2>
+<pre><code class="language-text">Webhook รับไม่ได้?
+  → ตรวจ method, URL mode, workflow listening
+
+Webhook ได้ แต่ API 422?
+  → เทียบ normalized JSON กับ Pydantic contract
+
+API ได้ แต่ Switch ผิดทาง?
+  → inspect output schema/status ของ HTTP node
+
+ทุกอย่างผ่าน แต่ retry สร้างซ้ำ?
+  → ตรวจ event_id เดิมและ API idempotency test
+</code></pre>
+<p>เมื่อ workflow ผ่านแล้ว ให้วาด flow ปัจจุบันจากของจริงหนึ่งครั้ง แล้วเทียบกับภาพต้นบท ถ้าไม่ตรงให้อัปเดต diagram หรือ implementation เพื่อไม่ให้เอกสารโกหก</p><a class="back" href="#top">↑ กลับสารบัญ</a></article><article id="lesson-8"><div class="source">docs/DECISION_LOG.md</div><details class="local-toc"><summary>หัวข้อในบทนี้</summary><a href="#lesson-8-adr-001-text-input-and-mock-provider-first">ADR-001 — Text input and mock provider first</a><a href="#lesson-8-adr-002-persistence-and-worker-boundary">ADR-002 — Persistence and worker boundary</a><a href="#lesson-8-adr-003-idempotency-scope">ADR-003 — Idempotency scope</a></details><h1 id="lesson-8-architecture-decision-log">Architecture Decision Log</h1>
+<h2 id="lesson-8-adr-001-text-input-and-mock-provider-first">ADR-001 — Text input and mock provider first</h2>
+<p>Status: proposed<br/>
+Context:
+Decision:
+Alternatives:
+Consequences:
+Validation/revisit trigger:</p>
+<h2 id="lesson-8-adr-002-persistence-and-worker-boundary">ADR-002 — Persistence and worker boundary</h2>
+<p>Status: proposed<br/>
+Context:
+Decision:
+Alternatives:
+Consequences:
+Crash/restart verification:</p>
+<h2 id="lesson-8-adr-003-idempotency-scope">ADR-003 — Idempotency scope</h2>
+<p>Status: proposed<br/>
+Business key:
+Canonical payload fields:
+Same key/same payload behavior:
+Same key/different payload behavior:
+Retention/limitation:</p><a class="back" href="#top">↑ กลับสารบัญ</a></article><article id="lesson-9"><div class="source">docs/PROJECT_BRIEF.md</div><details class="local-toc"><summary>หัวข้อในบทนี้</summary><a href="#lesson-9-scope">Scope</a><a href="#lesson-9-success-guardrails">Success และ Guardrails</a><a href="#lesson-9-plan">Plan</a></details><h1 id="lesson-9-project-brief-code">Project Brief — เติมก่อนเขียน Code</h1>
+<p>วันที่ / version:
+Problem และผู้ใช้:
+Current process/baseline ที่สมมติสำหรับ lab:
+Target outcome:</p>
+<h2 id="lesson-9-scope">Scope</h2>
+<p>In scope:
+Out of scope:
+Constraints:
+Assumptions + วิธีพิสูจน์:</p>
+<h2 id="lesson-9-success-guardrails">Success และ Guardrails</h2>
+<p>Outcome metric:
+Technical evidence:
+Must-not-happen:</p>
+<h2 id="lesson-9-plan">Plan</h2>
+<p>Milestone แรกและ demo date:
+Top risks/unknowns:
+Decision owner ในโปรเจกต์จำลอง:</p>
+<p>Ready when: คุณอธิบาย why/what/not-what/how-proven ได้ภายในสองนาที</p><a class="back" href="#top">↑ กลับสารบัญ</a></article><article id="lesson-10"><div class="source">docs/RUNBOOK_TEMPLATE.md</div><details class="local-toc"><summary>หัวข้อในบทนี้</summary><a href="#lesson-10-setup-and-configuration">Setup and configuration</a><a href="#lesson-10-normal-operation">Normal operation</a><a href="#lesson-10-debug-and-recovery">Debug and recovery</a><a href="#lesson-10-handoff-rehearsal">Handoff rehearsal</a></details><h1 id="lesson-10-runbook-resume-evidence-assistant-lite">Runbook — Resume Evidence Assistant Lite</h1>
+<p>Status/environment/commit:
+Components and owners:
+Known limitations: synthetic text, mock provider, demo reviewer identity</p>
+<h2 id="lesson-10-setup-and-configuration">Setup and configuration</h2>
+<p>Prerequisites:
+Config names (no secret values):
+Initialize DB/schema:</p>
+<h2 id="lesson-10-normal-operation">Normal operation</h2>
+<p>Start API:
+Readiness expected:
+Run worker once:
+Submit/check/review task:
+Stop safely:</p>
+<h2 id="lesson-10-debug-and-recovery">Debug and recovery</h2>
+<p>Find task/audit without exposing resume:
+Duplicate/conflict handling:
+Provider transient/invalid output:
+Task stuck processing:
+Safe replay rule:
+Reset lab data safely:</p>
+<h2 id="lesson-10-handoff-rehearsal">Handoff rehearsal</h2>
+<p>Recipient/date:
+Clean setup result:
+Failure drill result:
+Questions/docs fixed:</p><a class="back" href="#top">↑ กลับสารบัญ</a></article><article id="lesson-11"><div class="source">docs/TEST_EVIDENCE.md</div><details class="local-toc"><summary>หัวข้อในบทนี้</summary><a href="#lesson-11-failure-drill">Failure Drill</a><a href="#lesson-11-n8n-evidence">n8n Evidence</a></details><h1 id="lesson-11-test-and-demo-evidence">Test and Demo Evidence</h1>
+<p>Commit / environment / Python version / date:</p>
+<div class="table-scroll"><table>
+<thead>
+<tr>
+<th>ID</th>
+<th>Command/request</th>
+<th>Expected</th>
+<th>Actual</th>
+<th>Result/evidence</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>TEST-01</td>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+</tr>
+</tbody>
+</table></div>
+<h2 id="lesson-11-failure-drill">Failure Drill</h2>
+<p>Scenario:
+State before:
+Action/failure injected:
+Expected transition/log/audit:
+Actual:
+Recovery steps:
+State after:
+Limitation/follow-up:</p>
+<h2 id="lesson-11-n8n-evidence">n8n Evidence</h2>
+<p>Workflow version/export:
+Synthetic execution IDs:
+Pinned data removed:
+Normal/duplicate/conflict/failure actual results:</p><a class="back" href="#top">↑ กลับสารบัญ</a></article><article id="lesson-12"><div class="source">docs/TRACEABILITY.md</div><details class="local-toc"><summary>หัวข้อในบทนี้</summary><a href="#lesson-12-_1">วิธีใช้</a></details><h1 id="lesson-12-requirement-traceability">Requirement Traceability</h1>
+<p>เติมตารางนี้ก่อนเริ่ม implementation แล้วอัปเดตเมื่อ requirement หรือ test เปลี่ยน จุดประสงค์คือพิสูจน์ว่าแต่ละข้อกำหนดมี code boundary และหลักฐานรองรับ ไม่ใช่เพียงบอกว่า “ทำครบแล้ว”</p>
+<div class="table-scroll"><table>
+<thead>
+<tr>
+<th>Requirement ID</th>
+<th>Requirement</th>
+<th>Code boundary/owner</th>
+<th>Test ID</th>
+<th>Evidence</th>
+<th>Status</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>REQ-API-01</td>
+<td>valid intake returns durable task</td>
+<td></td>
+<td>TEST-03</td>
+<td></td>
+<td>Planned</td>
+</tr>
+<tr>
+<td>REQ-IDEM-01</td>
+<td>same event + same payload returns same task</td>
+<td></td>
+<td>TEST-05</td>
+<td></td>
+<td>Planned</td>
+</tr>
+<tr>
+<td>REQ-IDEM-02</td>
+<td>same event + changed payload conflicts</td>
+<td></td>
+<td>TEST-06</td>
+<td></td>
+<td>Planned</td>
+</tr>
+<tr>
+<td>REQ-AI-01</td>
+<td>quoted evidence must exist in source</td>
+<td></td>
+<td>TEST-07, TEST-09</td>
+<td></td>
+<td>Planned</td>
+</tr>
+<tr>
+<td>REQ-AI-02</td>
+<td>absent skill must not be invented</td>
+<td></td>
+<td>TEST-08</td>
+<td></td>
+<td>Planned</td>
+</tr>
+<tr>
+<td>REQ-WRK-01</td>
+<td>retry is bounded and observable</td>
+<td></td>
+<td>TEST-10, TEST-11</td>
+<td></td>
+<td>Planned</td>
+</tr>
+<tr>
+<td>REQ-REV-01</td>
+<td>final decision requires valid human action</td>
+<td></td>
+<td>TEST-12, TEST-13</td>
+<td></td>
+<td>Planned</td>
+</tr>
+<tr>
+<td>REQ-DUR-01</td>
+<td>accepted work survives restart</td>
+<td></td>
+<td>TEST-14</td>
+<td></td>
+<td>Planned</td>
+</tr>
+<tr>
+<td>REQ-SEC-01</td>
+<td>logs do not expose raw resume</td>
+<td></td>
+<td>TEST-15</td>
+<td></td>
+<td>Planned</td>
+</tr>
+<tr>
+<td>REQ-N8N-01</td>
+<td>workflow preserves API truth</td>
+<td></td>
+<td>TEST-16</td>
+<td></td>
+<td>Planned</td>
+</tr>
+</tbody>
+</table></div>
+<h2 id="lesson-12-_1">วิธีใช้</h2>
+<ol>
+<li>แทน <code>Code boundary/owner</code> ด้วย module/function/table/node ที่รับผิดชอบ</li>
+<li>ใส่ exact command, report path, execution ID หรือ screenshot reference ใน Evidence</li>
+<li>ใช้สถานะ <code>Planned</code>, <code>Implemented</code>, <code>Verified</code>, <code>Blocked</code></li>
+<li>ถ้า requirement เปลี่ยน ให้อัปเดต requirement, acceptance test และ implementation พร้อมกัน</li>
+<li>ก่อน demo ต้องไม่มี critical requirement ที่ยังเป็น <code>Planned</code> โดยไม่ระบุ limitation</li>
+</ol><a class="back" href="#top">↑ กลับสารบัญ</a></article></main></div><footer>ใช้เฉพาะข้อมูลสังเคราะห์และ Mock AI • Hint เปิดทีละระดับ • ทุก requirement ต้องมีหลักฐาน</footer></body></html>
