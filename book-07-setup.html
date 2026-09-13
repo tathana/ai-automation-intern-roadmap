@@ -64,10 +64,43 @@ python -c "import sys; print(sys.executable)"
 <pre><code class="language-text">D:\COOP\practice\resume-evidence-assistant\.venv\Scripts\python.exe
 </code></pre>
 <p>มักเห็น <code>(.venv)</code> หน้า prompt ด้วย แต่ path ที่ตรวจได้เป็นหลักฐานที่ชัดกว่า เมื่อเปิด Terminal ใหม่ให้ activate ใหม่ แล้วเลือก Python: Select Interpreter จาก Command Palette ของ VS Code ให้ชี้ <code>.venv</code> เดียวกัน</p>
-<p>หาก PowerShell บล็อก Activate ยังรัน Python ของโปรเจกต์โดยตรงได้:</p>
+<h3 id="lesson-0-error-running-scripts-is-disabled-on-this-system">เจอ error: running scripts is disabled on this system</h3>
+<p>ตัวอย่างเมื่อรัน <code>.\.venv\Scripts\Activate.ps1</code> แล้ว PowerShell บล็อกสคริปต์ (path และการตัดบรรทัดอาจต่างกัน):</p>
+<pre><code class="language-text">Activate.ps1 cannot be loaded because running scripts is disabled on this system.
+CategoryInfo          : SecurityError: (:) [], PSSecurityException
+FullyQualifiedErrorId : UnauthorizedAccess
+</code></pre>
+<p>ข้อความนี้หมายถึง <strong>Execution Policy ของ PowerShell ไม่อนุญาตให้รันสคริปต์ Activate</strong> ยังไม่ได้แปลว่า Python หรือ <code>.venv</code> เสีย และคำว่า <code>UnauthorizedAccess</code> ในกรณีนี้ไม่ได้หมายความว่าต้องเปิด Administrator เสมอไป</p>
+<p>ให้เรียก Python ของโปรเจกต์โดยตรงก่อน:</p>
 <pre><code class="language-powershell">.\.venv\Scripts\python.exe -c "import sys; print(sys.executable)"
 </code></pre>
 <p>ไม่จำเป็นต้องเปลี่ยน execution policy เพื่อทำขั้นนี้ หากใช้วิธีเรียกตรง คำสั่ง <code>python</code> ในขั้นต่อไปให้แทนด้วย <code>.\.venv\Scripts\python.exe</code></p>
+<p><strong>ผลที่ควรเห็น:</strong> path ลงท้าย <code>resume-evidence-assistant\.venv\Scripts\python.exe</code> แม้ prompt ไม่มี <code>(.venv)</code> ก็ใช้ได้ เพราะเราระบุตัว Python ที่ต้องการแล้ว</p>
+<pre><code class="language-text">Activate.ps1 ถูกบล็อก
+       ↓
+เรียก .venv\Scripts\python.exe โดยตรง
+       ↓
+ตรวจ sys.executable ชี้เข้าโปรเจกต์
+       ↓
+ใช้ Python ตัวนี้รันไฟล์และติดตั้ง package ต่อได้
+</code></pre>
+<p>ตัวอย่างสำหรับขั้นถัดไป รัน <code>hello.py</code> หลังสร้างไฟล์แล้ว และติดตั้ง pytest เมื่อถึงช่วงเขียน test:</p>
+<pre><code class="language-powershell">.\.venv\Scripts\python.exe hello.py
+.\.venv\Scripts\python.exe -m pip install pytest
+.\.venv\Scripts\python.exe -m pytest --version
+</code></pre>
+<h3 id="lesson-0-path-python-anaconda">ระวัง path และ Python ของ Anaconda</h3>
+<p>พิมพ์ต้น path เป็น <code>.\.venv</code> โดยมี backslash คั่น:</p>
+<pre><code class="language-text">.\       = เริ่มจากโฟลเดอร์ปัจจุบัน
+.venv    = ชื่อโฟลเดอร์ environment
+รวมกัน   = .\.venv\Scripts\python.exe
+</code></pre>
+<p><code>..venv</code> ไม่มี backslash คั่น จึงเป็นคนละชื่อกับ <code>.venv</code> หากหา executable ไม่พบ ให้ตรวจตำแหน่งและไฟล์ก่อน:</p>
+<pre><code class="language-powershell">Get-Location
+Test-Path .\.venv\Scripts\python.exe
+</code></pre>
+<p><code>Test-Path</code> ควรคืน <code>True</code> ถ้าเป็น <code>False</code> ให้ตรวจว่าอยู่ถูกโปรเจกต์และทำขั้นสร้าง <code>.venv</code> แล้ว อย่าเพิ่งสร้างทับหรือเปลี่ยนนโยบายเครื่อง</p>
+<p>ถ้าพิมพ์ <code>python</code> เฉย ๆ แล้วยังได้ <code>C:\Users\HP\anaconda3\python.exe</code> แปลว่า Terminal ยังเลือก Anaconda จาก PATH ให้ใช้คำสั่งเรียกตรงด้านบน ไม่ต้องถอน Anaconda ส่วนปุ่ม Run ใน VS Code ให้เลือก interpreter ของ <code>.venv</code> ด้วย เพราะการเลือก interpreter ของ editor กับการ Activate ใน Terminal เป็นคนละส่วน</p>
 <p><strong>อ่านเพิ่ม:</strong> <a href="https://ai-automation-intern-roadmap.vercel.app/book-00#lesson-3">Book 00 — Environment และการเลือก executable</a></p>
 <h2 id="lesson-0-5-python">5. ทดลองไฟล์ Python แรก</h2>
 <p>สร้างไฟล์ <code>hello.py</code> ที่ระดับเดียวกับ <code>.venv</code> ด้วย VS Code แล้วพิมพ์และบันทึก:</p>
