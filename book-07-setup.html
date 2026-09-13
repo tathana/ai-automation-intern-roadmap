@@ -253,6 +253,45 @@ pager แสดงทีละหน้า
 </code></pre>
 <p>ตัวเลือก <code>--no-pager</code> มีผลกับคำสั่งครั้งนี้เท่านั้น เหมาะกับผลสั้นหรือเมื่อต้องการคัดลอก output แต่ผลยาวจะเลื่อนผ่านหน้าจอรวดเดียว</p>
 <p>ข้อความ <code>No newline at end of file</code> เป็นข้อมูลใน diff ไม่ใช่คำสั่งของ pager หมายถึงไฟล์ไม่มีอักขระขึ้นบรรทัดใหม่หลังบรรทัดสุดท้าย เปิดไฟล์ กด Enter ที่ท้ายบรรทัด บันทึก แล้ว <code>git add &lt;file&gt;</code> ใหม่เพื่ออัปเดต staging ได้</p>
+<h4 id="lesson-0-commit">เจอไฟล์แปลกสถานะ <code>??</code> ก่อน Commit</h4>
+<p>บางครั้งช่อง <strong>New File</strong> ใน VS Code ยังมี keyboard focus อยู่ แล้วสิ่งที่ตั้งใจพิมพ์ใน Terminal กลายเป็นชื่อไฟล์ ตัวอย่างจากการฝึกจริงคือไฟล์ชื่อ <code>e --show-toplevel</code> ซึ่งภายในมี output ของ <code>git diff</code> ที่วางลงไปโดยไม่ตั้งใจ</p>
+<pre><code class="language-text">A  .gitignore
+A  README.md
+A  hello.py
+?? "e --show-toplevel"
+</code></pre>
+<ul>
+<li><code>A</code> ช่องซ้ายหมายถึงไฟล์ถูกเพิ่มใน staging แล้ว</li>
+<li><code>??</code> หมายถึง <strong>untracked</strong>: Git เห็นไฟล์ในโฟลเดอร์ แต่ยังไม่ได้อยู่ใน staging หรือ commit</li>
+</ul>
+<p>อย่ารีบใช้ <code>git add .</code> และอย่าเพิ่มชื่อไฟล์แปลกลง <code>.gitignore</code> เพื่อซ่อนปัญหา ให้ตรวจเป้าหมายก่อน:</p>
+<pre><code class="language-powershell">Get-ChildItem -Force | Select-Object Name, Length
+Get-Content -LiteralPath '.\e --show-toplevel' -TotalCount 20
+</code></pre>
+<p><code>Get-ChildItem</code> แสดงชื่อและขนาดเพื่อยืนยันไฟล์ ส่วน <code>Get-Content</code> ตรวจ 20 บรรทัดแรก <code>-LiteralPath</code> ทำให้ PowerShell ใช้ชื่อที่มีช่องว่างตามตัวอักษรจริง</p>
+<pre><code class="language-text">พบ ?? ใน git status
+      ↓
+ยืนยันชื่อ ขนาด และเนื้อหา
+      ↓
+ไฟล์งานจริง → ตัดสินใจว่าจะเก็บหรือ stage
+ไฟล์สร้างผิด → ลบเฉพาะ path ที่ตรวจแล้ว
+      ↓
+git status ตรวจซ้ำ
+</code></pre>
+<p>เมื่อยืนยันว่าเป็นไฟล์สร้างผิดและไม่มีข้อมูลที่ต้องเก็บ จึงลบเฉพาะไฟล์นั้น:</p>
+<pre><code class="language-powershell">Remove-Item -LiteralPath '.\e --show-toplevel'
+git status --short
+</code></pre>
+<p><code>Remove-Item</code> ลบจาก disk โดยตรงและไฟล์ untracked กู้จาก Git ไม่ได้ จึงต้องอ่านเนื้อหาก่อน คำสั่งนี้ระบุไฟล์เดียว ไม่มี wildcard และไม่ลบสามไฟล์ที่ stage ไว้ หลังลบควรเหลือ:</p>
+<pre><code class="language-text">A  .gitignore
+A  README.md
+A  hello.py
+</code></pre>
+<p>ถ้าไฟล์แปลกถูก stage ไปแล้ว ให้แยกสองการกระทำ:</p>
+<pre><code class="language-powershell">git restore --staged '.\e --show-toplevel'
+Remove-Item -LiteralPath '.\e --show-toplevel'
+</code></pre>
+<p>คำสั่งแรกนำออกจาก staging แต่ยังเก็บไฟล์บน disk คำสั่งที่สองจึงลบไฟล์จริง ใช้ <code>git status --short</code> ตรวจผลระหว่างสองขั้นได้</p>
 <pre><code class="language-text">Working directory
   ↓ git add เฉพาะไฟล์ที่ต้องการ
 Staging area
