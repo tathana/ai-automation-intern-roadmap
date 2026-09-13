@@ -1,0 +1,197 @@
+<!doctype html><html lang="th"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>2B — เตรียมโปรเจกต์ทีละขั้น · Book 07 — Guided Project Delivery</title><style>
+:root{color-scheme:light;--ink:#203149;--muted:#5b6b7d;--line:#dbe3e9;--accent:#096b63}
+*{box-sizing:border-box}html{scroll-behavior:smooth;scroll-padding-top:24px}body{margin:0;background:#f3f6f8;color:var(--ink);font-family:"Leelawadee UI",Tahoma,sans-serif;font-size:17px;line-height:1.9}a{color:var(--accent);text-underline-offset:4px}header{background:#173b43;color:white;padding:56px max(24px,calc((100vw - 1240px)/2));}header h1{font-size:clamp(28px,4vw,46px);line-height:1.35;margin:12px 0}header p{max-width:780px;color:#d9e9eb}.eyebrow{letter-spacing:2px;font-size:13px;color:#a8dfd5}.layout{max-width:1300px;margin:auto;display:grid;grid-template-columns:280px minmax(0,1fr);gap:30px;padding:30px 24px}aside{position:sticky;top:20px;align-self:start;max-height:92vh;overflow:auto;padding-right:12px}aside h2{font-size:18px}nav a{display:block;padding:9px 10px;border-bottom:1px solid var(--line);text-decoration:none;font-size:14px;line-height:1.6}nav a:hover{background:#e1eeeb}article{background:white;padding:clamp(20px,4vw,48px);border:1px solid var(--line);border-radius:12px;margin-bottom:28px;overflow-wrap:anywhere}article h1{font-size:29px;line-height:1.5;margin:20px 0 28px}h2{font-size:24px;margin-top:40px}h3{font-size:20px;margin-top:28px}pre{background:#152c3b;color:#eaf2f7;padding:20px;border-radius:8px;overflow:auto;line-height:1.65;font-size:14px;white-space:pre;overflow-wrap:normal}code{font-family:Consolas,"Courier New",monospace}p code,li code,td code{background:#edf2f5;padding:2px 5px;border-radius:4px;font-size:.9em}blockquote{margin:24px 0;padding:4px 20px;border-left:4px solid #138779;background:#eff8f5}table{border-collapse:collapse;width:100%;font-size:15px}th,td{border:1px solid var(--line);padding:12px;text-align:left;vertical-align:top}th{background:#eaf2f2}.table-scroll{overflow:auto;margin:20px 0}hr{border:0;border-top:1px solid var(--line);margin:32px 0}.source{font-size:12px;color:var(--muted)}.local-toc{margin-top:18px;font-size:14px;background:#f5f8fa;padding:10px 14px;border-radius:6px}.local-toc a{display:block;margin:7px 0}summary{cursor:pointer}.back{display:inline-block;margin-top:24px;font-size:14px}button{border:1px solid #aac8c5;background:white;color:#175c54;padding:9px 16px;border-radius:6px;cursor:pointer;font:inherit;font-size:14px}footer{max-width:1000px;margin:20px auto;padding:24px;color:var(--muted);font-size:14px}.visual-board{margin:20px 0;padding:16px;border:1px solid #cbd9df;border-radius:12px;background:#f7fafb;overflow:auto}.visual-flow{min-width:620px;display:flex;align-items:center;justify-content:center;gap:8px;padding:14px}.visual-box{min-width:112px;padding:11px;background:white;border:1px solid #9eb3bd;border-radius:9px;text-align:center;box-shadow:0 3px 8px rgba(20,50,60,.07)}.visual-arrow{font-weight:700;color:var(--accent)}.visual-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:10px}.visual-pane{background:white;border:1px solid #cbd9df;border-radius:8px;padding:12px}.visual-label{font-size:12px;letter-spacing:.08em;color:#527080;font-weight:700}.visual-lane{display:grid;grid-template-columns:130px 1fr;gap:12px;align-items:center;margin:8px 0}.visual-track{padding:9px;background:#e6f1ef;border-radius:7px}.visual-note{padding:11px 15px;border-left:4px solid var(--accent);background:#eaf5f3;margin:14px 0}@media(max-width:850px){.layout{display:block;padding:16px}aside{position:static;max-height:none;padding:0 0 20px}nav{max-height:280px;overflow:auto}article h1{font-size:25px}body{font-size:16px}.visual-grid{grid-template-columns:1fr}.visual-lane{grid-template-columns:1fr}}@media print{body{background:white;font-size:11pt}header{background:white;color:black;padding:0}header p{color:black}.layout{display:block;padding:0}aside,button,.local-toc,.back{display:none}article{border:0;padding:0;break-before:page}pre{white-space:pre-wrap;background:#f0f2f4;color:black;font-size:9pt}a{color:inherit}h1,h2,h3{break-after:avoid}.table-scroll{overflow:visible}}
+
+        .book-map{display:flex;gap:8px;overflow:auto;padding:10px 0 2px;margin-top:20px}
+        .book-map a{white-space:nowrap;color:white;border:1px solid rgba(255,255,255,.35);border-radius:999px;padding:5px 11px;text-decoration:none;font-size:13px}
+        .book-pager{display:flex;justify-content:space-between;gap:16px;margin:0 0 24px}
+        .book-pager a{background:white;border:1px solid var(--line);border-radius:9px;padding:10px 14px;text-decoration:none;font-weight:700}
+        </style></head><body><header id="top"><div class="eyebrow">BOOK 07 · GUIDED PROJECT PATH</div><h1>2B — เตรียมโปรเจกต์ทีละขั้น</h1><p>สร้างโฟลเดอร์ เปิด VS Code ตรวจ Python/Git สร้าง .venv และ first commit พร้อมลิงก์อ่านลึก</p><p><a style="color:white" href="book-07.html">หน้าเริ่ม Book 7</a> · <a style="color:white" href="book-07-materials.zip">ดาวน์โหลด Workbook และ Template</a> · <a style="color:white" href="index.html">หนังสือทั้งหมด</a></p><div class="book-map" aria-label="เส้นทาง Book 7"><a href="book-07-start.html">เริ่มต้นและ Workbook</a><a href="book-07-requirements.html">1 — เข้าใจโจทย์และกำหนดขอบเขต</a><a href="book-07-design.html">2 — ออกแบบระบบและแบ่งงาน</a><a href="book-07-setup.html">2B — เตรียมโปรเจกต์ทีละขั้น</a><a href="book-07-build.html">3 — เริ่มเขียนโค้ดทีละก้อน</a><a href="book-07-ai.html">4 — ใช้ AI ช่วยเขียนอย่างคุมงานได้</a><a href="book-07-test.html">5 — วาง Test และ Failure Cases</a><a href="book-07-deliver.html">6 — Release, Observe และ Handoff</a><a href="book-07-example.html">7 — ดูตัวอย่างเต็มและภาพรวม</a><a href="book-07-reference.html">Reference — Phase Gates และ Template Pack</a></div></header><div class="layout"><aside><h2>ในหน้านี้</h2><nav><a href="#lesson-0">20 — เตรียมโปรเจกต์ทีละขั้น: จากโฟลเดอร์ว่างจนพร้อมเขียน</a></nav><p style="font-size:13px">อ่านตามลำดับ หรือกลับหน้าเริ่มเพื่อเลือกจากสถานการณ์ที่กำลังเจอ</p></aside><main><div class="book-pager"><a href="book-07-design.html">← ขั้นก่อนหน้า</a><a href="book-07-build.html">ขั้นถัดไป →</a></div><article id="lesson-0"><div class="source">20_PROJECT_SETUP_GUIDE.md</div><details class="local-toc"><summary>หัวข้อในส่วนนี้</summary><a href="#lesson-0-1-editor">1. สร้างโฟลเดอร์และเปิด Editor</a><a href="#lesson-0-2">2. ตรวจว่าพร้อมเริ่มหรือยัง</a><a href="#lesson-0-3-virtual-environment">3. สร้าง Virtual Environment</a><a href="#lesson-0-4-activate-python">4. Activate และตรวจ Python ตัวที่ใช้อยู่</a><a href="#lesson-0-5-python">5. ทดลองไฟล์ Python แรก</a><a href="#lesson-0-6-git">6. สร้างไฟล์บอกทางก่อนเก็บงานใน Git</a><a href="#lesson-0-7-git">7. เริ่ม Git และบันทึกจุดเริ่ม</a><a href="#lesson-0-8-package">8. Package ต้องติดตั้งตอนไหน</a><a href="#lesson-0-_1">พร้อมไปเขียนฟังก์ชันแรกเมื่อใด</a><a href="#lesson-0-_2">ถ้าติด ให้เปิดตรงนี้</a></details><h1 id="lesson-0-20">20 — เตรียมโปรเจกต์ทีละขั้น: จากโฟลเดอร์ว่างจนพร้อมเขียน</h1>
+<p>หน้านี้รวมขั้นตอนที่ต้องพิมพ์เองไว้ใน Book 7 ทำตามจากบนลงล่างได้ ส่วนลิงก์ <strong>อ่านเพิ่ม</strong> ใช้เมื่อต้องการเข้าใจเรื่องนั้นลึกขึ้น ไม่ต้องอ่านครบทุกเล่มก่อนเริ่ม</p>
+<p>ตัวอย่างใช้ Windows + PowerShell และ Python 3.11 ตามเครื่องที่ใช้ฝึก ชื่อโปรเจกต์คือ <code>resume-evidence-assistant</code> ถ้าทำบางขั้นแล้วให้ตรวจผลและข้ามไปขั้นถัดไป ไม่ต้องสร้างใหม่</p>
+<pre><code class="language-text">สร้างโฟลเดอร์ → เปิด VS Code → ตรวจ Python/Git
+      ↓
+สร้าง .venv → เลือก interpreter → ทดลองรัน
+      ↓
+สร้าง README/.gitignore → เริ่ม Git → บันทึกจุดเริ่ม
+      ↓
+อ่าน Resume จาก TXT → PDF/DOCX → API → task → AI → review
+</code></pre>
+<h2 id="lesson-0-1-editor">1. สร้างโฟลเดอร์และเปิด Editor</h2>
+<p>เปิด PowerShell แล้วพิมพ์ทีละบรรทัด:</p>
+<pre><code class="language-powershell">New-Item -ItemType Directory -Path D:\COOP\practice\resume-evidence-assistant -Force
+Set-Location D:\COOP\practice\resume-evidence-assistant
+code .
+</code></pre>
+<ul>
+<li><code>New-Item</code> สร้างสิ่งใหม่ โดย <code>-ItemType Directory</code> ระบุว่าเป็นโฟลเดอร์</li>
+<li><code>-Force</code> ในคำสั่งสร้าง directory นี้ใช้กับโฟลเดอร์เดิมได้ ไม่ลบเนื้อหาข้างใน อย่าเหมารวมว่า Force ของทุกคำสั่งปลอดภัยเหมือนกัน</li>
+<li><code>Set-Location</code> เปลี่ยนตำแหน่งทำงานของ Terminal</li>
+<li><code>code .</code> เปิดโฟลเดอร์ปัจจุบันใน VS Code จุด <code>.</code> หมายถึงตำแหน่งที่อยู่ตอนนี้</li>
+</ul>
+<p>ถ้าไม่มีไดรฟ์ D ให้เลือกโฟลเดอร์ของตัวเอง และใช้ path นั้นตลอดบท ถ้า <code>code</code> ไม่พบ ให้เปิด VS Code ด้วยตนเองแล้วเลือก File → Open Folder</p>
+<p><strong>ตรวจผล:</strong> เห็นโฟลเดอร์โปรเจกต์ใน Explorer ของ VS Code</p>
+<p><strong>อ่านเพิ่ม:</strong> <a href="https://ai-automation-intern-roadmap.vercel.app/book-00#lesson-2">Book 00 — Paths และ Navigation</a></p>
+<h2 id="lesson-0-2">2. ตรวจว่าพร้อมเริ่มหรือยัง</h2>
+<p>ใน VS Code เลือก Terminal → New Terminal และใช้ PowerShell สังเกต prompt ขึ้นต้น <code>PS</code> แล้วพิมพ์:</p>
+<pre><code class="language-powershell">Get-Location
+py --version
+git --version
+</code></pre>
+<p>คำสั่งแรกบอกตำแหน่งทำงาน อีกสองคำสั่งตรวจว่าเรียกเครื่องมือได้ ตัวอย่างผลจากเครื่องฝึกคือ Python 3.11.9 และ Git 2.52.0 รุ่นไม่ต้องตรงทุกหลัก แต่เลือก Python ให้ตรงข้อกำหนดโปรเจกต์</p>
+<p>ถ้า <code>py</code> ไม่พบแต่ <code>python --version</code> ใช้ได้ ให้ตรวจว่าเป็น Python รุ่นที่ต้องการก่อนใช้ <code>python -m venv .venv</code> แทน หากไม่มี Python/Git ให้ติดตั้งผ่านช่องทางที่เครื่องนั้นอนุญาตแล้วเปิด Terminal ใหม่</p>
+<p><strong>ตรวจผล:</strong> อยู่ในโฟลเดอร์โปรเจกต์ และคำสั่งทั้งสองแสดง version</p>
+<p><strong>อ่านเพิ่ม:</strong> <a href="https://ai-automation-intern-roadmap.vercel.app/book-00#lesson-1">Book 00 — Terminal และ Command</a></p>
+<h2 id="lesson-0-3-virtual-environment">3. สร้าง Virtual Environment</h2>
+<p>Virtual environment คือพื้นที่แยก Python packages ของโปรเจกต์นี้ เพื่อไม่ให้การติดตั้ง package ของงานหนึ่งปะปนกับงานอื่น โฟลเดอร์นี้สร้างใหม่ได้จากรายการ dependencies จึงไม่ต้องเก็บใน Git</p>
+<pre><code class="language-powershell">py -3.11 -m venv .venv
+</code></pre>
+<p><code>py -3.11</code> เลือก Python 3.11, <code>-m venv</code> เรียกโมดูลสร้าง environment และ <code>.venv</code> เป็นชื่อโฟลเดอร์ปลายทาง คำสั่งสำเร็จมักกลับมาที่ prompt โดยไม่มีข้อความพิเศษ</p>
+<pre><code class="language-text">Python ที่ติดตั้งในเครื่อง
+       ↓ สร้าง environment
+project/.venv
+       ├─ Python สำหรับเรียกใช้งาน
+       └─ packages ของโปรเจกต์นี้
+</code></pre>
+<p><strong>ตรวจผล:</strong> เห็นโฟลเดอร์ <code>.venv</code> ในโปรเจกต์ หากมีอยู่แล้วตรวจขั้นต่อไปก่อนสร้างทับ</p>
+<p><strong>อ่านเพิ่ม:</strong> <a href="https://ai-automation-intern-roadmap.vercel.app/book-00#lesson-3">Book 00 — Python, venv และ Dependencies</a></p>
+<h2 id="lesson-0-4-activate-python">4. Activate และตรวจ Python ตัวที่ใช้อยู่</h2>
+<pre><code class="language-powershell">.\.venv\Scripts\Activate.ps1
+python -c "import sys; print(sys.executable)"
+</code></pre>
+<p>Activate ปรับ environment ของ Terminal รอบนี้ให้ค้นหา Python ใน <code>.venv</code> ก่อน ไม่ได้เปลี่ยน Python ทั้งเครื่อง ส่วน <code>-c</code> ให้ Python รันโค้ดสั้นจากข้อความ <code>sys.executable</code> คือ path ของ Python ที่กำลังรันจริง</p>
+<p>คาดหวังผล:</p>
+<pre><code class="language-text">D:\COOP\practice\resume-evidence-assistant\.venv\Scripts\python.exe
+</code></pre>
+<p>มักเห็น <code>(.venv)</code> หน้า prompt ด้วย แต่ path ที่ตรวจได้เป็นหลักฐานที่ชัดกว่า เมื่อเปิด Terminal ใหม่ให้ activate ใหม่ แล้วเลือก Python: Select Interpreter จาก Command Palette ของ VS Code ให้ชี้ <code>.venv</code> เดียวกัน</p>
+<p>หาก PowerShell บล็อก Activate ยังรัน Python ของโปรเจกต์โดยตรงได้:</p>
+<pre><code class="language-powershell">.\.venv\Scripts\python.exe -c "import sys; print(sys.executable)"
+</code></pre>
+<p>ไม่จำเป็นต้องเปลี่ยน execution policy เพื่อทำขั้นนี้ หากใช้วิธีเรียกตรง คำสั่ง <code>python</code> ในขั้นต่อไปให้แทนด้วย <code>.\.venv\Scripts\python.exe</code></p>
+<p><strong>อ่านเพิ่ม:</strong> <a href="https://ai-automation-intern-roadmap.vercel.app/book-00#lesson-3">Book 00 — Environment และการเลือก executable</a></p>
+<h2 id="lesson-0-5-python">5. ทดลองไฟล์ Python แรก</h2>
+<p>สร้างไฟล์ <code>hello.py</code> ที่ระดับเดียวกับ <code>.venv</code> ด้วย VS Code แล้วพิมพ์และบันทึก:</p>
+<pre><code class="language-python">print("Resume Evidence Assistant is ready")
+</code></pre>
+<p>กลับ Terminal ที่อยู่โฟลเดอร์โปรเจกต์:</p>
+<pre><code class="language-powershell">python hello.py
+</code></pre>
+<p>ควรเห็น <code>Resume Evidence Assistant is ready</code> นี่พิสูจน์ว่า editor บันทึกไฟล์ถูกที่และ Terminal รัน Python ได้ ขั้นนี้ยังไม่ต้องติดตั้ง FastAPI หรือ AI SDK</p>
+<p><strong>อ่านเพิ่ม:</strong> <a href="https://ai-automation-intern-roadmap.vercel.app/week-1#lesson-2">Week 1 — Python Execution และ Functions</a></p>
+<h2 id="lesson-0-6-git">6. สร้างไฟล์บอกทางก่อนเก็บงานใน Git</h2>
+<p>สร้าง <code>README.md</code> ที่รากโปรเจกต์ แล้วเริ่มด้วย:</p>
+<pre><code class="language-markdown"># Resume Evidence Assistant Lite
+
+ช่วย HR อ่าน Resume สังเคราะห์และแสดงทักษะพร้อมหลักฐานให้คนตรวจ
+
+## เป้าหมายแรก
+อ่าน TXT ได้ก่อน แล้วเพิ่ม PDF/DOCX และ Mock AI
+
+## Environment
+Python 3.11, Windows PowerShell
+
+## ทดลองรัน
+python hello.py
+</code></pre>
+<p>สร้าง <code>.gitignore</code> ที่รากเดียวกันแล้วใส่:</p>
+<pre><code class="language-gitignore">.venv/
+__pycache__/
+*.py[cod]
+.pytest_cache/
+.env
+</code></pre>
+<p><code>.gitignore</code> บอก Git ว่าไฟล์ใหม่กลุ่มไหนไม่ต้องติดตาม ไม่ได้ทำให้ไฟล์ที่ commit ไปแล้วหายจากประวัติ ตัวอย่างนี้ไม่ ignore README, source และ test เพราะเป็นสิ่งที่คนอื่นต้องใช้</p>
+<pre><code class="language-text">resume-evidence-assistant/
+├─ .venv/       ← environment ไม่ commit
+├─ .gitignore   ← กติกาไฟล์ที่ไม่ติดตาม
+├─ README.md    ← วิธีเริ่มและรัน
+└─ hello.py     ← ตรวจว่าเครื่องพร้อม
+</code></pre>
+<p><strong>อ่านเพิ่ม:</strong> <a href="https://ai-automation-intern-roadmap.vercel.app/special-git#lesson-9">Git Special — Gitignore และ Secrets</a></p>
+<h2 id="lesson-0-7-git">7. เริ่ม Git และบันทึกจุดเริ่ม</h2>
+<p>ตรวจที่อยู่และ repository ก่อน:</p>
+<pre><code class="language-powershell">Get-Location
+git rev-parse --show-toplevel
+</code></pre>
+<p>ถ้าบอก <code>not a git repository</code> และอยู่ถูกโฟลเดอร์ ให้สร้าง repo:</p>
+<pre><code class="language-powershell">git init -b main
+</code></pre>
+<p>ถ้าแสดง path โปรเจกต์นี้อยู่แล้วให้ข้าม init หากชี้ไปโฟลเดอร์แม่ แปลว่าอยู่ใน repo อื่น ให้แยกตำแหน่งโปรเจกต์ก่อน ไม่สร้าง repo ซ้อนโดยไม่ตั้งใจ</p>
+<p>ตรวจผู้เขียน commit:</p>
+<pre><code class="language-powershell">git config user.name
+git config user.email
+</code></pre>
+<p>หากว่างหรือผิด ให้ตั้งเฉพาะ repo นี้ โดยแทนค่าตัวอย่างก่อนรัน:</p>
+<pre><code class="language-powershell">git config user.name "YOUR NAME"
+git config user.email "YOUR EMAIL"
+</code></pre>
+<p>ไม่ใช้ <code>--global</code> ในตัวอย่างนี้ จึงไม่เปลี่ยนผู้เขียนของงานอื่น ตรวจแล้วเก็บไฟล์ที่ทำเสร็จ:</p>
+<pre><code class="language-powershell">git status
+git add .gitignore README.md hello.py
+git diff --cached
+git commit -m "chore: initialize learning project"
+git status
+</code></pre>
+<p><code>add</code> เลือกไฟล์เข้าพื้นที่เตรียม commit หรือ staging; <code>diff --cached</code> ให้ตรวจสิ่งที่จะบันทึก; <code>commit</code> สร้างจุดบันทึกในเครื่อง ขั้นนี้ยังไม่ต้อง push ขึ้น GitHub</p>
+<p><strong>ตรวจผล:</strong> commit สำเร็จ และ <code>git status</code> บอก working tree clean โดย <code>.venv</code> ไม่อยู่ในรายการที่จะ commit</p>
+<p><strong>อ่านเพิ่ม:</strong> <a href="https://ai-automation-intern-roadmap.vercel.app/special-git#lesson-2">Git Special — Setup และ First Repository</a>, <a href="https://ai-automation-intern-roadmap.vercel.app/special-git#lesson-3">Staging และ Commit</a></p>
+<h2 id="lesson-0-8-package">8. Package ต้องติดตั้งตอนไหน</h2>
+<p>การอ่าน TXT ด้วย Python พื้นฐานยังไม่ต้องเพิ่ม package เมื่อเริ่มเขียน test ค่อยติดตั้ง pytest ใน <code>.venv</code> ที่ตรวจแล้ว:</p>
+<pre><code class="language-powershell">python -m pip install pytest
+python -m pytest --version
+</code></pre>
+<p><code>python -m pip</code> ช่วยให้ติดตั้งผ่าน Python ตัวเดียวกับที่เราเลือกไว้ คำสั่งตรวจ version บอกเพียงว่ามี pytest ยังไม่ได้พิสูจน์ว่า test โปรเจกต์ผ่าน</p>
+<p>บันทึก dependencies ที่ใช้จริงใน <code>pyproject.toml</code> หรือ requirements ตามรูปแบบที่เลือกให้ชัด และอ่านวิธีบันทึก version/lock ก่อนส่งมอบ เมื่อเพิ่ม PDF/DOCX จึงค่อยเพิ่ม reader dependencies</p>
+<p><strong>อ่านเพิ่ม:</strong> <a href="https://ai-automation-intern-roadmap.vercel.app/book-00#lesson-3">Book 00 — Dependency Declaration</a>, <a href="https://ai-automation-intern-roadmap.vercel.app/week-1#lesson-7">Week 1 — Pytest</a></p>
+<h2 id="lesson-0-_1">พร้อมไปเขียนฟังก์ชันแรกเมื่อใด</h2>
+<ul>
+<li>อยู่ในโฟลเดอร์ถูกต้องและเปิดด้วย VS Code</li>
+<li><code>sys.executable</code> ชี้ <code>.venv</code> ของโปรเจกต์</li>
+<li><code>hello.py</code> รันและแสดงข้อความได้</li>
+<li>README ระบุเป้าหมายและวิธีรัน</li>
+<li>Git เก็บจุดเริ่มแล้ว และไม่ติดตาม <code>.venv</code> หรือ <code>.env</code></li>
+</ul>
+<p>สำหรับ Resume Assistant ต่อที่ <a href="https://ai-automation-intern-roadmap.vercel.app/project-01#lesson-9">Project 01 — บท 08 อ่านไฟล์ Resume</a> โดยทำ F0: TXT → unit tests → PDF/DOCX ส่วนวิธีคิดหน้าที่ฟังก์ชันเปิด <a href="book-07-build.html#lesson-0">From Requirement to Code</a></p>
+<h2 id="lesson-0-_2">ถ้าติด ให้เปิดตรงนี้</h2>
+<div class="table-scroll"><table>
+<thead>
+<tr>
+<th>อาการ/คำถาม</th>
+<th>ตรวจเบื้องต้น</th>
+<th>อ่านลึก</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>คำสั่งหาไฟล์ไม่เจอ</td>
+<td>Get-Location และชื่อไฟล์ที่บันทึก</td>
+<td><a href="https://ai-automation-intern-roadmap.vercel.app/book-00#lesson-2">Paths</a></td>
+</tr>
+<tr>
+<td>ลง package แล้ว import ไม่ได้</td>
+<td>sys.executable และ Python interpreter</td>
+<td><a href="https://ai-automation-intern-roadmap.vercel.app/book-00#lesson-3">Environment</a></td>
+</tr>
+<tr>
+<td>ไม่เข้าใจ print/function/import</td>
+<td>ทดลองโค้ดเล็กทีละบรรทัด</td>
+<td><a href="https://ai-automation-intern-roadmap.vercel.app/week-1#lesson-2">Python</a></td>
+</tr>
+<tr>
+<td>จะอ่านไฟล์และจัดการ path อย่างไร</td>
+<td>เริ่ม pathlib และ encoding</td>
+<td><a href="https://ai-automation-intern-roadmap.vercel.app/week-1#lesson-4">Files</a></td>
+</tr>
+<tr>
+<td>จะทดสอบฟังก์ชันอะไรบ้าง</td>
+<td>ระบุ input, expected output, error</td>
+<td><a href="book-07-test.html#lesson-0">Test Planning ใน Book 7</a></td>
+</tr>
+<tr>
+<td>อยากให้ AI ช่วยก้อนที่ติด</td>
+<td>บอกเป้าหมาย command และ error</td>
+<td><a href="book-07-ai.html#lesson-0">AI-assisted Coding</a></td>
+</tr>
+</tbody>
+</table></div>
+<p>ถ้าฝึกกับผู้ช่วย ให้ส่ง command พร้อมผลที่เห็นหลังแต่ละด่าน เพื่อให้ตรวจจากสิ่งที่เกิดจริง เมื่อจบ session จดว่าผ่านขั้นไหนและอะไรยังติดใน Workbook แล้วกลับมาเริ่มต่อได้ทันที</p><a class="back" href="#top">↑ กลับด้านบน</a></article><div class="book-pager"><a href="book-07-design.html">← ขั้นก่อนหน้า</a><a href="book-07-build.html">ขั้นถัดไป →</a></div></main></div><footer>Book 07 · เริ่มจากโจทย์ → ทำชิ้นเล็กให้พิสูจน์ได้ → ส่งมอบให้คนอื่นดูแลต่อได้</footer></body></html>
