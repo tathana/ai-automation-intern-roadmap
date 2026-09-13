@@ -166,6 +166,43 @@ git commit -m "chore: initialize learning project"
 git status
 </code></pre>
 <p><code>add</code> เลือกไฟล์เข้าพื้นที่เตรียม commit หรือ staging; <code>diff --cached</code> ให้ตรวจสิ่งที่จะบันทึก; <code>commit</code> สร้างจุดบันทึกในเครื่อง ขั้นนี้ยังไม่ต้อง push ขึ้น GitHub</p>
+<h3 id="lesson-0-checkpoint-7a-gitignore-stage">Checkpoint 7A — ตรวจ <code>.gitignore</code> ก่อน Stage</h3>
+<p><code>git status</code> ควรเห็น <code>.gitignore</code>, <code>README.md</code> และ <code>hello.py</code> เป็น untracked แต่ไม่เห็น <code>.venv</code> จากนั้นถาม Git โดยตรงว่า path แต่ละแบบถูก ignore ด้วยกฎใด:</p>
+<pre><code class="language-powershell">git check-ignore -v .venv
+git check-ignore -v --no-index .env __pycache__/example.py .pytest_cache/example foo.pyc
+</code></pre>
+<p><code>-v</code> หรือ verbose แสดงชื่อไฟล์ <code>.gitignore</code>, เลขบรรทัด, pattern และ path ที่ตรงกัน ส่วน <code>--no-index</code> ช่วยตรวจ pattern แม้ path ตัวอย่างยังไม่ได้ถูก track หรือยังไม่มีไฟล์จริง</p>
+<p>ผลควรมีรูปแบบคล้าย:</p>
+<pre><code class="language-text">.gitignore:1:.venv/          .venv
+.gitignore:5:.env            .env
+.gitignore:2:__pycache__/    __pycache__/example.py
+.gitignore:4:.pytest_cache/  .pytest_cache/example
+.gitignore:3:*.py[cod]       foo.pyc
+</code></pre>
+<p>หากคำสั่งไม่แสดง path ใด ให้กลับไปตรวจการสะกดและบรรทัดใน <code>.gitignore</code> ก่อน <code>git add</code> ข้อควรจำคือไฟล์ <code>.gitignore</code> เองต้องถูก commit เพื่อให้คนอื่นได้รับกติกาเดียวกัน</p>
+<h3 id="lesson-0-checkpoint-7b-git-identity">Checkpoint 7B — ตรวจ Git Identity</h3>
+<p>ชื่อและอีเมลจะถูกบันทึกใน metadata ของทุก commit ตรวจค่าที่ใช้กับ repository ปัจจุบัน:</p>
+<pre><code class="language-powershell">git config user.name
+git config user.email
+</code></pre>
+<p>หากต้องแก้เฉพาะโปรเจกต์นี้:</p>
+<pre><code class="language-powershell">git config user.name "Thanaphat Chainarong"
+git config user.email "thanaphatchainarong@gmail.com"
+</code></pre>
+<p>คำสั่งไม่มี <code>--global</code> จึงเขียนค่า local ใน <code>.git/config</code> และมีผลเฉพาะ repository นี้ เหมาะเมื่อ Repository บริษัทกับงานส่วนตัวใช้อีเมลต่างกัน</p>
+<h3 id="lesson-0-checkpoint-7c-stage-commit">Checkpoint 7C — Stage แล้วอ่านสิ่งที่จะ Commit</h3>
+<pre><code class="language-powershell">git add .gitignore README.md hello.py
+git status
+git diff --cached
+</code></pre>
+<p>หลัง <code>git add</code> ไฟล์ควรอยู่ใต้ <code>Changes to be committed</code> คำสั่ง <code>git diff --cached</code> แสดงเนื้อหาจาก staging area ที่ commit ถัดไปกำลังจะบันทึก ให้ตรวจว่าไม่มี <code>.env</code>, secret, <code>.venv</code> หรือไฟล์ที่ไม่ได้ตั้งใจ</p>
+<pre><code class="language-text">Working directory
+  ↓ git add เฉพาะไฟล์ที่ต้องการ
+Staging area
+  ↓ git diff --cached เพื่อตรวจ
+Commit
+</code></pre>
+<p>ถ้า Stage ผิดไฟล์ ยังไม่ต้องลบไฟล์ ใช้ <code>git restore --staged &lt;file&gt;</code> นำไฟล์ออกจาก staging แล้วตรวจ <code>git status</code> ใหม่</p>
 <p><strong>ตรวจผล:</strong> commit สำเร็จ และ <code>git status</code> บอก working tree clean โดย <code>.venv</code> ไม่อยู่ในรายการที่จะ commit</p>
 <p><strong>อ่านเพิ่ม:</strong> <a href="https://ai-automation-intern-roadmap.vercel.app/special-git#lesson-2">Git Special — Setup และ First Repository</a>, <a href="https://ai-automation-intern-roadmap.vercel.app/special-git#lesson-3">Staging และ Commit</a></p>
 <h2 id="lesson-0-8-package">8. Package ต้องติดตั้งตอนไหน</h2>
