@@ -196,6 +196,63 @@ git status
 git diff --cached
 </code></pre>
 <p>หลัง <code>git add</code> ไฟล์ควรอยู่ใต้ <code>Changes to be committed</code> คำสั่ง <code>git diff --cached</code> แสดงเนื้อหาจาก staging area ที่ commit ถัดไปกำลังจะบันทึก ให้ตรวจว่าไม่มี <code>.env</code>, secret, <code>.venv</code> หรือไฟล์ที่ไม่ได้ตั้งใจ</p>
+<h4 id="lesson-0-git-diff-end"><code>git diff</code> ดูเหมือนค้างและขึ้น <code>(END)</code></h4>
+<p>เมื่อผลลัพธ์ยาว Git อาจเปิดโปรแกรมแสดงข้อความทีละหน้าที่เรียกว่า <strong>pager</strong> โดย Git for Windows มักใช้โปรแกรม <code>less</code> ระหว่างนั้น PowerShell ไม่ได้ค้าง แต่กำลังรอคำสั่งจาก pager จึงยังไม่เห็น prompt <code>PS ...&gt;</code></p>
+<p>หน้าจออาจลงท้ายแบบนี้:</p>
+<pre><code class="language-text">\ No newline at end of file
+(END)
+</code></pre>
+<p><code>(END)</code> หมายถึงมาถึงท้าย diff แล้ว ส่วนเครื่องหมาย <code>:</code> ด้านล่างหมายถึง pager กำลังรอคำสั่ง กดปุ่มโดยไม่ต้องพิมพ์ต่อท้าย command:</p>
+<div class="table-scroll"><table>
+<thead>
+<tr>
+<th>ปุ่ม</th>
+<th>ผลใน pager</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>Space</code> หรือ <code>Page Down</code></td>
+<td>เลื่อนลงหนึ่งหน้า</td>
+</tr>
+<tr>
+<td>ลูกศรขึ้น/ลง</td>
+<td>เลื่อนทีละบรรทัด</td>
+</tr>
+<tr>
+<td><code>g</code></td>
+<td>ไปต้นผลลัพธ์</td>
+</tr>
+<tr>
+<td><code>G</code></td>
+<td>ไปท้ายผลลัพธ์</td>
+</tr>
+<tr>
+<td><code>/คำที่หา</code> แล้ว Enter</td>
+<td>ค้นหาข้อความ</td>
+</tr>
+<tr>
+<td><code>n</code></td>
+<td>ไปผลค้นหาถัดไป</td>
+</tr>
+<tr>
+<td><code>q</code></td>
+<td>ออกจาก pager กลับ PowerShell</td>
+</tr>
+</tbody>
+</table></div>
+<pre><code class="language-text">git diff --cached
+       ↓ ผลยาว
+pager แสดงทีละหน้า
+       ↓ กด q
+กลับไปยัง PS ...&gt; โดยไม่มีการแก้ไฟล์
+</code></pre>
+<p>ถ้ากด <code>q</code> แล้วไม่ออก ให้คลิกในพื้นที่ Terminal เพื่อให้ Terminal รับ keyboard focus แล้วกด <code>q</code> อีกครั้ง การออกจาก pager ไม่ยกเลิก staging และไม่ลบความเปลี่ยนแปลง</p>
+<p>หากต้องการพิมพ์ผลทั้งหมดลง Terminal โดยไม่เปิด pager ใช้:</p>
+<pre><code class="language-powershell">git --no-pager diff --cached
+</code></pre>
+<p>ตัวเลือก <code>--no-pager</code> มีผลกับคำสั่งครั้งนี้เท่านั้น เหมาะกับผลสั้นหรือเมื่อต้องการคัดลอก output แต่ผลยาวจะเลื่อนผ่านหน้าจอรวดเดียว</p>
+<p>ข้อความ <code>No newline at end of file</code> เป็นข้อมูลใน diff ไม่ใช่คำสั่งของ pager หมายถึงไฟล์ไม่มีอักขระขึ้นบรรทัดใหม่หลังบรรทัดสุดท้าย เปิดไฟล์ กด Enter ที่ท้ายบรรทัด บันทึก แล้ว <code>git add &lt;file&gt;</code> ใหม่เพื่ออัปเดต staging ได้</p>
 <pre><code class="language-text">Working directory
   ↓ git add เฉพาะไฟล์ที่ต้องการ
 Staging area
