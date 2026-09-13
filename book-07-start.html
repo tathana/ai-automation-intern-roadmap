@@ -1,0 +1,262 @@
+<!doctype html><html lang="th"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>เริ่มต้นและ Workbook · Book 07 — Guided Project Delivery</title><style>
+:root{color-scheme:light;--ink:#203149;--muted:#5b6b7d;--line:#dbe3e9;--accent:#096b63}
+*{box-sizing:border-box}html{scroll-behavior:smooth;scroll-padding-top:24px}body{margin:0;background:#f3f6f8;color:var(--ink);font-family:"Leelawadee UI",Tahoma,sans-serif;font-size:17px;line-height:1.9}a{color:var(--accent);text-underline-offset:4px}header{background:#173b43;color:white;padding:56px max(24px,calc((100vw - 1240px)/2));}header h1{font-size:clamp(28px,4vw,46px);line-height:1.35;margin:12px 0}header p{max-width:780px;color:#d9e9eb}.eyebrow{letter-spacing:2px;font-size:13px;color:#a8dfd5}.layout{max-width:1300px;margin:auto;display:grid;grid-template-columns:280px minmax(0,1fr);gap:30px;padding:30px 24px}aside{position:sticky;top:20px;align-self:start;max-height:92vh;overflow:auto;padding-right:12px}aside h2{font-size:18px}nav a{display:block;padding:9px 10px;border-bottom:1px solid var(--line);text-decoration:none;font-size:14px;line-height:1.6}nav a:hover{background:#e1eeeb}article{background:white;padding:clamp(20px,4vw,48px);border:1px solid var(--line);border-radius:12px;margin-bottom:28px;overflow-wrap:anywhere}article h1{font-size:29px;line-height:1.5;margin:20px 0 28px}h2{font-size:24px;margin-top:40px}h3{font-size:20px;margin-top:28px}pre{background:#152c3b;color:#eaf2f7;padding:20px;border-radius:8px;overflow:auto;line-height:1.65;font-size:14px;white-space:pre;overflow-wrap:normal}code{font-family:Consolas,"Courier New",monospace}p code,li code,td code{background:#edf2f5;padding:2px 5px;border-radius:4px;font-size:.9em}blockquote{margin:24px 0;padding:4px 20px;border-left:4px solid #138779;background:#eff8f5}table{border-collapse:collapse;width:100%;font-size:15px}th,td{border:1px solid var(--line);padding:12px;text-align:left;vertical-align:top}th{background:#eaf2f2}.table-scroll{overflow:auto;margin:20px 0}hr{border:0;border-top:1px solid var(--line);margin:32px 0}.source{font-size:12px;color:var(--muted)}.local-toc{margin-top:18px;font-size:14px;background:#f5f8fa;padding:10px 14px;border-radius:6px}.local-toc a{display:block;margin:7px 0}summary{cursor:pointer}.back{display:inline-block;margin-top:24px;font-size:14px}button{border:1px solid #aac8c5;background:white;color:#175c54;padding:9px 16px;border-radius:6px;cursor:pointer;font:inherit;font-size:14px}footer{max-width:1000px;margin:20px auto;padding:24px;color:var(--muted);font-size:14px}.visual-board{margin:20px 0;padding:16px;border:1px solid #cbd9df;border-radius:12px;background:#f7fafb;overflow:auto}.visual-flow{min-width:620px;display:flex;align-items:center;justify-content:center;gap:8px;padding:14px}.visual-box{min-width:112px;padding:11px;background:white;border:1px solid #9eb3bd;border-radius:9px;text-align:center;box-shadow:0 3px 8px rgba(20,50,60,.07)}.visual-arrow{font-weight:700;color:var(--accent)}.visual-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:10px}.visual-pane{background:white;border:1px solid #cbd9df;border-radius:8px;padding:12px}.visual-label{font-size:12px;letter-spacing:.08em;color:#527080;font-weight:700}.visual-lane{display:grid;grid-template-columns:130px 1fr;gap:12px;align-items:center;margin:8px 0}.visual-track{padding:9px;background:#e6f1ef;border-radius:7px}.visual-note{padding:11px 15px;border-left:4px solid var(--accent);background:#eaf5f3;margin:14px 0}@media(max-width:850px){.layout{display:block;padding:16px}aside{position:static;max-height:none;padding:0 0 20px}nav{max-height:280px;overflow:auto}article h1{font-size:25px}body{font-size:16px}.visual-grid{grid-template-columns:1fr}.visual-lane{grid-template-columns:1fr}}@media print{body{background:white;font-size:11pt}header{background:white;color:black;padding:0}header p{color:black}.layout{display:block;padding:0}aside,button,.local-toc,.back{display:none}article{border:0;padding:0;break-before:page}pre{white-space:pre-wrap;background:#f0f2f4;color:black;font-size:9pt}a{color:inherit}h1,h2,h3{break-after:avoid}.table-scroll{overflow:visible}}
+
+        .book-map{display:flex;gap:8px;overflow:auto;padding:10px 0 2px;margin-top:20px}
+        .book-map a{white-space:nowrap;color:white;border:1px solid rgba(255,255,255,.35);border-radius:999px;padding:5px 11px;text-decoration:none;font-size:13px}
+        .book-pager{display:flex;justify-content:space-between;gap:16px;margin:0 0 24px}
+        .book-pager a{background:white;border:1px solid var(--line);border-radius:9px;padding:10px 14px;text-decoration:none;font-weight:700}
+        </style></head><body><header id="top"><div class="eyebrow">BOOK 07 · GUIDED PROJECT PATH</div><h1>เริ่มต้นและ Workbook</h1><p>รู้ว่าตอนนี้อยู่ด่านไหน และใช้สมุดงานไฟล์เดียวพาโปรเจกต์เดินต่อ</p><p><a style="color:white" href="book-07.html">หน้าเริ่ม Book 7</a> · <a style="color:white" href="book-07-materials.zip">ดาวน์โหลด Workbook และ Template</a> · <a style="color:white" href="index.html">หนังสือทั้งหมด</a></p><div class="book-map" aria-label="เส้นทาง Book 7"><a href="book-07-start.html">เริ่มต้นและ Workbook</a><a href="book-07-requirements.html">1 — เข้าใจโจทย์และกำหนดขอบเขต</a><a href="book-07-design.html">2 — ออกแบบระบบและแบ่งงาน</a><a href="book-07-build.html">3 — เริ่มเขียนโค้ดทีละก้อน</a><a href="book-07-ai.html">4 — ใช้ AI ช่วยเขียนอย่างคุมงานได้</a><a href="book-07-test.html">5 — วาง Test และ Failure Cases</a><a href="book-07-deliver.html">6 — Release, Observe และ Handoff</a><a href="book-07-example.html">7 — ดูตัวอย่างเต็มและภาพรวม</a><a href="book-07-reference.html">Reference — Phase Gates และ Template Pack</a></div></header><div class="layout"><aside><h2>ในหน้านี้</h2><nav><a href="#lesson-0">13 — Start Here: ได้รับงานแล้วเริ่มตรงไหน</a><a href="#lesson-1">14 — Beginner Project Workbook: สมุดงานไฟล์เดียว</a></nav><p style="font-size:13px">อ่านตามลำดับ หรือกลับหน้าเริ่มเพื่อเลือกจากสถานการณ์ที่กำลังเจอ</p></aside><main><div class="book-pager"><a href="book-07.html">กลับหน้าเริ่ม Book 7</a><a href="book-07-requirements.html">ขั้นถัดไป →</a></div><article id="lesson-0"><div class="source">13_START_HERE_BEGINNER_GUIDE.md</div><details class="local-toc"><summary>หัวข้อในส่วนนี้</summary><a href="#lesson-0-_1">เส้นทางหนึ่งโปรเจกต์</a><a href="#lesson-0-_2">ถ้าเพิ่งได้รับข้อความจากหัวหน้า</a><a href="#lesson-0-_3">แผนที่ว่าเมื่อใดควรเปิดหน้าไหน</a><a href="#lesson-0-stopgo">กติกา Stop–Go</a><a href="#lesson-0-definition-of-ready">Definition of Ready แบบง่าย</a><a href="#lesson-0-_4">เมื่อจบหน้านี้</a></details><h1 id="lesson-0-13-start-here">13 — Start Here: ได้รับงานแล้วเริ่มตรงไหน</h1>
+<p>หน้านี้เป็นประตูหลักสำหรับคนที่ได้รับโจทย์มาแล้ว แต่ยังไม่แน่ใจว่าต้องเปิดไฟล์ใดหรือเริ่มเขียนโค้ดตรงไหน</p>
+<blockquote>
+<p>หลักสำคัญ: อย่าเริ่มจากการเลือกเทคโนโลยี ให้เริ่มจากทำความเข้าใจว่าใครกำลังเสียเวลากับอะไร และผลลัพธ์แบบใดจึงเรียกว่าแก้ปัญหาได้</p>
+</blockquote>
+<h2 id="lesson-0-_1">เส้นทางหนึ่งโปรเจกต์</h2>
+<pre><code class="language-text">รับโจทย์
+  ↓
+เขียนสิ่งที่เข้าใจด้วยภาษาของเรา
+  ↓
+ถามผู้ใช้และดูขั้นตอนเดิม
+  ↓
+กำหนดสิ่งที่จะทำ / ไม่ทำ / วิธีตรวจว่าผ่าน
+  ↓
+วาดข้อมูลและเส้นทางงาน
+  ↓
+แบ่งเป็นชิ้นเล็กที่สาธิตได้
+  ↓
+เขียนโค้ด + test ทีละชิ้น
+  ↓
+รวมระบบ ทดลอง failure และตรวจโดยผู้ใช้
+  ↓
+release → observe → handoff
+</code></pre>
+<p>ไม่ต้องคิดทุกเรื่องให้สมบูรณ์ตั้งแต่วันแรก แต่ทุกครั้งก่อนขยับไปด่านถัดไป ต้องมีหลักฐานชิ้นเล็กว่าด่านปัจจุบันชัดพอแล้ว</p>
+<h2 id="lesson-0-_2">ถ้าเพิ่งได้รับข้อความจากหัวหน้า</h2>
+<p>สมมติได้รับว่า “ช่วยใช้ AI ลดเวลาอ่าน Resume ให้ HR” ให้ทำเพียงสี่อย่างก่อน:</p>
+<ol>
+<li>จดโจทย์ต้นฉบับไว้โดยไม่ตีความเพิ่ม</li>
+<li>เขียนความเข้าใจของเรา 3–5 บรรทัด</li>
+<li>ทำรายการคำถามที่หากไม่รู้แล้วจะออกแบบผิด</li>
+<li>นัดคุยหรือส่งคำถามให้ผู้ใช้จริง</li>
+</ol>
+<p>ยังไม่ควรสร้าง database schema, เลือกโมเดล หรือขอ AI เขียนระบบเต็ม เพราะสิ่งเหล่านั้นขึ้นกับคำตอบที่ยังไม่มี</p>
+<h2 id="lesson-0-_3">แผนที่ว่าเมื่อใดควรเปิดหน้าไหน</h2>
+<div class="table-scroll"><table>
+<thead>
+<tr>
+<th>สถานการณ์</th>
+<th>ไปทำอะไร</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>เพิ่งรับงานและโจทย์ยังกว้าง</td>
+<td>Start Here และ Guided Workbook</td>
+</tr>
+<tr>
+<td>ไม่รู้ว่าผู้ใช้ต้องการอะไร</td>
+<td>Requirement &amp; Scope</td>
+</tr>
+<tr>
+<td>รู้โจทย์แล้วแต่ไม่รู้ระบบหน้าตาอย่างไร</td>
+<td>Design &amp; Work Breakdown</td>
+</tr>
+<tr>
+<td>เปิด editor แล้วไม่รู้เริ่มไฟล์ไหน</td>
+<td>From Requirement to Code</td>
+</tr>
+<tr>
+<td>อยากให้ AI ช่วยแต่กลัวได้โค้ดก้อนใหญ่</td>
+<td>AI-assisted Coding</td>
+</tr>
+<tr>
+<td>ไม่รู้ว่าต้อง test อะไร</td>
+<td>Testing &amp; Failure Cases</td>
+</tr>
+<tr>
+<td>กำลังจะ demo หรือ deploy</td>
+<td>Release &amp; Handoff</td>
+</tr>
+<tr>
+<td>อยากเห็นตัวอย่างที่กรอกและทำครบ</td>
+<td>Worked Example</td>
+</tr>
+</tbody>
+</table></div>
+<h2 id="lesson-0-stopgo">กติกา Stop–Go</h2>
+<p>ก่อนเริ่มโค้ด ตอบคำถามต่อไปนี้ให้ได้อย่างน้อยหนึ่งประโยค:</p>
+<ul>
+<li>ใครใช้ผลลัพธ์นี้</li>
+<li>Input มาจากไหน</li>
+<li>Output ต้องหน้าตาอย่างไร</li>
+<li>อะไรห้ามระบบทำ</li>
+<li>ตัวอย่างหนึ่งเคสที่ควรผ่าน</li>
+<li>ตัวอย่างหนึ่งเคสที่ต้องปฏิเสธหรือส่งให้คนตรวจ</li>
+<li>จะพิสูจน์อย่างไรว่าลดเวลาหรือแก้ปัญหาได้</li>
+</ul>
+<p>หากยังตอบไม่ได้ ให้หยุดที่ discovery ไม่ใช่แก้ด้วยการเขียนโค้ดเดา</p>
+<h2 id="lesson-0-definition-of-ready">Definition of Ready แบบง่าย</h2>
+<p>งานหนึ่งชิ้นพร้อมให้เริ่มเขียนเมื่อ:</p>
+<ul>
+<li>มีตัวอย่าง input ที่ใช้ทดสอบได้</li>
+<li>บอก expected output ได้</li>
+<li>รู้ว่าเมื่อข้อมูลผิดควรเกิดอะไร</li>
+<li>ขอบเขตเล็กพอทำและตรวจได้ภายในหนึ่งช่วงงาน</li>
+<li>รู้ว่าใครตอบคำถามเมื่อติดเรื่อง business rule</li>
+</ul>
+<p><strong>Definition of Ready</strong> คือเงื่อนไขก่อนเริ่มงาน ส่วน <strong>Definition of Done</strong> คือเงื่อนไขก่อนประกาศว่างานเสร็จ สองคำนี้ช่วยลดการเริ่มงานทั้งที่ยังขาดข้อมูล และลดการส่งงานที่ “รันได้แต่ยังตรวจไม่ได้”</p>
+<h2 id="lesson-0-_4">เมื่อจบหน้านี้</h2>
+<p>คุณยังไม่จำเป็นต้องมีโค้ด แต่ต้องรู้ว่าตัวเองอยู่ด่านใด จากนั้นเปิด Guided Workbook และกรอกเฉพาะช่องของด่านนั้น</p><a class="back" href="#top">↑ กลับด้านบน</a></article><article id="lesson-1"><div class="source">14_BEGINNER_PROJECT_WORKBOOK.md</div><details class="local-toc"><summary>หัวข้อในส่วนนี้</summary><a href="#lesson-1-1-project-snapshot">1. Project Snapshot</a><a href="#lesson-1-2-current-flow">2. Current Flow</a><a href="#lesson-1-3-scope-box">3. Scope Box</a><a href="#lesson-1-4-acceptance-examples">4. Acceptance Examples</a><a href="#lesson-1-5-data-and-risk-notes">5. Data and Risk Notes</a><a href="#lesson-1-6-simple-system-map">6. Simple System Map</a><a href="#lesson-1-7-work-slices">7. Work Slices</a><a href="#lesson-1-8-daily-log">8. Daily Log</a><a href="#lesson-1-9-release-and-handoff">9. Release and Handoff</a></details><h1 id="lesson-1-14-beginner-project-workbook">14 — Beginner Project Workbook: สมุดงานไฟล์เดียว</h1>
+<p>Workbook นี้ลดภาระการเลือก Template หลายไฟล์ ให้คัดลอกหัวข้อต่อไปนี้ไปไว้ใน <code>docs/PROJECT_WORKBOOK.md</code> แล้วเติมทีละส่วน ข้อใดยังไม่รู้ให้เขียน <code>UNKNOWN — ถามใคร / เมื่อไร</code> แทนการเดา</p>
+<h2 id="lesson-1-1-project-snapshot">1. Project Snapshot</h2>
+<pre><code class="language-markdown"># Project: &lt;ชื่อที่สื่อปัญหา&gt;
+
+## โจทย์ต้นฉบับ
+&lt;ข้อความจากผู้มอบหมาย&gt;
+
+## ความเข้าใจของเรา
+ระบบนี้ช่วย &lt;ผู้ใช้&gt; ทำ &lt;งาน&gt; โดยลด &lt;เวลา/ข้อผิดพลาด/ขั้นตอน&gt;
+
+## Success metric
+- ก่อนทำ: ...
+- เป้าหมายทดลอง: ...
+- วิธีวัด: ...
+
+## Owner และผู้ตัดสิน
+- ผู้ใช้จริง:
+- ผู้ให้ requirement:
+- ผู้อนุมัติผลลัพธ์:
+</code></pre>
+<p>ถ้ายังไม่มี baseline ให้จดวิธีเก็บ ไม่ต้องสร้างตัวเลขขึ้นเอง เช่น “จับเวลาการอ่าน Resume 30 ไฟล์จากตัวอย่างสังเคราะห์หรือข้อมูลที่ได้รับอนุญาต”</p>
+<h2 id="lesson-1-2-current-flow">2. Current Flow</h2>
+<pre><code class="language-text">ใครส่งอะไร
+  ↓
+ใครเปิด/อ่าน/คัดลอก
+  ↓
+ใช้กฎอะไรตัดสิน
+  ↓
+บันทึกผลไว้ที่ไหน
+  ↓
+ใครรับงานต่อ
+</code></pre>
+<p>ใต้ Flow ให้จดจุดช้า จุดผิดบ่อย และจุดที่ต้องใช้วิจารณญาณมนุษย์ อย่ารีบทำ automation ในขั้นที่ยังไม่เข้าใจกฎ</p>
+<h2 id="lesson-1-3-scope-box">3. Scope Box</h2>
+<pre><code class="language-markdown">## In scope รอบนี้
+- รับไฟล์ข้อความ/PDF ที่ระบบรองรับ
+- สกัดข้อมูลตาม schema
+- แสดงหลักฐานและส่งให้คนตรวจ
+
+## Out of scope รอบนี้
+- ตัดสินรับหรือปฏิเสธผู้สมัครอัตโนมัติ
+- OCR เอกสารทุกชนิด
+- เชื่อม production HR system ก่อนผ่าน pilot
+
+## ข้อห้าม
+- ห้าม log เนื้อหา Resume เต็ม
+- ห้ามให้ model ทำ side effect โดยไม่มี approval
+</code></pre>
+<p>Out of scope ไม่ได้แปลว่าเรื่องนั้นไม่สำคัญ แต่แปลว่า “ยังไม่รับปากในรอบนี้”</p>
+<h2 id="lesson-1-4-acceptance-examples">4. Acceptance Examples</h2>
+<p>เขียนตัวอย่างก่อนเขียนโค้ด:</p>
+<div class="table-scroll"><table>
+<thead>
+<tr>
+<th>ID</th>
+<th>Given</th>
+<th>When</th>
+<th>Then</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>AC-01</td>
+<td>Resume มี skill Python จริง</td>
+<td>วิเคราะห์</td>
+<td>คืน skill พร้อม quote ที่ค้นพบในต้นฉบับ</td>
+</tr>
+<tr>
+<td>AC-02</td>
+<td>Provider คืน quote ที่ไม่มีจริง</td>
+<td>ตรวจ evidence</td>
+<td>ระบุ <code>needs_review</code> และไม่ยืนยันข้อมูลนั้น</td>
+</tr>
+<tr>
+<td>AC-03</td>
+<td>ส่ง event เดิมซ้ำ</td>
+<td>รับข้อมูล</td>
+<td>คืน task เดิมและไม่สร้างงานซ้ำ</td>
+</tr>
+</tbody>
+</table></div>
+<p><code>Given–When–Then</code> แปลแบบง่ายว่า “กำหนดสถานการณ์ → ทำบางอย่าง → คาดหวังผล” และสามารถเปลี่ยนเป็น test ภายหลังได้ตรง ๆ</p>
+<h2 id="lesson-1-5-data-and-risk-notes">5. Data and Risk Notes</h2>
+<pre><code class="language-markdown">| Data | Source | Sensitive? | Store where? | Keep how long? |
+|---|---|---|---|---|
+| resume_text | upload | PII | approved storage | ตาม policy |
+
+| Risk | What can happen? | Control | How to test? | Owner |
+|---|---|---|---|---|
+| RISK-01 | PII ปรากฏใน log | redact และ log เฉพาะ ID | ตรวจ captured logs | backend |
+</code></pre>
+<h2 id="lesson-1-6-simple-system-map">6. Simple System Map</h2>
+<pre><code class="language-text">[Input] → [Validate] → [Save Task] → [Process] → [Review] → [Output]
+               │             │            │
+               └─ error      └─ retry     └─ audit
+</code></pre>
+<p>ทุกกล่องควรบอกได้ว่า “รับอะไร คืนอะไร เก็บ state หรือไม่ และล้มเหลวอย่างไร” หากกล่องหนึ่งทำหลายหน้าที่จนตอบยาก ให้แยกกล่อง</p>
+<h2 id="lesson-1-7-work-slices">7. Work Slices</h2>
+<div class="table-scroll"><table>
+<thead>
+<tr>
+<th>Slice</th>
+<th>Demo ที่เห็นได้</th>
+<th>Code</th>
+<th>Test</th>
+<th>Done เมื่อ</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>S1</td>
+<td>input ถูกต้องสร้าง task ได้</td>
+<td>model + validation + repository</td>
+<td>valid/invalid input</td>
+<td>query task กลับมาได้</td>
+</tr>
+<tr>
+<td>S2</td>
+<td>worker สร้าง evidence</td>
+<td>provider + service</td>
+<td>supported/unsupported quote</td>
+<td>result ถูกบันทึก</td>
+</tr>
+<tr>
+<td>S3</td>
+<td>คนกด approve/reject</td>
+<td>review API + audit</td>
+<td>valid/duplicate decision</td>
+<td>audit ค้นย้อนหลังได้</td>
+</tr>
+</tbody>
+</table></div>
+<p>หนึ่ง Slice ควรวิ่งจาก input ไปถึงผลที่มองเห็น ไม่ใช่ “ทำ database ทั้งหมด” โดยยังสาธิตอะไรไม่ได้</p>
+<h2 id="lesson-1-8-daily-log">8. Daily Log</h2>
+<pre><code class="language-markdown">## วันที่ ...
+- เป้าหมายชิ้นเล็ก:
+- ก่อนแก้ tests เป็นอย่างไร:
+- ไฟล์ที่ตั้งใจแก้:
+- สิ่งที่ทดลอง:
+- หลักฐานหลังแก้:
+- คำถาม/ความเสี่ยงที่ยังเหลือ:
+- commit:
+</code></pre>
+<h2 id="lesson-1-9-release-and-handoff">9. Release and Handoff</h2>
+<pre><code class="language-markdown">- [ ] รันจาก clean setup ตาม README ได้
+- [ ] ไม่มี secret หรือข้อมูลจริงใน Git/log/test fixture
+- [ ] happy path และ failure สำคัญผ่าน
+- [ ] มีวิธีตรวจ health และงานค้าง
+- [ ] มี rollback/disable switch
+- [ ] ระบุ limitation ตรงไปตรงมา
+- [ ] คนอื่นทดลองตาม runbook ได้
+</code></pre>
+<p>Workbook นี้เป็นเส้นหลัก ส่วน Template Pack ใช้เมื่อเรื่องใดซับซ้อนพอที่จะต้องแยกเอกสาร เช่น ADR หลายรายการ, risk register ใหญ่ หรือ release ที่มี migration</p><a class="back" href="#top">↑ กลับด้านบน</a></article><div class="book-pager"><a href="book-07.html">กลับหน้าเริ่ม Book 7</a><a href="book-07-requirements.html">ขั้นถัดไป →</a></div></main></div><footer>Book 07 · เริ่มจากโจทย์ → ทำชิ้นเล็กให้พิสูจน์ได้ → ส่งมอบให้คนอื่นดูแลต่อได้</footer></body></html>

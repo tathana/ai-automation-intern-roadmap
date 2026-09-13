@@ -1,0 +1,223 @@
+<!doctype html><html lang="th"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>5 — วาง Test และ Failure Cases · Book 07 — Guided Project Delivery</title><style>
+:root{color-scheme:light;--ink:#203149;--muted:#5b6b7d;--line:#dbe3e9;--accent:#096b63}
+*{box-sizing:border-box}html{scroll-behavior:smooth;scroll-padding-top:24px}body{margin:0;background:#f3f6f8;color:var(--ink);font-family:"Leelawadee UI",Tahoma,sans-serif;font-size:17px;line-height:1.9}a{color:var(--accent);text-underline-offset:4px}header{background:#173b43;color:white;padding:56px max(24px,calc((100vw - 1240px)/2));}header h1{font-size:clamp(28px,4vw,46px);line-height:1.35;margin:12px 0}header p{max-width:780px;color:#d9e9eb}.eyebrow{letter-spacing:2px;font-size:13px;color:#a8dfd5}.layout{max-width:1300px;margin:auto;display:grid;grid-template-columns:280px minmax(0,1fr);gap:30px;padding:30px 24px}aside{position:sticky;top:20px;align-self:start;max-height:92vh;overflow:auto;padding-right:12px}aside h2{font-size:18px}nav a{display:block;padding:9px 10px;border-bottom:1px solid var(--line);text-decoration:none;font-size:14px;line-height:1.6}nav a:hover{background:#e1eeeb}article{background:white;padding:clamp(20px,4vw,48px);border:1px solid var(--line);border-radius:12px;margin-bottom:28px;overflow-wrap:anywhere}article h1{font-size:29px;line-height:1.5;margin:20px 0 28px}h2{font-size:24px;margin-top:40px}h3{font-size:20px;margin-top:28px}pre{background:#152c3b;color:#eaf2f7;padding:20px;border-radius:8px;overflow:auto;line-height:1.65;font-size:14px;white-space:pre;overflow-wrap:normal}code{font-family:Consolas,"Courier New",monospace}p code,li code,td code{background:#edf2f5;padding:2px 5px;border-radius:4px;font-size:.9em}blockquote{margin:24px 0;padding:4px 20px;border-left:4px solid #138779;background:#eff8f5}table{border-collapse:collapse;width:100%;font-size:15px}th,td{border:1px solid var(--line);padding:12px;text-align:left;vertical-align:top}th{background:#eaf2f2}.table-scroll{overflow:auto;margin:20px 0}hr{border:0;border-top:1px solid var(--line);margin:32px 0}.source{font-size:12px;color:var(--muted)}.local-toc{margin-top:18px;font-size:14px;background:#f5f8fa;padding:10px 14px;border-radius:6px}.local-toc a{display:block;margin:7px 0}summary{cursor:pointer}.back{display:inline-block;margin-top:24px;font-size:14px}button{border:1px solid #aac8c5;background:white;color:#175c54;padding:9px 16px;border-radius:6px;cursor:pointer;font:inherit;font-size:14px}footer{max-width:1000px;margin:20px auto;padding:24px;color:var(--muted);font-size:14px}.visual-board{margin:20px 0;padding:16px;border:1px solid #cbd9df;border-radius:12px;background:#f7fafb;overflow:auto}.visual-flow{min-width:620px;display:flex;align-items:center;justify-content:center;gap:8px;padding:14px}.visual-box{min-width:112px;padding:11px;background:white;border:1px solid #9eb3bd;border-radius:9px;text-align:center;box-shadow:0 3px 8px rgba(20,50,60,.07)}.visual-arrow{font-weight:700;color:var(--accent)}.visual-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:10px}.visual-pane{background:white;border:1px solid #cbd9df;border-radius:8px;padding:12px}.visual-label{font-size:12px;letter-spacing:.08em;color:#527080;font-weight:700}.visual-lane{display:grid;grid-template-columns:130px 1fr;gap:12px;align-items:center;margin:8px 0}.visual-track{padding:9px;background:#e6f1ef;border-radius:7px}.visual-note{padding:11px 15px;border-left:4px solid var(--accent);background:#eaf5f3;margin:14px 0}@media(max-width:850px){.layout{display:block;padding:16px}aside{position:static;max-height:none;padding:0 0 20px}nav{max-height:280px;overflow:auto}article h1{font-size:25px}body{font-size:16px}.visual-grid{grid-template-columns:1fr}.visual-lane{grid-template-columns:1fr}}@media print{body{background:white;font-size:11pt}header{background:white;color:black;padding:0}header p{color:black}.layout{display:block;padding:0}aside,button,.local-toc,.back{display:none}article{border:0;padding:0;break-before:page}pre{white-space:pre-wrap;background:#f0f2f4;color:black;font-size:9pt}a{color:inherit}h1,h2,h3{break-after:avoid}.table-scroll{overflow:visible}}
+
+        .book-map{display:flex;gap:8px;overflow:auto;padding:10px 0 2px;margin-top:20px}
+        .book-map a{white-space:nowrap;color:white;border:1px solid rgba(255,255,255,.35);border-radius:999px;padding:5px 11px;text-decoration:none;font-size:13px}
+        .book-pager{display:flex;justify-content:space-between;gap:16px;margin:0 0 24px}
+        .book-pager a{background:white;border:1px solid var(--line);border-radius:9px;padding:10px 14px;text-decoration:none;font-weight:700}
+        </style></head><body><header id="top"><div class="eyebrow">BOOK 07 · GUIDED PROJECT PATH</div><h1>5 — วาง Test และ Failure Cases</h1><p>เปลี่ยน acceptance เป็น unit/integration tests และแยก software test จาก AI evaluation</p><p><a style="color:white" href="book-07.html">หน้าเริ่ม Book 7</a> · <a style="color:white" href="book-07-materials.zip">ดาวน์โหลด Workbook และ Template</a> · <a style="color:white" href="index.html">หนังสือทั้งหมด</a></p><div class="book-map" aria-label="เส้นทาง Book 7"><a href="book-07-start.html">เริ่มต้นและ Workbook</a><a href="book-07-requirements.html">1 — เข้าใจโจทย์และกำหนดขอบเขต</a><a href="book-07-design.html">2 — ออกแบบระบบและแบ่งงาน</a><a href="book-07-build.html">3 — เริ่มเขียนโค้ดทีละก้อน</a><a href="book-07-ai.html">4 — ใช้ AI ช่วยเขียนอย่างคุมงานได้</a><a href="book-07-test.html">5 — วาง Test และ Failure Cases</a><a href="book-07-deliver.html">6 — Release, Observe และ Handoff</a><a href="book-07-example.html">7 — ดูตัวอย่างเต็มและภาพรวม</a><a href="book-07-reference.html">Reference — Phase Gates และ Template Pack</a></div></header><div class="layout"><aside><h2>ในหน้านี้</h2><nav><a href="#lesson-0">17 — Test Planning for Beginners: ต้องทดสอบอะไรบ้าง</a><a href="#lesson-1">07 — Test Strategy, Failure Matrix และ AI Evaluation</a></nav><p style="font-size:13px">อ่านตามลำดับ หรือกลับหน้าเริ่มเพื่อเลือกจากสถานการณ์ที่กำลังเจอ</p></aside><main><div class="book-pager"><a href="book-07-ai.html">← ขั้นก่อนหน้า</a><a href="book-07-deliver.html">ขั้นถัดไป →</a></div><article id="lesson-0"><div class="source">17_TEST_PLANNING_FOR_BEGINNERS.md</div><details class="local-toc"><summary>หัวข้อในส่วนนี้</summary><a href="#lesson-0-acceptance-criteria-test">เปลี่ยน Acceptance Criteria เป็น Test</a><a href="#lesson-0-_1">สี่ระดับที่ควรรู้</a><a href="#lesson-0-test-matrix">ชุดคำถามสร้าง Test Matrix</a><a href="#lesson-0-test-plan">ตาราง Test Plan ขนาดเล็ก</a><a href="#lesson-0-mock-test">Mock อย่างไรไม่ให้ Test หลอกเรา</a><a href="#lesson-0-ai-system-evaluation">AI System ต้องมี Evaluation เพิ่ม</a><a href="#lesson-0-test">ก่อนบอกว่า Test ผ่าน</a></details><h1 id="lesson-0-17-test-planning-for-beginners">17 — Test Planning for Beginners: ต้องทดสอบอะไรบ้าง</h1>
+<p>Test ไม่ได้มีไว้พิสูจน์ว่า “โค้ดไม่มี bug” แต่เป็นหลักฐานว่า behavior สำคัญที่เราระบุไว้ยังทำงาน และช่วยเตือนเมื่อการแก้ครั้งใหม่ทำของเดิมเสีย</p>
+<h2 id="lesson-0-acceptance-criteria-test">เปลี่ยน Acceptance Criteria เป็น Test</h2>
+<pre><code class="language-text">Requirement
+  ↓ เขียนตัวอย่าง Given–When–Then
+Acceptance criterion
+  ↓ เลือกระดับที่ตรวจได้เร็วที่สุด
+Test
+  ↓ เก็บผลการรัน
+Evidence
+</code></pre>
+<p>ตัวอย่าง:</p>
+<pre><code class="language-python">def test_quote_found_in_source_is_supported():
+    assert is_supported_quote("Used Python daily", "Python") is True
+
+
+def test_empty_quote_is_not_supported():
+    assert is_supported_quote("Used Python daily", "") is False
+</code></pre>
+<p>ชื่อ test ควรบอกสถานการณ์และผลที่คาด อ่านแล้วเข้าใจ contract ได้โดยไม่ต้องเปิด implementation ก่อน</p>
+<h2 id="lesson-0-_1">สี่ระดับที่ควรรู้</h2>
+<div class="table-scroll"><table>
+<thead>
+<tr>
+<th>ระดับ</th>
+<th>ตรวจอะไร</th>
+<th>ตัวอย่าง</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Unit</td>
+<td>ฟังก์ชัน/กฎเล็กแบบแยกส่วน</td>
+<td>quote validator</td>
+</tr>
+<tr>
+<td>Component</td>
+<td>module หรือ service กับ fake dependency</td>
+<td>service + fake provider</td>
+</tr>
+<tr>
+<td>Integration</td>
+<td>หลายส่วนจริงคุยกัน</td>
+<td>API + SQLite</td>
+</tr>
+<tr>
+<td>End-to-end</td>
+<td>เส้นทางผู้ใช้ตั้งแต่ต้นจนจบ</td>
+<td>upload → process → review</td>
+</tr>
+</tbody>
+</table></div>
+<p>ไม่จำเป็นต้องทำทุกกรณีเป็น end-to-end เพราะช้าและหาสาเหตุยาก กฎย่อยควรมี unit test ส่วน boundary สำคัญจึงเสริม integration</p>
+<h2 id="lesson-0-test-matrix">ชุดคำถามสร้าง Test Matrix</h2>
+<p>สำหรับแต่ละ flow ให้ถาม:</p>
+<ol>
+<li><strong>Happy path:</strong> ข้อมูลถูกต้องแล้วได้อะไร</li>
+<li><strong>Boundary:</strong> ค่าว่าง เล็กสุด ใหญ่สุด หรือหมดเวลาจะเกิดอะไร</li>
+<li><strong>Invalid input:</strong> field หาย type ผิด format ผิดถูกปฏิเสธอย่างไร</li>
+<li><strong>Duplicate:</strong> request/event เดิมเข้าซ้ำแล้วข้อมูลหรือ side effect ซ้ำหรือไม่</li>
+<li><strong>Dependency failure:</strong> database/provider/email ล่มหรือช้าแล้ว state อยู่ไหน</li>
+<li><strong>Crash recovery:</strong> process หยุดหลังทำครึ่งหนึ่งแล้วเริ่มใหม่ได้หรือไม่</li>
+<li><strong>Permission:</strong> ผู้ใช้ที่ไม่มีสิทธิ์ทำสิ่งนี้ได้หรือไม่</li>
+<li><strong>Privacy:</strong> log/error/response เปิดเผยข้อมูลเกินจำเป็นหรือไม่</li>
+</ol>
+<h2 id="lesson-0-test-plan">ตาราง Test Plan ขนาดเล็ก</h2>
+<div class="table-scroll"><table>
+<thead>
+<tr>
+<th>ID</th>
+<th>Behavior</th>
+<th>Level</th>
+<th>Fixture</th>
+<th>Expected</th>
+<th>Evidence</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>T-01</td>
+<td>quote จริงได้รับการยืนยัน</td>
+<td>unit</td>
+<td>source+quote</td>
+<td><code>True</code></td>
+<td>pytest report</td>
+</tr>
+<tr>
+<td>T-02</td>
+<td>quote ปลอมถูก block</td>
+<td>component</td>
+<td>fake provider</td>
+<td><code>needs_review</code></td>
+<td>result record</td>
+</tr>
+<tr>
+<td>T-03</td>
+<td>event ซ้ำไม่สร้าง task ซ้ำ</td>
+<td>integration</td>
+<td>SQLite temp DB</td>
+<td>same task ID</td>
+<td>DB count</td>
+</tr>
+<tr>
+<td>T-04</td>
+<td>worker crash คืนงานเข้า queue</td>
+<td>integration</td>
+<td>short lease</td>
+<td>task retried</td>
+<td>state history</td>
+</tr>
+</tbody>
+</table></div>
+<h2 id="lesson-0-mock-test">Mock อย่างไรไม่ให้ Test หลอกเรา</h2>
+<p>Mock ใช้แทน dependency ที่ช้า แพง หรือควบคุมไม่ได้ เช่น LLM API แต่ไม่ควร mock สิ่งที่ test ตั้งใจพิสูจน์</p>
+<pre><code class="language-text">ถ้าต้องพิสูจน์ business rule → ใช้ input จริงกับ rule จริง
+ถ้าต้องพิสูจน์ SQL → ใช้ database test จริง
+ถ้าต้องพิสูจน์ provider failure handling → fake provider ที่ตั้งให้ timeout
+</code></pre>
+<p>Test ที่ mock database, service และ provider ทั้งหมดอาจพิสูจน์เพียงว่า mock คืนค่าตามที่เราสั่ง</p>
+<h2 id="lesson-0-ai-system-evaluation">AI System ต้องมี Evaluation เพิ่ม</h2>
+<p>Software test ตรวจ contract ที่แน่นอน ส่วน AI evaluation ตรวจคุณภาพที่อาจแปรผัน:</p>
+<ul>
+<li>evidence grounded หรือไม่</li>
+<li>field extraction ถูกต้องเพียงใด</li>
+<li>unsupported claim ถูก block เท่าไร</li>
+<li>human reviewer ต้องแก้มากเพียงใด</li>
+<li>latency/cost อยู่ในขอบเขตหรือไม่</li>
+</ul>
+<p>ใช้ dataset สังเคราะห์หรือข้อมูลที่ได้รับอนุญาต เก็บ prompt/model/version/rubric เพื่อให้เปรียบเทียบรอบใหม่ได้</p>
+<h2 id="lesson-0-test">ก่อนบอกว่า Test ผ่าน</h2>
+<ul>
+<li>รันคำสั่งจาก clean environment ได้</li>
+<li>test ล้มจริงเมื่อจงใจทำ behavior ให้ผิด</li>
+<li>ไม่มี test ที่ขึ้นกับลำดับหรือข้อมูลค้างจากรอบก่อน</li>
+<li>failure สำคัญจาก risk register มี test หรือ manual procedure รองรับ</li>
+<li>บันทึก command, environment และผลที่ใช้เป็น evidence</li>
+</ul><a class="back" href="#top">↑ กลับด้านบน</a></article><article id="lesson-1"><div class="source">07_testing_failure_ai_evaluation.md</div><details class="local-toc"><summary>หัวข้อในส่วนนี้</summary><a href="#lesson-1-boundary-risk">ทดสอบตาม Boundary และ Risk</a><a href="#lesson-1-test-matrix">Test Matrix</a><a href="#lesson-1-failure-matrix">Failure Matrix</a><a href="#lesson-1-ai-evaluation-unit-test">AI Evaluation ไม่ใช่ Unit Test ธรรมดา</a><a href="#lesson-1-human-review">Human Review</a><a href="#lesson-1-evidence-pack">Evidence Pack</a></details><h1 id="lesson-1-07-test-strategy-failure-matrix-ai-evaluation">07 — Test Strategy, Failure Matrix และ AI Evaluation</h1>
+<h2 id="lesson-1-boundary-risk">ทดสอบตาม Boundary และ Risk</h2>
+<pre><code class="language-text">Domain rules → unit tests
+DB/provider/files → integration tests
+User journey → end-to-end tests
+LLM behavior → fixed evaluation dataset + validators + human rubric
+Operational recovery → failure drills
+</code></pre>
+<p>จำนวน test ไม่ใช่เป้าหมาย ให้ความเสี่ยงเป็นตัวกำหนดว่าต้องพิสูจน์อะไร</p>
+<h2 id="lesson-1-test-matrix">Test Matrix</h2>
+<div class="table-scroll"><table>
+<thead>
+<tr>
+<th>Case</th>
+<th>Input</th>
+<th>Expected state/output</th>
+<th>Evidence</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>happy</td>
+<td>valid PDF</td>
+<td>needs_review + supported fields</td>
+<td>test/report</td>
+</tr>
+<tr>
+<td>invalid</td>
+<td>unsupported type</td>
+<td>rejected, no task side effect</td>
+<td>API test</td>
+</tr>
+<tr>
+<td>duplicate</td>
+<td>same event twice</td>
+<td>one task, same ID</td>
+<td>concurrency test</td>
+</tr>
+<tr>
+<td>provider timeout</td>
+<td>valid input</td>
+<td>retry_wait, no false success</td>
+<td>failure drill</td>
+</tr>
+<tr>
+<td>unsupported quote</td>
+<td>model invented quote</td>
+<td>needs_review/field removed</td>
+<td>eval</td>
+</tr>
+</tbody>
+</table></div>
+<h2 id="lesson-1-failure-matrix">Failure Matrix</h2>
+<p>สำหรับแต่ละ dependency ถาม timeout, retryable errors, retry budget, persistent state, alert, manual recovery และ safe replay</p>
+<pre><code class="language-text">Provider 429
+→ record attempt/category
+→ exponential backoff + jitter within budget
+→ retry_wait with next_attempt_at
+→ exhausted: needs_review/failed_terminal
+→ never export unvalidated partial result
+</code></pre>
+<h2 id="lesson-1-ai-evaluation-unit-test">AI Evaluation ไม่ใช่ Unit Test ธรรมดา</h2>
+<p>แยก deterministic validators ออกจาก model-quality eval:</p>
+<ul>
+<li>schema validity</li>
+<li>evidence quote พบใน source จริง</li>
+<li>field precision/recall ตาม rubric</li>
+<li>abstention เมื่อไม่มีหลักฐาน</li>
+<li>unsupported-claim rate</li>
+<li>latency/cost เป็น secondary metrics</li>
+<li>slice ผลตาม document type/language/difficulty</li>
+</ul>
+<p>ห้ามปรับ prompt และตัดสินด้วยตัวอย่างเดียว สร้าง versioned dataset, expected labels, evaluator version และผล regression</p>
+<h2 id="lesson-1-human-review">Human Review</h2>
+<p>review screen ต้องแสดง source, extracted claim, evidence/location, confidence ที่อธิบายได้, reason flags และ action approve/edit/reject พร้อม audit actor/time</p>
+<h2 id="lesson-1-evidence-pack">Evidence Pack</h2>
+<p>เก็บ command, environment/version, dataset version, summary, failures, known limitations และผู้ตรวจ อย่าเก็บ raw sensitive fixtures ใน artifact ที่แชร์กว้าง</p>
+<h3 id="lesson-1-gate-c">Gate C ตรวจผ่านเมื่อ</h3>
+<p>must-have acceptance cases มีหลักฐาน, critical failure drill ผ่าน, AI claims มี evidence validation และ limitation ถูกบันทึก ไม่เลือกเฉพาะตัวอย่างที่สวย</p><a class="back" href="#top">↑ กลับด้านบน</a></article><div class="book-pager"><a href="book-07-ai.html">← ขั้นก่อนหน้า</a><a href="book-07-deliver.html">ขั้นถัดไป →</a></div></main></div><footer>Book 07 · เริ่มจากโจทย์ → ทำชิ้นเล็กให้พิสูจน์ได้ → ส่งมอบให้คนอื่นดูแลต่อได้</footer></body></html>

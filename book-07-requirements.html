@@ -1,0 +1,162 @@
+<!doctype html><html lang="th"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>1 — เข้าใจโจทย์และกำหนดขอบเขต · Book 07 — Guided Project Delivery</title><style>
+:root{color-scheme:light;--ink:#203149;--muted:#5b6b7d;--line:#dbe3e9;--accent:#096b63}
+*{box-sizing:border-box}html{scroll-behavior:smooth;scroll-padding-top:24px}body{margin:0;background:#f3f6f8;color:var(--ink);font-family:"Leelawadee UI",Tahoma,sans-serif;font-size:17px;line-height:1.9}a{color:var(--accent);text-underline-offset:4px}header{background:#173b43;color:white;padding:56px max(24px,calc((100vw - 1240px)/2));}header h1{font-size:clamp(28px,4vw,46px);line-height:1.35;margin:12px 0}header p{max-width:780px;color:#d9e9eb}.eyebrow{letter-spacing:2px;font-size:13px;color:#a8dfd5}.layout{max-width:1300px;margin:auto;display:grid;grid-template-columns:280px minmax(0,1fr);gap:30px;padding:30px 24px}aside{position:sticky;top:20px;align-self:start;max-height:92vh;overflow:auto;padding-right:12px}aside h2{font-size:18px}nav a{display:block;padding:9px 10px;border-bottom:1px solid var(--line);text-decoration:none;font-size:14px;line-height:1.6}nav a:hover{background:#e1eeeb}article{background:white;padding:clamp(20px,4vw,48px);border:1px solid var(--line);border-radius:12px;margin-bottom:28px;overflow-wrap:anywhere}article h1{font-size:29px;line-height:1.5;margin:20px 0 28px}h2{font-size:24px;margin-top:40px}h3{font-size:20px;margin-top:28px}pre{background:#152c3b;color:#eaf2f7;padding:20px;border-radius:8px;overflow:auto;line-height:1.65;font-size:14px;white-space:pre;overflow-wrap:normal}code{font-family:Consolas,"Courier New",monospace}p code,li code,td code{background:#edf2f5;padding:2px 5px;border-radius:4px;font-size:.9em}blockquote{margin:24px 0;padding:4px 20px;border-left:4px solid #138779;background:#eff8f5}table{border-collapse:collapse;width:100%;font-size:15px}th,td{border:1px solid var(--line);padding:12px;text-align:left;vertical-align:top}th{background:#eaf2f2}.table-scroll{overflow:auto;margin:20px 0}hr{border:0;border-top:1px solid var(--line);margin:32px 0}.source{font-size:12px;color:var(--muted)}.local-toc{margin-top:18px;font-size:14px;background:#f5f8fa;padding:10px 14px;border-radius:6px}.local-toc a{display:block;margin:7px 0}summary{cursor:pointer}.back{display:inline-block;margin-top:24px;font-size:14px}button{border:1px solid #aac8c5;background:white;color:#175c54;padding:9px 16px;border-radius:6px;cursor:pointer;font:inherit;font-size:14px}footer{max-width:1000px;margin:20px auto;padding:24px;color:var(--muted);font-size:14px}.visual-board{margin:20px 0;padding:16px;border:1px solid #cbd9df;border-radius:12px;background:#f7fafb;overflow:auto}.visual-flow{min-width:620px;display:flex;align-items:center;justify-content:center;gap:8px;padding:14px}.visual-box{min-width:112px;padding:11px;background:white;border:1px solid #9eb3bd;border-radius:9px;text-align:center;box-shadow:0 3px 8px rgba(20,50,60,.07)}.visual-arrow{font-weight:700;color:var(--accent)}.visual-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:10px}.visual-pane{background:white;border:1px solid #cbd9df;border-radius:8px;padding:12px}.visual-label{font-size:12px;letter-spacing:.08em;color:#527080;font-weight:700}.visual-lane{display:grid;grid-template-columns:130px 1fr;gap:12px;align-items:center;margin:8px 0}.visual-track{padding:9px;background:#e6f1ef;border-radius:7px}.visual-note{padding:11px 15px;border-left:4px solid var(--accent);background:#eaf5f3;margin:14px 0}@media(max-width:850px){.layout{display:block;padding:16px}aside{position:static;max-height:none;padding:0 0 20px}nav{max-height:280px;overflow:auto}article h1{font-size:25px}body{font-size:16px}.visual-grid{grid-template-columns:1fr}.visual-lane{grid-template-columns:1fr}}@media print{body{background:white;font-size:11pt}header{background:white;color:black;padding:0}header p{color:black}.layout{display:block;padding:0}aside,button,.local-toc,.back{display:none}article{border:0;padding:0;break-before:page}pre{white-space:pre-wrap;background:#f0f2f4;color:black;font-size:9pt}a{color:inherit}h1,h2,h3{break-after:avoid}.table-scroll{overflow:visible}}
+
+        .book-map{display:flex;gap:8px;overflow:auto;padding:10px 0 2px;margin-top:20px}
+        .book-map a{white-space:nowrap;color:white;border:1px solid rgba(255,255,255,.35);border-radius:999px;padding:5px 11px;text-decoration:none;font-size:13px}
+        .book-pager{display:flex;justify-content:space-between;gap:16px;margin:0 0 24px}
+        .book-pager a{background:white;border:1px solid var(--line);border-radius:9px;padding:10px 14px;text-decoration:none;font-weight:700}
+        </style></head><body><header id="top"><div class="eyebrow">BOOK 07 · GUIDED PROJECT PATH</div><h1>1 — เข้าใจโจทย์และกำหนดขอบเขต</h1><p>สำรวจงานเดิม ตั้ง baseline เขียน scope, acceptance criteria และ traceability</p><p><a style="color:white" href="book-07.html">หน้าเริ่ม Book 7</a> · <a style="color:white" href="book-07-materials.zip">ดาวน์โหลด Workbook และ Template</a> · <a style="color:white" href="index.html">หนังสือทั้งหมด</a></p><div class="book-map" aria-label="เส้นทาง Book 7"><a href="book-07-start.html">เริ่มต้นและ Workbook</a><a href="book-07-requirements.html">1 — เข้าใจโจทย์และกำหนดขอบเขต</a><a href="book-07-design.html">2 — ออกแบบระบบและแบ่งงาน</a><a href="book-07-build.html">3 — เริ่มเขียนโค้ดทีละก้อน</a><a href="book-07-ai.html">4 — ใช้ AI ช่วยเขียนอย่างคุมงานได้</a><a href="book-07-test.html">5 — วาง Test และ Failure Cases</a><a href="book-07-deliver.html">6 — Release, Observe และ Handoff</a><a href="book-07-example.html">7 — ดูตัวอย่างเต็มและภาพรวม</a><a href="book-07-reference.html">Reference — Phase Gates และ Template Pack</a></div></header><div class="layout"><aside><h2>ในหน้านี้</h2><nav><a href="#lesson-0">01 — รับโจทย์, Discovery และ Baseline</a><a href="#lesson-1">02 — Scope, Requirements, Acceptance Criteria และ Traceability</a></nav><p style="font-size:13px">อ่านตามลำดับ หรือกลับหน้าเริ่มเพื่อเลือกจากสถานการณ์ที่กำลังเจอ</p></aside><main><div class="book-pager"><a href="book-07-start.html">← ขั้นก่อนหน้า</a><a href="book-07-design.html">ขั้นถัดไป →</a></div><article id="lesson-0"><div class="source">01_intake_discovery_baseline.md</div><details class="local-toc"><summary>หัวข้อในส่วนนี้</summary><a href="#lesson-0-_1">แปลคำขอให้เป็นปัญหาที่ตรวจได้</a><a href="#lesson-0-stakeholder-map">Stakeholder Map</a><a href="#lesson-0-discovery">คำถาม Discovery ที่ให้หลักฐาน</a><a href="#lesson-0-current-state-map">Current-State Map</a><a href="#lesson-0-baseline">Baseline ที่เทียบได้</a><a href="#lesson-0-output">Output ของบทนี้</a></details><h1 id="lesson-0-01-discovery-baseline">01 — รับโจทย์, Discovery และ Baseline</h1>
+<h2 id="lesson-0-_1">แปลคำขอให้เป็นปัญหาที่ตรวจได้</h2>
+<p>ผู้ใช้อาจเริ่มว่า “อยากใช้ AI อ่าน resume” นี่คือ solution idea ไม่ใช่ problem definition ให้ถามต่อว่าใครทำอะไร ช่วงไหนช้า output ถูกใช้ต่ออย่างไร และผิดแบบไหนอันตราย</p>
+<pre><code class="language-text">คำขอ: ใช้ AI อ่าน resume
+  ↓ ถามงานปัจจุบัน
+HR เปิด PDF → หา evidence → จดลง sheet → ส่ง reviewer
+  ↓ วัด
+เฉลี่ย 7 นาที/ไฟล์, 1,000 ไฟล์, ต้องย้อนหา quote บ่อย
+  ↓ เป้าหมายที่ปลอดภัย
+สร้าง evidence draft พร้อมตำแหน่งอ้างอิง ให้คนตรวจเร็วขึ้น
+</code></pre>
+<h2 id="lesson-0-stakeholder-map">Stakeholder Map</h2>
+<p>แยกบทบาทให้ชัด:</p>
+<ul>
+<li><strong>User:</strong> คนทำงานกับระบบทุกวัน</li>
+<li><strong>Sponsor/Owner:</strong> คนตัดสิน scope/priority</li>
+<li><strong>Subject-matter expert:</strong> คนตัดสินว่าผลถูกทางธุรกิจหรือไม่</li>
+<li><strong>Technical owner:</strong> คนรับระบบหลังส่งมอบ</li>
+<li><strong>Risk approver:</strong> Security, Legal, Privacy หรือผู้มีอำนาจตามบริบท</li>
+</ul>
+<p>คนเดียวอาจมีหลายบทบาท แต่ชื่อ “ทีม HR” กว้างเกินไปสำหรับ decision log</p>
+<h2 id="lesson-0-discovery">คำถาม Discovery ที่ให้หลักฐาน</h2>
+<p>แทนที่จะถาม “อยากได้ feature อะไร” ให้ถาม:</p>
+<ul>
+<li>ช่วยทำรายการจริงหนึ่งรายการให้ดูตั้งแต่ต้นจนจบได้ไหม</li>
+<li>จุดใดใช้เวลาคนลงมือ จุดใดเป็นเวลารอ</li>
+<li>input ที่แย่ที่สุดหน้าตาอย่างไร</li>
+<li>output ถูกนำไปตัดสินใจหรือส่งระบบใดต่อ</li>
+<li>วันนี้เมื่อข้อมูลขาด/ซ้ำ/อ่านไม่ได้ทำอย่างไร</li>
+<li>ใครตรวจว่าผลถูก และตรวจจากหลักฐานอะไร</li>
+<li>ถ้าระบบหยุดหนึ่งวัน ผลกระทบคืออะไร</li>
+</ul>
+<h2 id="lesson-0-current-state-map">Current-State Map</h2>
+<p>บันทึก actor, action, system, data และเวลาคร่าว ๆ:</p>
+<div class="table-scroll"><table>
+<thead>
+<tr>
+<th>Step</th>
+<th>Actor</th>
+<th>Input → Output</th>
+<th>Active/Wait time</th>
+<th>Failure</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>1</td>
+<td>HR</td>
+<td>mailbox → PDF</td>
+<td>30s</td>
+<td>attachment หาย</td>
+</tr>
+<tr>
+<td>2</td>
+<td>HR</td>
+<td>PDF → notes</td>
+<td>5m</td>
+<td>scanned PDF</td>
+</tr>
+<tr>
+<td>3</td>
+<td>Reviewer</td>
+<td>notes → decision support</td>
+<td>2m</td>
+<td>quote ตามไม่พบ</td>
+</tr>
+</tbody>
+</table></div>
+<p>การแยก <strong>active time</strong> กับ <strong>wait time</strong> ป้องกันการอ้างว่าลดเวลาคนทั้งที่ลดเพียง latency ระบบ</p>
+<h2 id="lesson-0-baseline">Baseline ที่เทียบได้</h2>
+<p>กำหนดจุดเริ่ม/จบ ชุดตัวอย่าง และเงื่อนไขเดียวกัน:</p>
+<pre><code class="language-text">Start: HR เปิดไฟล์
+End: evidence note พร้อมให้ reviewer ตรวจ
+Sample: synthetic/searchable 30 ไฟล์ แบ่งสั้น/ยาว/ข้อมูลขาด
+Measure: median, p90, correction count, unprocessable count
+</code></pre>
+<p>ค่าเฉลี่ยอย่างเดียวซ่อนงานยาก จึงเก็บ distribution หรืออย่างน้อย median/p90 และแบ่งประเภทเอกสาร</p>
+<h2 id="lesson-0-output">Output ของบทนี้</h2>
+<ul>
+<li><code>01_project_intake.md</code></li>
+<li><code>02_stakeholder_questions.md</code></li>
+<li><code>03_current_state_and_baseline.md</code></li>
+<li>รายการ unknown พร้อม owner/date ที่จะตอบ</li>
+</ul>
+<h3 id="lesson-0-gate-a">Gate A ตรวจผ่านเมื่อ</h3>
+<p>ผู้ใช้และ owner ทวนกลับได้ตรงกันว่า pain อยู่ที่ใด เป้าหมายคืออะไร จะวัดจากอะไร และข้อใดไม่ใช่งานรอบนี้</p><a class="back" href="#top">↑ กลับด้านบน</a></article><article id="lesson-1"><div class="source">02_scope_requirements_traceability.md</div><details class="local-toc"><summary>หัวข้อในส่วนนี้</summary><a href="#lesson-1-_1">จากปัญหาไปสู่สัญญาที่ทดสอบได้</a><a href="#lesson-1-project-brief">Project Brief หนึ่งหน้า</a><a href="#lesson-1-functional-non-functional-requirements">Functional และ Non-functional Requirements</a><a href="#lesson-1-acceptance-criteria">Acceptance Criteria</a><a href="#lesson-1-assumption-constraint-decision">Assumption, Constraint และ Decision</a><a href="#lesson-1-traceability-matrix">Traceability Matrix</a><a href="#lesson-1-change-control">Change Control แบบเบา</a></details><h1 id="lesson-1-02-scope-requirements-acceptance-criteria-traceability">02 — Scope, Requirements, Acceptance Criteria และ Traceability</h1>
+<h2 id="lesson-1-_1">จากปัญหาไปสู่สัญญาที่ทดสอบได้</h2>
+<pre><code class="language-text">Problem → Outcome → Scope → Requirement → Acceptance case → Test/Evidence
+</code></pre>
+<p>แต่ละชั้นตอบคนละคำถาม: outcome บอกผลต่อผู้ใช้, requirement บอกพฤติกรรมระบบ, acceptance case บอกตัวอย่างที่ใช้ตัดสินว่ายอมรับได้</p>
+<h2 id="lesson-1-project-brief">Project Brief หนึ่งหน้า</h2>
+<p>ควรมี problem, users, target outcome, in/out of scope, constraints, assumptions, baseline, success/guardrail metrics, owner และ milestone แรก ถ้า brief ยังอธิบายไม่ได้ในหนึ่งหน้า อย่าเพิ่งแตก task จำนวนมาก</p>
+<h2 id="lesson-1-functional-non-functional-requirements">Functional และ Non-functional Requirements</h2>
+<pre><code class="language-text">REQ-F-01 ระบบรับ PDF ไม่เกินขนาดที่กำหนดและสร้าง task ID
+REQ-NF-01 ระบบไม่บันทึก raw resume ใน application log
+REQ-NF-02 duplicate event เดิมต้องไม่สร้าง task ใหม่
+</code></pre>
+<p>Functional คือ “ทำอะไร”; non-functional คือคุณภาพ ขีดจำกัด ความปลอดภัย ความทนทาน และการดูแล</p>
+<h2 id="lesson-1-acceptance-criteria">Acceptance Criteria</h2>
+<p>ใช้ Given/When/Then หรือ Input/Action/Expected แต่ต้องมีตัวอย่าง failure ด้วย:</p>
+<pre><code class="language-text">AC-03
+Given PDF ไม่มี text layer
+When ส่งเข้าระบบรุ่นที่ยังไม่มี OCR
+Then task เป็น needs_review reason=TEXT_NOT_FOUND
+And ไม่เรียก LLM และไม่แสดงว่า extract สำเร็จ
+</code></pre>
+<p>จุดสำคัญคือ “อะไรต้องไม่เกิด” เช่นไม่ส่งซ้ำ ไม่ log PII ไม่ auto-reject</p>
+<h2 id="lesson-1-assumption-constraint-decision">Assumption, Constraint และ Decision</h2>
+<ul>
+<li><strong>Assumption:</strong> เชื่อชั่วคราวและต้องพิสูจน์ เช่นไฟล์ส่วนใหญ่ searchable</li>
+<li><strong>Constraint:</strong> ข้อจำกัดที่ต้องยอมรับ เช่นใช้เฉพาะ provider ที่บริษัทอนุญาต</li>
+<li><strong>Decision:</strong> ทางเลือกที่ตกลงแล้วพร้อมเหตุผล เช่นเก็บ evidence location แทน raw prompt log</li>
+</ul>
+<p>อย่าปนสามคำนี้ เพราะ assumption ที่ถูกเขียนเหมือน fact ทำให้ design พังเงียบ ๆ</p>
+<h2 id="lesson-1-traceability-matrix">Traceability Matrix</h2>
+<div class="table-scroll"><table>
+<thead>
+<tr>
+<th>Requirement</th>
+<th>Design</th>
+<th>Task</th>
+<th>Verification</th>
+<th>Status</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>REQ-F-01</td>
+<td>API intake</td>
+<td>TASK-02</td>
+<td>TEST-01, EVID-01</td>
+<td>verified</td>
+</tr>
+<tr>
+<td>REQ-NF-02</td>
+<td>unique event key</td>
+<td>TASK-05</td>
+<td>TEST-06</td>
+<td>planned</td>
+</tr>
+</tbody>
+</table></div>
+<p>Matrix ช่วยหา orphan สองแบบ: requirement ไม่มี test และ feature ไม่มี requirement</p>
+<h2 id="lesson-1-change-control">Change Control แบบเบา</h2>
+<p>เมื่อ requirement เปลี่ยน ให้บันทึก:</p>
+<pre><code class="language-text">CHANGE-04: เพิ่ม OCR
+Reason: baseline พบ scanned PDF 28%
+Impact: provider/cost/privacy/eval + 3 วัน
+Decision: defer V1; return explicit TEXT_NOT_FOUND
+Owner/date: ...
+</code></pre>
+<p>ไม่ต้องจัดประชุมใหญ่ทุกครั้ง แต่ห้ามให้ change ซ่อนอยู่ใน chat แล้วไม่มีผลต่อ plan</p>
+<h3 id="lesson-1-gate-a">Gate A ตรวจผ่านเมื่อ</h3>
+<p>ทุก must-have requirement มี acceptance case, owner ยืนยัน scope/out-of-scope และ unknown สำคัญมีวิธีพิสูจน์</p><a class="back" href="#top">↑ กลับด้านบน</a></article><div class="book-pager"><a href="book-07-start.html">← ขั้นก่อนหน้า</a><a href="book-07-design.html">ขั้นถัดไป →</a></div></main></div><footer>Book 07 · เริ่มจากโจทย์ → ทำชิ้นเล็กให้พิสูจน์ได้ → ส่งมอบให้คนอื่นดูแลต่อได้</footer></body></html>

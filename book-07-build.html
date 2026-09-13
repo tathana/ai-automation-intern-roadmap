@@ -1,0 +1,215 @@
+<!doctype html><html lang="th"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>3 — เริ่มเขียนโค้ดทีละก้อน · Book 07 — Guided Project Delivery</title><style>
+:root{color-scheme:light;--ink:#203149;--muted:#5b6b7d;--line:#dbe3e9;--accent:#096b63}
+*{box-sizing:border-box}html{scroll-behavior:smooth;scroll-padding-top:24px}body{margin:0;background:#f3f6f8;color:var(--ink);font-family:"Leelawadee UI",Tahoma,sans-serif;font-size:17px;line-height:1.9}a{color:var(--accent);text-underline-offset:4px}header{background:#173b43;color:white;padding:56px max(24px,calc((100vw - 1240px)/2));}header h1{font-size:clamp(28px,4vw,46px);line-height:1.35;margin:12px 0}header p{max-width:780px;color:#d9e9eb}.eyebrow{letter-spacing:2px;font-size:13px;color:#a8dfd5}.layout{max-width:1300px;margin:auto;display:grid;grid-template-columns:280px minmax(0,1fr);gap:30px;padding:30px 24px}aside{position:sticky;top:20px;align-self:start;max-height:92vh;overflow:auto;padding-right:12px}aside h2{font-size:18px}nav a{display:block;padding:9px 10px;border-bottom:1px solid var(--line);text-decoration:none;font-size:14px;line-height:1.6}nav a:hover{background:#e1eeeb}article{background:white;padding:clamp(20px,4vw,48px);border:1px solid var(--line);border-radius:12px;margin-bottom:28px;overflow-wrap:anywhere}article h1{font-size:29px;line-height:1.5;margin:20px 0 28px}h2{font-size:24px;margin-top:40px}h3{font-size:20px;margin-top:28px}pre{background:#152c3b;color:#eaf2f7;padding:20px;border-radius:8px;overflow:auto;line-height:1.65;font-size:14px;white-space:pre;overflow-wrap:normal}code{font-family:Consolas,"Courier New",monospace}p code,li code,td code{background:#edf2f5;padding:2px 5px;border-radius:4px;font-size:.9em}blockquote{margin:24px 0;padding:4px 20px;border-left:4px solid #138779;background:#eff8f5}table{border-collapse:collapse;width:100%;font-size:15px}th,td{border:1px solid var(--line);padding:12px;text-align:left;vertical-align:top}th{background:#eaf2f2}.table-scroll{overflow:auto;margin:20px 0}hr{border:0;border-top:1px solid var(--line);margin:32px 0}.source{font-size:12px;color:var(--muted)}.local-toc{margin-top:18px;font-size:14px;background:#f5f8fa;padding:10px 14px;border-radius:6px}.local-toc a{display:block;margin:7px 0}summary{cursor:pointer}.back{display:inline-block;margin-top:24px;font-size:14px}button{border:1px solid #aac8c5;background:white;color:#175c54;padding:9px 16px;border-radius:6px;cursor:pointer;font:inherit;font-size:14px}footer{max-width:1000px;margin:20px auto;padding:24px;color:var(--muted);font-size:14px}.visual-board{margin:20px 0;padding:16px;border:1px solid #cbd9df;border-radius:12px;background:#f7fafb;overflow:auto}.visual-flow{min-width:620px;display:flex;align-items:center;justify-content:center;gap:8px;padding:14px}.visual-box{min-width:112px;padding:11px;background:white;border:1px solid #9eb3bd;border-radius:9px;text-align:center;box-shadow:0 3px 8px rgba(20,50,60,.07)}.visual-arrow{font-weight:700;color:var(--accent)}.visual-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:10px}.visual-pane{background:white;border:1px solid #cbd9df;border-radius:8px;padding:12px}.visual-label{font-size:12px;letter-spacing:.08em;color:#527080;font-weight:700}.visual-lane{display:grid;grid-template-columns:130px 1fr;gap:12px;align-items:center;margin:8px 0}.visual-track{padding:9px;background:#e6f1ef;border-radius:7px}.visual-note{padding:11px 15px;border-left:4px solid var(--accent);background:#eaf5f3;margin:14px 0}@media(max-width:850px){.layout{display:block;padding:16px}aside{position:static;max-height:none;padding:0 0 20px}nav{max-height:280px;overflow:auto}article h1{font-size:25px}body{font-size:16px}.visual-grid{grid-template-columns:1fr}.visual-lane{grid-template-columns:1fr}}@media print{body{background:white;font-size:11pt}header{background:white;color:black;padding:0}header p{color:black}.layout{display:block;padding:0}aside,button,.local-toc,.back{display:none}article{border:0;padding:0;break-before:page}pre{white-space:pre-wrap;background:#f0f2f4;color:black;font-size:9pt}a{color:inherit}h1,h2,h3{break-after:avoid}.table-scroll{overflow:visible}}
+
+        .book-map{display:flex;gap:8px;overflow:auto;padding:10px 0 2px;margin-top:20px}
+        .book-map a{white-space:nowrap;color:white;border:1px solid rgba(255,255,255,.35);border-radius:999px;padding:5px 11px;text-decoration:none;font-size:13px}
+        .book-pager{display:flex;justify-content:space-between;gap:16px;margin:0 0 24px}
+        .book-pager a{background:white;border:1px solid var(--line);border-radius:9px;padding:10px 14px;text-decoration:none;font-weight:700}
+        </style></head><body><header id="top"><div class="eyebrow">BOOK 07 · GUIDED PROJECT PATH</div><h1>3 — เริ่มเขียนโค้ดทีละก้อน</h1><p>เชื่อม requirement ไปยังไฟล์ ฟังก์ชัน test และวงจรทำงานรายวัน</p><p><a style="color:white" href="book-07.html">หน้าเริ่ม Book 7</a> · <a style="color:white" href="book-07-materials.zip">ดาวน์โหลด Workbook และ Template</a> · <a style="color:white" href="index.html">หนังสือทั้งหมด</a></p><div class="book-map" aria-label="เส้นทาง Book 7"><a href="book-07-start.html">เริ่มต้นและ Workbook</a><a href="book-07-requirements.html">1 — เข้าใจโจทย์และกำหนดขอบเขต</a><a href="book-07-design.html">2 — ออกแบบระบบและแบ่งงาน</a><a href="book-07-build.html">3 — เริ่มเขียนโค้ดทีละก้อน</a><a href="book-07-ai.html">4 — ใช้ AI ช่วยเขียนอย่างคุมงานได้</a><a href="book-07-test.html">5 — วาง Test และ Failure Cases</a><a href="book-07-deliver.html">6 — Release, Observe และ Handoff</a><a href="book-07-example.html">7 — ดูตัวอย่างเต็มและภาพรวม</a><a href="book-07-reference.html">Reference — Phase Gates และ Template Pack</a></div></header><div class="layout"><aside><h2>ในหน้านี้</h2><nav><a href="#lesson-0">15 — From Requirement to Code: เปิด Editor แล้วทำอะไรก่อน</a><a href="#lesson-1">18 — Daily Build Loop: วงจรทำงานหนึ่งก้อนต่อวัน</a><a href="#lesson-2">06 — Build, Git Workflow และตรวจงานที่ AI ช่วยสร้าง</a></nav><p style="font-size:13px">อ่านตามลำดับ หรือกลับหน้าเริ่มเพื่อเลือกจากสถานการณ์ที่กำลังเจอ</p></aside><main><div class="book-pager"><a href="book-07-design.html">← ขั้นก่อนหน้า</a><a href="book-07-ai.html">ขั้นถัดไป →</a></div><article id="lesson-0"><div class="source">15_FROM_REQUIREMENT_TO_CODE.md</div><details class="local-toc"><summary>หัวข้อในส่วนนี้</summary><a href="#lesson-0-contract-framework">เริ่มจาก Contract ไม่ใช่ Framework</a><a href="#lesson-0-_1">ลำดับการเขียนที่ลดความงง</a><a href="#lesson-0-pure-function">Pure Function แรก</a><a href="#lesson-0-function-design-card">Function Design Card</a><a href="#lesson-0-_2">โครงสร้างโปรเจกต์เริ่มต้น</a><a href="#lesson-0-service">Service ทำหน้าที่ประสาน ไม่ทำทุกอย่างเอง</a><a href="#lesson-0-vertical-slice">แบ่งงานเป็น Vertical Slice</a><a href="#lesson-0-_3">เมื่อใดถือว่าฟังก์ชันหนึ่งเสร็จ</a></details><h1 id="lesson-0-15-from-requirement-to-code-editor">15 — From Requirement to Code: เปิด Editor แล้วทำอะไรก่อน</h1>
+<p>บทนี้เชื่อม “สิ่งที่ผู้ใช้ต้องการ” ไปยัง “ไฟล์และฟังก์ชันที่ต้องเขียน” โดยไม่กระโดดไปสร้างระบบทั้งก้อน</p>
+<h2 id="lesson-0-contract-framework">เริ่มจาก Contract ไม่ใช่ Framework</h2>
+<p>สมมติ requirement คือ:</p>
+<blockquote>
+<p>เมื่อรับข้อความ Resume ระบบต้องคืน candidate ID, skills และ evidence quote โดย quote ต้องพบในข้อความต้นฉบับ</p>
+</blockquote>
+<p>ก่อนเปิด FastAPI หรือ n8n ให้เขียนรูปร่างข้อมูลก่อน:</p>
+<pre><code class="language-python">from pydantic import BaseModel
+
+
+class ResumeInput(BaseModel):
+    candidate_id: str
+    text: str
+
+
+class Evidence(BaseModel):
+    skill: str
+    quote: str
+    supported: bool
+</code></pre>
+<p>นี่คือ <strong>data contract</strong>: ข้อตกลงว่าข้อมูลเข้าและออกมี field/type อะไร ทำให้คนและระบบส่วนอื่นคุยกันด้วยรูปแบบเดียวกัน</p>
+<h2 id="lesson-0-_1">ลำดับการเขียนที่ลดความงง</h2>
+<pre><code class="language-text">1. ตัวอย่าง input/output
+2. Model และ validation
+3. Pure function ของกฎหลัก
+4. Unit test ของกฎหลัก
+5. Repository หรือ database
+6. Service/use case ที่ประสานงาน
+7. API/CLI/worker เป็นทางเข้า
+8. Integration test
+</code></pre>
+<p>เริ่มแก่นกลางก่อนเพราะแก้และ test ง่ายกว่าเริ่มจากหน้า API ที่ผูกหลายอย่างพร้อมกัน</p>
+<h2 id="lesson-0-pure-function">Pure Function แรก</h2>
+<p>ฟังก์ชันตรวจ quote ไม่จำเป็นต้องรู้จัก HTTP, database หรือ AI provider:</p>
+<pre><code class="language-python">def is_supported_quote(source_text: str, quote: str) -&gt; bool:
+    normalized_source = " ".join(source_text.lower().split())
+    normalized_quote = " ".join(quote.lower().split())
+    return bool(normalized_quote) and normalized_quote in normalized_source
+</code></pre>
+<p>อ่านทีละขั้น:</p>
+<pre><code class="language-text">รับ source_text + quote
+        ↓
+ลดตัวพิมพ์และช่องว่างที่ต่างกัน
+        ↓
+quote ว่างหรือไม่
+        ↓
+ค้น quote ใน source
+        ↓
+คืน True / False
+</code></pre>
+<p>เพราะไม่มี side effect เราจึงเรียกด้วย input เดิมแล้วคาดผลเดิมได้ ทำให้ unit test ง่าย</p>
+<h2 id="lesson-0-function-design-card">Function Design Card</h2>
+<p>ก่อนสร้างฟังก์ชันที่เริ่มซับซ้อน ให้ตอบ:</p>
+<pre><code class="language-markdown">Function: validate_evidence
+Responsibility: ตรวจ evidence หนึ่งรายการเท่านั้น
+Input: source_text: str, evidence: Evidence
+Output: Evidence ที่กำหนด supported แล้ว
+Side effect: ไม่มี
+Failure: input ไม่ตรง model ถูกปฏิเสธก่อนถึงฟังก์ชัน
+Example: source="Used Python" + quote="Python" → supported=True
+</code></pre>
+<p>หากช่อง Responsibility มีคำว่า “และ” หลายครั้ง เช่น “อ่านไฟล์ และเรียก AI และบันทึก DB และส่งอีเมล” นั่นเป็นสัญญาณว่าควรแบ่งฟังก์ชัน</p>
+<h2 id="lesson-0-_2">โครงสร้างโปรเจกต์เริ่มต้น</h2>
+<pre><code class="language-text">project/
+├─ README.md
+├─ pyproject.toml
+├─ .env.example
+├─ src/
+│  └─ app/
+│     ├─ models.py       # รูปร่างข้อมูล
+│     ├─ rules.py        # pure business rules
+│     ├─ repository.py   # อ่าน/เขียน state
+│     ├─ services.py     # ลำดับ use case
+│     ├─ api.py          # HTTP boundary
+│     └─ settings.py     # config จาก environment
+└─ tests/
+   ├─ test_rules.py
+   ├─ test_services.py
+   └─ test_api.py
+</code></pre>
+<p>นี่เป็นจุดเริ่ม ไม่ใช่กฎตายตัว โปรเจกต์เล็กมากอาจรวมไฟล์ได้ แต่ควรแยกเมื่อเหตุผลในการเปลี่ยนต่างกัน เช่น business rule ไม่ควรต้องแก้เพราะเปลี่ยน database</p>
+<h2 id="lesson-0-service">Service ทำหน้าที่ประสาน ไม่ทำทุกอย่างเอง</h2>
+<pre><code class="language-python">def create_evidence_task(payload, repository, provider):
+    existing = repository.find_by_event_id(payload.event_id)
+    if existing:
+        return existing
+
+    draft = provider.extract(payload.text)
+    checked = validate_all(payload.text, draft)
+    return repository.save(payload.event_id, checked)
+</code></pre>
+<p>ตัวแปร <code>repository</code> และ <code>provider</code> ถูกส่งเข้ามา ทำให้ test สามารถใช้ fake/mock แทน database และ external AI จริงได้ แนวคิดนี้เรียกว่า <strong>dependency injection</strong></p>
+<h2 id="lesson-0-vertical-slice">แบ่งงานเป็น Vertical Slice</h2>
+<p>แทนที่จะทำ models ทั้งหมดก่อนสามวัน ให้เลือก flow เล็ก:</p>
+<pre><code class="language-text">POST /tasks
+  → validate payload
+  → save task
+  → GET /tasks/{id} เห็นสถานะ queued
+</code></pre>
+<p>เมื่อผ่านจึงเพิ่ม worker/provider ใน Slice ถัดไป วิธีนี้ทำให้มีของสาธิตเร็วและพบปัญหาระหว่าง layer ตั้งแต่ต้น</p>
+<h2 id="lesson-0-_3">เมื่อใดถือว่าฟังก์ชันหนึ่งเสร็จ</h2>
+<ul>
+<li>ชื่อสื่อหน้าที่เดียว</li>
+<li>input/output ชัด</li>
+<li>จัดการกรณีผิดตาม contract</li>
+<li>มี test ของอย่างน้อย happy path และ edge/failure สำคัญ</li>
+<li>ไม่มี secret/PII ใน log</li>
+<li>ผู้อ่านอธิบายได้ว่าทำไมโค้ดจึงอยู่ layer นี้</li>
+</ul><a class="back" href="#top">↑ กลับด้านบน</a></article><article id="lesson-1"><div class="source">18_DAILY_BUILD_LOOP.md</div><details class="local-toc"><summary>หัวข้อในส่วนนี้</summary><a href="#lesson-1-10">วงจร 10 ขั้น</a><a href="#lesson-1-_1">ตัวอย่างหนึ่งรอบ</a><a href="#lesson-1-ai">จุดที่ให้ AI ช่วยในวงจร</a><a href="#lesson-1-_2">คำสั่งขั้นต่ำที่ใช้บ่อย</a><a href="#lesson-1-end-of-day-note">End-of-day Note</a></details><h1 id="lesson-1-18-daily-build-loop">18 — Daily Build Loop: วงจรทำงานหนึ่งก้อนต่อวัน</h1>
+<p>เมื่อโปรเจกต์ใหญ่ ให้ลดมุมมองเหลือ “วันนี้จะทำ behavior เล็กใดให้พิสูจน์ได้” แล้วใช้วงจรเดิมซ้ำ</p>
+<h2 id="lesson-1-10">วงจร 10 ขั้น</h2>
+<pre><code class="language-text">1 อ่าน task + acceptance
+2 เลือก behavior เดียว
+3 เขียน/แก้ test ให้แสดงสิ่งที่ต้องการ
+4 ออกแบบ function contract
+5 เขียน implementation เล็กสุด
+6 รัน focused test
+7 รัน test ที่เกี่ยวข้องทั้งหมด
+8 อ่าน diff และตรวจ secret/PII
+9 อัปเดต docs/decision ถ้าจำเป็น
+10 commit ที่อธิบายเหตุผลได้
+</code></pre>
+<h2 id="lesson-1-_1">ตัวอย่างหนึ่งรอบ</h2>
+<p>เป้าหมาย: event เดิมต้องไม่สร้าง task ซ้ำ</p>
+<pre><code class="language-text">AC-03 duplicate event → same task ID
+        ↓
+เขียน integration test ที่ส่ง event เดิม 2 รอบ
+        ↓
+เพิ่ม unique constraint + find-before-create
+        ↓
+รัน test_idempotency.py
+        ↓
+ตรวจ DB count = 1
+        ↓
+commit: feat: make intake idempotent
+</code></pre>
+<p>งานก้อนนี้มี requirement, code, test และ evidence เชื่อมกัน จึง review ง่ายกว่า commit “update backend” ที่เปลี่ยนหลาย behavior</p>
+<h2 id="lesson-1-ai">จุดที่ให้ AI ช่วยในวงจร</h2>
+<ul>
+<li>ก่อนเขียน: ช่วยหาคำถามหรือ edge cases ที่เราลืม</li>
+<li>ระหว่างออกแบบ: เปรียบเทียบสองทางเลือกและ trade-off</li>
+<li>ระหว่างเขียน: ร่างฟังก์ชัน/fixture/test ก้อนเล็ก</li>
+<li>เมื่อติด: ช่วยตั้งสมมติฐานจาก error และหลักฐาน</li>
+<li>ก่อน commit: review diff เทียบ acceptance criteria</li>
+</ul>
+<p>AI ไม่ควรเป็นคนตัดสินว่า requirement ถูกต้องแทน stakeholder หรือกดข้าม test เพราะคำตอบ “ดูน่าจะใช้ได้”</p>
+<h2 id="lesson-1-_2">คำสั่งขั้นต่ำที่ใช้บ่อย</h2>
+<pre><code class="language-powershell">git status
+git diff
+pytest tests/test_idempotency.py -q
+pytest -q
+git diff --check
+git add &lt;เฉพาะไฟล์ที่ตรวจแล้ว&gt;
+git commit -m "feat: make intake idempotent"
+</code></pre>
+<p><code>focused test</code> ให้ feedback เร็วระหว่างทำ ส่วน <code>full relevant suite</code> ช่วยตรวจว่าไม่ได้ทำ behavior อื่นพัง ทั้งสองมีหน้าที่ต่างกัน</p>
+<h2 id="lesson-1-end-of-day-note">End-of-day Note</h2>
+<p>ก่อนหยุด ให้เขียนสั้น ๆ:</p>
+<pre><code class="language-markdown">Done: AC-03 duplicate event ผ่านบน SQLite test DB
+Evidence: pytest tests/test_idempotency.py -q → 3 passed
+Decision: ใช้ event_id เป็น business idempotency key
+Next: ทดลอง crash หลัง provider สำเร็จแต่ก่อน save result
+Blocked: ต้องถาม retention policy ของ raw document
+</code></pre>
+<p>ข้อความนี้ช่วยให้วันถัดไปเริ่มต่อได้ทันที และทำให้หัวหน้ามองเห็นความคืบหน้า ความเสี่ยง และคำถามโดยไม่ต้องอ่านโค้ดทั้งหมด</p><a class="back" href="#top">↑ กลับด้านบน</a></article><article id="lesson-2"><div class="source">06_build_git_ai_review.md</div><details class="local-toc"><summary>หัวข้อในส่วนนี้</summary><a href="#lesson-2-_1">วงจรงานย่อย</a><a href="#lesson-2-_2">ก่อนแก้</a><a href="#lesson-2-_3">หลังแก้</a><a href="#lesson-2-ai-assisted-coding-contract">AI-assisted Coding Contract</a><a href="#lesson-2-pull-request-reviewer">Pull Request ที่ Reviewer ใช้งานได้</a><a href="#lesson-2-definition-of-done">Definition of Done</a></details><h1 id="lesson-2-06-build-git-workflow-ai">06 — Build, Git Workflow และตรวจงานที่ AI ช่วยสร้าง</h1>
+<h2 id="lesson-2-_1">วงจรงานย่อย</h2>
+<pre><code class="language-text">เลือก TASK → อ่าน linked requirement/test → ทำ change เล็ก
+→ รัน focused test → inspect diff → self-review → commit/PR → feedback
+</code></pre>
+<p>เริ่มจาก expected behavior ก่อน prompt AI มิฉะนั้นเราจะตรวจเพียงว่า code “ดูสมเหตุผล” ไม่ใช่ตรง contract</p>
+<h2 id="lesson-2-_2">ก่อนแก้</h2>
+<pre><code class="language-powershell">git status
+git branch --show-current
+python -m pytest tests/unit -q
+</code></pre>
+<p>บันทึก baseline ถ้า test เดิมเสีย เพื่อไม่อ้างว่า change ใหม่เป็นสาเหตุทั้งหมด</p>
+<h2 id="lesson-2-_3">หลังแก้</h2>
+<pre><code class="language-powershell">git diff --check
+git diff
+python -m pytest -q
+git status
+</code></pre>
+<p>อ่าน diff ทีละไฟล์: ทำไมเปลี่ยน, มี unrelated change หรือ secret หรือไม่, error path/test/docs ถูกเปลี่ยนตาม contract หรือยัง</p>
+<h2 id="lesson-2-ai-assisted-coding-contract">AI-assisted Coding Contract</h2>
+<p>ให้ AI ได้เฉพาะ context ที่ได้รับอนุญาต ระบุ constraints/test/output และขอ change เล็ก อย่า paste secrets, PII หรือ proprietary code ไปยังบริการที่ทีมไม่อนุญาต</p>
+<p>ตรวจสิ่งที่ AI มักเดา:</p>
+<ul>
+<li>package/API version</li>
+<li>file/path/function ที่ไม่มีจริง</li>
+<li>happy path โดยไม่มี timeout/error/idempotency</li>
+<li>permission กว้างเกินจำเป็น</li>
+<li>test ที่ mock จนไม่ตรวจ behavior</li>
+<li>log raw payload</li>
+</ul>
+<h2 id="lesson-2-pull-request-reviewer">Pull Request ที่ Reviewer ใช้งานได้</h2>
+<pre><code class="language-text">Why: linked problem/requirement
+What: behavior changed and not changed
+How to verify: exact commands + expected result
+Risk: data/state/security/compatibility
+Evidence: test/eval/demo link
+Rollback: safe reversal path
+</code></pre>
+<h2 id="lesson-2-definition-of-done">Definition of Done</h2>
+<p>Done ไม่ใช่ “code รันได้ในเครื่องผม” อย่างน้อยต้องผ่าน acceptance ที่เกี่ยวข้อง, tests, lint/type ตามทีม, docs/config example, observability, review และไม่มี secret</p>
+<h3 id="lesson-2-gate-c">Gate C ตรวจผ่านเมื่อ</h3>
+<p>ผู้เขียนอธิบาย diff ได้เอง รัน verification จาก clean setup ได้ และ reviewer เชื่อม change กลับไปยัง requirement/risk ได้</p><a class="back" href="#top">↑ กลับด้านบน</a></article><div class="book-pager"><a href="book-07-design.html">← ขั้นก่อนหน้า</a><a href="book-07-ai.html">ขั้นถัดไป →</a></div></main></div><footer>Book 07 · เริ่มจากโจทย์ → ทำชิ้นเล็กให้พิสูจน์ได้ → ส่งมอบให้คนอื่นดูแลต่อได้</footer></body></html>

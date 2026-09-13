@@ -1,0 +1,85 @@
+<!doctype html><html lang="th"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>Reference — Phase Gates และ Template Pack · Book 07 — Guided Project Delivery</title><style>
+:root{color-scheme:light;--ink:#203149;--muted:#5b6b7d;--line:#dbe3e9;--accent:#096b63}
+*{box-sizing:border-box}html{scroll-behavior:smooth;scroll-padding-top:24px}body{margin:0;background:#f3f6f8;color:var(--ink);font-family:"Leelawadee UI",Tahoma,sans-serif;font-size:17px;line-height:1.9}a{color:var(--accent);text-underline-offset:4px}header{background:#173b43;color:white;padding:56px max(24px,calc((100vw - 1240px)/2));}header h1{font-size:clamp(28px,4vw,46px);line-height:1.35;margin:12px 0}header p{max-width:780px;color:#d9e9eb}.eyebrow{letter-spacing:2px;font-size:13px;color:#a8dfd5}.layout{max-width:1300px;margin:auto;display:grid;grid-template-columns:280px minmax(0,1fr);gap:30px;padding:30px 24px}aside{position:sticky;top:20px;align-self:start;max-height:92vh;overflow:auto;padding-right:12px}aside h2{font-size:18px}nav a{display:block;padding:9px 10px;border-bottom:1px solid var(--line);text-decoration:none;font-size:14px;line-height:1.6}nav a:hover{background:#e1eeeb}article{background:white;padding:clamp(20px,4vw,48px);border:1px solid var(--line);border-radius:12px;margin-bottom:28px;overflow-wrap:anywhere}article h1{font-size:29px;line-height:1.5;margin:20px 0 28px}h2{font-size:24px;margin-top:40px}h3{font-size:20px;margin-top:28px}pre{background:#152c3b;color:#eaf2f7;padding:20px;border-radius:8px;overflow:auto;line-height:1.65;font-size:14px;white-space:pre;overflow-wrap:normal}code{font-family:Consolas,"Courier New",monospace}p code,li code,td code{background:#edf2f5;padding:2px 5px;border-radius:4px;font-size:.9em}blockquote{margin:24px 0;padding:4px 20px;border-left:4px solid #138779;background:#eff8f5}table{border-collapse:collapse;width:100%;font-size:15px}th,td{border:1px solid var(--line);padding:12px;text-align:left;vertical-align:top}th{background:#eaf2f2}.table-scroll{overflow:auto;margin:20px 0}hr{border:0;border-top:1px solid var(--line);margin:32px 0}.source{font-size:12px;color:var(--muted)}.local-toc{margin-top:18px;font-size:14px;background:#f5f8fa;padding:10px 14px;border-radius:6px}.local-toc a{display:block;margin:7px 0}summary{cursor:pointer}.back{display:inline-block;margin-top:24px;font-size:14px}button{border:1px solid #aac8c5;background:white;color:#175c54;padding:9px 16px;border-radius:6px;cursor:pointer;font:inherit;font-size:14px}footer{max-width:1000px;margin:20px auto;padding:24px;color:var(--muted);font-size:14px}.visual-board{margin:20px 0;padding:16px;border:1px solid #cbd9df;border-radius:12px;background:#f7fafb;overflow:auto}.visual-flow{min-width:620px;display:flex;align-items:center;justify-content:center;gap:8px;padding:14px}.visual-box{min-width:112px;padding:11px;background:white;border:1px solid #9eb3bd;border-radius:9px;text-align:center;box-shadow:0 3px 8px rgba(20,50,60,.07)}.visual-arrow{font-weight:700;color:var(--accent)}.visual-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:10px}.visual-pane{background:white;border:1px solid #cbd9df;border-radius:8px;padding:12px}.visual-label{font-size:12px;letter-spacing:.08em;color:#527080;font-weight:700}.visual-lane{display:grid;grid-template-columns:130px 1fr;gap:12px;align-items:center;margin:8px 0}.visual-track{padding:9px;background:#e6f1ef;border-radius:7px}.visual-note{padding:11px 15px;border-left:4px solid var(--accent);background:#eaf5f3;margin:14px 0}@media(max-width:850px){.layout{display:block;padding:16px}aside{position:static;max-height:none;padding:0 0 20px}nav{max-height:280px;overflow:auto}article h1{font-size:25px}body{font-size:16px}.visual-grid{grid-template-columns:1fr}.visual-lane{grid-template-columns:1fr}}@media print{body{background:white;font-size:11pt}header{background:white;color:black;padding:0}header p{color:black}.layout{display:block;padding:0}aside,button,.local-toc,.back{display:none}article{border:0;padding:0;break-before:page}pre{white-space:pre-wrap;background:#f0f2f4;color:black;font-size:9pt}a{color:inherit}h1,h2,h3{break-after:avoid}.table-scroll{overflow:visible}}
+
+        .book-map{display:flex;gap:8px;overflow:auto;padding:10px 0 2px;margin-top:20px}
+        .book-map a{white-space:nowrap;color:white;border:1px solid rgba(255,255,255,.35);border-radius:999px;padding:5px 11px;text-decoration:none;font-size:13px}
+        .book-pager{display:flex;justify-content:space-between;gap:16px;margin:0 0 24px}
+        .book-pager a{background:white;border:1px solid var(--line);border-radius:9px;padding:10px 14px;text-decoration:none;font-weight:700}
+        </style></head><body><header id="top"><div class="eyebrow">BOOK 07 · GUIDED PROJECT PATH</div><h1>Reference — Phase Gates และ Template Pack</h1><p>เปิดเมื่อต้องการ checklist, phase gate หรือเอกสารทางการสำหรับงานที่ซับซ้อนขึ้น</p><p><a style="color:white" href="book-07.html">หน้าเริ่ม Book 7</a> · <a style="color:white" href="book-07-materials.zip">ดาวน์โหลด Workbook และ Template</a> · <a style="color:white" href="index.html">หนังสือทั้งหมด</a></p><div class="book-map" aria-label="เส้นทาง Book 7"><a href="book-07-start.html">เริ่มต้นและ Workbook</a><a href="book-07-requirements.html">1 — เข้าใจโจทย์และกำหนดขอบเขต</a><a href="book-07-design.html">2 — ออกแบบระบบและแบ่งงาน</a><a href="book-07-build.html">3 — เริ่มเขียนโค้ดทีละก้อน</a><a href="book-07-ai.html">4 — ใช้ AI ช่วยเขียนอย่างคุมงานได้</a><a href="book-07-test.html">5 — วาง Test และ Failure Cases</a><a href="book-07-deliver.html">6 — Release, Observe และ Handoff</a><a href="book-07-example.html">7 — ดูตัวอย่างเต็มและภาพรวม</a><a href="book-07-reference.html">Reference — Phase Gates และ Template Pack</a></div></header><div class="layout"><aside><h2>ในหน้านี้</h2><nav><a href="#lesson-0">00 — วิธีใช้ Template โดยไม่ทำ Documentation เกินจำเป็น</a></nav><p style="font-size:13px">อ่านตามลำดับ หรือกลับหน้าเริ่มเพื่อเลือกจากสถานการณ์ที่กำลังเจอ</p></aside><main><div class="book-pager"><a href="book-07-example.html">← ขั้นก่อนหน้า</a><a href="book-07.html">กลับหน้าเริ่ม Book 7</a></div><article id="lesson-0"><div class="source">00_workflow_and_phase_gates.md</div><details class="local-toc"><summary>หัวข้อในส่วนนี้</summary><a href="#lesson-0-template">Template ไม่ใช่งานเอกสารเพิ่ม</a><a href="#lesson-0-_1">เลือกระดับงาน</a><a href="#lesson-0-phase-gates">Phase Gates</a><a href="#lesson-0-stop-conditions">Stop Conditions</a><a href="#lesson-0-15">วิธีเริ่มใน 15 นาที</a><a href="#lesson-0-_2">ความเข้าใจผิดที่พบบ่อย</a></details><h1 id="lesson-0-00-template-documentation">00 — วิธีใช้ Template โดยไม่ทำ Documentation เกินจำเป็น</h1>
+<h2 id="lesson-0-template">Template ไม่ใช่งานเอกสารเพิ่ม</h2>
+<p>Template คือ external memory ของทีม: เก็บสิ่งที่ตกลง เหตุผล และวิธีพิสูจน์ เพื่อไม่ให้คำพูดเปลี่ยนความหมายหลังผ่านไปหลายวัน เอกสารที่ดีช่วยตอบคำถามสามข้อ:</p>
+<ol>
+<li>เรากำลังแก้ปัญหาอะไร และไม่ทำอะไร</li>
+<li>เราเลือกวิธีนี้เพราะอะไร มีความเสี่ยงใด</li>
+<li>จะรู้ได้อย่างไรว่างานใช้ได้และส่งต่อได้</li>
+</ol>
+<p>ถ้าเอกสารหนึ่งไม่ช่วยตัดสินใจ สื่อสาร หรือพิสูจน์ ให้ย่อหรือไม่สร้าง</p>
+<h2 id="lesson-0-_1">เลือกระดับงาน</h2>
+<div class="table-scroll"><table>
+<thead>
+<tr>
+<th>ระดับ</th>
+<th>ตัวอย่าง</th>
+<th>ชุดขั้นต่ำ</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Experiment</td>
+<td>ทดลอง parser ด้วยข้อมูลสังเคราะห์</td>
+<td>brief, experiment note, result</td>
+</tr>
+<tr>
+<td>Internal script</td>
+<td>report รายวัน ใช้คนเดียว</td>
+<td>brief, README, test cases, handoff note</td>
+</tr>
+<tr>
+<td>Team service</td>
+<td>API/n8n มีหลายผู้ใช้</td>
+<td>requirements, design, contracts, test/release/runbook</td>
+</tr>
+<tr>
+<td>Sensitive/production</td>
+<td>PII, money, side effects, AI decision support</td>
+<td>ชุดเต็ม + security/privacy/eval/rollback/owner approval</td>
+</tr>
+</tbody>
+</table></div>
+<p>ความซับซ้อนของเอกสารตาม <strong>blast radius และ uncertainty</strong> ไม่ใช่จำนวนบรรทัดโค้ด</p>
+<h2 id="lesson-0-phase-gates">Phase Gates</h2>
+<pre><code class="language-text">Gate A — Problem understood
+  ↓ owner ยืนยันปัญหา ผู้ใช้ baseline และขอบเขต
+Gate B — Safe design
+  ↓ contracts/state/failures/data risks มีคำตอบพอเริ่ม slice เล็ก
+Gate C — Verified build
+  ↓ tests/eval/review evidence ผ่านเกณฑ์ที่ตกลง
+Gate D — Release ready
+  ↓ config/migration/monitor/rollback/owner พร้อม
+Gate E — Transfer complete
+  ↓ ผู้รับมอบรันและแก้ failure drill ได้จากเอกสาร
+</code></pre>
+<p>Gate ไม่ใช่พิธีอนุมัติใหญ่เสมอไป สำหรับงานเล็กอาจเป็น checklist 10 นาที แต่ห้ามข้ามเพราะ “เดี๋ยวค่อยจำ”</p>
+<h2 id="lesson-0-stop-conditions">Stop Conditions</h2>
+<p>หยุด build และขอคำตอบเมื่อ:</p>
+<ul>
+<li>ไม่รู้ว่าใครเป็น decision owner</li>
+<li>ไม่มีตัวอย่าง input/output หรือผู้ตรวจความถูกต้อง</li>
+<li>ต้องใช้ข้อมูลจริงแต่ยังไม่รู้ policy/permission</li>
+<li>acceptance criteria ใช้คำว่า “ดี”, “เร็ว”, “แม่น” โดยไม่มีวิธีวัด</li>
+<li>AI output จะสร้าง side effect สำคัญโดยไม่มี validation/approval</li>
+<li>deploy target, secret owner หรือ rollback ยังไม่มีผู้รับผิดชอบ</li>
+</ul>
+<h2 id="lesson-0-15">วิธีเริ่มใน 15 นาที</h2>
+<ol>
+<li>คัดลอก <code>template_pack/00_master_checklist.md</code></li>
+<li>เติมระดับงานและ owner</li>
+<li>เปิด <code>01_project_intake.md</code> คุยกับผู้ใช้</li>
+<li>สร้างรหัส requirement/risk เริ่มต้น</li>
+<li>นัด checkpoint แรกที่มี demo ชิ้นเล็ก ไม่ใช่รอจน “เสร็จทั้งหมด”</li>
+</ol>
+<h2 id="lesson-0-_2">ความเข้าใจผิดที่พบบ่อย</h2>
+<p><strong>“Requirement เปลี่ยนแปลว่าเราเก็บไม่ดี”</strong> — งาน discovery ทำให้เรียนรู้เพิ่มได้ การเปลี่ยนไม่ผิด แต่ต้องบันทึกว่าอะไรเปลี่ยน เหตุผล ผลต่อเวลา และใครยืนยัน</p>
+<p><strong>“มี README แล้วเท่ากับ handoff ได้”</strong> — README ช่วย developer เริ่มต้น ส่วน runbook ช่วย operator ดูแลเหตุขัดข้อง และ handoff ต้องพิสูจน์ด้วย rehearsal</p>
+<p><strong>“Prototype ไม่ต้องคิดเรื่อง privacy”</strong> — prototype อาจมีข้อมูลจริงและถูกแชร์ง่าย ความเสี่ยงข้อมูลเริ่มตั้งแต่ไฟล์แรก ไม่ใช่ตอน production</p><a class="back" href="#top">↑ กลับด้านบน</a></article><div class="book-pager"><a href="book-07-example.html">← ขั้นก่อนหน้า</a><a href="book-07.html">กลับหน้าเริ่ม Book 7</a></div></main></div><footer>Book 07 · เริ่มจากโจทย์ → ทำชิ้นเล็กให้พิสูจน์ได้ → ส่งมอบให้คนอื่นดูแลต่อได้</footer></body></html>

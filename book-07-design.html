@@ -1,0 +1,198 @@
+<!doctype html><html lang="th"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>2 — ออกแบบระบบและแบ่งงาน · Book 07 — Guided Project Delivery</title><style>
+:root{color-scheme:light;--ink:#203149;--muted:#5b6b7d;--line:#dbe3e9;--accent:#096b63}
+*{box-sizing:border-box}html{scroll-behavior:smooth;scroll-padding-top:24px}body{margin:0;background:#f3f6f8;color:var(--ink);font-family:"Leelawadee UI",Tahoma,sans-serif;font-size:17px;line-height:1.9}a{color:var(--accent);text-underline-offset:4px}header{background:#173b43;color:white;padding:56px max(24px,calc((100vw - 1240px)/2));}header h1{font-size:clamp(28px,4vw,46px);line-height:1.35;margin:12px 0}header p{max-width:780px;color:#d9e9eb}.eyebrow{letter-spacing:2px;font-size:13px;color:#a8dfd5}.layout{max-width:1300px;margin:auto;display:grid;grid-template-columns:280px minmax(0,1fr);gap:30px;padding:30px 24px}aside{position:sticky;top:20px;align-self:start;max-height:92vh;overflow:auto;padding-right:12px}aside h2{font-size:18px}nav a{display:block;padding:9px 10px;border-bottom:1px solid var(--line);text-decoration:none;font-size:14px;line-height:1.6}nav a:hover{background:#e1eeeb}article{background:white;padding:clamp(20px,4vw,48px);border:1px solid var(--line);border-radius:12px;margin-bottom:28px;overflow-wrap:anywhere}article h1{font-size:29px;line-height:1.5;margin:20px 0 28px}h2{font-size:24px;margin-top:40px}h3{font-size:20px;margin-top:28px}pre{background:#152c3b;color:#eaf2f7;padding:20px;border-radius:8px;overflow:auto;line-height:1.65;font-size:14px;white-space:pre;overflow-wrap:normal}code{font-family:Consolas,"Courier New",monospace}p code,li code,td code{background:#edf2f5;padding:2px 5px;border-radius:4px;font-size:.9em}blockquote{margin:24px 0;padding:4px 20px;border-left:4px solid #138779;background:#eff8f5}table{border-collapse:collapse;width:100%;font-size:15px}th,td{border:1px solid var(--line);padding:12px;text-align:left;vertical-align:top}th{background:#eaf2f2}.table-scroll{overflow:auto;margin:20px 0}hr{border:0;border-top:1px solid var(--line);margin:32px 0}.source{font-size:12px;color:var(--muted)}.local-toc{margin-top:18px;font-size:14px;background:#f5f8fa;padding:10px 14px;border-radius:6px}.local-toc a{display:block;margin:7px 0}summary{cursor:pointer}.back{display:inline-block;margin-top:24px;font-size:14px}button{border:1px solid #aac8c5;background:white;color:#175c54;padding:9px 16px;border-radius:6px;cursor:pointer;font:inherit;font-size:14px}footer{max-width:1000px;margin:20px auto;padding:24px;color:var(--muted);font-size:14px}.visual-board{margin:20px 0;padding:16px;border:1px solid #cbd9df;border-radius:12px;background:#f7fafb;overflow:auto}.visual-flow{min-width:620px;display:flex;align-items:center;justify-content:center;gap:8px;padding:14px}.visual-box{min-width:112px;padding:11px;background:white;border:1px solid #9eb3bd;border-radius:9px;text-align:center;box-shadow:0 3px 8px rgba(20,50,60,.07)}.visual-arrow{font-weight:700;color:var(--accent)}.visual-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:10px}.visual-pane{background:white;border:1px solid #cbd9df;border-radius:8px;padding:12px}.visual-label{font-size:12px;letter-spacing:.08em;color:#527080;font-weight:700}.visual-lane{display:grid;grid-template-columns:130px 1fr;gap:12px;align-items:center;margin:8px 0}.visual-track{padding:9px;background:#e6f1ef;border-radius:7px}.visual-note{padding:11px 15px;border-left:4px solid var(--accent);background:#eaf5f3;margin:14px 0}@media(max-width:850px){.layout{display:block;padding:16px}aside{position:static;max-height:none;padding:0 0 20px}nav{max-height:280px;overflow:auto}article h1{font-size:25px}body{font-size:16px}.visual-grid{grid-template-columns:1fr}.visual-lane{grid-template-columns:1fr}}@media print{body{background:white;font-size:11pt}header{background:white;color:black;padding:0}header p{color:black}.layout{display:block;padding:0}aside,button,.local-toc,.back{display:none}article{border:0;padding:0;break-before:page}pre{white-space:pre-wrap;background:#f0f2f4;color:black;font-size:9pt}a{color:inherit}h1,h2,h3{break-after:avoid}.table-scroll{overflow:visible}}
+
+        .book-map{display:flex;gap:8px;overflow:auto;padding:10px 0 2px;margin-top:20px}
+        .book-map a{white-space:nowrap;color:white;border:1px solid rgba(255,255,255,.35);border-radius:999px;padding:5px 11px;text-decoration:none;font-size:13px}
+        .book-pager{display:flex;justify-content:space-between;gap:16px;margin:0 0 24px}
+        .book-pager a{background:white;border:1px solid var(--line);border-radius:9px;padding:10px 14px;text-decoration:none;font-weight:700}
+        </style></head><body><header id="top"><div class="eyebrow">BOOK 07 · GUIDED PROJECT PATH</div><h1>2 — ออกแบบระบบและแบ่งงาน</h1><p>สำรวจ data/risk วาง architecture, contracts, project structure และ vertical slices</p><p><a style="color:white" href="book-07.html">หน้าเริ่ม Book 7</a> · <a style="color:white" href="book-07-materials.zip">ดาวน์โหลด Workbook และ Template</a> · <a style="color:white" href="index.html">หนังสือทั้งหมด</a></p><div class="book-map" aria-label="เส้นทาง Book 7"><a href="book-07-start.html">เริ่มต้นและ Workbook</a><a href="book-07-requirements.html">1 — เข้าใจโจทย์และกำหนดขอบเขต</a><a href="book-07-design.html">2 — ออกแบบระบบและแบ่งงาน</a><a href="book-07-build.html">3 — เริ่มเขียนโค้ดทีละก้อน</a><a href="book-07-ai.html">4 — ใช้ AI ช่วยเขียนอย่างคุมงานได้</a><a href="book-07-test.html">5 — วาง Test และ Failure Cases</a><a href="book-07-deliver.html">6 — Release, Observe และ Handoff</a><a href="book-07-example.html">7 — ดูตัวอย่างเต็มและภาพรวม</a><a href="book-07-reference.html">Reference — Phase Gates และ Template Pack</a></div></header><div class="layout"><aside><h2>ในหน้านี้</h2><nav><a href="#lesson-0">03 — Data Inventory, Privacy, Security และ Risk Register</a><a href="#lesson-1">04 — Architecture, Boundaries, State และ ADR</a><a href="#lesson-2">05 — Project Structure, Contracts และ Implementation Plan</a></nav><p style="font-size:13px">อ่านตามลำดับ หรือกลับหน้าเริ่มเพื่อเลือกจากสถานการณ์ที่กำลังเจอ</p></aside><main><div class="book-pager"><a href="book-07-requirements.html">← ขั้นก่อนหน้า</a><a href="book-07-build.html">ขั้นถัดไป →</a></div><article id="lesson-0"><div class="source">03_data_privacy_security_risk.md</div><details class="local-toc"><summary>หัวข้อในส่วนนี้</summary><a href="#lesson-0-data-journey">วาด Data Journey ก่อนเลือกเครื่องมือ</a><a href="#lesson-0-data-inventory">Data Inventory</a><a href="#lesson-0-trust-boundary">Trust Boundary</a><a href="#lesson-0-ai-specific-risks">AI-specific Risks</a><a href="#lesson-0-risk-register">Risk Register ที่ใช้งานได้</a><a href="#lesson-0-security-questions-build">Security Questions ก่อน Build</a></details><h1 id="lesson-0-03-data-inventory-privacy-security-risk-register">03 — Data Inventory, Privacy, Security และ Risk Register</h1>
+<h2 id="lesson-0-data-journey">วาด Data Journey ก่อนเลือกเครื่องมือ</h2>
+<pre><code class="language-text">Source → ingest → temporary storage → processing/provider
+      → result → human review → downstream/export → retention/delete
+</code></pre>
+<p>ทุกลูกศรคือ boundary ที่ข้อมูลอาจถูกเปิดเผย เปลี่ยนรูป สูญหาย หรือถูกใช้เกินวัตถุประสงค์</p>
+<h2 id="lesson-0-data-inventory">Data Inventory</h2>
+<p>สำหรับแต่ละ field/ไฟล์ บันทึก source, owner, classification, purpose, storage, retention, access, export และ deletion ไม่ใช้คำว่า “ข้อมูลผู้ใช้” กว้าง ๆ</p>
+<div class="table-scroll"><table>
+<thead>
+<tr>
+<th>Data</th>
+<th>Class</th>
+<th>Need</th>
+<th>Stored where</th>
+<th>Retention</th>
+<th>Access</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>synthetic resume</td>
+<td>test</td>
+<td>eval</td>
+<td>repo fixture</td>
+<td>project</td>
+<td>developers</td>
+</tr>
+<tr>
+<td>real resume</td>
+<td>restricted/PII</td>
+<td>pilot</td>
+<td>approved store</td>
+<td>policy</td>
+<td>HR role</td>
+</tr>
+<tr>
+<td>extracted evidence</td>
+<td>sensitive derived</td>
+<td>review</td>
+<td>task DB</td>
+<td>policy</td>
+<td>HR/reviewer</td>
+</tr>
+</tbody>
+</table></div>
+<p>Derived data อาจยัง sensitive แม้ไม่ใช่ไฟล์ต้นฉบับ</p>
+<h2 id="lesson-0-trust-boundary">Trust Boundary</h2>
+<p>ผู้ใช้, browser, API, workflow, database, model provider และ downstream system ไม่ควรถูกถือว่าไว้ใจกันโดยอัตโนมัติ ที่ boundary ให้ถาม authentication, authorization, validation, encryption, audit และ failure behavior</p>
+<h2 id="lesson-0-ai-specific-risks">AI-specific Risks</h2>
+<ul>
+<li>prompt injection จากเอกสารไม่ใช่คำสั่งที่เชื่อถือได้</li>
+<li>hallucinated field/quote ต้องถูก validate กับ source</li>
+<li>model output เป็น untrusted input ก่อนผ่าน schema/business rules</li>
+<li>ranking/explanation อาจมี bias และไม่ควรกลายเป็นการตัดสินอัตโนมัติโดยไม่อนุมัติ</li>
+<li>prompt/log อาจเปิดเผย PII</li>
+</ul>
+<pre><code class="language-text">Document text (untrusted)
+  ↓ delimit + instruct as data
+LLM output (untrusted)
+  ↓ schema + evidence + policy validation
+Draft
+  ↓ authorized human review
+Approved result
+</code></pre>
+<h2 id="lesson-0-risk-register">Risk Register ที่ใช้งานได้</h2>
+<p>Risk ไม่ใช่รายการความกลัว แต่ต้องมี trigger, likelihood, impact, control, residual risk, owner และ review date</p>
+<pre><code class="language-text">RISK-02: unsupported evidence ถูก reviewer เชื่อ
+Prevent: require verbatim quote + source location
+Detect: validator + sampled eval
+Respond: needs_review; disable export
+Owner: AI engineer + HR SME
+</code></pre>
+<h2 id="lesson-0-security-questions-build">Security Questions ก่อน Build</h2>
+<ul>
+<li>ใครเรียก endpoint/เปิด workflow ได้</li>
+<li>ใครดู task ของคนอื่นได้</li>
+<li>URL/file path ถูกจำกัดอย่างไร</li>
+<li>secrets มาจากไหนและ rotate อย่างไร</li>
+<li>logs, backups และ exports มี PII หรือไม่</li>
+<li>side effect ไหนต้อง approval/idempotency</li>
+<li>dependency/provider failure ทำให้ข้อมูลค้างที่ไหน</li>
+</ul>
+<h3 id="lesson-0-gate-b">Gate B ตรวจผ่านเมื่อ</h3>
+<p>มี data owner, classification, allowed environment, retention, access control, risk owner และ stop condition สำหรับความเสี่ยงสำคัญ ห้ามใช้ข้อมูลจริงเพื่อ “ลองก่อน” หากยังไม่ผ่าน</p><a class="back" href="#top">↑ กลับด้านบน</a></article><article id="lesson-1"><div class="source">04_architecture_state_adr.md</div><details class="local-toc"><summary>หัวข้อในส่วนนี้</summary><a href="#lesson-1-_1">เริ่มจากความรับผิดชอบ ไม่ใช่ชื่อเทคโนโลยี</a><a href="#lesson-1-diagram">Diagram สี่ภาพที่คุ้มที่สุด</a><a href="#lesson-1-state-machine-worker">State Machine ก่อนเขียน Worker</a><a href="#lesson-1-sync-async">Sync หรือ Async</a><a href="#lesson-1-architecture-decision-record">Architecture Decision Record</a><a href="#lesson-1-architecture-review-walkthrough">Architecture Review Walkthrough</a></details><h1 id="lesson-1-04-architecture-boundaries-state-adr">04 — Architecture, Boundaries, State และ ADR</h1>
+<h2 id="lesson-1-_1">เริ่มจากความรับผิดชอบ ไม่ใช่ชื่อเทคโนโลยี</h2>
+<p>ถามก่อนว่าใครรับ request, ใคร validate, ใครเก็บ state, ใครทำงานช้า, ใครอนุมัติ และใครส่งผลต่อ จากนั้นค่อยเลือก FastAPI, n8n, worker หรือ provider</p>
+<h2 id="lesson-1-diagram">Diagram สี่ภาพที่คุ้มที่สุด</h2>
+<ol>
+<li><strong>Context:</strong> คนและระบบภายนอกใดคุยกับระบบเรา</li>
+<li><strong>Component:</strong> ส่วนหลักและ responsibility</li>
+<li><strong>Sequence:</strong> request หนึ่งเส้นทางเดินอย่างไร</li>
+<li><strong>State:</strong> task เปลี่ยนสถานะได้แบบใด</li>
+</ol>
+<pre><code class="language-text">[HR] → [Web/API] → [Task DB] ← [Worker] → [Approved AI provider]
+                           ↓
+                    [Review queue] → [Reviewer]
+</code></pre>
+<pre><code class="language-text">HR        API        DB        Worker      Provider
+ | submit  |          |           |            |
+ |--------&gt;| validate |           |            |
+ |         |--insert-&gt;| queued    |            |
+ |&lt;--202 task_id------|           |            |
+ |                    |&lt;-claim----|            |
+ |                    |           |---request-&gt;|
+ |                    |&lt;-result---|&lt;--output---|
+</code></pre>
+<h2 id="lesson-1-state-machine-worker">State Machine ก่อนเขียน Worker</h2>
+<pre><code class="language-text">queued → processing → needs_review → approved → exported
+            │              │
+            ├→ retry_wait ─┘
+            └→ failed_terminal
+</code></pre>
+<p>กำหนดว่า actor ใดเปลี่ยน state, precondition คืออะไร, เขียนข้อมูลใดใน transaction เดียว และ retry ได้หรือไม่ สถานะ <code>failed</code> เดียวมักกว้างเกินไปสำหรับ recovery</p>
+<h2 id="lesson-1-sync-async">Sync หรือ Async</h2>
+<p>ใช้ synchronous เมื่อเร็ว คาดการณ์ได้ และ caller รอได้ ใช้ durable async เมื่อเวลานาน มี provider/retry, ต้องรอด restart หรือมี human review อย่าใช้ in-process background task แทน queue โดยไม่เข้าใจว่าถ้า process ตาย state อยู่ที่ไหน</p>
+<h2 id="lesson-1-architecture-decision-record">Architecture Decision Record</h2>
+<p>ADR เก็บ context, decision, alternatives, consequences และ validation:</p>
+<pre><code class="language-text">ADR-01: Persist task before returning 202
+Context: processing may exceed request timeout
+Decision: API writes task+audit atomically; worker claims later
+Alternative: synchronous; in-memory task
+Consequence: DB/worker complexity, but restart-safe
+Validate: crash-after-202 and duplicate-event tests
+</code></pre>
+<h2 id="lesson-1-architecture-review-walkthrough">Architecture Review Walkthrough</h2>
+<p>ไล่หนึ่ง request ด้วยนิ้วตั้งแต่ต้นจนจบ แล้วถามทุก boundary:</p>
+<ul>
+<li>identity/authorization มาจากไหน</li>
+<li>invalid/duplicate input ไปไหน</li>
+<li>state ถูก commit ก่อนตอบหรือไม่</li>
+<li>process ตายตรงนี้แล้วกู้จากอะไร</li>
+<li>trace/task ID เดินครบหรือไม่</li>
+<li>ข้อมูลลับปรากฏใน log ตรงใด</li>
+</ul>
+<h3 id="lesson-1-gate-b">Gate B ตรวจผ่านเมื่อ</h3>
+<p>ทีมอธิบาย happy path, failure path, state owner, source of truth, trust boundaries และเหตุผลของ component ทุกชิ้นได้โดยไม่อาศัย “framework จัดการให้”</p><a class="back" href="#top">↑ กลับด้านบน</a></article><article id="lesson-2"><div class="source">05_structure_contracts_plan.md</div><details class="local-toc"><summary>หัวข้อในส่วนนี้</summary><a href="#lesson-2-responsibility">โครงสร้างตาม Responsibility</a><a href="#lesson-2-contract-boundary">Contract คือข้อตกลงที่ Boundary</a><a href="#lesson-2-vertical-slice">Vertical Slice</a><a href="#lesson-2-task-breakdown">Task Breakdown ที่ดี</a><a href="#lesson-2-milestone">Milestone</a></details><h1 id="lesson-2-05-project-structure-contracts-implementation-plan">05 — Project Structure, Contracts และ Implementation Plan</h1>
+<h2 id="lesson-2-responsibility">โครงสร้างตาม Responsibility</h2>
+<p>โครงสร้างเริ่มเล็กแล้วโตตาม boundary:</p>
+<pre><code class="language-text">project/
+├── README.md
+├── pyproject.toml
+├── .env.example
+├── src/app/
+│   ├── api/          # HTTP boundary
+│   ├── domain/       # business rules, no framework knowledge
+│   ├── services/     # use cases/orchestration
+│   ├── adapters/     # DB/provider/email/n8n integration
+│   ├── models/       # validated contracts
+│   └── config.py
+├── tests/
+│   ├── unit/
+│   ├── integration/
+│   └── fixtures/
+├── scripts/
+└── docs/
+</code></pre>
+<p>ไม่ต้องสร้างโฟลเดอร์ว่างทุกชื่อ หากมีไฟล์เดียวเริ่ม <code>main.py</code> ได้ แต่เมื่อ HTTP, rule และ provider ถูกแก้คนละเหตุผล ให้แยก responsibility</p>
+<h2 id="lesson-2-contract-boundary">Contract คือข้อตกลงที่ Boundary</h2>
+<p>Contract ระบุ schema, semantics, errors, versioning, idempotency และตัวอย่าง ไม่ใช่แค่ชื่อ field</p>
+<pre><code class="language-json">{
+  "event_id": "evt-001",
+  "document_ref": "approved-store://synthetic/r-01.pdf"
+}
+</code></pre>
+<p>ต้องตอบเพิ่มว่า <code>event_id</code> unique ใน scope ใด, <code>document_ref</code> scheme ไหนอนุญาต, missing/duplicate คืนอะไร และ caller retry ได้เมื่อใด</p>
+<h2 id="lesson-2-vertical-slice">Vertical Slice</h2>
+<p>แทนที่จะทำ database ทั้งหมด แล้ว API ทั้งหมด แล้ว UI ทั้งหมด ให้ส่งเส้นทางบางที่สุดที่ผู้ใช้ทดลองได้:</p>
+<pre><code class="language-text">synthetic input → validated intake → persisted task
+                → mock extraction → review screen/export draft
+</code></pre>
+<p>Slice แรกใช้ mock provider ได้ แต่ต้องติดป้ายชัด เพื่อทดสอบ flow/state/review ก่อนเสียเวลากับ model quality</p>
+<h2 id="lesson-2-task-breakdown">Task Breakdown ที่ดี</h2>
+<p>Task ควรมี outcome, scope, files/components, acceptance cases, dependencies, risk, verification command และ evidence</p>
+<pre><code class="language-text">TASK-04 Persist intake idempotently
+Linked: REQ-F-01, REQ-NF-02, ADR-01
+Done when: duplicate event returns same task; concurrency test passes
+Verify: python -m pytest tests/integration/test_intake.py -q
+</code></pre>
+<h2 id="lesson-2-milestone">Milestone</h2>
+<ul>
+<li>M0: baseline + synthetic fixtures</li>
+<li>M1: thin vertical slice + demo</li>
+<li>M2: failure/retry/review + eval</li>
+<li>M3: staging integration + readiness review</li>
+<li>M4: limited pilot + measured impact</li>
+</ul>
+<p>แต่ละ milestone มี evidence และ decision: continue, change, defer หรือ stop</p>
+<h3 id="lesson-2-gate-b">Gate B ตรวจผ่านเมื่อ</h3>
+<p>สามารถสร้าง first slice โดยไม่เดา contract สำคัญ มี task ขนาด review ได้ และความซับซ้อนใหม่ทุกชิ้นเชื่อมกับ requirement/risk</p><a class="back" href="#top">↑ กลับด้านบน</a></article><div class="book-pager"><a href="book-07-requirements.html">← ขั้นก่อนหน้า</a><a href="book-07-build.html">ขั้นถัดไป →</a></div></main></div><footer>Book 07 · เริ่มจากโจทย์ → ทำชิ้นเล็กให้พิสูจน์ได้ → ส่งมอบให้คนอื่นดูแลต่อได้</footer></body></html>

@@ -1,0 +1,81 @@
+<!doctype html><html lang="th"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>6 — Release, Observe และ Handoff · Book 07 — Guided Project Delivery</title><style>
+:root{color-scheme:light;--ink:#203149;--muted:#5b6b7d;--line:#dbe3e9;--accent:#096b63}
+*{box-sizing:border-box}html{scroll-behavior:smooth;scroll-padding-top:24px}body{margin:0;background:#f3f6f8;color:var(--ink);font-family:"Leelawadee UI",Tahoma,sans-serif;font-size:17px;line-height:1.9}a{color:var(--accent);text-underline-offset:4px}header{background:#173b43;color:white;padding:56px max(24px,calc((100vw - 1240px)/2));}header h1{font-size:clamp(28px,4vw,46px);line-height:1.35;margin:12px 0}header p{max-width:780px;color:#d9e9eb}.eyebrow{letter-spacing:2px;font-size:13px;color:#a8dfd5}.layout{max-width:1300px;margin:auto;display:grid;grid-template-columns:280px minmax(0,1fr);gap:30px;padding:30px 24px}aside{position:sticky;top:20px;align-self:start;max-height:92vh;overflow:auto;padding-right:12px}aside h2{font-size:18px}nav a{display:block;padding:9px 10px;border-bottom:1px solid var(--line);text-decoration:none;font-size:14px;line-height:1.6}nav a:hover{background:#e1eeeb}article{background:white;padding:clamp(20px,4vw,48px);border:1px solid var(--line);border-radius:12px;margin-bottom:28px;overflow-wrap:anywhere}article h1{font-size:29px;line-height:1.5;margin:20px 0 28px}h2{font-size:24px;margin-top:40px}h3{font-size:20px;margin-top:28px}pre{background:#152c3b;color:#eaf2f7;padding:20px;border-radius:8px;overflow:auto;line-height:1.65;font-size:14px;white-space:pre;overflow-wrap:normal}code{font-family:Consolas,"Courier New",monospace}p code,li code,td code{background:#edf2f5;padding:2px 5px;border-radius:4px;font-size:.9em}blockquote{margin:24px 0;padding:4px 20px;border-left:4px solid #138779;background:#eff8f5}table{border-collapse:collapse;width:100%;font-size:15px}th,td{border:1px solid var(--line);padding:12px;text-align:left;vertical-align:top}th{background:#eaf2f2}.table-scroll{overflow:auto;margin:20px 0}hr{border:0;border-top:1px solid var(--line);margin:32px 0}.source{font-size:12px;color:var(--muted)}.local-toc{margin-top:18px;font-size:14px;background:#f5f8fa;padding:10px 14px;border-radius:6px}.local-toc a{display:block;margin:7px 0}summary{cursor:pointer}.back{display:inline-block;margin-top:24px;font-size:14px}button{border:1px solid #aac8c5;background:white;color:#175c54;padding:9px 16px;border-radius:6px;cursor:pointer;font:inherit;font-size:14px}footer{max-width:1000px;margin:20px auto;padding:24px;color:var(--muted);font-size:14px}.visual-board{margin:20px 0;padding:16px;border:1px solid #cbd9df;border-radius:12px;background:#f7fafb;overflow:auto}.visual-flow{min-width:620px;display:flex;align-items:center;justify-content:center;gap:8px;padding:14px}.visual-box{min-width:112px;padding:11px;background:white;border:1px solid #9eb3bd;border-radius:9px;text-align:center;box-shadow:0 3px 8px rgba(20,50,60,.07)}.visual-arrow{font-weight:700;color:var(--accent)}.visual-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:10px}.visual-pane{background:white;border:1px solid #cbd9df;border-radius:8px;padding:12px}.visual-label{font-size:12px;letter-spacing:.08em;color:#527080;font-weight:700}.visual-lane{display:grid;grid-template-columns:130px 1fr;gap:12px;align-items:center;margin:8px 0}.visual-track{padding:9px;background:#e6f1ef;border-radius:7px}.visual-note{padding:11px 15px;border-left:4px solid var(--accent);background:#eaf5f3;margin:14px 0}@media(max-width:850px){.layout{display:block;padding:16px}aside{position:static;max-height:none;padding:0 0 20px}nav{max-height:280px;overflow:auto}article h1{font-size:25px}body{font-size:16px}.visual-grid{grid-template-columns:1fr}.visual-lane{grid-template-columns:1fr}}@media print{body{background:white;font-size:11pt}header{background:white;color:black;padding:0}header p{color:black}.layout{display:block;padding:0}aside,button,.local-toc,.back{display:none}article{border:0;padding:0;break-before:page}pre{white-space:pre-wrap;background:#f0f2f4;color:black;font-size:9pt}a{color:inherit}h1,h2,h3{break-after:avoid}.table-scroll{overflow:visible}}
+
+        .book-map{display:flex;gap:8px;overflow:auto;padding:10px 0 2px;margin-top:20px}
+        .book-map a{white-space:nowrap;color:white;border:1px solid rgba(255,255,255,.35);border-radius:999px;padding:5px 11px;text-decoration:none;font-size:13px}
+        .book-pager{display:flex;justify-content:space-between;gap:16px;margin:0 0 24px}
+        .book-pager a{background:white;border:1px solid var(--line);border-radius:9px;padding:10px 14px;text-decoration:none;font-weight:700}
+        </style></head><body><header id="top"><div class="eyebrow">BOOK 07 · GUIDED PROJECT PATH</div><h1>6 — Release, Observe และ Handoff</h1><p>เปิดใช้อย่างควบคุมได้ มี rollback, logs, runbook, demo และการวัดผล</p><p><a style="color:white" href="book-07.html">หน้าเริ่ม Book 7</a> · <a style="color:white" href="book-07-materials.zip">ดาวน์โหลด Workbook และ Template</a> · <a style="color:white" href="index.html">หนังสือทั้งหมด</a></p><div class="book-map" aria-label="เส้นทาง Book 7"><a href="book-07-start.html">เริ่มต้นและ Workbook</a><a href="book-07-requirements.html">1 — เข้าใจโจทย์และกำหนดขอบเขต</a><a href="book-07-design.html">2 — ออกแบบระบบและแบ่งงาน</a><a href="book-07-build.html">3 — เริ่มเขียนโค้ดทีละก้อน</a><a href="book-07-ai.html">4 — ใช้ AI ช่วยเขียนอย่างคุมงานได้</a><a href="book-07-test.html">5 — วาง Test และ Failure Cases</a><a href="book-07-deliver.html">6 — Release, Observe และ Handoff</a><a href="book-07-example.html">7 — ดูตัวอย่างเต็มและภาพรวม</a><a href="book-07-reference.html">Reference — Phase Gates และ Template Pack</a></div></header><div class="layout"><aside><h2>ในหน้านี้</h2><nav><a href="#lesson-0">08 — Release, Migration, Observability และ Rollback</a><a href="#lesson-1">09 — Demo, Impact Measurement, Runbook และ Handoff</a></nav><p style="font-size:13px">อ่านตามลำดับ หรือกลับหน้าเริ่มเพื่อเลือกจากสถานการณ์ที่กำลังเจอ</p></aside><main><div class="book-pager"><a href="book-07-test.html">← ขั้นก่อนหน้า</a><a href="book-07-example.html">ขั้นถัดไป →</a></div><article id="lesson-0"><div class="source">08_release_observability_rollback.md</div><details class="local-toc"><summary>หัวข้อในส่วนนี้</summary><a href="#lesson-0-container">“Container เปิด” ไม่เท่ากับ “ระบบพร้อม”</a><a href="#lesson-0-configuration-secrets">Configuration และ Secrets</a><a href="#lesson-0-migration">Migration</a><a href="#lesson-0-observability-user-journey">Observability จาก User Journey</a><a href="#lesson-0-rollout">Rollout</a><a href="#lesson-0-rollback">Rollback</a><a href="#lesson-0-incident-flow">Incident Flow</a></details><h1 id="lesson-0-08-release-migration-observability-rollback">08 — Release, Migration, Observability และ Rollback</h1>
+<h2 id="lesson-0-container">“Container เปิด” ไม่เท่ากับ “ระบบพร้อม”</h2>
+<pre><code class="language-text">process running → liveness
+dependencies/config ready → readiness
+user journey works → smoke test
+quality/risk gates pass → release ready
+</code></pre>
+<p>Release checklist ต้องระบุ environment, version/commit, config names, secret source, migrations, backup, health/smoke, dashboards/alerts, rollback และ owner</p>
+<h2 id="lesson-0-configuration-secrets">Configuration และ Secrets</h2>
+<p>validate config ตอน startup; <code>.env.example</code> มีชื่อ/ตัวอย่างที่ไม่ลับ; production secrets มาจากช่องทางที่ทีมอนุญาต ไม่ log token และไม่ฝังค่า environment-specific ใน image</p>
+<h2 id="lesson-0-migration">Migration</h2>
+<p>ทุก schema change ต้องตอบ forward, backward compatibility, data backfill, lock/downtime, verification และ rollback/roll-forward บาง migration rollback ไม่ปลอดภัย จึงต้องทดสอบ restore หรือใช้ expand-contract</p>
+<h2 id="lesson-0-observability-user-journey">Observability จาก User Journey</h2>
+<p>ใช้ correlation/task ID เชื่อม:</p>
+<pre><code class="language-text">request_id → task_id → attempt_id → review_id → export_id
+</code></pre>
+<p>Log เป็น event ที่ค้นสาเหตุได้, metric บอกแนวโน้ม/alert, trace แสดง latency ข้าม component ห้ามใส่ raw resume/prompt โดยไม่จำเป็น</p>
+<p>Metrics ตัวอย่าง:</p>
+<ul>
+<li>intake success/error by category</li>
+<li>queue depth และ oldest age</li>
+<li>attempt/retry/exhausted count</li>
+<li>review turnaround และ correction rate</li>
+<li>unsupported-claim rate จาก sample</li>
+<li>export failures/duplicates</li>
+</ul>
+<h2 id="lesson-0-rollout">Rollout</h2>
+<p>เริ่ม synthetic/local → staging → shadow/dry-run → limited pilot → wider rollout การใช้ feature flag หรือปิด side effect ช่วยแยก “เห็นผล” ออกจาก “ส่งผลจริง”</p>
+<h2 id="lesson-0-rollback">Rollback</h2>
+<p>เขียน trigger, authority, exact steps, data consequence และ verification ห้ามใช้ “redeploy เวอร์ชันก่อน” หาก schema/event side effect ไม่ย้อนตาม</p>
+<h2 id="lesson-0-incident-flow">Incident Flow</h2>
+<pre><code class="language-text">detect → contain → preserve evidence → communicate → recover
+      → verify → learn/postmortem → follow-up owner/date
+</code></pre>
+<h3 id="lesson-0-gate-d">Gate D ตรวจผ่านเมื่อ</h3>
+<p>คนที่ on-call/รับมอบรู้วิธีดูสถานะ หยุดผลกระทบ ตรวจ version/config/state และ rollback/roll-forward โดยไม่ต้องเดาจากความจำผู้พัฒนา</p><a class="back" href="#top">↑ กลับด้านบน</a></article><article id="lesson-1"><div class="source">09_demo_impact_handoff.md</div><details class="local-toc"><summary>หัวข้อในส่วนนี้</summary><a href="#lesson-1-demo-happy-path">Demo คือการพิสูจน์ ไม่ใช่โชว์เฉพาะ Happy Path</a><a href="#lesson-1-impact">วัด Impact อย่างซื่อสัตย์</a><a href="#lesson-1-readme-runbook-handoff">README, Runbook และ Handoff ต่างกัน</a><a href="#lesson-1-handoff-rehearsal">Handoff Rehearsal</a><a href="#lesson-1-ownership">Ownership หลังส่ง</a></details><h1 id="lesson-1-09-demo-impact-measurement-runbook-handoff">09 — Demo, Impact Measurement, Runbook และ Handoff</h1>
+<h2 id="lesson-1-demo-happy-path">Demo คือการพิสูจน์ ไม่ใช่โชว์เฉพาะ Happy Path</h2>
+<p>สคริปต์ห้านาที:</p>
+<ol>
+<li>ปัญหา ผู้ใช้ และ baseline</li>
+<li>scope และสิ่งที่ระบบไม่ทำ</li>
+<li>input → output → human review</li>
+<li>failure หนึ่งกรณีและ recovery</li>
+<li>tests/eval/metrics evidence</li>
+<li>limitation, decision ที่ต้องการ และ next step</li>
+</ol>
+<p>ติดป้าย mock, synthetic, staging และ production ให้ชัด</p>
+<h2 id="lesson-1-impact">วัด Impact อย่างซื่อสัตย์</h2>
+<pre><code class="language-text">old active time = read + copy + verify
+new active time = submit + review + correct + recover failures
+time saved = comparable old - comparable new
+</code></pre>
+<p>รายงาน sample size, mix, median/p90, correction/failure rate, wait time และ learning effect ไม่คูณผลทดลองเล็กเป็น savings รายปีโดยไม่บอก assumption</p>
+<h2 id="lesson-1-readme-runbook-handoff">README, Runbook และ Handoff ต่างกัน</h2>
+<ul>
+<li><strong>README:</strong> developer เข้าใจ/ติดตั้ง/รัน/test</li>
+<li><strong>Runbook:</strong> operator ตรวจ health, incident, replay, backup, rollback</li>
+<li><strong>Handoff:</strong> owner, status, access, limitations, evidence และการถ่ายโอนความรู้</li>
+</ul>
+<h2 id="lesson-1-handoff-rehearsal">Handoff Rehearsal</h2>
+<p>ให้ผู้รับมอบเริ่มจาก repository/สภาพแวดล้อมที่ตกลง แล้วทำ:</p>
+<ol>
+<li>setup ด้วย docs เท่านั้น</li>
+<li>รัน tests และ smoke case</li>
+<li>หา log ของ task หนึ่งรายการ</li>
+<li>ทำ failure drill ที่ปลอดภัย</li>
+<li>อธิบาย safe replay/rollback/escalation</li>
+</ol>
+<p>ทุกคำถามที่ควรตอบได้จาก docs คือ bug ของ handoff pack ให้แก้แล้วลองซ้ำ</p>
+<h2 id="lesson-1-ownership">Ownership หลังส่ง</h2>
+<p>ระบุ business owner, technical owner, data/risk owner, support channel, SLA/expectation, known debt, expiry/review date ของ prototype และสิ่งที่ยังไม่ production-ready</p>
+<h3 id="lesson-1-gate-e">Gate E ตรวจผ่านเมื่อ</h3>
+<p>ผู้รับมอบปฏิบัติงานพื้นฐานและ recovery drill ได้, owner ยอมรับ limitation, metrics มี baseline/วิธีวัด และหลักฐาน release เชื่อมถึง version ที่ส่งจริง</p><a class="back" href="#top">↑ กลับด้านบน</a></article><div class="book-pager"><a href="book-07-test.html">← ขั้นก่อนหน้า</a><a href="book-07-example.html">ขั้นถัดไป →</a></div></main></div><footer>Book 07 · เริ่มจากโจทย์ → ทำชิ้นเล็กให้พิสูจน์ได้ → ส่งมอบให้คนอื่นดูแลต่อได้</footer></body></html>

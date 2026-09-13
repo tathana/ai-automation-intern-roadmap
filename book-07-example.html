@@ -1,0 +1,387 @@
+<!doctype html><html lang="th"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>7 — ดูตัวอย่างเต็มและภาพรวม · Book 07 — Guided Project Delivery</title><style>
+:root{color-scheme:light;--ink:#203149;--muted:#5b6b7d;--line:#dbe3e9;--accent:#096b63}
+*{box-sizing:border-box}html{scroll-behavior:smooth;scroll-padding-top:24px}body{margin:0;background:#f3f6f8;color:var(--ink);font-family:"Leelawadee UI",Tahoma,sans-serif;font-size:17px;line-height:1.9}a{color:var(--accent);text-underline-offset:4px}header{background:#173b43;color:white;padding:56px max(24px,calc((100vw - 1240px)/2));}header h1{font-size:clamp(28px,4vw,46px);line-height:1.35;margin:12px 0}header p{max-width:780px;color:#d9e9eb}.eyebrow{letter-spacing:2px;font-size:13px;color:#a8dfd5}.layout{max-width:1300px;margin:auto;display:grid;grid-template-columns:280px minmax(0,1fr);gap:30px;padding:30px 24px}aside{position:sticky;top:20px;align-self:start;max-height:92vh;overflow:auto;padding-right:12px}aside h2{font-size:18px}nav a{display:block;padding:9px 10px;border-bottom:1px solid var(--line);text-decoration:none;font-size:14px;line-height:1.6}nav a:hover{background:#e1eeeb}article{background:white;padding:clamp(20px,4vw,48px);border:1px solid var(--line);border-radius:12px;margin-bottom:28px;overflow-wrap:anywhere}article h1{font-size:29px;line-height:1.5;margin:20px 0 28px}h2{font-size:24px;margin-top:40px}h3{font-size:20px;margin-top:28px}pre{background:#152c3b;color:#eaf2f7;padding:20px;border-radius:8px;overflow:auto;line-height:1.65;font-size:14px;white-space:pre;overflow-wrap:normal}code{font-family:Consolas,"Courier New",monospace}p code,li code,td code{background:#edf2f5;padding:2px 5px;border-radius:4px;font-size:.9em}blockquote{margin:24px 0;padding:4px 20px;border-left:4px solid #138779;background:#eff8f5}table{border-collapse:collapse;width:100%;font-size:15px}th,td{border:1px solid var(--line);padding:12px;text-align:left;vertical-align:top}th{background:#eaf2f2}.table-scroll{overflow:auto;margin:20px 0}hr{border:0;border-top:1px solid var(--line);margin:32px 0}.source{font-size:12px;color:var(--muted)}.local-toc{margin-top:18px;font-size:14px;background:#f5f8fa;padding:10px 14px;border-radius:6px}.local-toc a{display:block;margin:7px 0}summary{cursor:pointer}.back{display:inline-block;margin-top:24px;font-size:14px}button{border:1px solid #aac8c5;background:white;color:#175c54;padding:9px 16px;border-radius:6px;cursor:pointer;font:inherit;font-size:14px}footer{max-width:1000px;margin:20px auto;padding:24px;color:var(--muted);font-size:14px}.visual-board{margin:20px 0;padding:16px;border:1px solid #cbd9df;border-radius:12px;background:#f7fafb;overflow:auto}.visual-flow{min-width:620px;display:flex;align-items:center;justify-content:center;gap:8px;padding:14px}.visual-box{min-width:112px;padding:11px;background:white;border:1px solid #9eb3bd;border-radius:9px;text-align:center;box-shadow:0 3px 8px rgba(20,50,60,.07)}.visual-arrow{font-weight:700;color:var(--accent)}.visual-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:10px}.visual-pane{background:white;border:1px solid #cbd9df;border-radius:8px;padding:12px}.visual-label{font-size:12px;letter-spacing:.08em;color:#527080;font-weight:700}.visual-lane{display:grid;grid-template-columns:130px 1fr;gap:12px;align-items:center;margin:8px 0}.visual-track{padding:9px;background:#e6f1ef;border-radius:7px}.visual-note{padding:11px 15px;border-left:4px solid var(--accent);background:#eaf5f3;margin:14px 0}@media(max-width:850px){.layout{display:block;padding:16px}aside{position:static;max-height:none;padding:0 0 20px}nav{max-height:280px;overflow:auto}article h1{font-size:25px}body{font-size:16px}.visual-grid{grid-template-columns:1fr}.visual-lane{grid-template-columns:1fr}}@media print{body{background:white;font-size:11pt}header{background:white;color:black;padding:0}header p{color:black}.layout{display:block;padding:0}aside,button,.local-toc,.back{display:none}article{border:0;padding:0;break-before:page}pre{white-space:pre-wrap;background:#f0f2f4;color:black;font-size:9pt}a{color:inherit}h1,h2,h3{break-after:avoid}.table-scroll{overflow:visible}}
+
+        .book-map{display:flex;gap:8px;overflow:auto;padding:10px 0 2px;margin-top:20px}
+        .book-map a{white-space:nowrap;color:white;border:1px solid rgba(255,255,255,.35);border-radius:999px;padding:5px 11px;text-decoration:none;font-size:13px}
+        .book-pager{display:flex;justify-content:space-between;gap:16px;margin:0 0 24px}
+        .book-pager a{background:white;border:1px solid var(--line);border-radius:9px;padding:10px 14px;text-decoration:none;font-weight:700}
+        </style></head><body><header id="top"><div class="eyebrow">BOOK 07 · GUIDED PROJECT PATH</div><h1>7 — ดูตัวอย่างเต็มและภาพรวม</h1><p>เดิน Resume Evidence Assistant ตั้งแต่โจทย์หนึ่งบรรทัดถึง demo พร้อม visual notes</p><p><a style="color:white" href="book-07.html">หน้าเริ่ม Book 7</a> · <a style="color:white" href="book-07-materials.zip">ดาวน์โหลด Workbook และ Template</a> · <a style="color:white" href="index.html">หนังสือทั้งหมด</a></p><div class="book-map" aria-label="เส้นทาง Book 7"><a href="book-07-start.html">เริ่มต้นและ Workbook</a><a href="book-07-requirements.html">1 — เข้าใจโจทย์และกำหนดขอบเขต</a><a href="book-07-design.html">2 — ออกแบบระบบและแบ่งงาน</a><a href="book-07-build.html">3 — เริ่มเขียนโค้ดทีละก้อน</a><a href="book-07-ai.html">4 — ใช้ AI ช่วยเขียนอย่างคุมงานได้</a><a href="book-07-test.html">5 — วาง Test และ Failure Cases</a><a href="book-07-deliver.html">6 — Release, Observe และ Handoff</a><a href="book-07-example.html">7 — ดูตัวอย่างเต็มและภาพรวม</a><a href="book-07-reference.html">Reference — Phase Gates และ Template Pack</a></div></header><div class="layout"><aside><h2>ในหน้านี้</h2><nav><a href="#lesson-0">19 — Filled Guided Example: Resume Evidence Assistant</a><a href="#lesson-1">10 — ตัวอย่างครบวงจร วิธีนำไปใช้ และแหล่งอ่านต่อ</a><a href="#lesson-2">11 — Visual Notes: รับงานจนถึง Handoff</a><a href="#lesson-3">12 — Easy Walkthrough: รับโจทย์หนึ่งประโยคแล้วใช้ Template อย่างไร</a></nav><p style="font-size:13px">อ่านตามลำดับ หรือกลับหน้าเริ่มเพื่อเลือกจากสถานการณ์ที่กำลังเจอ</p></aside><main><div class="book-pager"><a href="book-07-deliver.html">← ขั้นก่อนหน้า</a><a href="book-07-reference.html">ขั้นถัดไป →</a></div><article id="lesson-0"><div class="source">19_FILLED_GUIDED_EXAMPLE.md</div><details class="local-toc"><summary>หัวข้อในส่วนนี้</summary><a href="#lesson-0-1">1. โจทย์ต้นฉบับ</a><a href="#lesson-0-2">2. แปลเป็นปัญหาที่ตรวจได้</a><a href="#lesson-0-3-scope">3. Scope รอบแรก</a><a href="#lesson-0-4-acceptance">4. Acceptance</a><a href="#lesson-0-5-system-flow">5. System Flow</a><a href="#lesson-0-6-project-structure">6. Project Structure</a><a href="#lesson-0-7-work-breakdown">7. Work Breakdown</a><a href="#lesson-0-8-function-card">8. Function Card ตัวอย่าง</a><a href="#lesson-0-9-prompt-ai">9. Prompt ให้ AI ช่วยก้อนแรก</a><a href="#lesson-0-10-test-evidence">10. Test และ Evidence</a><a href="#lesson-0-11-demo-handoff">11. Demo และ Handoff</a></details><h1 id="lesson-0-19-filled-guided-example-resume-evidence-assistant">19 — Filled Guided Example: Resume Evidence Assistant</h1>
+<p>ตัวอย่างนี้แสดงกระบวนการย่อหนึ่งรอบ ไม่ใช่ requirement สำหรับ production และใช้ข้อมูลสังเคราะห์ทั้งหมด</p>
+<h2 id="lesson-0-1">1. โจทย์ต้นฉบับ</h2>
+<blockquote>
+<p>HR อ่าน Resume จำนวนมากและต้องการ AI ช่วยลดเวลาหาข้อมูลที่เกี่ยวข้อง</p>
+</blockquote>
+<h2 id="lesson-0-2">2. แปลเป็นปัญหาที่ตรวจได้</h2>
+<p>HR ยังเป็นผู้ตัดสิน ระบบช่วยสร้าง evidence draft โดยทุกข้ออ้างต้องมี quote ที่ค้นพบในข้อความต้นฉบับ เป้าหมาย pilot คือเปรียบเทียบเวลาต่อไฟล์และ correction rate กับวิธีเดิม</p>
+<p>คำถามที่ยังต้องถาม:</p>
+<ul>
+<li>ปริมาณ/ภาษา/ชนิดไฟล์จริงเป็นอย่างไร</li>
+<li>field ใดที่ HR ต้องใช้ในขั้นถัดไป</li>
+<li>retention และสิทธิ์เข้าถึงเป็นอย่างไร</li>
+<li>ใครอนุมัติผลลัพธ์ก่อนใช้ต่อ</li>
+</ul>
+<h2 id="lesson-0-3-scope">3. Scope รอบแรก</h2>
+<pre><code class="language-text">ทำ: text input → structured evidence → validation → human review
+ไม่ทำ: auto-rank/reject, production OCR, ส่งผลเข้า HRIS อัตโนมัติ
+</code></pre>
+<p>เหตุผลที่เริ่ม text-only คือพิสูจน์ business flow และ evidence validation ก่อนรับความซับซ้อนจากเอกสารหลายรูปแบบ</p>
+<h2 id="lesson-0-4-acceptance">4. Acceptance</h2>
+<div class="table-scroll"><table>
+<thead>
+<tr>
+<th>ID</th>
+<th>เงื่อนไขผ่าน</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>AC-01</td>
+<td>payload ไม่ครบถูกปฏิเสธพร้อม error ที่อ่านได้</td>
+</tr>
+<tr>
+<td>AC-02</td>
+<td>evidence quote ทุกชิ้นค้นพบใน normalized source หรือถูกระบุ unsupported</td>
+</tr>
+<tr>
+<td>AC-03</td>
+<td>event เดิมส่งซ้ำแล้วไม่สร้าง task ใหม่</td>
+</tr>
+<tr>
+<td>AC-04</td>
+<td>model/provider ล้มเหลวแล้ว task ไม่หายและ retry ได้ตาม policy</td>
+</tr>
+<tr>
+<td>AC-05</td>
+<td>การ approve/reject มีผู้ทำ เวลา เหตุผล และประวัติ</td>
+</tr>
+</tbody>
+</table></div>
+<h2 id="lesson-0-5-system-flow">5. System Flow</h2>
+<pre><code class="language-text">Synthetic Resume
+      ↓
+Intake API ──validate──→ reject 4xx
+      ↓ valid
+SQLite Task Queue ← duplicate returns existing
+      ↓ lease
+Worker → Mock/Approved AI Provider
+      ↓
+Evidence Validator → unsupported? → needs_review
+      ↓
+Human Review → decision + audit
+</code></pre>
+<h2 id="lesson-0-6-project-structure">6. Project Structure</h2>
+<pre><code class="language-text">src/app/
+├─ models.py       # request/result contracts
+├─ rules.py        # evidence validation
+├─ repository.py   # durable task state
+├─ services.py     # intake/process/review use cases
+├─ provider.py     # Mock และ approved provider boundary
+├─ api.py          # HTTP endpoints
+└─ worker.py       # claim/process/retry loop
+tests/
+├─ test_rules.py
+├─ test_intake.py
+├─ test_worker.py
+└─ test_review.py
+</code></pre>
+<h2 id="lesson-0-7-work-breakdown">7. Work Breakdown</h2>
+<h3 id="lesson-0-slice-1-intake-duplicate">Slice 1 — Intake ที่ทน duplicate</h3>
+<ul>
+<li>Code: input model, repository, <code>POST /tasks</code>, <code>GET /tasks/{id}</code></li>
+<li>Tests: valid, missing field, duplicate event, DB persistence</li>
+<li>Demo: ส่ง payload สองครั้งแล้วได้ task ID เดียว</li>
+</ul>
+<h3 id="lesson-0-slice-2-evidence">Slice 2 — Evidence ที่มีหลักฐาน</h3>
+<ul>
+<li>Code: mock provider, quote validator, process service</li>
+<li>Tests: supported quote, invented quote, provider invalid schema</li>
+<li>Demo: claim ที่ไม่มีหลักฐานถูกส่ง <code>needs_review</code></li>
+</ul>
+<h3 id="lesson-0-slice-3-recovery">Slice 3 — Recovery</h3>
+<ul>
+<li>Code: lease, attempts, retry/backoff, terminal failure</li>
+<li>Tests: timeout, crash, lease expiry, max attempts</li>
+<li>Demo: หยุด worker กลางทางแล้วเริ่มใหม่โดย task ไม่หาย</li>
+</ul>
+<h3 id="lesson-0-slice-4-human-decision">Slice 4 — Human decision</h3>
+<ul>
+<li>Code: review endpoint, role/permission boundary, audit record</li>
+<li>Tests: approve, reject, duplicate decision, unauthorized user</li>
+<li>Demo: ค้นย้อนหลังได้ว่าใครตัดสินอะไรและเพราะอะไร</li>
+</ul>
+<h2 id="lesson-0-8-function-card">8. Function Card ตัวอย่าง</h2>
+<pre><code class="language-text">Function: claim_next_task
+Responsibility: จอง task พร้อมทำหนึ่งรายการให้ worker
+Input: worker_id, now, lease_seconds
+Output: claimed task หรือ None
+Side effect: เปลี่ยน status/lease owner ใน transaction เดียว
+Failure: DB busy → retry ตาม policy
+Important test: worker สองตัวต้อง claim task เดียวกันไม่ได้
+</code></pre>
+<h2 id="lesson-0-9-prompt-ai">9. Prompt ให้ AI ช่วยก้อนแรก</h2>
+<pre><code class="language-text">ช่วยออกแบบ tests สำหรับ claim_next_task บน SQLite
+ต้องพิสูจน์ว่า worker สองตัว claim task เดียวไม่ได้ และ lease หมดอายุแล้ว reclaim ได้
+ยังไม่เขียน production code ขอ test cases, fixture state และ expected transition ก่อน
+ห้ามใช้ sleep จริงใน test ให้ส่ง clock/now เข้า function
+</code></pre>
+<p>การส่ง <code>now</code> เข้าไปทำให้ test ควบคุมเวลาได้ ไม่ต้องรอจริง แนวคิดนี้ทำให้ failure/recovery test เร็วและไม่ flaky</p>
+<h2 id="lesson-0-10-test-evidence">10. Test และ Evidence</h2>
+<pre><code class="language-text">AC-03 → test_duplicate_event_returns_existing_task → DB count = 1
+AC-04 → test_expired_lease_can_be_reclaimed → status returns processing
+AC-05 → test_review_writes_audit_record → actor/reason/timestamp exist
+</code></pre>
+<h2 id="lesson-0-11-demo-handoff">11. Demo และ Handoff</h2>
+<p>Demo ตามลำดับ normal → failure → recovery → limitation:</p>
+<ol>
+<li>ส่ง Resume สังเคราะห์และดู task</li>
+<li>แสดง evidence ที่รองรับ</li>
+<li>ให้ mock provider สร้าง quote ปลอมและเห็นว่า validator block</li>
+<li>ส่ง event ซ้ำและเห็นว่า task ไม่ซ้ำ</li>
+<li>review และเปิด audit</li>
+<li>บอกตรง ๆ ว่า pilot ยังไม่รองรับอะไร</li>
+</ol>
+<p>ก่อนส่งมอบ ให้เพื่อนหรือคนในทีม clone ใหม่ ทำตาม README และ runbook โดยเราไม่บอกขั้นตอนปากเปล่า จุดที่เขาติดคือ documentation gap ที่ต้องแก้</p><a class="back" href="#top">↑ กลับด้านบน</a></article><article id="lesson-1"><div class="source">10_worked_examples_sources.md</div><details class="local-toc"><summary>หัวข้อในส่วนนี้</summary><a href="#lesson-1-a-hr-resume-evidence-assistant">ตัวอย่าง A: HR Resume Evidence Assistant</a><a href="#lesson-1-b-daily-report-automation">ตัวอย่าง B: Daily Report Automation</a><a href="#lesson-1-copy">วิธี Copy ไปใช้</a><a href="#lesson-1-_1">แหล่งอ่านต่อที่คัดตามงาน</a><a href="#lesson-1-definition-of-done-project-pack">Definition of Done ของ Project Pack</a></details><h1 id="lesson-1-10">10 — ตัวอย่างครบวงจร วิธีนำไปใช้ และแหล่งอ่านต่อ</h1>
+<h2 id="lesson-1-a-hr-resume-evidence-assistant">ตัวอย่าง A: HR Resume Evidence Assistant</h2>
+<p>เปิด <code>examples/hr_resume_assistant/FILLED_PROJECT_PACK.md</code> เพื่อดู artifact ที่กรอกแล้วในเอกสารเดียว และ <code>TRACEABILITY.csv</code> เพื่อเห็นการเชื่อม:</p>
+<pre><code class="language-text">pain: HR ใช้เวลาค้น evidence
+→ REQ-F-02: extract draft with source quote/location
+→ design: worker + approved model adapter + validator
+→ TASK-06: evidence validation
+→ TEST-09: invented quote must be rejected
+→ EVID-04: eval report version v1
+</code></pre>
+<p>ตัวอย่างนี้จงใจไม่ auto-rank/reject/hire และใช้ข้อมูลสังเคราะห์ เพราะเป้าหมายคือ decision support ที่ตรวจสอบได้</p>
+<h2 id="lesson-1-b-daily-report-automation">ตัวอย่าง B: Daily Report Automation</h2>
+<p>เปิด <code>examples/daily_report_automation/FILLED_SMALL_PROJECT.md</code> เพื่อดูงานที่ใช้ script/scheduler อย่างพอดี ไม่ใช้ queue, microservices หรือ LLM โดยไม่มีเหตุผล</p>
+<pre><code class="language-text">approved CSV → validate → aggregate → render draft → human sends
+</code></pre>
+<p>บทเรียนสำคัญคือ Template เดียวกันต้อง <strong>ย่อได้</strong> ตามความเสี่ยง ไม่ใช่บังคับ architecture แบบเดียว</p>
+<h2 id="lesson-1-copy">วิธี Copy ไปใช้</h2>
+<pre><code class="language-powershell">Copy-Item -Recurse '.\template_pack' '.\docs\delivery'
+</code></pre>
+<p>จากนั้นลบเฉพาะ template ที่ตัดสินใจแล้วว่าไม่จำเป็น และบันทึกเหตุผลสั้น ๆ ใน Master Checklist อย่า copy filled example แล้วเปลี่ยนชื่อโดยไม่ตรวจ assumptions</p>
+<h2 id="lesson-1-_1">แหล่งอ่านต่อที่คัดตามงาน</h2>
+<div class="table-scroll"><table>
+<thead>
+<tr>
+<th>เมื่อกำลังทำ</th>
+<th>แหล่งหลัก</th>
+<th>อ่านเรื่อง</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Requirement/API</td>
+<td><a href="https://spec.openapis.org/oas/latest.html">OpenAPI Specification</a></td>
+<td>contract ที่เครื่องมืออ่านได้</td>
+</tr>
+<tr>
+<td>Architecture diagram</td>
+<td><a href="https://c4model.com/">C4 Model</a></td>
+<td>context/container/component/code</td>
+</tr>
+<tr>
+<td>Python packaging</td>
+<td><a href="https://packaging.python.org/">Python Packaging User Guide</a></td>
+<td>environment, dependency, project layout</td>
+</tr>
+<tr>
+<td>FastAPI/Pydantic</td>
+<td><a href="https://fastapi.tiangolo.com/">FastAPI</a> / <a href="https://docs.pydantic.dev/">Pydantic</a></td>
+<td>validation และ API contracts</td>
+</tr>
+<tr>
+<td>Workflow</td>
+<td><a href="https://docs.n8n.io/">n8n Documentation</a></td>
+<td>executions, error handling, credentials</td>
+</tr>
+<tr>
+<td>Container</td>
+<td><a href="https://docs.docker.com/">Docker Documentation</a></td>
+<td>images, Compose, networking, storage</td>
+</tr>
+<tr>
+<td>Tests</td>
+<td><a href="https://docs.pytest.org/">pytest Documentation</a></td>
+<td>fixtures, parametrization, test discovery</td>
+</tr>
+<tr>
+<td>Web/API security</td>
+<td><a href="https://owasp.org/www-project-api-security/">OWASP API Security</a></td>
+<td>authorization, input, resources</td>
+</tr>
+<tr>
+<td>AI risk</td>
+<td><a href="https://www.nist.gov/itl/ai-risk-management-framework">NIST AI RMF</a></td>
+<td>govern/map/measure/manage</td>
+</tr>
+<tr>
+<td>LLM threats</td>
+<td><a href="https://genai.owasp.org/">OWASP GenAI Security</a></td>
+<td>prompt injection, output handling, data risks</td>
+</tr>
+<tr>
+<td>Observability</td>
+<td><a href="https://opentelemetry.io/docs/">OpenTelemetry Documentation</a></td>
+<td>traces, metrics, logs, context propagation</td>
+</tr>
+<tr>
+<td>Reliability/incident</td>
+<td><a href="https://sre.google/books/">Google SRE Books</a></td>
+<td>SLO, monitoring, incident/postmortem</td>
+</tr>
+<tr>
+<td>Git collaboration</td>
+<td><a href="https://docs.github.com/en/pull-requests">GitHub Docs</a></td>
+<td>branches, pull requests, reviews</td>
+</tr>
+</tbody>
+</table></div>
+<p>ลิงก์เหล่านี้เป็นจุดเริ่มจากเอกสารทางการ แต่ policy, deployment, security และ data retention ของบริษัทมีลำดับสูงกว่า textbook เสมอ</p>
+<h2 id="lesson-1-definition-of-done-project-pack">Definition of Done ของ Project Pack</h2>
+<ul>
+<li>ไม่มี placeholder สำคัญที่ไม่ระบุ owner/date</li>
+<li>requirement สำคัญเชื่อมกับ design/task/test/evidence</li>
+<li>diagrams และ contracts ตรงกับ version ที่ส่ง</li>
+<li>risk/privacy/security มีผู้อนุมัติตามบริบท</li>
+<li>verification commands ทำซ้ำได้</li>
+<li>rollback/recovery ไม่อาศัยผู้เขียนคนเดียว</li>
+<li>filled example/test data ไม่มีข้อมูลจริงหรือ secret</li>
+</ul><a class="back" href="#top">↑ กลับด้านบน</a></article><article id="lesson-2"><div class="source">11_delivery_visual_notes.md</div><details class="local-toc"><summary>หัวข้อในส่วนนี้</summary><a href="#lesson-2-phase-gates">Phase Gates</a><a href="#lesson-2-traceability">Traceability</a><a href="#lesson-2-before-after">Before / After ที่วัดอย่างตรงไปตรงมา</a><a href="#lesson-2-handoff">Handoff</a></details><h1 id="lesson-2-11-visual-notes-handoff">11 — Visual Notes: รับงานจนถึง Handoff</h1>
+<h2 id="lesson-2-phase-gates">Phase Gates</h2>
+<div class="visual-board"><div class="visual-flow"><div class="visual-box">A Problem<br/><small>baseline/scope</small></div><span class="visual-arrow">→</span><div class="visual-box">B Design<br/><small>contract/risk</small></div><span class="visual-arrow">→</span><div class="visual-box">C Verified<br/><small>test/eval</small></div><span class="visual-arrow">→</span><div class="visual-box">D Release<br/><small>monitor/rollback</small></div><span class="visual-arrow">→</span><div class="visual-box">E Transfer<br/><small>runbook/rehearsal</small></div></div></div>
+<h2 id="lesson-2-traceability">Traceability</h2>
+<div class="visual-board"><div class="visual-flow"><div class="visual-box"><code>REQ-F-02</code></div><span class="visual-arrow">→</span><div class="visual-box"><code>ADR-01</code></div><span class="visual-arrow">→</span><div class="visual-box"><code>TASK-06</code></div><span class="visual-arrow">→</span><div class="visual-box"><code>TEST-09</code></div><span class="visual-arrow">→</span><div class="visual-box"><code>EVID-04</code></div></div></div>
+<h2 id="lesson-2-before-after">Before / After ที่วัดอย่างตรงไปตรงมา</h2>
+<div class="visual-board"><div class="visual-grid"><div class="visual-pane"><div class="visual-label">BEFORE</div><p>read + copy + verify + rework</p></div><div class="visual-pane"><div class="visual-label">AFTER</div><p>submit + review + correct + recover failures</p></div><div class="visual-pane"><div class="visual-label">COMPARE</div><p>same case mix · median/p90 · quality guardrails</p></div></div></div>
+<h2 id="lesson-2-handoff">Handoff</h2>
+<div class="visual-board"><div class="visual-grid"><div class="visual-pane"><div class="visual-label">README</div><p>developer setup/run/test</p></div><div class="visual-pane"><div class="visual-label">RUNBOOK</div><p>operator health/replay/rollback</p></div><div class="visual-pane"><div class="visual-label">REHEARSAL</div><p>ผู้รับมอบทำได้จาก docs จริง</p></div></div></div><a class="back" href="#top">↑ กลับด้านบน</a></article><article id="lesson-3"><div class="source">12_easy_template_walkthrough.md</div><details class="local-toc"><summary>หัวข้อในส่วนนี้</summary><a href="#lesson-3-phase-1-intake">Phase 1 — Intake: อย่าเพิ่งเสนอเทคโนโลยี</a><a href="#lesson-3-phase-2-scope-requirement">Phase 2 — Scope และ Requirement</a><a href="#lesson-3-phase-3-datarisk">Phase 3 — Data/Risk</a><a href="#lesson-3-phase-4-architecture-adr">Phase 4 — Architecture และ ADR</a><a href="#lesson-3-phase-5-plan-vertical-slice">Phase 5 — Plan เป็น Vertical Slice</a><a href="#lesson-3-phase-6-buildreview">Phase 6 — Build/Review</a><a href="#lesson-3-phase-7-verifyevaluate">Phase 7 — Verify/Evaluate</a><a href="#lesson-3-phase-8-releaserollbackobserve">Phase 8 — Release/Rollback/Observe</a><a href="#lesson-3-phase-9-demoimpacthandoff">Phase 9 — Demo/Impact/Handoff</a><a href="#lesson-3-template">เลือก Template เท่าที่จำเป็น</a><a href="#lesson-3-_1">ศัพท์สรุป</a></details><h1 id="lesson-3-12-easy-walkthrough-template">12 — Easy Walkthrough: รับโจทย์หนึ่งประโยคแล้วใช้ Template อย่างไร</h1>
+<p>สมมติหัวหน้าบอกว่า:</p>
+<blockquote>
+<p>“ช่วยทำระบบ AI อ่าน Resume เพื่อลดเวลาทีม HR หน่อย”</p>
+</blockquote>
+<p>ประโยคนี้ยังเริ่มเขียนโค้ดไม่ได้ เพราะยังไม่รู้ input, output, ผู้ใช้, baseline, ข้อห้าม และคำว่า “ลดเวลา” วัดอย่างไร บทนี้พาเดิน template แบบภาษาง่าย</p>
+<h2 id="lesson-3-phase-1-intake">Phase 1 — Intake: อย่าเพิ่งเสนอเทคโนโลยี</h2>
+<pre><code class="language-text">โจทย์กว้าง
+  ↓ ถามว่าใครทำอะไรอยู่
+Current workflow
+  ↓ จับเวลา/จำนวน/error
+Baseline ที่วัดได้
+</code></pre>
+<p>คำถามสำคัญ เช่น Resume มาจากไหน, เดือนละกี่ไฟล์, ภาษา/format อะไร, HR ต้องการผลแบบใด, จุดไหนเสียเวลาจริง และใครตัดสินสุดท้าย</p>
+<p><strong>Baseline</strong> คือค่าก่อนปรับ เช่นเฉลี่ย 8 นาที/ไฟล์ ไม่ใช่ตัวเลขที่เราคาดเองเพื่อให้โปรเจกต์ดูดี</p>
+<h2 id="lesson-3-phase-2-scope-requirement">Phase 2 — Scope และ Requirement</h2>
+<pre><code class="language-text">In scope: extract text + evidence draft + review queue
+Out of scope: auto-rank/reject/hire, production OCR ทุกชนิด
+</code></pre>
+<p>จากนั้นเปลี่ยนความต้องการเป็นสิ่งทดสอบได้:</p>
+<pre><code class="language-text">คำกว้าง: ระบบไม่สร้างข้อมูลมั่ว
+REQ-AI-03: quote ทุกชิ้นต้องตรวจพบใน normalized source
+TEST-09: mock คืน quote ปลอม → result ต้อง unsupported/needs_review
+</code></pre>
+<p>นี่คือ <strong>acceptance criteria</strong> หรือเงื่อนไขที่ใช้ตัดสินว่างานผ่าน ไม่ใช่รายละเอียด implementation</p>
+<h2 id="lesson-3-phase-3-datarisk">Phase 3 — Data/Risk</h2>
+<p>เขียนรายการข้อมูลและถามว่าใครเข้าถึง เก็บที่ไหน นานเท่าไร และ log อะไร:</p>
+<pre><code class="language-text">Resume text = PII สูง
+candidate_id = identifier
+evidence draft = derived data
+review decision = business record
+</code></pre>
+<p><strong>Risk register</strong> ไม่ใช่รายการสิ่งน่ากลัวลอย ๆ แต่ต้องมี likelihood/impact/control/owner เช่น PII หลุดใน log → redact raw text → owner backend → test log inspection</p>
+<h2 id="lesson-3-phase-4-architecture-adr">Phase 4 — Architecture และ ADR</h2>
+<p>วาดกล่องเฉพาะที่ช่วยตัดสินใจ:</p>
+<pre><code class="language-text">n8n → Intake API → SQLite task
+                      ↓
+                   Worker → Provider
+                      ↓
+             Validator → Human Review
+</code></pre>
+<p><strong>ADR (Architecture Decision Record)</strong> คือบันทึกว่าเลือกอะไร เพราะอะไร มี trade-off อะไร เช่น “เริ่ม text-only + Mock AI เพื่อพิสูจน์ flow ก่อน PDF/OCR” ช่วยไม่ให้ทีมย้อนถกเรื่องเดิมโดยลืมบริบท</p>
+<h2 id="lesson-3-phase-5-plan-vertical-slice">Phase 5 — Plan เป็น Vertical Slice</h2>
+<p>อย่าแบ่งงานเป็น “ทำ backend ทั้งหมด / ทำ database ทั้งหมด” ให้แบ่งเส้นที่ demo ได้:</p>
+<pre><code class="language-text">Slice 1: valid text → 202 + durable task
+Slice 2: worker → supported evidence
+Slice 3: hallucination → needs_review
+Slice 4: human decision + audit
+</code></pre>
+<p><strong>Vertical slice</strong> คือชิ้นเล็กที่ผ่านหลาย layer ตั้งแต่ input ถึง observable output</p>
+<h2 id="lesson-3-phase-6-buildreview">Phase 6 — Build/Review</h2>
+<p>หนึ่ง task/commit ควรเชื่อมกับ requirement/test:</p>
+<pre><code class="language-text">REQ-IDEM-01
+  ↓ TASK-04 implement unique event + hash
+  ↓ commit feat: make intake idempotent
+  ↓ TEST-05 replay same payload
+  ↓ evidence: test report + task count
+</code></pre>
+<p>AI ช่วยร่างได้ แต่ต้องอ่าน diff, ตรวจ API/version, test happy/failure และเช็ก secret/PII ก่อน commit</p>
+<h2 id="lesson-3-phase-7-verifyevaluate">Phase 7 — Verify/Evaluate</h2>
+<ul>
+<li>Test: software ทำตาม deterministic contract หรือไม่</li>
+<li>Evaluation: AI output quality บน dataset/rubric เป็นอย่างไร</li>
+</ul>
+<p>สองอย่างไม่แทนกัน <code>pytest passed</code> ไม่ได้พิสูจน์ model accuracy และคะแนน eval ดีไม่ได้พิสูจน์ transaction/idempotency</p>
+<h2 id="lesson-3-phase-8-releaserollbackobserve">Phase 8 — Release/Rollback/Observe</h2>
+<p><strong>Release plan</strong> บอกลำดับเปิดใช้และ verification <strong>Rollback plan</strong> บอก trigger/วิธีกลับ/ผลต่อข้อมูล <strong>Observability</strong> บอกจะเห็นอย่างไรว่างานค้าง ผิด หรือช้าลง</p>
+<p>เริ่ม shadow/manual-assist ก่อน side effect จริงในงานเสี่ยง วัด false result และ correction time ไม่ดูเพียงจำนวน workflow executions</p>
+<h2 id="lesson-3-phase-9-demoimpacthandoff">Phase 9 — Demo/Impact/Handoff</h2>
+<p>Demo ที่ดีมี normal + failure + recovery + limitation:</p>
+<pre><code class="language-text">valid input → task → evidence
+hallucination → blocked
+duplicate → same task
+review → audit
+</code></pre>
+<p>Impact เปรียบเทียบ baseline กับผลทดลองพร้อมจำนวน sample และข้อจำกัด Handoff ต้องให้คนอื่นรันจาก clean start โดยไม่พึ่งความจำของผู้สร้าง</p>
+<h2 id="lesson-3-template">เลือก Template เท่าที่จำเป็น</h2>
+<p>งานเล็กหนึ่งวันอาจใช้ Project Brief + Acceptance/Test + README ก็พอ งานที่มี PII/AI/หลายระบบจึงค่อยเพิ่ม Data Risk, ADR, Eval, Runbook และ Release Plan เป้าหมายคือช่วยตัดสินใจ ไม่ใช่กรอกเอกสารครบเพื่อความสวยงาม</p>
+<h2 id="lesson-3-_1">ศัพท์สรุป</h2>
+<div class="table-scroll"><table>
+<thead>
+<tr>
+<th>ศัพท์</th>
+<th>คำถามที่มันช่วยตอบ</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Stakeholder</td>
+<td>ใครได้ผล/ได้รับผลกระทบ/ตัดสินใจ</td>
+</tr>
+<tr>
+<td>Baseline</td>
+<td>ก่อนทำระบบใช้เวลา/ผิดพลาดเท่าไร</td>
+</tr>
+<tr>
+<td>Scope</td>
+<td>รอบนี้ทำและไม่ทำอะไร</td>
+</tr>
+<tr>
+<td>Acceptance criteria</td>
+<td>หลักฐานแบบใดจึงเรียกว่าผ่าน</td>
+</tr>
+<tr>
+<td>Traceability</td>
+<td>requirement เชื่อม design/code/test ไหน</td>
+</tr>
+<tr>
+<td>Risk control</td>
+<td>ลดโอกาสหรือผลกระทบอย่างไร</td>
+</tr>
+<tr>
+<td>ADR</td>
+<td>ทำไมเลือก design นี้</td>
+</tr>
+<tr>
+<td>Rollback</td>
+<td>ถ้า release มีปัญหากลับอย่างปลอดภัยอย่างไร</td>
+</tr>
+<tr>
+<td>Runbook</td>
+<td>คนดูแลตรวจ/recover ระบบอย่างไร</td>
+</tr>
+<tr>
+<td>Handoff</td>
+<td>คนอื่นรับช่วงต่อได้จริงหรือยัง</td>
+</tr>
+</tbody>
+</table></div><a class="back" href="#top">↑ กลับด้านบน</a></article><div class="book-pager"><a href="book-07-deliver.html">← ขั้นก่อนหน้า</a><a href="book-07-reference.html">ขั้นถัดไป →</a></div></main></div><footer>Book 07 · เริ่มจากโจทย์ → ทำชิ้นเล็กให้พิสูจน์ได้ → ส่งมอบให้คนอื่นดูแลต่อได้</footer></body></html>
