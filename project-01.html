@@ -1,15 +1,16 @@
 <!doctype html><html lang="th"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><meta name="description" content="Guided end-to-end AI automation practice project"><title>Project 01 — Resume Evidence Assistant Lite</title><style>
 :root{color-scheme:light;--ink:#203149;--muted:#5b6b7d;--line:#dbe3e9;--accent:#096b63}
 *{box-sizing:border-box}html{scroll-behavior:smooth;scroll-padding-top:24px}body{margin:0;background:#f3f6f8;color:var(--ink);font-family:"Leelawadee UI",Tahoma,sans-serif;font-size:17px;line-height:1.9}a{color:var(--accent);text-underline-offset:4px}header{background:#173b43;color:white;padding:56px max(24px,calc((100vw - 1240px)/2));}header h1{font-size:clamp(28px,4vw,46px);line-height:1.35;margin:12px 0}header p{max-width:780px;color:#d9e9eb}.eyebrow{letter-spacing:2px;font-size:13px;color:#a8dfd5}.layout{max-width:1300px;margin:auto;display:grid;grid-template-columns:280px minmax(0,1fr);gap:30px;padding:30px 24px}aside{position:sticky;top:20px;align-self:start;max-height:92vh;overflow:auto;padding-right:12px}aside h2{font-size:18px}nav a{display:block;padding:9px 10px;border-bottom:1px solid var(--line);text-decoration:none;font-size:14px;line-height:1.6}nav a:hover{background:#e1eeeb}article{background:white;padding:clamp(20px,4vw,48px);border:1px solid var(--line);border-radius:12px;margin-bottom:28px;overflow-wrap:anywhere}article h1{font-size:29px;line-height:1.5;margin:20px 0 28px}h2{font-size:24px;margin-top:40px}h3{font-size:20px;margin-top:28px}pre{background:#152c3b;color:#eaf2f7;padding:20px;border-radius:8px;overflow:auto;line-height:1.65;font-size:14px;white-space:pre;overflow-wrap:normal}code{font-family:Consolas,"Courier New",monospace}p code,li code,td code{background:#edf2f5;padding:2px 5px;border-radius:4px;font-size:.9em}blockquote{margin:24px 0;padding:4px 20px;border-left:4px solid #138779;background:#eff8f5}table{border-collapse:collapse;width:100%;font-size:15px}th,td{border:1px solid var(--line);padding:12px;text-align:left;vertical-align:top}th{background:#eaf2f2}.table-scroll{overflow:auto;margin:20px 0}hr{border:0;border-top:1px solid var(--line);margin:32px 0}.source{font-size:12px;color:var(--muted)}.local-toc{margin-top:18px;font-size:14px;background:#f5f8fa;padding:10px 14px;border-radius:6px}.local-toc a{display:block;margin:7px 0}summary{cursor:pointer}.back{display:inline-block;margin-top:24px;font-size:14px}button{border:1px solid #aac8c5;background:white;color:#175c54;padding:9px 16px;border-radius:6px;cursor:pointer;font:inherit;font-size:14px}footer{max-width:1000px;margin:20px auto;padding:24px;color:var(--muted);font-size:14px}.visual-board{margin:20px 0;padding:16px;border:1px solid #cbd9df;border-radius:12px;background:#f7fafb;overflow:auto}.visual-flow{min-width:620px;display:flex;align-items:center;justify-content:center;gap:8px;padding:14px}.visual-box{min-width:112px;padding:11px;background:white;border:1px solid #9eb3bd;border-radius:9px;text-align:center;box-shadow:0 3px 8px rgba(20,50,60,.07)}.visual-arrow{font-weight:700;color:var(--accent)}.visual-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:10px}.visual-pane{background:white;border:1px solid #cbd9df;border-radius:8px;padding:12px}.visual-label{font-size:12px;letter-spacing:.08em;color:#527080;font-weight:700}.visual-lane{display:grid;grid-template-columns:130px 1fr;gap:12px;align-items:center;margin:8px 0}.visual-track{padding:9px;background:#e6f1ef;border-radius:7px}.visual-note{padding:11px 15px;border-left:4px solid var(--accent);background:#eaf5f3;margin:14px 0}@media(max-width:850px){.layout{display:block;padding:16px}aside{position:static;max-height:none;padding:0 0 20px}nav{max-height:280px;overflow:auto}article h1{font-size:25px}body{font-size:16px}.visual-grid{grid-template-columns:1fr}.visual-lane{grid-template-columns:1fr}}@media print{body{background:white;font-size:11pt}header{background:white;color:black;padding:0}header p{color:black}.layout{display:block;padding:0}aside,button,.local-toc,.back{display:none}article{border:0;padding:0;break-before:page}pre{white-space:pre-wrap;background:#f0f2f4;color:black;font-size:9pt}a{color:inherit}h1,h2,h3{break-after:avoid}.table-scroll{overflow:visible}}
-</style></head><body><header id="top"><div class="eyebrow">GUIDED PROJECT · BUILD IT YOURSELF</div><h1>Project 01 — Resume Evidence Assistant Lite</h1><p>โจทย์ end-to-end ขนาดเล็กแต่ครบวงจร: requirement, FastAPI, SQLite, worker, Mock AI, evidence validation, human review, n8n, Docker, tests และ handoff</p><p><a style="color:white" href="index.html">หน้าหลัก</a> · <a style="color:white" href="book-07.html">Delivery Template Book</a> · <a style="color:white" href="debugging-atlas.html">Debugging Atlas</a></p><button onclick="window.print()">พิมพ์ / บันทึกเป็น PDF</button> <a style="color:white" href="project-01-materials.zip">ดาวน์โหลดโจทย์และ Fixtures</a></header><div class="layout"><aside><h2>สารบัญโจทย์</h2><nav><a href="#lesson-0">Project 01 — Resume Evidence Assistant Lite</a><a href="#lesson-1">00 — Project Map และภาพปลายทาง</a><a href="#lesson-2">01 — Mission และข้อกำหนด</a><a href="#lesson-3">02 — Implementation Guideline ทีละ Milestone</a><a href="#lesson-4">03 — Acceptance Matrix และ Test Design</a><a href="#lesson-5">04 — Hint Ladder</a><a href="#lesson-6">05 — Grading Rubric และ Delivery Checklist</a><a href="#lesson-7">06 — n8n Canvas Guideline</a><a href="#lesson-8">07 — Easy Walkthrough: มองระบบให้ออกก่อนเขียน</a><a href="#lesson-9">Architecture Decision Log</a><a href="#lesson-10">Project Brief — เติมก่อนเขียน Code</a><a href="#lesson-11">Runbook — Resume Evidence Assistant Lite</a><a href="#lesson-12">Test and Demo Evidence</a><a href="#lesson-13">Requirement Traceability</a></nav></aside><main><article id="lesson-0"><div class="source">README.md</div><details class="local-toc"><summary>หัวข้อในบทนี้</summary><a href="#lesson-0-_1">เริ่มอย่างไร</a><a href="#lesson-0-_2">แผนเวลา</a><a href="#lesson-0-definition-of-done">Definition of Done แบบย่อ</a><a href="#lesson-0-_3">สิ่งที่ให้มา</a><a href="#lesson-0-_4">เอกสารหลักของชุดฝึก</a></details><h1 id="lesson-0-project-01-resume-evidence-assistant-lite">Project 01 — Resume Evidence Assistant Lite</h1>
+</style></head><body><header id="top"><div class="eyebrow">GUIDED PROJECT · BUILD IT YOURSELF</div><h1>Project 01 — Resume Evidence Assistant Lite</h1><p>โจทย์ end-to-end ขนาดเล็กแต่ครบวงจร: requirement, FastAPI, SQLite, worker, Mock AI, evidence validation, human review, n8n, Docker, tests และ handoff</p><p><a style="color:white" href="index.html">หน้าหลัก</a> · <a style="color:white" href="book-07.html">Delivery Template Book</a> · <a style="color:white" href="debugging-atlas.html">Debugging Atlas</a></p><button onclick="window.print()">พิมพ์ / บันทึกเป็น PDF</button> <a style="color:white" href="project-01-materials.zip">ดาวน์โหลดโจทย์และ Fixtures</a></header><div class="layout"><aside><h2>สารบัญโจทย์</h2><nav><a href="#lesson-0">Project 01 — Resume Evidence Assistant Lite</a><a href="#lesson-1">00 — Project Map และภาพปลายทาง</a><a href="#lesson-2">01 — Mission และข้อกำหนด</a><a href="#lesson-3">02 — Implementation Guideline ทีละ Milestone</a><a href="#lesson-4">03 — Acceptance Matrix และ Test Design</a><a href="#lesson-5">04 — Hint Ladder</a><a href="#lesson-6">05 — Grading Rubric และ Delivery Checklist</a><a href="#lesson-7">06 — n8n Canvas Guideline</a><a href="#lesson-8">07 — Easy Walkthrough: มองระบบให้ออกก่อนเขียน</a><a href="#lesson-9">08 — อ่านไฟล์ Resume ก่อนต่อ AI</a><a href="#lesson-10">Architecture Decision Log</a><a href="#lesson-11">Project Brief — เติมก่อนเขียน Code</a><a href="#lesson-12">Runbook — Resume Evidence Assistant Lite</a><a href="#lesson-13">Test and Demo Evidence</a><a href="#lesson-14">Requirement Traceability</a></nav></aside><main><article id="lesson-0"><div class="source">README.md</div><details class="local-toc"><summary>หัวข้อในบทนี้</summary><a href="#lesson-0-_1">เริ่มอย่างไร</a><a href="#lesson-0-_2">แผนเวลา</a><a href="#lesson-0-definition-of-done">Definition of Done แบบย่อ</a><a href="#lesson-0-_3">สิ่งที่ให้มา</a><a href="#lesson-0-_4">เอกสารหลักของชุดฝึก</a></details><h1 id="lesson-0-project-01-resume-evidence-assistant-lite">Project 01 — Resume Evidence Assistant Lite</h1>
 <p>โปรเจกต์ฝึกแบบ end-to-end สำหรับประกอบ Python, FastAPI, SQLite, Worker, n8n, Mock AI, validation, human review, tests, Docker และ documentation เข้าด้วยกัน โดยตั้งใจจำกัดขอบเขตให้เล็กพอทำ vertical slice ได้ภายในหนึ่งวันและขยายต่อได้ในวันที่สอง</p>
 <blockquote>
-<p>ข้อมูลสังเคราะห์เท่านั้น • Text input เท่านั้น • Mock AI เท่านั้น • ไม่ rank/reject/hire • ไม่มี production authentication</p>
+<p>ข้อมูลสังเคราะห์เท่านั้น • PDF/DOCX/TXT หรือ text input • Mock AI เท่านั้น • ไม่ rank/reject/hire • ไม่มี production authentication</p>
 </blockquote>
+<p><strong>เริ่มจากไฟล์:</strong> เปิด <a href="#lesson-9">08 — อ่านไฟล์ Resume ก่อนต่อ AI</a> ทำ F0 อ่านบนเครื่อง → F1 upload → F2 ทดสอบ มี contract และ FILE-01–10 เพิ่มให้ PDF สแกน/OCR อยู่นอกขอบเขตรอบแรก และควรเผื่อเวลาขั้นอ่านไฟล์เพิ่มจากแผนเดิม</p>
 <h2 id="lesson-0-_1">เริ่มอย่างไร</h2>
 <ol>
 <li>อ่าน <a href="#lesson-2">Mission และข้อกำหนด</a> โดยยังไม่เปิด Hints</li>
-<li>เติม <a href="#lesson-10">Project Brief</a> และ <a href="#lesson-9">Decision Log</a></li>
+<li>เติม <a href="#lesson-11">Project Brief</a> และ <a href="#lesson-10">Decision Log</a></li>
 <li>สร้าง repository/virtual environmentตาม <a href="#lesson-3">Implementation Guideline</a></li>
 <li>ทำ Milestone 1–3 ให้ flow หลักครบก่อน</li>
 <li>รัน failure cases แล้วค่อยทำ n8n/Docker/docs</li>
@@ -85,7 +86,7 @@
 <li><a href="#lesson-6">Rubric และการส่งมอบ</a></li>
 <li><a href="#lesson-7">คู่มือสร้าง n8n จาก canvas เปล่า</a></li>
 <li><a href="#lesson-8">Easy Walkthrough — มองระบบให้ออกก่อนเขียน</a></li>
-<li><a href="#lesson-13">Requirement Traceability Template</a></li>
+<li><a href="#lesson-14">Requirement Traceability Template</a></li>
 </ul>
 <p>ชุดนี้ไม่ให้ source-code solution เพราะเป้าหมายคือให้คุณอธิบายการตัดสินใจและเขียนแต่ละ boundary ได้เอง ใช้ AI ช่วยได้ แต่ทุก diff ต้องผ่าน AI Review Checklist</p><a class="back" href="#top">↑ กลับสารบัญ</a></article><article id="lesson-1"><div class="source">00_PROJECT_MAP.md</div><details class="local-toc"><summary>หัวข้อในบทนี้</summary><a href="#lesson-1-business-scenario">Business Scenario</a><a href="#lesson-1-boundary-ownership">Boundary Ownership</a><a href="#lesson-1-state-machine">State Machine</a><a href="#lesson-1-mock">Mock กับของจริง</a></details><h1 id="lesson-1-00-project-map">00 — Project Map และภาพปลายทาง</h1>
 <h2 id="lesson-1-business-scenario">Business Scenario</h2>
@@ -203,6 +204,7 @@ Mock AI เสนอหลักฐาน
 <h2 id="lesson-2-mission">Mission</h2>
 <p>สร้างระบบที่รับ resume text สังเคราะห์พร้อมรายการ skill แล้วสร้าง task แบบ durable ให้ worker ประมวลผลเป็น evidence draft จากนั้นให้คน approve/edit/reject พร้อม audit โดยไม่สร้างหลักฐานที่ไม่มีใน source</p>
 <h2 id="lesson-2-input-contract">Input Contract</h2>
+<p>ทางเข้าไฟล์ <code>POST /intakes/files</code> รองรับ PDF text, DOCX และ TXT ตาม <a href="#lesson-9">File Intake</a> และแปลง extracted text เป็น <code>resume_text</code> ตาม contract ด้านล่าง <code>/intakes</code> เดิมยังใช้ทดสอบแก่นระบบโดยตรงได้</p>
 <pre><code class="language-json">{
   "event_id": "HR-DEMO-001",
   "candidate_id": "C001",
@@ -323,7 +325,7 @@ event_id เดิม + payload hash ต่าง
 <h2 id="lesson-3-milestone-0-brief-repository">Milestone 0 — Brief และ Repository</h2>
 <ol>
 <li>คัดลอก/เติม <code>docs/PROJECT_BRIEF.md</code></li>
-<li>เขียน ADR แรกใน <code>docs/DECISION_LOG.md</code>: ทำไมใช้ text-only + mock ก่อน</li>
+<li>เขียน ADR แรกใน <code>docs/DECISION_LOG.md</code>: รองรับ PDF text/DOCX/TXT โดยแปลงเป็น text contract เดิม ใช้ Mock AI ก่อน และเลื่อน OCR ไว้รอบถัดไป</li>
 <li>สร้าง repo และโครงขั้นต่ำ</li>
 <li>สร้าง <code>.venv</code>, <code>pyproject.toml</code>, <code>.gitignore</code>, <code>.env.example</code></li>
 <li>commit: <code>docs: define project scope and acceptance plan</code></li>
@@ -344,6 +346,7 @@ tests/
 </code></pre>
 <p>อย่าแยกโฟลเดอร์หลายชั้นก่อนมีหลายไฟล์/หลาย responsibility จริง</p>
 <h2 id="lesson-3-milestone-1-contract-first">Milestone 1 — Contract First</h2>
+<p>เส้นทางเริ่มจากไฟล์ให้ทำ F0 ใน <a href="#lesson-9">File Intake</a> ก่อน และเพิ่ม F1 upload endpoint เมื่อ intake service พร้อม ใช้ service เดียวกันเพื่อรักษา duplicate/transaction behavior</p>
 <p>สร้าง Pydantic request/response models, <code>/health</code>, <code>/ready</code> และ <code>POST /intakes</code> ที่ยังใช้ in-memory fake repository ได้ชั่วคราว</p>
 <p>หลักฐาน:</p>
 <ul>
@@ -1018,71 +1021,339 @@ if task is None:
 <td>รูปแบบที่ระบบอาจล้มเหลวและต้องออกแบบรับมือ</td>
 </tr>
 </tbody>
-</table></div><a class="back" href="#top">↑ กลับสารบัญ</a></article><article id="lesson-9"><div class="source">docs/DECISION_LOG.md</div><details class="local-toc"><summary>หัวข้อในบทนี้</summary><a href="#lesson-9-adr-001-text-input-and-mock-provider-first">ADR-001 — Text input and mock provider first</a><a href="#lesson-9-adr-002-persistence-and-worker-boundary">ADR-002 — Persistence and worker boundary</a><a href="#lesson-9-adr-003-idempotency-scope">ADR-003 — Idempotency scope</a></details><h1 id="lesson-9-architecture-decision-log">Architecture Decision Log</h1>
-<h2 id="lesson-9-adr-001-text-input-and-mock-provider-first">ADR-001 — Text input and mock provider first</h2>
+</table></div><a class="back" href="#top">↑ กลับสารบัญ</a></article><article id="lesson-9"><div class="source">08_RESUME_FILE_INTAKE.md</div><details class="local-toc"><summary>หัวข้อในบทนี้</summary><a href="#lesson-9-_1">ภาพรวมและขอบเขต</a><a href="#lesson-9-f0">F0 — อ่านไฟล์บนเครื่องก่อน</a><a href="#lesson-9-f1-upload-api">F1 — ต่อ Upload API</a><a href="#lesson-9-error">Error ที่ผู้ใช้ควรได้รับ</a><a href="#lesson-9-duplicate">Duplicate และหลักฐาน</a><a href="#lesson-9-f2-test-demo">F2 — Test และ Demo</a><a href="#lesson-9-prompt">Prompt เริ่มทำกับผู้ช่วย</a></details><h1 id="lesson-9-08-resume-ai">08 — อ่านไฟล์ Resume ก่อนต่อ AI</h1>
+<p>เริ่มด้วยไฟล์ได้เลย เป้าหมายชิ้นแรกคือ <strong>เลือก Resume สังเคราะห์หนึ่งไฟล์ แล้วเห็นข้อความที่อ่านออกมา</strong> เมื่ออ่านถูกต้องจึงต่อ API, task และ Mock AI เดิม</p>
+<h2 id="lesson-9-_1">ภาพรวมและขอบเขต</h2>
+<p>Text extraction คือดึงตัวอักษรจากไฟล์ ส่วน AI extraction คืออ่านข้อความแล้วเลือกข้อมูล เช่น skill และ quote เป็นคนละขั้น จึงควรทดลองแยกกัน</p>
+<pre><code class="language-text">PDF / DOCX / TXT + ข้อมูลผู้สมัคร
+        ↓ ตรวจชนิด ขนาด และอ่านได้จริง
+Document Reader → extracted text
+        ↓ validate
+Intake service เดิม → SQLite task
+        ↓
+Worker → Mock AI → ตรวจ evidence กับข้อความต้นทาง
+        ↓
+HR ตรวจ draft → decision + audit
+</code></pre>
+<div class="table-scroll"><table>
+<thead>
+<tr>
+<th>ไฟล์</th>
+<th>รอบแรกอ่านอะไร</th>
+<th>ข้อจำกัด</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>PDF</td>
+<td>text layer จากไฟล์ไม่เข้ารหัส</td>
+<td>PDF สแกนไม่มีข้อความต้องใช้ OCR</td>
+</tr>
+<tr>
+<td>DOCX</td>
+<td>ย่อหน้าและตารางตามลำดับเอกสาร</td>
+<td>ยังไม่รับประกัน text box/header/footer</td>
+</tr>
+<tr>
+<td>TXT</td>
+<td>UTF-8 และ UTF-8 BOM</td>
+<td>encoding อื่นแจ้งไม่รองรับ</td>
+</tr>
+<tr>
+<td>DOC, รูปภาพ, ZIP</td>
+<td>ยังไม่รองรับ</td>
+<td>ปฏิเสธชนิดไฟล์</td>
+</tr>
+</tbody>
+</table></div>
+<p>OCR คือการแปลงภาพตัวอักษรเป็นข้อความ ให้เพิ่มภายหลัง PDF ที่มี text layer ก็อาจอ่านลำดับสองคอลัมน์ผิดได้ ต้องเทียบกับต้นฉบับด้วย</p>
+<p>กำหนดเพดานแบบฝึกเป็น config: ไฟล์ไม่เกิน 5 MiB, PDF ไม่เกิน 20 หน้า, ข้อความไม่เกิน 50,000 ตัวอักษร ตัวเลขนี้เป็นขอบเขตรอบทดลอง ไม่ใช่มาตรฐานทุกระบบ</p>
+<h2 id="lesson-9-f0">F0 — อ่านไฟล์บนเครื่องก่อน</h2>
+<p>เพิ่ม <code>document_reader.py</code> และ <code>tests/unit/test_document_reader.py</code> ใช้ไฟล์สังเคราะห์ ยังไม่ใส่ SQL หรือ AI ใน reader</p>
+<pre><code class="language-text">read_resume(file_bytes, filename)
+      ↓ เลือก parser ที่อนุญาต
+read_pdf / read_docx / read_txt
+      ↓ ตรวจข้อความไม่ว่างและไม่เกินเพดาน
+คืน text + source metadata
+</code></pre>
+<p><code>file_bytes</code> คือเนื้อไฟล์จริง <code>filename</code> ช่วยเลือก parser แต่ไม่พิสูจน์ชนิดไฟล์ ต้องให้ parser อ่านและจัดการ error ด้วย</p>
+<div class="table-scroll"><table>
+<thead>
+<tr>
+<th>Function</th>
+<th>Input</th>
+<th>Output</th>
+<th>หน้าที่</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>read_txt</code></td>
+<td>bytes</td>
+<td>str</td>
+<td>decode และตรวจว่าง</td>
+</tr>
+<tr>
+<td><code>read_pdf</code></td>
+<td>bytes</td>
+<td>ข้อความแยกหน้า</td>
+<td>รักษาหมายเลขหน้าที่อ่านจริง</td>
+</tr>
+<tr>
+<td><code>read_docx</code></td>
+<td>bytes</td>
+<td>ข้อความตามลำดับเอกสาร</td>
+<td>อ่านย่อหน้าและตาราง</td>
+</tr>
+<tr>
+<td><code>read_resume</code></td>
+<td>bytes, filename</td>
+<td>document result</td>
+<td>เลือก reader และตรวจ limits ร่วม</td>
+</tr>
+</tbody>
+</table></div>
+<p>ตัวอย่างเริ่มต้นที่อ่านทีละบรรทัดได้:</p>
+<pre><code class="language-python">def read_txt(content: bytes) -&gt; str:
+    text = content.decode("utf-8-sig")
+    if not text.strip():
+        raise ValueError("NO_EXTRACTABLE_TEXT")
+    return text
+</code></pre>
+<p><code>decode</code> เปลี่ยน bytes เป็นข้อความ; <code>utf-8-sig</code> รองรับ BOM ต้นไฟล์; <code>strip()</code> ใช้เช็กว่ามีแต่ช่องว่างหรือไม่ คืนข้อความเดิมไว้ตรวจ evidence ภายหลัง หาก decode ไม่ได้ให้ชั้น service แปลง error เป็นรหัส API</p>
+<p>PDF/DOCX ดูตัวอย่าง Document Reader ใน Book 08 ประกอบ และตรวจ library/version ที่เลือกก่อนใช้ <strong>จบด่านนี้เมื่อ:</strong> อ่านทั้งสามชนิดและเทียบข้อความกับต้นฉบับได้</p>
+<h2 id="lesson-9-f1-upload-api">F1 — ต่อ Upload API</h2>
+<p>เพิ่ม <code>POST /intakes/files</code> รับ <code>multipart/form-data</code> ซึ่งแนบไฟล์และ field ข้อความใน request เดียว เมื่ออ่านสำเร็จให้เรียก intake service เดียวกับ <code>/intakes</code> เพื่อรักษา transaction และ duplicate behavior เดิม</p>
+<div class="table-scroll"><table>
+<thead>
+<tr>
+<th>Field</th>
+<th>ตัวอย่าง</th>
+<th>ความหมาย</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>file</code></td>
+<td>resume-demo.pdf</td>
+<td>ไฟล์สังเคราะห์หนึ่งไฟล์</td>
+</tr>
+<tr>
+<td><code>event_id</code></td>
+<td>HR-FILE-001</td>
+<td>รหัสการส่ง</td>
+</tr>
+<tr>
+<td><code>candidate_id</code></td>
+<td>C001</td>
+<td>รหัสผู้สมัคร</td>
+</tr>
+<tr>
+<td><code>required_skills_json</code></td>
+<td><code>["Python", "Docker"]</code></td>
+<td>JSON array ใน form field ต้อง parse และ validate</td>
+</tr>
+<tr>
+<td><code>mock_scenario</code></td>
+<td>normal</td>
+<td>scenario เดิมของชุดฝึก</td>
+</tr>
+</tbody>
+</table></div>
+<pre><code class="language-text">อ่าน upload แบบจำกัด bytes → parse → ตรวจ text
+  → สร้าง input model โดย resume_text = extracted_text
+  → intake service ตรวจ duplicate และ commit
+  → 202 + task_id
+</code></pre>
+<p>รอบเล็กอ่านเอกสารก่อนสร้าง task และต้องจำกัด resource การเรียก parser งานหนักไม่ควรบล็อก async event loop; งาน OCR/ไฟล์ใหญ่ค่อยย้าย extraction ไป worker</p>
+<p>อย่าใช้ชื่อไฟล์จากผู้ใช้เป็น path เขียน disk หรือรับ URL/path ให้ server เปิดเอง อ่าน bytes ได้เลย ตรวจขนาด DOCX หลังขยายด้วยเพราะภายในเป็น ZIP</p>
+<h2 id="lesson-9-error">Error ที่ผู้ใช้ควรได้รับ</h2>
+<div class="table-scroll"><table>
+<thead>
+<tr>
+<th>กรณี</th>
+<th style="text-align: right;">HTTP</th>
+<th>รหัสตัวอย่าง</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>เกินขนาด</td>
+<td style="text-align: right;">413</td>
+<td>FILE_TOO_LARGE</td>
+</tr>
+<tr>
+<td>ชนิดไม่รองรับ</td>
+<td style="text-align: right;">415</td>
+<td>UNSUPPORTED_FILE_TYPE</td>
+</tr>
+<tr>
+<td>ไฟล์เสีย/เข้ารหัส/encoding ผิด</td>
+<td style="text-align: right;">422</td>
+<td>DOCUMENT_UNREADABLE</td>
+</tr>
+<tr>
+<td>ไม่มีข้อความ</td>
+<td style="text-align: right;">422</td>
+<td>NO_EXTRACTABLE_TEXT</td>
+</tr>
+<tr>
+<td>เกิน page/text limits</td>
+<td style="text-align: right;">422</td>
+<td>DOCUMENT_LIMIT_EXCEEDED</td>
+</tr>
+<tr>
+<td>metadata ผิด</td>
+<td style="text-align: right;">422</td>
+<td>INVALID_METADATA</td>
+</tr>
+<tr>
+<td>event เดิมแต่ payload ต่าง</td>
+<td style="text-align: right;">409</td>
+<td>EVENT_PAYLOAD_CONFLICT</td>
+</tr>
+</tbody>
+</table></div>
+<p>error ก่อน intake สำเร็จต้องไม่สร้าง task หรือเรียก provider ไม่ส่ง traceback หรือเนื้อหา Resume เต็มกลับผู้ใช้</p>
+<h2 id="lesson-9-duplicate">Duplicate และหลักฐาน</h2>
+<p>สำหรับ file intake ใช้ SHA-256 ของ bytes ร่วมกับ candidate ID, skills, mock scenario และชนิด intake ใน canonical payload hash ชื่อไฟล์ไม่ใช่ identity: เปลี่ยนชื่อแต่ bytes/metadata เหมือนเดิมควรคืน task เดิม</p>
+<p>event เดิมแต่ bytes/metadata เปลี่ยน → 409; event ใหม่ → งานใหม่ตาม contract แม้ไฟล์เหมือนเดิม บันทึกกติกานี้ใน README</p>
+<p>เก็บ extracted text ที่ใช้วิเคราะห์ไว้กับ task เพื่อให้ validator/reviewer อ้าง source เดียวกัน เก็บ page number เฉพาะที่รู้จริงจาก PDF ไม่สร้างเลขหน้า DOCX/TXT ขึ้นเอง การพบ quote พิสูจน์ว่าข้อความมีอยู่ แต่ไม่ได้พิสูจน์ว่า AI ตีความถูกต้อง</p>
+<h2 id="lesson-9-f2-test-demo">F2 — Test และ Demo</h2>
+<div class="table-scroll"><table>
+<thead>
+<tr>
+<th>ID</th>
+<th>ทดลอง</th>
+<th>ผลที่ต้องเห็น</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>FILE-01</td>
+<td>TXT BOM, PDF text, DOCX ย่อหน้า/ตาราง</td>
+<td>อ่านข้อความสำคัญได้</td>
+</tr>
+<tr>
+<td>FILE-02</td>
+<td>ไฟล์ว่างหรือ PDF ไม่มี text</td>
+<td>422 ไม่มี task/AI call</td>
+</tr>
+<tr>
+<td>FILE-03</td>
+<td>ไฟล์เสีย/เข้ารหัส/encoding ผิด</td>
+<td>error ตาม contract</td>
+</tr>
+<tr>
+<td>FILE-04</td>
+<td>ชนิดไม่รองรับ/ปลอม extension</td>
+<td>ปฏิเสธหรือ parse error</td>
+</tr>
+<tr>
+<td>FILE-05</td>
+<td>ต่ำกว่า/เท่ากับ/เกิน limits</td>
+<td>boundary ตรง config</td>
+</tr>
+<tr>
+<td>FILE-06</td>
+<td>event/bytes/metadata เดิม เปลี่ยนชื่อไฟล์</td>
+<td>task เดิม ไม่มี audit ซ้ำ</td>
+</tr>
+<tr>
+<td>FILE-07</td>
+<td>event เดิม เปลี่ยน bytes/metadata</td>
+<td>409</td>
+</tr>
+<tr>
+<td>FILE-08</td>
+<td>skills JSON ผิดหรือ metadata หาย</td>
+<td>422</td>
+</tr>
+<tr>
+<td>FILE-09</td>
+<td>ชื่อไฟล์มี path traversal</td>
+<td>ไม่เขียนตามชื่อผู้ใช้; ไม่มี raw text ใน logs</td>
+</tr>
+<tr>
+<td>FILE-10</td>
+<td>upload → worker → review → restart</td>
+<td>result/audit ยังอยู่ และ tests เดิมผ่าน</td>
+</tr>
+</tbody>
+</table></div>
+<p>สร้าง fixtures จากข้อความสังเคราะห์เดียวกัน เช่น <code>Built reporting scripts using Python.</code> ทั้งสามรูปแบบ เพิ่มไฟล์ว่างและเสียสำหรับทดสอบ ชุดบทนี้เป็น guideline ยังไม่ได้แจก binary fixtures หรือ upload implementation</p>
+<p>Demo เริ่มจาก Swagger UI <code>/docs</code> เลือกไฟล์ → รับ task ID → รัน worker → เปิดผล → review จากนั้นค่อยต่อ n8n แบบ multipart โดยส่ง binary property และรักษา error routing ของบท 06</p>
+<h2 id="lesson-9-prompt">Prompt เริ่มทำกับผู้ช่วย</h2>
+<pre><code class="language-text">ช่วยพาทำ F0 ของ Resume Evidence Assistant Lite
+เริ่ม read_txt และ unit tests อธิบาย input/output ทีละขั้น
+ใช้ synthetic fixture ยังไม่ต่อ API/AI/database
+เมื่อผ่านค่อยเพิ่ม PDF และ DOCX ตาม contract บท 08
+</code></pre>
+<p>อ่าน <a href="#lesson-3">Guideline</a> ต่อ และใช้ <a href="#lesson-4">Acceptance Matrix</a> ควบคู่ FILE-01–10 เมื่อต่อระบบครบ</p><a class="back" href="#top">↑ กลับสารบัญ</a></article><article id="lesson-10"><div class="source">docs/DECISION_LOG.md</div><details class="local-toc"><summary>หัวข้อในบทนี้</summary><a href="#lesson-10-adr-001-text-input-and-mock-provider-first">ADR-001 — Text input and mock provider first</a><a href="#lesson-10-adr-002-persistence-and-worker-boundary">ADR-002 — Persistence and worker boundary</a><a href="#lesson-10-adr-003-idempotency-scope">ADR-003 — Idempotency scope</a></details><h1 id="lesson-10-architecture-decision-log">Architecture Decision Log</h1>
+<h2 id="lesson-10-adr-001-text-input-and-mock-provider-first">ADR-001 — Text input and mock provider first</h2>
 <p>Status: proposed<br/>
 Context:
 Decision:
 Alternatives:
 Consequences:
 Validation/revisit trigger:</p>
-<h2 id="lesson-9-adr-002-persistence-and-worker-boundary">ADR-002 — Persistence and worker boundary</h2>
+<h2 id="lesson-10-adr-002-persistence-and-worker-boundary">ADR-002 — Persistence and worker boundary</h2>
 <p>Status: proposed<br/>
 Context:
 Decision:
 Alternatives:
 Consequences:
 Crash/restart verification:</p>
-<h2 id="lesson-9-adr-003-idempotency-scope">ADR-003 — Idempotency scope</h2>
+<h2 id="lesson-10-adr-003-idempotency-scope">ADR-003 — Idempotency scope</h2>
 <p>Status: proposed<br/>
 Business key:
 Canonical payload fields:
 Same key/same payload behavior:
 Same key/different payload behavior:
-Retention/limitation:</p><a class="back" href="#top">↑ กลับสารบัญ</a></article><article id="lesson-10"><div class="source">docs/PROJECT_BRIEF.md</div><details class="local-toc"><summary>หัวข้อในบทนี้</summary><a href="#lesson-10-scope">Scope</a><a href="#lesson-10-success-guardrails">Success และ Guardrails</a><a href="#lesson-10-plan">Plan</a></details><h1 id="lesson-10-project-brief-code">Project Brief — เติมก่อนเขียน Code</h1>
+Retention/limitation:</p><a class="back" href="#top">↑ กลับสารบัญ</a></article><article id="lesson-11"><div class="source">docs/PROJECT_BRIEF.md</div><details class="local-toc"><summary>หัวข้อในบทนี้</summary><a href="#lesson-11-scope">Scope</a><a href="#lesson-11-success-guardrails">Success และ Guardrails</a><a href="#lesson-11-plan">Plan</a></details><h1 id="lesson-11-project-brief-code">Project Brief — เติมก่อนเขียน Code</h1>
 <p>วันที่ / version:
 Problem และผู้ใช้:
 Current process/baseline ที่สมมติสำหรับ lab:
 Target outcome:</p>
-<h2 id="lesson-10-scope">Scope</h2>
+<h2 id="lesson-11-scope">Scope</h2>
 <p>In scope:
 Out of scope:
 Constraints:
 Assumptions + วิธีพิสูจน์:</p>
-<h2 id="lesson-10-success-guardrails">Success และ Guardrails</h2>
+<h2 id="lesson-11-success-guardrails">Success และ Guardrails</h2>
 <p>Outcome metric:
 Technical evidence:
 Must-not-happen:</p>
-<h2 id="lesson-10-plan">Plan</h2>
+<h2 id="lesson-11-plan">Plan</h2>
 <p>Milestone แรกและ demo date:
 Top risks/unknowns:
 Decision owner ในโปรเจกต์จำลอง:</p>
-<p>Ready when: คุณอธิบาย why/what/not-what/how-proven ได้ภายในสองนาที</p><a class="back" href="#top">↑ กลับสารบัญ</a></article><article id="lesson-11"><div class="source">docs/RUNBOOK_TEMPLATE.md</div><details class="local-toc"><summary>หัวข้อในบทนี้</summary><a href="#lesson-11-setup-and-configuration">Setup and configuration</a><a href="#lesson-11-normal-operation">Normal operation</a><a href="#lesson-11-debug-and-recovery">Debug and recovery</a><a href="#lesson-11-handoff-rehearsal">Handoff rehearsal</a></details><h1 id="lesson-11-runbook-resume-evidence-assistant-lite">Runbook — Resume Evidence Assistant Lite</h1>
+<p>Ready when: คุณอธิบาย why/what/not-what/how-proven ได้ภายในสองนาที</p><a class="back" href="#top">↑ กลับสารบัญ</a></article><article id="lesson-12"><div class="source">docs/RUNBOOK_TEMPLATE.md</div><details class="local-toc"><summary>หัวข้อในบทนี้</summary><a href="#lesson-12-setup-and-configuration">Setup and configuration</a><a href="#lesson-12-normal-operation">Normal operation</a><a href="#lesson-12-debug-and-recovery">Debug and recovery</a><a href="#lesson-12-handoff-rehearsal">Handoff rehearsal</a></details><h1 id="lesson-12-runbook-resume-evidence-assistant-lite">Runbook — Resume Evidence Assistant Lite</h1>
 <p>Status/environment/commit:
 Components and owners:
 Known limitations: synthetic text, mock provider, demo reviewer identity</p>
-<h2 id="lesson-11-setup-and-configuration">Setup and configuration</h2>
+<h2 id="lesson-12-setup-and-configuration">Setup and configuration</h2>
 <p>Prerequisites:
 Config names (no secret values):
 Initialize DB/schema:</p>
-<h2 id="lesson-11-normal-operation">Normal operation</h2>
+<h2 id="lesson-12-normal-operation">Normal operation</h2>
 <p>Start API:
 Readiness expected:
 Run worker once:
 Submit/check/review task:
 Stop safely:</p>
-<h2 id="lesson-11-debug-and-recovery">Debug and recovery</h2>
+<h2 id="lesson-12-debug-and-recovery">Debug and recovery</h2>
 <p>Find task/audit without exposing resume:
 Duplicate/conflict handling:
 Provider transient/invalid output:
 Task stuck processing:
 Safe replay rule:
 Reset lab data safely:</p>
-<h2 id="lesson-11-handoff-rehearsal">Handoff rehearsal</h2>
+<h2 id="lesson-12-handoff-rehearsal">Handoff rehearsal</h2>
 <p>Recipient/date:
 Clean setup result:
 Failure drill result:
-Questions/docs fixed:</p><a class="back" href="#top">↑ กลับสารบัญ</a></article><article id="lesson-12"><div class="source">docs/TEST_EVIDENCE.md</div><details class="local-toc"><summary>หัวข้อในบทนี้</summary><a href="#lesson-12-failure-drill">Failure Drill</a><a href="#lesson-12-n8n-evidence">n8n Evidence</a></details><h1 id="lesson-12-test-and-demo-evidence">Test and Demo Evidence</h1>
+Questions/docs fixed:</p><a class="back" href="#top">↑ กลับสารบัญ</a></article><article id="lesson-13"><div class="source">docs/TEST_EVIDENCE.md</div><details class="local-toc"><summary>หัวข้อในบทนี้</summary><a href="#lesson-13-failure-drill">Failure Drill</a><a href="#lesson-13-n8n-evidence">n8n Evidence</a></details><h1 id="lesson-13-test-and-demo-evidence">Test and Demo Evidence</h1>
 <p>Commit / environment / Python version / date:</p>
 <div class="table-scroll"><table>
 <thead>
@@ -1104,7 +1375,7 @@ Questions/docs fixed:</p><a class="back" href="#top">↑ กลับสาร�
 </tr>
 </tbody>
 </table></div>
-<h2 id="lesson-12-failure-drill">Failure Drill</h2>
+<h2 id="lesson-13-failure-drill">Failure Drill</h2>
 <p>Scenario:
 State before:
 Action/failure injected:
@@ -1113,11 +1384,11 @@ Actual:
 Recovery steps:
 State after:
 Limitation/follow-up:</p>
-<h2 id="lesson-12-n8n-evidence">n8n Evidence</h2>
+<h2 id="lesson-13-n8n-evidence">n8n Evidence</h2>
 <p>Workflow version/export:
 Synthetic execution IDs:
 Pinned data removed:
-Normal/duplicate/conflict/failure actual results:</p><a class="back" href="#top">↑ กลับสารบัญ</a></article><article id="lesson-13"><div class="source">docs/TRACEABILITY.md</div><details class="local-toc"><summary>หัวข้อในบทนี้</summary><a href="#lesson-13-_1">วิธีใช้</a></details><h1 id="lesson-13-requirement-traceability">Requirement Traceability</h1>
+Normal/duplicate/conflict/failure actual results:</p><a class="back" href="#top">↑ กลับสารบัญ</a></article><article id="lesson-14"><div class="source">docs/TRACEABILITY.md</div><details class="local-toc"><summary>หัวข้อในบทนี้</summary><a href="#lesson-14-_1">วิธีใช้</a></details><h1 id="lesson-14-requirement-traceability">Requirement Traceability</h1>
 <p>เติมตารางนี้ก่อนเริ่ม implementation แล้วอัปเดตเมื่อ requirement หรือ test เปลี่ยน จุดประสงค์คือพิสูจน์ว่าแต่ละข้อกำหนดมี code boundary และหลักฐานรองรับ ไม่ใช่เพียงบอกว่า “ทำครบแล้ว”</p>
 <div class="table-scroll"><table>
 <thead>
@@ -1213,7 +1484,7 @@ Normal/duplicate/conflict/failure actual results:</p><a class="back" href="#top"
 </tr>
 </tbody>
 </table></div>
-<h2 id="lesson-13-_1">วิธีใช้</h2>
+<h2 id="lesson-14-_1">วิธีใช้</h2>
 <ol>
 <li>แทน <code>Code boundary/owner</code> ด้วย module/function/table/node ที่รับผิดชอบ</li>
 <li>ใส่ exact command, report path, execution ID หรือ screenshot reference ใน Evidence</li>
