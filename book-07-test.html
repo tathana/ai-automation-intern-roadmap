@@ -6,7 +6,7 @@
         .book-map a{white-space:nowrap;color:white;border:1px solid rgba(255,255,255,.35);border-radius:999px;padding:5px 11px;text-decoration:none;font-size:13px}
         .book-pager{display:flex;justify-content:space-between;gap:16px;margin:0 0 24px}
         .book-pager a{background:white;border:1px solid var(--line);border-radius:9px;padding:10px 14px;text-decoration:none;font-weight:700}
-        </style></head><body><header id="top"><div class="eyebrow">BOOK 07 · GUIDED PROJECT PATH</div><h1>5 — วาง Test และ Failure Cases</h1><p>เปลี่ยน acceptance เป็น unit/integration tests และแยก software test จาก AI evaluation</p><p><a style="color:white" href="book-07.html">หน้าเริ่ม Book 7</a> · <a style="color:white" href="book-07-materials.zip">ดาวน์โหลด Workbook และ Template</a> · <a style="color:white" href="index.html">หนังสือทั้งหมด</a></p><div class="book-map" aria-label="เส้นทาง Book 7"><a href="book-07-start.html">เริ่มต้นและ Workbook</a><a href="book-07-requirements.html">1 — เข้าใจโจทย์และกำหนดขอบเขต</a><a href="book-07-design.html">2 — ออกแบบระบบและแบ่งงาน</a><a href="book-07-setup.html">2B — เตรียมโปรเจกต์ทีละขั้น</a><a href="book-07-build.html">3 — เริ่มเขียนโค้ดทีละก้อน</a><a href="book-07-ai.html">4 — ใช้ AI ช่วยเขียนอย่างคุมงานได้</a><a href="book-07-test.html">5 — วาง Test และ Failure Cases</a><a href="book-07-deliver.html">6 — Release, Observe และ Handoff</a><a href="book-07-example.html">7 — ดูตัวอย่างเต็มและภาพรวม</a><a href="book-07-reference.html">Reference — Phase Gates และ Template Pack</a></div></header><div class="layout"><aside><h2>ในหน้านี้</h2><nav><a href="#lesson-0">17 — Test Planning for Beginners: ต้องทดสอบอะไรบ้าง</a><a href="#lesson-1">07 — Test Strategy, Failure Matrix และ AI Evaluation</a></nav><p style="font-size:13px">อ่านตามลำดับ หรือกลับหน้าเริ่มเพื่อเลือกจากสถานการณ์ที่กำลังเจอ</p></aside><main><div class="book-pager"><a href="book-07-ai.html">← ขั้นก่อนหน้า</a><a href="book-07-deliver.html">ขั้นถัดไป →</a></div><article id="lesson-0"><div class="source">17_TEST_PLANNING_FOR_BEGINNERS.md</div><details class="local-toc"><summary>หัวข้อในส่วนนี้</summary><a href="#lesson-0-acceptance-criteria-test">เปลี่ยน Acceptance Criteria เป็น Test</a><a href="#lesson-0-_1">สี่ระดับที่ควรรู้</a><a href="#lesson-0-test-matrix">ชุดคำถามสร้าง Test Matrix</a><a href="#lesson-0-test-plan">ตาราง Test Plan ขนาดเล็ก</a><a href="#lesson-0-mock-test">Mock อย่างไรไม่ให้ Test หลอกเรา</a><a href="#lesson-0-ai-system-evaluation">AI System ต้องมี Evaluation เพิ่ม</a><a href="#lesson-0-test">ก่อนบอกว่า Test ผ่าน</a></details><h1 id="lesson-0-17-test-planning-for-beginners">17 — Test Planning for Beginners: ต้องทดสอบอะไรบ้าง</h1>
+        </style></head><body><header id="top"><div class="eyebrow">BOOK 07 · GUIDED PROJECT PATH</div><h1>5 — วาง Test และ Failure Cases</h1><p>เปลี่ยน acceptance เป็น unit/integration tests และแยก software test จาก AI evaluation</p><p><a style="color:white" href="book-07.html">หน้าเริ่ม Book 7</a> · <a style="color:white" href="book-07-materials.zip">ดาวน์โหลด Workbook และ Template</a> · <a style="color:white" href="index.html">หนังสือทั้งหมด</a></p><div class="book-map" aria-label="เส้นทาง Book 7"><a href="book-07-start.html">เริ่มต้นและ Workbook</a><a href="book-07-requirements.html">1 — เข้าใจโจทย์และกำหนดขอบเขต</a><a href="book-07-design.html">2 — ออกแบบระบบและแบ่งงาน</a><a href="book-07-setup.html">2B — เตรียมโปรเจกต์ทีละขั้น</a><a href="book-07-build.html">3 — เริ่มเขียนโค้ดทีละก้อน</a><a href="book-07-ai.html">4 — ใช้ AI ช่วยเขียนอย่างคุมงานได้</a><a href="book-07-test.html">5 — วาง Test และ Failure Cases</a><a href="book-07-deliver.html">6 — Release, Observe และ Handoff</a><a href="book-07-example.html">7 — ดูตัวอย่างเต็มและภาพรวม</a><a href="book-07-reference.html">Reference — Phase Gates และ Template Pack</a></div></header><div class="layout"><aside><h2>ในหน้านี้</h2><nav><a href="#lesson-0">17 — Test Planning for Beginners: ต้องทดสอบอะไรบ้าง</a><a href="#lesson-1">07 — Test Strategy, Failure Matrix และ AI Evaluation</a></nav><p style="font-size:13px">อ่านตามลำดับ หรือกลับหน้าเริ่มเพื่อเลือกจากสถานการณ์ที่กำลังเจอ</p></aside><main><div class="book-pager"><a href="book-07-ai.html">← ขั้นก่อนหน้า</a><a href="book-07-deliver.html">ขั้นถัดไป →</a></div><article id="lesson-0"><div class="source">17_TEST_PLANNING_FOR_BEGINNERS.md</div><details class="local-toc"><summary>หัวข้อในส่วนนี้</summary><a href="#lesson-0-acceptance-criteria-test">เปลี่ยน Acceptance Criteria เป็น Test</a><a href="#lesson-0-manual-check-pytest">Manual Check ก่อนเขียน Pytest</a><a href="#lesson-0-_1">สี่ระดับที่ควรรู้</a><a href="#lesson-0-test-matrix">ชุดคำถามสร้าง Test Matrix</a><a href="#lesson-0-test-plan">ตาราง Test Plan ขนาดเล็ก</a><a href="#lesson-0-mock-test">Mock อย่างไรไม่ให้ Test หลอกเรา</a><a href="#lesson-0-ai-system-evaluation">AI System ต้องมี Evaluation เพิ่ม</a><a href="#lesson-0-test">ก่อนบอกว่า Test ผ่าน</a></details><h1 id="lesson-0-17-test-planning-for-beginners">17 — Test Planning for Beginners: ต้องทดสอบอะไรบ้าง</h1>
 <p>Test ไม่ได้มีไว้พิสูจน์ว่า “โค้ดไม่มี bug” แต่เป็นหลักฐานว่า behavior สำคัญที่เราระบุไว้ยังทำงาน และช่วยเตือนเมื่อการแก้ครั้งใหม่ทำของเดิมเสีย</p>
 <h2 id="lesson-0-acceptance-criteria-test">เปลี่ยน Acceptance Criteria เป็น Test</h2>
 <pre><code class="language-text">Requirement
@@ -26,6 +26,76 @@ def test_empty_quote_is_not_supported():
     assert is_supported_quote("Used Python daily", "") is False
 </code></pre>
 <p>ชื่อ test ควรบอกสถานการณ์และผลที่คาด อ่านแล้วเข้าใจ contract ได้โดยไม่ต้องเปิด implementation ก่อน</p>
+<h2 id="lesson-0-manual-check-pytest">Manual Check ก่อนเขียน Pytest</h2>
+<p>ก่อนมี test file เราสามารถเรียกฟังก์ชันด้วย input เล็ก ๆ จาก Terminal เพื่อยืนยัน mental model วิธีนี้เรียกว่า <strong>manual check</strong> หรือการทดลองด้วยมือ ยังไม่ใช่ automated test เพราะต้องมีคนรันและอ่านผลเอง</p>
+<p>สมมติมี <code>document_reader.py</code>:</p>
+<pre><code class="language-python">def read_txt(content: bytes) -&gt; str:
+    text = content.decode("utf-8-sig")
+    if not text.strip():
+        raise ValueError("NO_EXTRACTABLE_TEXT")
+    return text
+</code></pre>
+<p>ตรวจ happy path ด้วยคำสั่งสั้น:</p>
+<pre><code class="language-powershell">python -c "from document_reader import read_txt; print(read_txt(b'Python and SQL'))"
+</code></pre>
+<p><code>python -c</code> ให้ Python รันโค้ดที่อยู่ในข้อความโดยไม่ต้องสร้าง script เพิ่ม ผลที่คาดคือ <code>Python and SQL</code></p>
+<p>ตรวจ failure path โดยส่ง bytes ว่าง:</p>
+<pre><code class="language-powershell">python -c "from document_reader import read_txt; read_txt(b'')"
+</code></pre>
+<p>ผลที่ตั้งใจให้เกิด:</p>
+<pre><code class="language-text">Traceback (most recent call last):
+  ...
+  raise ValueError("NO_EXTRACTABLE_TEXT")
+ValueError: NO_EXTRACTABLE_TEXT
+</code></pre>
+<p>นี่คือ <strong>expected failure</strong>: โปรแกรมเกิด exception ตรงตาม contract จึงถือว่าการทดลองกรณีนี้ผ่าน อ่าน traceback จากบรรทัดล่างขึ้นบนก่อน:</p>
+<pre><code class="language-text">ValueError                    → ประเภท exception
+NO_EXTRACTABLE_TEXT           → รหัส/ข้อความสาเหตุ
+document_reader.py, line ...  → ตำแหน่งที่ raise
+&lt;string&gt;, line 1              → คำสั่ง python -c ที่เรียกฟังก์ชัน
+</code></pre>
+<pre><code class="language-text">input b''
+  ↓ decode เป็นข้อความว่าง
+strip แล้วยังว่าง
+  ↓
+raise ValueError
+  ↓
+Terminal แสดง traceback ที่เราคาดไว้
+</code></pre>
+<p>อย่าสรุปว่า “เห็น traceback = test ผ่าน” ทุกกรณี ต้องกำหนด expected result ก่อนรัน หากคาดว่าจะได้ข้อความแต่กลับพบ traceback นั่นคือ failure ที่ต้องวิเคราะห์</p>
+<p>เมื่อ manual check ตรงตามที่คิด ให้เปลี่ยนเป็น pytest เพื่อให้เครื่องตรวจ exception และรันซ้ำได้:</p>
+<pre><code class="language-python">import pytest
+
+from document_reader import read_txt
+
+
+def test_empty_bytes_raise_no_extractable_text() -&gt; None:
+    with pytest.raises(ValueError, match="NO_EXTRACTABLE_TEXT"):
+        read_txt(b"")
+</code></pre>
+<p><code>pytest.raises</code> ระบุว่าใน block นี้ต้องเกิด <code>ValueError</code> และ <code>match</code> ตรวจข้อความ หากไม่เกิด exception, เกิดผิดประเภท หรือข้อความไม่ตรง test จะล้ม ต่างจาก manual check ที่คนต้องตีความ traceback เอง</p>
+<div class="table-scroll"><table>
+<thead>
+<tr>
+<th>วิธี</th>
+<th>จุดเด่น</th>
+<th>ข้อจำกัด</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>python -c</code></td>
+<td>ทดลองเร็ว เห็นการทำงานทันที</td>
+<td>ไม่มีผล pass/fail ที่รันซ้ำอัตโนมัติ</td>
+</tr>
+<tr>
+<td>pytest</td>
+<td>ทำซ้ำได้ ตรวจ regression และใช้ใน CI ได้</td>
+<td>ต้องสร้าง test และติดตั้งเครื่องมือก่อน</td>
+</tr>
+</tbody>
+</table></div>
+<p>หลังย้ายกรณีสำคัญเข้า pytest แล้ว manual command ยังมีประโยชน์ระหว่าง debug แต่หลักฐานส่งมอบควรมาจาก test suite และคำสั่งที่บันทึกไว้</p>
 <h2 id="lesson-0-_1">สี่ระดับที่ควรรู้</h2>
 <div class="table-scroll"><table>
 <thead>
