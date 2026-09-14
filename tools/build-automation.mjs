@@ -1,4 +1,5 @@
 import fs from 'node:fs/promises';
+import {explanations,promptReasons} from './automation-explanations.mjs';
 const root=new URL('../',import.meta.url),out=new URL('automation/',root);await fs.mkdir(out,{recursive:true});
 const esc=s=>String(s).replaceAll('&','&amp;').replaceAll('<','&lt;').replaceAll('>','&gt;').replaceAll('"','&quot;');
 const chapters=[
@@ -144,4 +145,10 @@ prompts:'<h2>ย้ายหลักเดียวกันไป OCR แล�
 'field-guide':'<h2>สรุปส่งต่อเมื่อเริ่มแชทใหม่</h2><pre>เป้าหมายและผู้ใช้: ...\nRequirement ล่าสุด: ...\nไฟล์/ส่วนที่เกี่ยวข้อง: ...\nการตัดสินใจที่ตกลงแล้ว: ...\nผลทดสอบที่รันจริง: ...\nสิ่งที่ยังไม่รู้และปัญหาค้าง: ...\nงานถัดไป: ...\nขอบเขตที่อนุญาตให้ทำ: ...</pre><p>ให้ AI สรุปได้ แต่คุณต้องตรวจว่าไม่ได้เปลี่ยนสมมติฐานเป็นข้อเท็จจริงก่อนใช้ต่อ</p>'
 };
 for(const [slug,content] of Object.entries(worked)){const file=new URL(slug+'.html',out);let html=await fs.readFile(file,'utf8');html=html.replace('<section id="prompts">','<section class="card">'+content+'</section><section id="prompts">');await fs.writeFile(file,html);}
-
+for(const [slug,sections] of Object.entries(explanations)){
+ const file=new URL(slug+'.html',out);let html=await fs.readFile(file,'utf8');
+ const expanded='<section class="card"><h2>ทำความเข้าใจให้ลึกขึ้น</h2>'+sections.map(([title,body,example])=>'<h3>'+title+'</h3><p>'+body+'</p><div class="note"><b>นึกภาพตาม:</b> '+example+'</div>').join('')+'</section>';
+ html=html.replace('<section id="prompts">',expanded+'<section id="prompts">');
+ html=html.replace('<section class="card"><h2>เมื่อเจอปัญหา</h2>','<section class="card"><h2>ทำไม Prompt นี้แบ่งแบบนี้</h2><p>'+promptReasons[slug]+'</p><p>ปรับ [วงเล็บ] ก่อนใช้ และตัดข้อที่ไม่เกี่ยวข้องออก หากเป็นขั้นที่ทีมอนุมัติให้ดำเนินการแล้ว ให้ระบุขอบเขตที่อนุมัติแทนการหยุดรอซ้ำทุกครั้ง</p></section><section class="card"><h2>เมื่อเจอปัญหา</h2>');
+ await fs.writeFile(file,html);
+}
