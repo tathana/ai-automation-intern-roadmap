@@ -1,0 +1,360 @@
+{
+  "commands": {
+    "start": [
+      [
+        "ดูเวอร์ชัน",
+        "sw_vers",
+        "อ่านข้อมูล",
+        "ผลมี ProductVersion เทียบ About This Mac ไม่เปลี่ยนค่าเครื่อง"
+      ],
+      [
+        "ดูสถาปัตยกรรม",
+        "uname -m",
+        "อ่านข้อมูล",
+        "Native M1 ควร arm64 ถ้า x86_64 อาจผ่าน Rosetta ดู Chip ประกอบ"
+      ]
+    ],
+    "finder": [
+      [
+        "เปิด cwd ใน Finder",
+        "open .",
+        "เปิดแอป",
+        "จุดคือ directory ที่ Terminal อยู่ Finder เปิดที่เดียวกัน"
+      ]
+    ],
+    "terminal": [
+      [
+        "ดูตำแหน่ง",
+        "pwd",
+        "อ่านข้อมูล",
+        "ผลเป็น absolute path เช่น /Users/ชื่อผู้ใช้"
+      ],
+      [
+        "อ่านคู่มือ",
+        "man ls",
+        "อ่านข้อมูล",
+        "เลื่อน Space ค้นด้วย / แล้ว Enter กด q ออก ตรวจ options ที่รองรับในเครื่อง"
+      ],
+      [
+        "ล้างหน้าจอ",
+        "clear",
+        "แสดงผล",
+        "ไม่ลบไฟล์หรือประวัติคำสั่ง"
+      ]
+    ],
+    "files-cli": [
+      [
+        "สร้างพื้นที่ฝึก",
+        "mkdir -p ~/mac-lab\ncd ~/mac-lab\npwd",
+        "สร้างโฟลเดอร์",
+        "-p สร้าง parent ที่ขาดและยอมให้ directory มีอยู่แล้ว cd เปลี่ยนที่ pwd ต้องลงท้าย /mac-lab"
+      ],
+      [
+        "ดูไฟล์ทั้งหมด",
+        "ls -la",
+        "อ่านข้อมูล",
+        "-l รายละเอียด -a รวมชื่อขึ้นต้นจุด . และ .. ไม่ใช่ไฟล์งานให้ลบ"
+      ],
+      [
+        "สร้างไฟล์",
+        "touch notes.txt",
+        "เขียนไฟล์",
+        "ถ้าไม่มีสร้างขนาดศูนย์ ถ้ามีเปลี่ยน timestamp ไม่ล้างข้อความ ตรวจ ls -l notes.txt"
+      ],
+      [
+        "สำเนาและเปลี่ยนชื่อ",
+        "cp -i notes.txt notes-copy.txt\nmv -i notes-copy.txt archive-notes.txt",
+        "เขียนไฟล์",
+        "ทำหลัง touch จะมี notes.txt และ archive-notes.txt -i ถามก่อนทับ"
+      ],
+      [
+        "ลบสำเนา",
+        "rm -i archive-notes.txt",
+        "ลบไฟล์",
+        "ตรวจ pwd กับ ls -l archive-notes.txt ก่อน ตอบ y ลบ n ยกเลิก ไม่เข้า Trash"
+      ],
+      [
+        "กลับ home และกลับเดิม",
+        "cd ~\ncd -",
+        "เปลี่ยนตำแหน่ง",
+        "~ คือ home; - กลับ working directory ก่อนหน้า"
+      ]
+    ],
+    "read-search": [
+      [
+        "สร้าง log",
+        "printf \"INFO start\\nERROR missing field\\nINFO done\\n\" > demo.log",
+        "เขียนทับไฟล์",
+        "ใน ~/mac-lab เท่านั้น \\n ขึ้นบรรทัด > ทับ demo.log ถ้ามี"
+      ],
+      [
+        "หา error",
+        "grep -n \"ERROR\" demo.log",
+        "อ่านข้อมูล",
+        "-n เลขบรรทัด ผล 2:ERROR missing field"
+      ],
+      [
+        "อ่านแบบเลื่อน",
+        "less demo.log",
+        "อ่านข้อมูล",
+        "/ERROR ค้น n ถัดไป q ออก"
+      ],
+      [
+        "ดูท้ายสองบรรทัด",
+        "tail -n 2 demo.log",
+        "อ่านข้อมูล",
+        "ได้ ERROR และ INFO done"
+      ],
+      [
+        "หา CSV",
+        "find . -name \"*.csv\"",
+        "อ่านข้อมูล",
+        "เริ่มที่ . ค้นชื่อ หากยังไม่มีผลว่างปกติ"
+      ],
+      [
+        "นับ INFO",
+        "grep \"INFO\" demo.log | wc -l",
+        "อ่านข้อมูล",
+        "ส่งสองบรรทัดให้ wc -l ได้ 2"
+      ],
+      [
+        "เข้า clipboard",
+        "printf \"Hello Mac\" | pbcopy",
+        "เปลี่ยน clipboard",
+        "Command+V ได้ Hello Mac แทน clipboard เดิม"
+      ],
+      [
+        "ค้นด้วย ripgrep",
+        "rg -n \"ERROR\" demo.log",
+        "อ่านข้อมูล · ต้องมี rg",
+        "ใช้เฉพาะที่ติดตั้งและอนุมัติแล้ว -n เลขบรรทัด ถ้าไม่มีก็ใช้ grep ข้างบนได้"
+      ]
+    ],
+    "environment": [
+      [
+        "หา Python",
+        "command -v python3",
+        "อ่านข้อมูล",
+        "แสดง executable ที่ shell พบ ถ้าว่างตรวจ PATH/ติดตั้ง"
+      ],
+      [
+        "ดู PATH",
+        "printf \"%s\\n\" \"$PATH\"",
+        "อ่านข้อมูล",
+        "แต่ละ directory คั่น : quotes รักษาค่าเป็น argument เดียว"
+      ],
+      [
+        "ตั้งตัวแปรจำลอง",
+        "export REPORT_MODE=demo\nprintf \"%s\\n\" \"$REPORT_MODE\"",
+        "ตั้งค่า shell",
+        "ได้ demo ล้างด้วย unset REPORT_MODE"
+      ],
+      [
+        "สถานะล่าสุด",
+        "echo $?",
+        "อ่านข้อมูล",
+        "รันทันทีหลังคำสั่งเป้าหมาย ไม่รัน ls คั่น"
+      ],
+      [
+        "ตรวจ port",
+        "lsof -nP -iTCP:8000 -sTCP:LISTEN",
+        "อ่านข้อมูล",
+        "-nP แสดงตัวเลข เลือก TCP8000 ที่ฟัง ถ้าว่างอาจไม่มีหรือไม่มีสิทธิ์เห็น ไม่หยุดโปรแกรม"
+      ],
+      [
+        "ดูงาน shell",
+        "jobs",
+        "อ่านข้อมูล",
+        "ดูงาน background ของ shell นี้ ไม่ใช่ทุก process ในเครื่อง"
+      ]
+    ],
+    "vscode": [
+      [
+        "เปิด Folder",
+        "code .",
+        "เปิดแอป",
+        "ต้องติดตั้ง code ใน PATH ก่อน ไม่พบใช้ File → Open Folder"
+      ],
+      [
+        "ตรวจ interpreter",
+        "python -c \"import sys; print(sys.executable)\"",
+        "อ่านข้อมูล",
+        "หลัง activate ควรลงท้าย .venv/bin/python ของงานนี้"
+      ]
+    ],
+    "python": [
+      [
+        "ดูรุ่น",
+        "python3 --version",
+        "อ่านข้อมูล",
+        "เทียบ README ไม่จำเป็นต้องใหม่สุด"
+      ],
+      [
+        "สร้าง environment",
+        "python3 -m venv .venv\nsource .venv/bin/activate",
+        "สร้างไฟล์/ตั้ง shell",
+        "ในรากโปรเจกต์ -m เรียก module .venv คือ directory source โหลดใน shell นี้"
+      ],
+      [
+        "ตรวจ pip",
+        "python -m pip --version",
+        "อ่านข้อมูล",
+        "ต้องชี้ .venv เดียวกันก่อน install"
+      ],
+      [
+        "ติดตั้ง requirements",
+        "python -m pip install -r requirements.txt",
+        "ดาวน์โหลดและติดตั้ง",
+        "ใช้ไฟล์ที่ตรวจแล้วกับ source ที่อนุมัติ -r อ่านรายการ ถ้า TLS error ส่ง IT ไม่ข้ามตรวจ"
+      ],
+      [
+        "ออก environment",
+        "deactivate",
+        "ตั้ง shell",
+        "คืน PATH ไม่ลบ environment"
+      ]
+    ],
+    "dev-tools": [
+      [
+        "ดู Git",
+        "git status\ngit diff",
+        "อ่านข้อมูล",
+        "ใน repository diff แสดง tracked ที่ยังไม่ stage ไฟล์ใหม่เปิดดูเอง"
+      ],
+      [
+        "ตรวจ staged/remote",
+        "git diff --staged\ngit remote -v",
+        "อ่านข้อมูล",
+        "ดูสิ่งที่จะ commit และปลายทาง fetch/push"
+      ],
+      [
+        "ดู Node/npm",
+        "node --version\nnpm --version",
+        "อ่านข้อมูล",
+        "เมื่อติดตั้งผ่านช่องทางทีมแล้ว"
+      ],
+      [
+        "ดู scripts",
+        "npm run",
+        "อ่านรายการ",
+        "จาก directory มี package.json ไม่ระบุชื่อ script เพื่อดูรายการ"
+      ],
+      [
+        "หา Homebrew",
+        "command -v brew",
+        "อ่านข้อมูล",
+        "ว่างไม่ได้แปลว่าจำเป็นต้องติดตั้ง"
+      ]
+    ],
+    "project": [
+      [
+        "สร้างห้องทดลอง",
+        "mkdir -p ~/mac-lab/report-demo/data ~/mac-lab/report-demo/output\ncd ~/mac-lab/report-demo\npython3 -m venv .venv\nsource .venv/bin/activate",
+        "สร้างไฟล์/ตั้ง shell",
+        "ใช้ Python ที่อนุมัติ เปิด Folder นี้ใน editor"
+      ],
+      [
+        "ข้อมูลจำลอง",
+        "request_id,status\nR001,done\nR002,pending\nR003,done",
+        "ไฟล์ · data/requests.csv",
+        "วางในไฟล์ UTF-8 ไม่ใช่ Terminal header กับสามแถว"
+      ],
+      [
+        "โปรแกรมรายงาน",
+        "from pathlib import Path\nfrom collections import Counter\nimport csv\n\nbase = Path(__file__).resolve().parent\nwith (base / \"data\" / \"requests.csv\").open(encoding=\"utf-8-sig\", newline=\"\") as stream:\n    reader = csv.DictReader(stream)\n    if reader.fieldnames != [\"request_id\", \"status\"]:\n        raise ValueError(\"Expected columns: request_id,status\")\n    rows = list(reader)\n\nseen = set()\nfor row in rows:\n    if not row[\"request_id\"] or row[\"request_id\"] in seen:\n        raise ValueError(\"Missing or duplicate request_id\")\n    if row[\"status\"] not in {\"done\", \"pending\"}:\n        raise ValueError(\"Unknown status\")\n    if None in row:\n        raise ValueError(\"Too many columns\")\n    seen.add(row[\"request_id\"])\n\ncounts = Counter(row[\"status\"] for row in rows)\nhtml = (\n    '<!doctype html><html lang=\"en\"><meta charset=\"utf-8\">'\n    '<title>Demo report</title><h1>Request report</h1>'\n    f'<p>Total: {len(rows)}</p>'\n    f'<p>Done: {counts[\"done\"]}</p>'\n    f'<p>Pending: {counts[\"pending\"]}</p></html>'\n)\noutput = base / \"output\" / \"report.html\"\noutput.parent.mkdir(exist_ok=True)\noutput.write_text(html, encoding=\"utf-8\")\nprint(f\"Wrote {output}\")\n",
+        "ไฟล์ · report.py",
+        "วางในไฟล์ที่รากโปรเจกต์ Path หาโฟลเดอร์สคริปต์ DictReader อ่านแถวเป็น dictionary Counter นับสถานะ ตรวจข้อมูลทั้งหมดก่อนเขียนทับ output/report.html ผลแทรกเฉพาะตัวเลข ไม่ใส่ข้อความจาก input ลง HTML"
+      ],
+      [
+        "รันและเปิด",
+        "python report.py\nopen output/report.html",
+        "รัน/เขียนผล",
+        "เปิดต่อเมื่อ Python สำเร็จ หาก error อย่าใช้ผลเก่า"
+      ],
+      [
+        "ไม่เก็บเข้า Git",
+        ".venv/\n__pycache__/\n.env\noutput/",
+        "ไฟล์ · .gitignore",
+        "งานจริงเพิ่มตามทีม ไฟล์ tracked แล้วไม่ได้ถูกเอาออกโดยอัตโนมัติ"
+      ]
+    ]
+  },
+  "shortcuts": [
+    [
+      "⌘ C / ⌘ V",
+      "คัดลอก / วาง"
+    ],
+    [
+      "⌘ S",
+      "บันทึก"
+    ],
+    [
+      "⌘ Z / ⇧⌘ Z",
+      "Undo / Redo ในหลายแอป"
+    ],
+    [
+      "⌘ A / ⌘ F",
+      "เลือกทั้งหมด / ค้นหา"
+    ],
+    [
+      "⌘ Space",
+      "Spotlight"
+    ],
+    [
+      "⌘ Tab",
+      "สลับแอป"
+    ],
+    [
+      "⌘ W / ⌘ Q",
+      "ปิดหน้าต่าง / ออกจากแอป"
+    ],
+    [
+      "⌃⌘ Q",
+      "ล็อกเครื่อง"
+    ],
+    [
+      "⇧⌘ 3 / ⇧⌘ 4",
+      "ภาพทั้งจอ / เลือกพื้นที่"
+    ],
+    [
+      "⇧⌘ 5",
+      "แผงจับภาพ"
+    ],
+    [
+      "⌥⌘ Esc",
+      "Force Quit อาจเสียงานที่ไม่บันทึก"
+    ],
+    [
+      "⇧⌘ G",
+      "Finder ไปโฟลเดอร์"
+    ],
+    [
+      "⌥⌘ V",
+      "Finder ย้ายไฟล์ที่คัดลอก"
+    ],
+    [
+      "⇧⌘ .",
+      "Finder แสดงไฟล์ซ่อน"
+    ],
+    [
+      "⌘ I / Space",
+      "Finder ข้อมูล / Quick Look"
+    ],
+    [
+      "⇧⌘ P",
+      "VS Code Command Palette"
+    ],
+    [
+      "⌘ P",
+      "VS Code หาไฟล์"
+    ],
+    [
+      "⇧⌘ F",
+      "VS Code ค้นทั้งโปรเจกต์"
+    ],
+    [
+      "Control+C",
+      "Terminal หยุด foreground program"
+    ]
+  ]
+}

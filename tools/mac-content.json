@@ -1,0 +1,487 @@
+[
+  {
+    "slug": "start",
+    "title": "00 · รู้จัก Mac บริษัท",
+    "intro": "ใช้ Apple silicon M1 เป็นฐาน ส่วน macOS 26.6.2 เป็นข้อมูลที่ต้าแจ้ง ยังไม่ได้ตรวจจากเครื่องจริง ให้ดู Apple → About This Mac และเทียบ ProductVersion ก่อนอ้างชื่อเมนู",
+    "sections": [
+      [
+        "ตรวจเครื่อง",
+        "ดู Chip, Memory และ macOS ใน About This Mac จดเฉพาะข้อมูลที่ใช้แก้ปัญหา ไม่ต้องส่ง serial number ให้คู่มือนี้ การค้นใน System Settings ช่วยเมื่อชื่อเมนูเปลี่ยน"
+      ],
+      [
+        "Apple silicon",
+        "M1 ใช้ ARM เลือกแอป Apple silicon/arm64 หรือ Universal ตามทีม ส่วน Intel/x86_64 เป็นอีกสถาปัตยกรรม Rosetta อาจแปลแอป Intel ได้ แต่ไม่ควรเริ่มด้วยการเปิดทุกอย่างผ่าน Rosetta"
+      ],
+      [
+        "ช่องทางบริษัท",
+        "ถามพอร์ทัลติดตั้ง เวอร์ชัน runtime และ extension ที่อนุญาต การใช้เมลบริษัทไม่ได้แปลว่าทุก AI service รับข้อมูลบริษัทได้ ถามที่เก็บ source, repository และระดับข้อมูลที่ใช้กับ AI ได้"
+      ],
+      [
+        "MDM และ Zscaler",
+        "MDM อาจล็อกการตั้งค่า Zscaler อาจเกี่ยวกับเครือข่าย แต่ยังสรุปสาเหตุ error ไม่ได้ เก็บเวลา ขั้นตอน และ error ส่ง IT ไม่ลบ agent หรือปิดตรวจ certificate"
+      ],
+      [
+        "คำถามพร้อมใช้",
+        "พี่ครับ ทีมติดตั้ง VS Code กับ Python ผ่านช่องทางไหน ใช้เวอร์ชันอะไร และมี extension/package source ที่อนุญาตไหมครับ โค้ดกับข้อมูลควรเก็บที่ไหนครับ"
+      ]
+    ]
+  },
+  {
+    "slug": "windows-to-mac",
+    "title": "01 · จาก Windows มา Mac",
+    "intro": "เริ่มจากเปิดแอป สลับงาน และบันทึกไฟล์ ไม่ต้องจำทุกเมนูวันแรก",
+    "sections": [
+      [
+        "ปุ่มหลัก",
+        "⌘ Command ใช้คัดลอกและบันทึกในหลายแอป ⌥ Option เป็นปุ่มเสริม ⌃ Control มีหน้าที่ต่างหาก ใน Terminal Control+C หยุดโปรแกรม ส่วน Command+C คัดลอกข้อความที่เลือก"
+      ],
+      [
+        "เมนูด้านบน",
+        "เมนู File/Edit เป็นของแอปที่ active คลิกหน้าต่างก่อนดูเมนู Settings ของแอปมักอยู่ใต้ชื่อแอป และหลายแอปใช้ Command+, ได้"
+      ],
+      [
+        "ปิดกับออก",
+        "Command+W หรือปุ่มแดงปิดหน้าต่าง/แท็บตามแอป Command+Q ออกจากแอป ถ้าปิดหน้าต่างแล้วแอปยังอยู่เป็นเรื่องปกติของหลายแอป ดูชื่อแอปก่อนกด Q"
+      ],
+      [
+        "Finder และ Dock",
+        "Finder จัดไฟล์คล้าย Explorer Dock เปิดและสลับแอป คลิกขวาไอคอน → Options → Keep in Dock เก็บทางลัด เอาไอคอนออกจาก Dock ไม่ใช่ถอนแอป"
+      ],
+      [
+        "ฝึกจริง",
+        "Command+Space ค้น Terminal แล้ว Enter เปิด Finder ต่อแล้ว Command+Tab สลับกลับ ถ้าค้นไม่พบตรวจ Applications ก่อนคิดว่าระบบเสีย"
+      ]
+    ]
+  },
+  {
+    "slug": "keyboard",
+    "title": "02 · คีย์บอร์ด ภาษา แทร็กแพด",
+    "intro": "⇧ คือ Shift จำปุ่มที่ใช้บ่อยแล้วเปิดอ้างอิงที่เหลือเมื่อจำเป็น",
+    "sections": [
+      [
+        "ไทยอังกฤษ",
+        "System Settings → Keyboard หา Text Input/Input Sources เพิ่ม layout ที่ถนัด ตรวจ Keyboard Shortcuts → Input Sources ว่าใช้ปุ่มใดสลับ เพราะอาจปรับไว้ Globe/Fn อาจตั้งทำอย่างอื่น"
+      ],
+      [
+        "แทร็กแพด",
+        "System Settings → Trackpad ดู Secondary click เช่นแตะสองนิ้ว ลอง Natural scrolling แล้วเลือกทิศที่ถนัด มีภาพตัวอย่างท่าทางใน Settings ให้ลองตาม"
+      ],
+      [
+        "เลือกข้อความ",
+        "Shift+ลูกศรขยายส่วนเลือก Option+ซ้าย/ขวาขยับเป็นคำในหลายแอป Command+ซ้าย/ขวาไปต้นท้ายบรรทัด Editor และ Terminal อาจผูกปุ่มต่างกัน ดูเมนูแอปประกอบ"
+      ],
+      [
+        "ภาพหน้าจอ",
+        "Command+Shift+5 เลือกพื้นที่และดู Options ว่าบันทึกที่ไหน ก่อนส่ง error ครอปส่วนที่จำเป็น ปิด token ข้อมูลลูกค้า และแชตที่ไม่เกี่ยวข้อง หากบริษัทจำกัด capture ใช้วิธีส่งข้อความที่อนุญาต"
+      ],
+      [
+        "ฝึกสองนาที",
+        "เปิดโน้ต สลับภาษา คัดลอก วาง Undo และจับภาพเฉพาะโน้ต เป้าหมายคือรู้ตำแหน่งปุ่มด้วยมือ ไม่ใช่ท่องรายการทั้งหมด"
+      ]
+    ]
+  },
+  {
+    "slug": "windows",
+    "title": "03 · หน้าต่าง Spaces จอนอก",
+    "intro": "จัด editor ข้างคู่มือก่อนแล้วค่อยเพิ่มพื้นที่ แยกงานอย่างที่ตามหาได้",
+    "sections": [
+      [
+        "สองหน้าต่าง",
+        "เลื่อนเมาส์ค้างปุ่มเขียวดูตัวเลือกจัดหน้าต่าง ถ้าไม่ตรงใช้เมนู Window หรือปรับขอบด้วยมือ ไม่จำเป็นต้อง full screen ทุกแอป"
+      ],
+      [
+        "Spaces",
+        "Full screen อาจอยู่ใน Space แยก Control+ลูกศรขึ้นเปิด Mission Control เมื่อใช้ค่ามาตรฐาน ดูภาพรวมและเลือกหน้าต่าง เริ่ม Desktop จำนวนน้อยก่อน"
+      ],
+      [
+        "หาแอป",
+        "Command+Tab แล้วดูเมนู Window หากไม่มีหน้าต่างใช้ File → New/Open ตามแอป ไม่ต้องติดตั้งใหม่"
+      ],
+      [
+        "จอนอก",
+        "Settings → Displays เลือก Mirror ภาพเหมือนกันหรือพื้นที่เพิ่ม จัดตำแหน่งให้ตรงโต๊ะ ถ้าไม่ขึ้นตรวจสาย อะแดปเตอร์ และ input จำนวนจอรองรับขึ้นกับรุ่นและอุปกรณ์"
+      ],
+      [
+        "แชร์จอ",
+        "เลือกหน้าต่างงานเฉพาะเมื่อทำได้ ตรวจ preview ก่อนแชร์ ถ้าไม่ขึ้นดูสิทธิ์ screen recording และนโยบายบริษัท"
+      ]
+    ]
+  },
+  {
+    "slug": "finder",
+    "title": "04 · Finder และไฟล์งาน",
+    "intro": "รู้ตำแหน่งไฟล์ก่อนสั่งโปรแกรมอ่าน ตัวอย่างใช้ ~/mac-lab ส่วนงานจริงใช้พื้นที่ทีมอนุญาต",
+    "sections": [
+      [
+        "โฟลเดอร์งาน",
+        "แยกจาก Downloads อย่าเก็บข้อมูลบริษัทลง cloud ส่วนตัวเพียงเพราะเหมือนโฟลเดอร์ local ถามระบบสำรองของทีมก่อน"
+      ],
+      [
+        "Path",
+        "Command+Shift+G ไป path เช่น ~/mac-lab เครื่องหมาย ~ คือ home ส่วน . คือ directory ปัจจุบัน และ .. คือแม่ เปิด View → Show Path Bar ช่วยดูตำแหน่ง"
+      ],
+      [
+        "ย้ายไฟล์",
+        "Command+C แล้ว Command+V คัดลอก Option+Command+V ย้ายไฟล์ที่คัดลอกไว้ใน Finder Return เปลี่ยนชื่อ การเปลี่ยน .xlsx เป็น .csv ไม่ได้แปลงข้อมูล"
+      ],
+      [
+        "ไฟล์ซ่อน",
+        "Space Quick Look, Command+I Get Info ดูขนาด/ชนิด Finder Settings → Advanced ตั้งแสดง extension ได้ Command+Shift+. แสดงชื่อขึ้นต้นด้วยจุด เช่น .env"
+      ],
+      [
+        "ZIP และ Trash",
+        "คลิกขวา Compress ทำ ZIP ตรวจไม่มีข้อมูลลับก่อนแชร์ Trash กู้ได้ก่อนล้างถัง แต่ rm ไม่ผ่าน Trash External drive ควร Eject ก่อนถอด"
+      ]
+    ]
+  },
+  {
+    "slug": "settings",
+    "title": "05 · ตั้งค่าและประชุม",
+    "intro": "ตั้งภาษา ตัวหนังสือ และอุปกรณ์ประชุมก่อน ค่าที่ถูกจัดการโดยองค์กรให้ IT ช่วย",
+    "sections": [
+      [
+        "หา Settings",
+        "ใช้ช่องค้นหา เช่น Microphone, Displays, Lock Screen ดีกว่าจำลำดับเมนู ถ้าสีเทาหรือ managed จดชื่อไว้ถาม IT"
+      ],
+      [
+        "เสียงกล้อง",
+        "เลือก input/output ทั้งใน Sound และแอปประชุม อาจเลือกคนละตัว ทดสอบระดับเสียง ตรวจ Privacy & Security สำหรับแอปที่อนุมัติ บางการเปลี่ยนต้องเปิดแอปใหม่"
+      ],
+      [
+        "แชร์จอ",
+        "ค้น Screen Recording หรือ Screen & System Audio Recording ชื่ออาจต่างตามเวอร์ชัน ให้สิทธิ์เฉพาะแอปที่อนุมัติ ถ้าล็อกอยู่ให้ IT ดู"
+      ],
+      [
+        "แบตและ sleep",
+        "ดู Battery และ Lock Screen ตามนโยบาย ล็อก Control+Command+Q เมื่อลุก ปิดฝาหรือเน็ตหลุดอาจหยุดงาน local งานต่อเนื่องใช้ระบบ scheduler ของทีม"
+      ],
+      [
+        "เครือข่าย",
+        "ใช้ Wi-Fi/VPN ตามขั้นตอนทีม ถ้า intranet ไม่เข้าแต่เว็บทั่วไปได้เก็บอาการ ไม่สุ่มเปลี่ยน proxy/DNS หรือปิด Zscaler"
+      ],
+      [
+        "พื้นที่",
+        "General → Storage ดูภาพรวม ลบเฉพาะไฟล์รู้จัก Git ไม่สำรองทุกอย่างและไฟล์ที่ไม่ commit ยังไม่อยู่ในประวัติ ใช้ระบบสำรองที่ทีมกำหนด"
+      ]
+    ]
+  },
+  {
+    "slug": "apps",
+    "title": "06 · ติดตั้งและถอนแอป",
+    "intro": "ใช้พอร์ทัลบริษัทก่อน ขั้นตอนนี้สำหรับแอปที่อนุญาตแล้ว",
+    "sections": [
+      [
+        "เลือกแอป",
+        "เริ่ม browser/editor/Python/Git ตามทีม Node เมื่อมี JavaScript Docker เมื่อใช้ container ไม่ลง runtime ซ้ำหลายชุดเผื่อทุกอย่าง"
+      ],
+      [
+        "ลำดับ",
+        "ยืนยันแอปและรุ่น → แหล่งทางการที่อนุญาต → Apple silicon/Universal → อ่านสิทธิ์ → ติดตั้ง → เปิดตรวจ Admin ไม่แทนการอนุมัติ"
+      ],
+      [
+        ".dmg",
+        "Disk image เหมือนไดรฟ์ชั่วคราว หลายแอปให้ลากเข้า Applications แล้วเปิดจาก Applications และ Eject image แต่บางตัวมี installer ภายใน อ่านหน้าต่างจริง"
+      ],
+      [
+        ".pkg",
+        "Installer อาจเพิ่ม service และไฟล์หลายที่ อ่านคำขอและให้ IT ช่วยเมื่อจำเป็น App Store ใช้บัญชีตามนโยบาย ไม่ต้องเปิด sync ส่วนตัวเพื่อทดลอง"
+      ],
+      [
+        "ถอน/อัปเดต",
+        "แอปทั่วไปบางตัวลากจาก Applications ไป Trash ได้ แอป service ใช้ uninstaller ทางการ/IT Runtime อัปเกรดอาจกระทบ dependency อ่าน README ก่อน"
+      ],
+      [
+        "ถูกบล็อก",
+        "เก็บชื่อ เวอร์ชัน แหล่ง และ error ไม่ใช้สูตรลบ quarantine/ปิด Gatekeeper เพื่อข้ามคำเตือนที่ยังไม่เข้าใจ"
+      ]
+    ]
+  },
+  {
+    "slug": "terminal",
+    "title": "07 · Terminal ตั้งแต่ศูนย์",
+    "intro": "Terminal เป็นหน้าต่าง shell เช่น zsh ตีความคำสั่งแล้วเรียก Python/Git อีกที",
+    "sections": [
+      [
+        "Prompt",
+        "เปิดผ่าน Spotlight ชื่อผู้ใช้ เครื่อง path และ % ที่เห็นคือข้อความรอรับคำสั่ง ไม่ต้องพิมพ์ตาม ตัวอย่างเล่มนี้ไม่มี %/$ นำหน้า"
+      ],
+      [
+        "คำสั่ง",
+        "ls -la . มีโปรแกรม ls, options -la, เป้าหมาย . คั่นช่องว่างแล้ว Enter หลายบรรทัดให้อ่านและรันทีละบรรทัดก่อน เพราะอาจพึ่งผลก่อนหน้า"
+      ],
+      [
+        "Working directory",
+        "แต่ละ Terminal มีที่อยู่เอง เปิด Finder ไม่ย้าย shell ตาม ใช้ pwd ตรวจและ cd ก่อนรัน relative path"
+      ],
+      [
+        "Python REPL",
+        "เห็น >>> คือ Python พิมพ์ exit() กลับ shell คำสั่ง cd ไม่ใช่ Python และ import csv ไม่ใช่ shell"
+      ],
+      [
+        "ปุ่มช่วย",
+        "Tab เติม path ลูกศรขึ้นเรียกประวัติ Control+C หยุด foreground program Command+C คัดลอกข้อความ ถ้า dquote> อาจ quotes ไม่ครบ ยกเลิกด้วย Control+C"
+      ],
+      [
+        "เงียบ",
+        "mkdir/cp อาจสำเร็จไม่มีข้อความ เมื่อ prompt กลับใช้ ls ตรวจ ถ้ายังไม่กลับอาจรันหรือรอ input Password บาง prompt ไม่แสดงตัวอักษร แต่ต้องรู้ก่อนว่าคำสั่งนั้นจำเป็นและอนุญาต"
+      ]
+    ]
+  },
+  {
+    "slug": "files-cli",
+    "title": "08 · จัดไฟล์ด้วยคำสั่ง",
+    "intro": "ฝึกไฟล์จำลองใน ~/mac-lab ตรวจผลทุกขั้น ชื่อมีช่องว่างครอบคำพูดตรง",
+    "sections": [
+      [
+        "Path สองแบบ",
+        "Absolute เริ่ม / ส่วน data/input.csv เริ่มจาก cwd ../ ถอยหนึ่งระดับ ใช้ ~ แทน home หรือ \"$HOME/...\" หากต้องครอบ path"
+      ],
+      [
+        "พื้นที่ฝึก",
+        "ถ้ามีงานเดิมในชื่อ mac-lab ให้เลือกชื่อใหม่ เปิด Terminal ใหม่ต้อง cd กลับ ตัวอย่างไม่ควรใช้กับข้อมูลจริง"
+      ],
+      [
+        "cp/mv",
+        "cp คัดลอก mv ย้าย/เปลี่ยนชื่อ ปลายทางผิดอาจทับไฟล์ ตัวอย่าง -i ถามเมื่อชนชื่อ ตอบ n ถ้าไม่แน่ใจ"
+      ],
+      [
+        "rm",
+        "ไม่ผ่าน Trash และไม่มี undo แบบ editor ฝึกกับสำเนาหนึ่งไฟล์ที่ตรวจชื่อแล้ว ไม่เริ่มด้วย rm -rf หรือ * แบบครอบคลุม"
+      ],
+      [
+        "Mac/Linux",
+        "Options บางตัวต่างกัน ใช้ man ของเครื่อง ไม่เติม sudo แก้ option ผิด รักษาตัวเล็กใหญ่ชื่อไฟล์ให้ตรงเพราะปลายทางอาจแยก case"
+      ]
+    ]
+  },
+  {
+    "slug": "read-search",
+    "title": "09 · อ่าน ค้น ต่อคำสั่ง",
+    "intro": "อ่าน log ส่วนที่เกี่ยวข้องก่อนถามทีม ใช้ข้อมูลจำลองเรียน pipe และ redirect",
+    "sections": [
+      [
+        "วิธีอ่าน",
+        "cat ไฟล์สั้น less ไฟล์ยาว head ต้น tail ท้าย ไม่ cat ไบนารีหรือ log มหาศาล และไม่ส่ง log บริษัทไปที่ไม่อนุญาต"
+      ],
+      [
+        "ค้นอะไร",
+        "find ค้นชื่อ/path grep ค้นเนื้อหา Quotes รอบ \"*.csv\" กัน shell ขยายก่อน find หากใช้ rg ต้องมีติดตั้งก่อน"
+      ],
+      [
+        "Pipe",
+        "ตัว ",
+        " ส่ง stdout ซ้ายให้ input ขวา > เขียนทับไฟล์ >> ต่อท้าย stderr เป็นอีกช่อง error จึงอาจยังขึ้นจอแม้ stdout ลงไฟล์"
+      ],
+      [
+        "ผลว่าง",
+        "grep ไม่พบอาจเงียบและ exit code 1 No such file ให้ดู pwd/ls ก่อน tail -f เฝ้าไฟล์จน Control+C"
+      ],
+      [
+        "Encoding",
+        "ภาษาไทยเพี้ยนให้ตรวจไฟล์ต้นทางและ encoding ก่อนสรุป Terminal เสีย UTF-8 BOM อ่านด้วย utf-8-sig ได้ แต่ระบบอื่นอาจใช้คนละ encoding"
+      ]
+    ]
+  },
+  {
+    "slug": "environment",
+    "title": "10 · PATH process environment",
+    "intro": "ตรวจ executable ที่ใช้ก่อนแก้ปัญหา “ลงแล้วแต่หาไม่เจอ”",
+    "sections": [
+      [
+        "PATH",
+        "รายชื่อ directory คั่น : ค้นตามลำดับ command -v บอกตัวที่จะใช้ ถ้าจะเพิ่มต้องรักษาค่าเดิม ไม่แทนทั้งหมดด้วย directory ใหม่"
+      ],
+      [
+        "ชั่วคราวถาวร",
+        "export มีผล shell นี้และโปรแกรมลูกหลังจากนั้น .zshrc สำหรับ interactive, .zprofile สำหรับ login shell อย่าคัดลอกบล็อกซ้ำทุกไฟล์"
+      ],
+      [
+        ".env",
+        "zsh ไม่โหลด .env อัตโนมัติ โปรแกรมต้องมีวิธีอ่าน ใช้ secret manager ตามทีม ไม่ใส่ token จริงใน history หรือแสดง env ทั้งหมดเพื่อส่งภาพ"
+      ],
+      [
+        "Process",
+        "PID คือหมายเลข process Activity Monitor ดู CPU/memory ได้ ก่อนหยุด process ดูว่าเป็นของใคร Local server ตัวเองมักหยุด Control+C ใน Terminal เดิม"
+      ],
+      [
+        "Exit code",
+        "$? คือสถานะล่าสุด โดยทั่วไป 0 สำเร็จ รันคำสั่งอื่นคั่นจะเปลี่ยนค่า & เริ่ม background jobs ดูงาน shell fg กลับ foreground งานถาวรใช้ระบบทีม"
+      ],
+      [
+        "สิทธิ์",
+        "Permission denied ไม่ได้แปลว่าต้อง sudo ดู ls -l ก่อน chmod เปลี่ยนสิทธิ์ ไม่ใช้ 777 แก้ทุกอย่าง Python script รัน python script.py โดยไม่ต้องตั้ง executable"
+      ]
+    ]
+  },
+  {
+    "slug": "vscode",
+    "title": "11 · VS Code พร้อมทำงาน",
+    "intro": "Editor runtime และ extension เป็นคนละส่วน เลือก interpreter ให้ตรงโปรเจกต์",
+    "sections": [
+      [
+        "ติดตั้ง",
+        "ใช้พอร์ทัลบริษัทก่อน ถ้าดาวน์โหลดเองได้ใช้ VS Code ทางการ Apple silicon/Universal เปิด .dmg ลากไป Applications แล้วเปิดจากนั้น ถ้าติดสิทธิ์ใช้ IT"
+      ],
+      [
+        "เปิด Folder",
+        "File → Open Folder ที่รากโปรเจกต์ เพื่อ Explorer/search/Git มีบริบทเดียวกัน Workspace Trust เกี่ยวกับโค้ดและ tasks ที่อาจรันได้ เชื่อถือเมื่อรู้ที่มา"
+      ],
+      [
+        "Extension",
+        "ใช้ Python extension ของ Microsoft ที่ทีมอนุมัติ ตรวจ publisher โดยเฉพาะ AI extension ที่ส่งข้อมูลออก ไม่ต้องลง pack ใหญ่"
+      ],
+      [
+        "code CLI",
+        "Command+Shift+P ค้น Shell Command: Install 'code' command in PATH เลือกแล้วเปิด Terminal ใหม่ ถ้าถูกบล็อกยังใช้ File → Open Folder ระหว่าง IT ช่วยได้"
+      ],
+      [
+        "Interpreter",
+        "สร้าง .venv แล้ว Python: Select Interpreter เลือก .venv/bin/python เปิด Terminal ใหม่ตรวจ sys.executable ปุ่ม Run อาจใช้คนละตัวถ้าตั้งผิด"
+      ],
+      [
+        "Debug",
+        "ตั้ง breakpoint ข้างเลขบรรทัด Run and Debug ตาม extension ที่อนุญาต Step Over เดินและดู Variables ถ้า error import ตรวจ environment ก่อน business logic"
+      ],
+      [
+        "บันทึก",
+        "Command+S ก่อนรัน จุดบนแท็บอาจบอกยังไม่บันทึก Source Control ดู diff ก่อน stage ตรวจ .env/input ไม่รวมไฟล์ใหม่ทั้งหมดอัตโนมัติ"
+      ]
+    ]
+  },
+  {
+    "slug": "python",
+    "title": "12 · Python และ venv",
+    "intro": "ใช้เวอร์ชันตามทีม แยกแพ็กเกจแต่ละโปรเจกต์",
+    "sections": [
+      [
+        "ตรวจก่อน",
+        "command -v python3 และ --version ดูของเดิม หากเสนอ developer tools ให้ตรวจวิธีทีมก่อน ไม่เปลี่ยน Python ระบบเพื่อแก้งานเดียว"
+      ],
+      [
+        "venv",
+        "เป็น directory runtime/packages ไม่ใช่ที่เก็บ source ตัวที่เรียก -m venv เป็นฐานของ environment เลือกเวอร์ชันถูกก่อนสร้าง"
+      ],
+      [
+        "activate",
+        "source .venv/bin/activate เปลี่ยน PATH shell นี้ เปิด Terminal ใหม่ต้อง activate ใหม่ หรือเรียก .venv/bin/python ตรงได้ ไม่ copy ข้ามเครื่องให้สร้างใหม่"
+      ],
+      [
+        "pip",
+        "python -m pip ผูกกับ interpreter นั้น ติดตั้งตาม requirements/source ที่อนุมัติ แพ็กเกจอาจรันโค้ดภายนอก ไม่ใช้ sudo pip"
+      ],
+      [
+        "ModuleNotFoundError",
+        "ตรวจ sys.executable กับ pip --version อยู่ environment เดียวกัน ชื่อ import อาจต่างชื่อ package อย่าเดาชื่อคล้ายแล้วติดตั้ง"
+      ],
+      [
+        "ข้อกำหนด",
+        "requirements/lock ตามทีม pip freeze บอกของที่ลง ไม่พิสูจน์ว่าจำเป็นทุกตัว .gitignore กัน .venv .env __pycache__ และข้อมูลที่ไม่ควร commit"
+      ]
+    ]
+  },
+  {
+    "slug": "dev-tools",
+    "title": "13 · Git Node Homebrew Docker",
+    "intro": "ใช้สิ่งที่โปรเจกต์ต้องการ อ่าน README และเวอร์ชันทีมก่อน",
+    "sections": [
+      [
+        "Git/remote",
+        "Git เก็บประวัติ local บริการ Git เก็บ remote Commit ยังไม่ขึ้น remote จน push ใช้ repository ทีม ไม่ส่งโค้ดบริษัทไปบัญชีส่วนตัว"
+      ],
+      [
+        "Workflow",
+        "README → status → branch ตามทีม → แก้ → diff → stage เฉพาะไฟล์ → diff --staged → commit → push ปลายทางที่ตรวจ ตาม review policy ไม่ใช้ force push เป็นจุดเริ่ม"
+      ],
+      [
+        "Node/npm",
+        "Node รัน JavaScript npm จัด packages/scripts อ่าน package.json ก่อน install เพราะอาจรัน install scripts npm ci ต้อง lockfile ที่สอดคล้องและจัด node_modules ใหม่ ใช้ตาม README"
+      ],
+      [
+        "Homebrew",
+        "ไม่ใช่สิ่งบังคับ หากอนุญาตใช้ทางการตาม IT Apple silicon default /opt/homebrew ไม่คัด PATH Intel ทับโดยไม่ตรวจ"
+      ],
+      [
+        "Docker",
+        "ใช้ตัวติดตั้ง Apple silicon ตามนโยบายและสิทธิ์ใช้งานบริษัท Image อาจมีแต่ amd64 ต้องถามทีม ไม่เปิดทุกอย่างผ่าน Intel เพื่อแก้"
+      ],
+      [
+        "ลดความซ้ำ",
+        "หลาย runtime/package manager ทำให้ PATH งง เริ่มจากชุดที่ทีมดูแลได้แล้วเพิ่มเมื่อมีเหตุผล"
+      ]
+    ]
+  },
+  {
+    "slug": "project",
+    "title": "14 · CSV → Report ทำตามได้",
+    "intro": "ข้อมูลจำลองสามแถว ใช้ Python standard library ไม่เรียก API ไม่ส่งรายงาน ไม่ต้องลงแพ็กเกจเพิ่ม",
+    "sections": [
+      [
+        "เตรียม",
+        "สร้าง ~/mac-lab/report-demo ที่ไม่มีงานเดิม เปิด Folder นี้ใน editor ทุกคำสั่งบทนี้จากรากนี้ เปิด Terminal ใหม่ต้อง cd กลับ"
+      ],
+      [
+        "Input",
+        "สร้าง data/requests.csv UTF-8 ตามตัวอย่าง หนึ่งแถวหนึ่ง request ID ไม่ซ้ำ status done/pending นับรายการ ไม่ใช่เงินหรือประวัติเหตุการณ์"
+      ],
+      [
+        "โปรแกรม",
+        "สร้าง report.py ที่ราก โปรแกรมตรวจ header, ID และ status ก่อนนับ ใช้ Path(__file__) อ้างที่อยู่สคริปต์"
+      ],
+      [
+        "ผล",
+        "ต้องเห็น Wrote และ total 3 done 2 pending 1 หากรอบใหม่ error ไฟล์เก่าอาจยังอยู่ ต้องดูว่ารอบนี้สำเร็จก่อนใช้ผล"
+      ],
+      [
+        "ทดสอบผิด",
+        "สำรอง CSV เปลี่ยน status เป็น unknown ต้อง ValueError คืนแล้วทำ ID ซ้ำต้องหยุด สุดท้ายคืนข้อมูลเดิม การเปิด HTML ได้อย่างเดียวไม่พิสูจน์ว่าคำนวณถูก"
+      ],
+      [
+        "ต่อยอด",
+        "งานจริงเพิ่มนิยามข้อมูล สิทธิ์ log ตรวจรับ และ scheduler กับทีม ตัวอย่างยังไม่ใช่ production อ่านเล่ม Automation ต่อ"
+      ]
+    ]
+  },
+  {
+    "slug": "troubleshooting",
+    "title": "15 · แก้ปัญหาให้ตรงจุด",
+    "intro": "เริ่มจาก error ตำแหน่งและสิ่งที่เปลี่ยน อย่าแก้หลายอย่างพร้อมกัน ใช้ช่องค้นหาทั้งเล่มหาอาการได้",
+    "sections": [
+      [
+        "command not found",
+        "ดูสะกดและ command -v แอปเปิดได้แต่ CLI ไม่พบอาจ PATH เช่น code ถ้า runtime ไม่มีใช้วิธีทีม"
+      ],
+      [
+        "No such file or directory",
+        "pwd/ls ดูชื่อจริง Quotes รอบช่องว่าง ตรวจ report.py.txt และโค้ดอ้าง cwd หรือ __file__"
+      ],
+      [
+        "Permission denied",
+        "ดูเป้าหมาย/สิทธิ์แอป ไม่เติม sudo หรือ chmod ครอบจักรวาล หาก managed ส่ง IT"
+      ],
+      [
+        "SSL certificate proxy",
+        "ตรวจเครือข่ายและ package source เก็บเวลา host/error ไม่มี token ให้ IT ไม่ด่วนสรุป Zscaler เสียหรือปิด TLS"
+      ],
+      [
+        "Address already in use",
+        "lsof ดู process หาก server ตัวเองกลับ Terminal เดิม Control+C ไม่รู้เจ้าของอย่าหยุด เปลี่ยน port ตามโปรเจกต์ได้"
+      ],
+      [
+        "Bad CPU type",
+        "ตรวจ Apple silicon/Universal และ runtime/dependency ให้ตรง About This Mac กับ uname -m ช่วย อย่าผสม Intel/ARM environment"
+      ],
+      [
+        "แอปค้าง",
+        "ดู Activity Monitor ก่อน Force Quit อาจเสียงานไม่บันทึก ไม่หยุด agent บริษัทเพราะชื่อไม่คุ้น"
+      ],
+      [
+        "มี package แต่ import ไม่ได้",
+        "เทียบ interpreter editor กับ sys.executable/pip อาจคนละ environment ไม่ต้องลงซ้ำทั้งระบบ"
+      ],
+      [
+        "ถามทีม",
+        "บอกเป้าหมาย ขั้นตอน คำสั่ง error ที่ตัดข้อมูลลับ เวอร์ชันและสิ่งที่ลอง เช่น editor กับ Terminal ชี้ Python ต่างกันควรเลือกตัวใดตามทีม"
+      ]
+    ]
+  }
+]
