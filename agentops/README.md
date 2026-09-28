@@ -19,7 +19,7 @@ python -m http.server 8771 --bind 127.0.0.1
 - agentops/index.html — สรุปและขอบเขตหลักฐาน
 - basics.html — เริ่มจากศูนย์: Terminal บน Mac/แล็บ, shell, AWS CLI, ตัวแปร, JSON และการอ่าน error; ตัวอย่างคัดลอกไม่เรียก AWS จริง
 - glossary.html — 22 คำพร้อมค้น
-- modules.html — Module 1–7 และ pipeline snapshot
+- modules.html — บทเรียนพื้นฐาน 9 หัวข้อ: API, Agent/Tool, Git/Version, CI/CD, Evaluation, AWS, Policy, Observability และอ่านภาษาอังกฤษ (แทนแผนที่ Module ที่ไม่มีข้อมูล)
 - simulator.html — 3 เหตุการณ์แบบทีละขั้น
 - debug.html — policy, spans, NEW_VERSION checklist
 - talk.html — บทพูดและคำถาม
@@ -36,7 +36,7 @@ node tools/build-agentops.mjs
 
 ## ข้อจำกัดหลักฐาน
 
-ข้อมูลความคืบหน้ามาจากข้อความผู้ใช้เล่าภาพ ไม่ใช่การตรวจ AWS ล่าสุด ลิงก์ workshop ต้อง sign in จึงยังไม่ยืนยันชื่อ Module 1–4 และ 7 ไม่เผยแพร่ลิงก์ join/access code หรือ identifiers จริง
+บทเรียนพื้นฐานเป็นเนื้อหาอธิบายแนวคิด ไม่อ้างหมายเลข Module ของ AWS และตัดแผนที่ Module ที่ไม่มีข้อมูลออกแล้ว ข้อมูลผลทดลองที่เก็บไว้ในส่วนแก้ปัญหา/บทพูดมาจากข้อความผู้ใช้เล่าภาพ ไม่ใช่การตรวจ AWS ล่าสุด ไม่เผยแพร่ลิงก์ join/access code หรือ identifiers จริง
 
 ต้องตรวจจริง: endpoint-version mapping, request tool/target, policy association/scope/context/decision, Lambda/tool result, input spans และ log source, pipeline execution/prod approval, online evaluation configuration การมีคำตอบ Refund processed ไม่ยืนยันธุรกรรม
 

@@ -1,0 +1,74 @@
+[
+  {
+    "title": "6 · AWS: แต่ละส่วนอยู่ชั้นไหน",
+    "text": [
+      "AWS เป็นแพลตฟอร์มบริการ cloud Console คือหน้าเว็บจัดการ CLI คือสั่งผ่านข้อความ SDK คือ library ที่โค้ดเรียกบริการ ทั้งสามอาจใช้ API เดียวกัน แต่แต่ละสภาพแวดล้อมต้องมี credentials และสิทธิ์ที่ถูกต้อง",
+      "Account คือบัญชีทรัพยากร Region คือภูมิภาค IAM จัดการตัวตนและสิทธิ์ Role คือบทบาทที่รับสิทธิ์ตามเงื่อนไข Authentication ถามว่าเป็นใคร ส่วน authorization ถามว่าทำอะไรได้ ล็อกอินสำเร็จไม่ได้แปลว่ามีสิทธิ์ทุก action",
+      "Runtime รันโปรแกรม agent ส่วน endpoint เป็นปลายทางเรียก version/configuration ที่ต้องการ ใน AgentCore ต้องตรวจว่า endpoint dev หรือ prod ชี้ Runtime version ใด ไม่เดาว่ามันเปลี่ยนตามรุ่นล่าสุดเสมอ",
+      "Gateway เชื่อม agent ไปเครื่องมือ Target คือปลายทางที่ผูกไว้ Lambda เป็นบริการรันฟังก์ชันโดยเราไม่ต้องจัดการ server เองทุกส่วน ฟังก์ชันยังต้องมีโค้ด สิทธิ์ และจัดการ error เช่นงานคืนเงิน",
+      "CloudWatch ใช้ติดตาม logs/metrics ส่วน CloudFormation จัดชุดทรัพยากรด้วยแม่แบบเรียกว่า stack การสร้าง stack สำเร็จบอกเรื่องโครงสร้าง ไม่ใช่ทดสอบเงื่อนไขธุรกิจครบแล้ว"
+    ],
+    "english": [
+      "Verify that the endpoint points to the intended version.",
+      "ตรวจว่า endpoint ชี้เวอร์ชันที่ตั้งใจ",
+      "verify = ตรวจยืนยัน; points to = ชี้ไปยัง; intended = ที่ต้องการ ไม่ใช่แค่เห็น READY"
+    ],
+    "example": "เครื่องที่พิมพ์คำสั่ง → บัญชี/region ที่เลือก → Runtime รัน agent → เครื่องมือผ่าน Gateway → ฟังก์ชันทำงานหากได้รับอนุญาต นี่เป็นภาพองค์ประกอบทั่วไป ไม่กำหนดลำดับภายใน policy/interceptor",
+    "question": "Resource ไม่ปรากฏแปลว่าถูกลบแล้วไหม?",
+    "answer": "ยังสรุปไม่ได้ ตรวจบัญชี region สิทธิ์ และ ID ก่อน"
+  },
+  {
+    "title": "7 · Policy ควบคุมอะไร",
+    "text": [
+      "Prompt กำกับพฤติกรรมโมเดล ส่วน policy เป็นกฎที่ชั้นควบคุมใช้ตัดสินสิทธิ์ ก่อนการกระทำมีผลจริงควรตรวจในระบบ ไม่ฝากไว้กับข้อความที่โมเดลบอกว่าจะทำ",
+      "Principal คือผู้กระทำ Action คือสิ่งที่จะทำ Resource คือสิ่งที่กระทำต่อ Context คือข้อมูลประกอบ Cedar เป็นภาษาสำหรับเขียนกฎสิทธิ์แบบนี้ ต้องตรวจทั้ง scope และเงื่อนไข ไม่ดูแค่จำนวนเงิน",
+      "Interceptor แทรกในเส้นทางเพื่ออ่าน ตรวจ หรือปรับข้อมูล ส่วน policy ตัดสินจากข้อมูลที่ได้รับ การ log ว่าเติมยอดเสร็จไม่พิสูจน์ว่าตัวตัดสินเห็นยอดด้วย path/type เดียวกัน ต้องตรวจ input ที่ใช้จริง",
+      "สมมติกฎห้าม order_total_cents > 10000: 25000 cents คือ $250 เข้าเงื่อนไข แต่เท่ากับ 10000 ไม่เข้าเงื่อนไขมากกว่า อย่างไรก็ตามต้องมีสิทธิ์อนุญาตและผ่านกฎอื่นด้วย Field นี้คือยอด order ตามโจทย์ ไม่ควรเปลี่ยนความหมายเป็นเงินคืนบางส่วนเอง",
+      "ACTIVE/ENFORCE บอกสถานะหรือโหมด configuration ส่วน ALLOW/DENY บอก decision ของคำขอหนึ่งรอบ แยกสองระดับนี้แล้วจะไม่พูดว่า setup เสร็จจึงทดสอบทุกกรณีผ่าน"
+    ],
+    "english": [
+      "The request is denied because it exceeds the limit.",
+      "คำขอถูกปฏิเสธเพราะเกินขีดจำกัด",
+      "denied = ปฏิเสธ; exceeds = มากกว่า ต้องดูว่านี่เป็น decision จริงหรือข้อความที่ agent สรุป"
+    ],
+    "example": "ตรวจแยก: กฎที่ตั้ง → context คำขอ → decision → tool result คำตอบ agent อย่างเดียวแทนทุกชั้นไม่ได้",
+    "question": "เติมข้อมูลใน interceptor สำเร็จเท่ากับ policy สำเร็จไหม?",
+    "answer": "ไม่ ต้องตรวจข้อมูลที่ policy เห็น ขอบเขตกฎ ผลตัดสิน และผลปลายทาง"
+  },
+  {
+    "title": "8 · Log, metric, trace และ debug",
+    "text": [
+      "Log คือบันทึกเหตุการณ์ Metric คือค่าตัวเลขตามเวลา เช่นจำนวน error Trace คือร่องรอยงานที่เชื่อมหลายช่วง และ span คือช่วงงานย่อยใน trace เช่นการเรียก tool ครั้งหนึ่ง แต่ละชนิดตอบคำถามต่างกัน",
+      "Session คือกลุ่มการสนทนาที่อาจมีหลายคำขอและหลาย trace ไม่ใช้ session ID, trace ID และ span ID แทนกัน ดูเวลา endpoint/version และ identifiers ที่เกี่ยวข้องเพื่อจับคู่รอบเดียวกัน",
+      "Latency คือเวลาที่ใช้ตอบ Throughput คือปริมาณงานต่อเวลา Error rate คือสัดส่วนงานผิดพลาด ค่าเฉลี่ยอย่างเดียวอาจซ่อนเคสช้าหรือผิดมาก ต้องดูกรณีตัวอย่างประกอบ",
+      "Debug เริ่มจาก expected ว่าควรเกิดอะไร เทียบ observed ที่เกิดจริง แล้วลดขอบเขตไปชั้นที่ต่าง เช่นไม่ได้เรียก tool เรียกแล้ว error หรือ tool สำเร็จแต่ตอบผิด เปลี่ยนทีละจุดที่มีหลักฐานจะรู้ว่าอะไรช่วยแก้ได้",
+      "Retry คือการลองซ้ำ Idempotency คือออกแบบให้คำขอเดิมซ้ำไม่สร้างผลธุรกิจซ้ำโดยไม่ตั้งใจ Timeout บอกว่าไม่ได้รับคำตอบทันเวลา ไม่ได้พิสูจน์ว่าปลายทางไม่ทำงาน จึงไม่กดคืนเงินซ้ำโดยไม่ตรวจผลเดิม"
+    ],
+    "english": [
+      "Inspect the trace to identify the failing tool call.",
+      "ตรวจ trace เพื่อหาการเรียกเครื่องมือที่ล้มเหลว",
+      "inspect = เปิดดู; identify = ระบุ; failing = ที่ผิด เริ่มด้วยคำถามว่าพังจุดใด"
+    ],
+    "example": "คำตอบผิด → หา trace รอบนั้น → หา span ของ tool → อ่าน input/output/error → เทียบคำตอบสุดท้าย ถ้าไม่มี span ต้องตรวจ telemetry ไม่เดาว่า tool ไม่ถูกเรียก",
+    "question": "Timeout แล้วสั่งคืนเงินซ้ำได้ทันทีไหม?",
+    "answer": "ควรตรวจผลเดิมและกลไกป้องกันคำขอซ้ำก่อน เพราะรอบก่อนอาจทำงานแล้วแต่คำตอบมาไม่ถึง"
+  },
+  {
+    "title": "9 · อ่านอังกฤษให้จับจุดได้",
+    "text": [
+      "หา 4 ส่วนของประโยค: กริยาให้ทำอะไร → ทำกับสิ่งใด → ที่ไหน/รุ่นใด → คาดผลอะไร Verify the deployment status in the console คือดูสถานะใน Console ไม่ใช่ deploy อีกรอบ",
+      "Run the script คือคำสั่งให้รัน ส่วน You should see… คือผลที่ควรปรากฏ หากไม่ตรงหยุดตรวจตรงนั้นก่อน Prerequisite คือสิ่งที่ต้องพร้อม Optional คือทางเลือกที่ไม่บังคับในเส้นทางนั้น",
+      "Replace the placeholder คือแทนค่าตัวอย่างด้วยค่าที่ถูก เช่นโปรไฟล์ตามทีม ไม่คัดคำว่า YOUR_PROFILE ตามตัวอักษร Environment variable ต้องมีค่าใน shell ที่ใช้อยู่ หากไม่รู้ว่าค่ามาจากไหนให้ย้อนขั้นก่อน ไม่เดาเอง",
+      "Pending = รอ, in progress = กำลังทำ, succeeded = ขั้นนั้นสำเร็จ, failed = ล้มเหลว, skipped = ข้าม, enabled = เปิดใช้งาน อ่านพร้อมชื่อ stage/resource ไม่ขยายเป็นทั้งระบบสำเร็จ",
+      "ประโยคถาม: Which environment should I run this in? = รันที่ไหน; What output should I expect? = ควรได้ผลอะไร; Does this command change any resources? = เปลี่ยนทรัพยากรไหม; Could you explain how this step connects to the previous one? = ขั้นนี้เชื่อมกับขั้นก่อนอย่างไร"
+    ],
+    "english": [
+      "Before proceeding, ensure that the evaluation has completed successfully.",
+      "ก่อนทำต่อ ตรวจให้แน่ใจว่าการประเมินเสร็จสำเร็จแล้ว",
+      "Before proceeding = ก่อนขั้นถัดไป; ensure = ตรวจให้แน่ใจ; completed successfully = เสร็จสำเร็จ ไม่ใช่เพิ่งเริ่ม"
+    ],
+    "example": "I expected X, but I got Y. I ran it in staging. = ผมคาดว่า X แต่ได้ Y และรันใน staging เพิ่มสิ่งที่ลองแล้วจะช่วยให้ผู้สอนวิเคราะห์ได้เร็ว",
+    "question": "You should see a success message คือให้พิมพ์ success ไหม?",
+    "answer": "ไม่ใช่ เป็นผลที่ควรเห็น ให้เทียบกับ output จริง"
+  }
+]

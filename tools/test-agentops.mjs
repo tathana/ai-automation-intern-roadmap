@@ -6,6 +6,10 @@ const root=fileURLToPath(new URL('../',import.meta.url));
 const dir=path.join(root,'agentops');
 const files=fs.readdirSync(dir).filter(f=>f.endsWith('.html'));
 assert.equal(files.length,8);
+const learning=fs.readFileSync(path.join(dir,'modules.html'),'utf8');
+assert(!learning.includes('ยังไม่ทราบหัวข้อจริง'),'placeholder module content remains');
+assert.equal((learning.match(/id="lesson-/g)||[]).length,9);
+assert(learning.includes('Continuous Integration')&&learning.includes('Prerequisite'));
 let links=0;
 for(const file of files){
 const html=fs.readFileSync(path.join(dir,file),'utf8');
