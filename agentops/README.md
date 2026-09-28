@@ -17,6 +17,7 @@ python -m http.server 8771 --bind 127.0.0.1
 ## โครงสร้าง
 
 - agentops/index.html — สรุปและขอบเขตหลักฐาน
+- basics.html — เริ่มจากศูนย์: Terminal บน Mac/แล็บ, shell, AWS CLI, ตัวแปร, JSON และการอ่าน error; ตัวอย่างคัดลอกไม่เรียก AWS จริง
 - glossary.html — 22 คำพร้อมค้น
 - modules.html — Module 1–7 และ pipeline snapshot
 - simulator.html — 3 เหตุการณ์แบบทีละขั้น
@@ -44,4 +45,3 @@ node tools/build-agentops.mjs
 อ่านและ checklist เก็บใน localStorage key agentops-field-notes-v1 ไม่ส่งเซิร์ฟเวอร์ หาก storage ใช้ไม่ได้ยังอ่านและเล่นได้แต่ไม่รับประกันการจำสถานะ Quiz อยู่ในหน่วยความจำหน้านั้น รีโหลดเริ่มใหม่ ช่องติ๊ก checklist คืออ่าน/เตรียมตรวจ ไม่ใช่ AWS ผ่านแล้ว
 
 ลิงก์เอกสาร AWS เปิดภายนอกเมื่อผู้ใช้กดเท่านั้น ไม่มีการดึง AWS หรือ service ภายนอกอัตโนมัติ ข้อมูล simulation และ quiz ฝังใน data.js ไม่ใช่ผล AWS
-

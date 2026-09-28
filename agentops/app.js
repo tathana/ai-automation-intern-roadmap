@@ -1,9 +1,9 @@
 (()=>{'use strict';
-const page=document.body.dataset.page,valid=['index','glossary','modules','simulator','debug','talk','quiz'];
+const page=document.body.dataset.page,valid=['index','basics','glossary','modules','simulator','debug','talk','quiz'];
 const key='agentops-field-notes-v1';let state={read:{},checks:{}},persist=true;
 try{const parsed=JSON.parse(localStorage.getItem(key)||'null');if(parsed&&typeof parsed==='object'&&parsed.read&&parsed.checks){state={read:parsed.read,checks:parsed.checks};}}catch{persist=false;}
 function save(){try{localStorage.setItem(key,JSON.stringify(state));}catch{persist=false;}if(!persist)document.querySelector('#storage-note').textContent='Browser ไม่อนุญาตเก็บข้อมูล: ใช้งานได้ในหน้านี้ แต่ความคืบหน้าอาจไม่อยู่หลังปิด';}
-function renderProgress(){const n=valid.filter(x=>state.read[x]===true).length;document.querySelector('#reading-progress').value=n;document.querySelector('#reading-count').textContent=n+' / 7 หน้า';document.querySelector('#mobile-reading-count').textContent='อ่านแล้ว '+n+' / 7 หน้า';document.querySelector('#mark-read').checked=state.read[page]===true;}
+function renderProgress(){const n=valid.filter(x=>state.read[x]===true).length;document.querySelector('#reading-progress').value=n;document.querySelector('#reading-count').textContent=n+' / 8 หน้า';document.querySelector('#mobile-reading-count').textContent='อ่านแล้ว '+n+' / 8 หน้า';document.querySelector('#mark-read').checked=state.read[page]===true;}
 renderProgress();if(!persist)save();
 document.querySelector('#mark-read').addEventListener('change',event=>{state.read[page]=event.target.checked;save();renderProgress();});
 document.querySelectorAll('[data-check]').forEach(el=>{el.checked=state.checks[el.dataset.check]===true;el.addEventListener('change',()=>{state.checks[el.dataset.check]=el.checked;save();});});
