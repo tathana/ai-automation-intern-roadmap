@@ -5,6 +5,7 @@ Static portal containing the Book 00–08 textbook collection, the original five
 ## Files
 
 - `index.html` — landing page
+- `devops/` — DevOps & Environment Strategy study guide, deeper reference, 15-minute presentation and separate speaker script
 - `book-00.html` / `book-00-materials.zip` — Developer Toolkit and command-line foundation
 - `special-git.html` / `special-git-materials.zip` — Git Foundation & Safe Workflow, drills and Git Rescue Challenge
 - `special-git-assets/` — individually downloadable Git Rescue setup script
