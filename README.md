@@ -5,6 +5,7 @@ Static portal containing the Book 00–08 textbook collection, the original five
 ## Files
 
 - `index.html` — landing page
+- `genai-essentials/` — Thai preparation guide for the 2026 Generative AI Essentials on AWS classroom course: nine-module reading with worked examples, three local browser lab simulations, copyable English prompts, an interactive English-interface rehearsal, myClass/AWS navigation, glossary, and self-check. Simulations do not invoke AWS or grade the real class.
 - `devops/` — DevOps & Environment Strategy study guide, deeper reference, 15-minute presentation and separate speaker script
 - `book-00.html` / `book-00-materials.zip` — Developer Toolkit and command-line foundation
 - `special-git.html` / `special-git-materials.zip` — Git Foundation & Safe Workflow, drills and Git Rescue Challenge

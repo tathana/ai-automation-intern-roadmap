@@ -1,0 +1,9 @@
+.template-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:16px}
+.template-card{border:1px solid var(--line);border-radius:10px;padding:16px;min-width:0}
+.template-card h4{margin-top:0}
+.template-card .copybox{margin-bottom:0}
+.builder-form label{display:block;font-weight:700;margin:12px 0}
+.builder-form input,.builder-form select,.builder-form textarea{display:block;margin-top:5px;font-weight:400}
+#builder-output{margin-top:7px;font-family:Consolas,monospace;font-size:14px;line-height:1.6}
+#builder-status{align-self:center;color:var(--green);font-size:14px}
+@media(max-width:850px){.template-grid{grid-template-columns:1fr}}
