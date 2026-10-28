@@ -1,0 +1,273 @@
+<!doctype html>
+<html lang="th"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<meta name="description" content="บทที่ 6: Observability และ Traces — เนื้อหาละเอียดตามเวลาและสรุปท้ายเรื่อง"><title>Observability และ Traces | AI & Automation Knowledge</title>
+<link rel="stylesheet" href="style.css"></head><body>
+<a class="skip" href="#main">ข้ามไปเนื้อหา</a>
+<header class="topbar"><a href="../index.html">← คลังความรู้หลัก</a><a href="index.html">Gemini Agent Platform · 6 บท</a></header>
+<div class="reader-layout"><aside><details open><summary>บทเรียนทั้ง 6 คลิป</summary><nav aria-label="บทเรียน"><a href="01-overview.html" >01 · ภาพรวมแพลตฟอร์ม</a><a href="02-setup.html" >02 · เตรียมเครื่องและสร้าง Agent ตัวแรก</a><a href="03-website-agent.html" >03 · สร้างและ Deploy เว็บไซต์ด้วย Agent</a><a href="04-deployment.html" >04 · Deploy ตัว Agent ขึ้นคลาวด์</a><a href="05-security.html" >05 · เพิ่มความปลอดภัยด้วย Model Armor</a><a href="06-observability.html" aria-current=page>06 · Observability และ Traces</a></nav></details>
+    <details class="toc" open><summary>สารบัญบทนี้</summary><nav aria-label="หัวข้อในบท"><a class="depth-2" href="#section-1">เนื้อหาแบบละเอียด</a><a class="depth-3" href="#section-2">0:00–0:56 — จากการสร้างระบบ สู่การปรับปรุงระบบ</a><a class="depth-3" href="#section-3">0:57–1:41 — Observability, Telemetry และ Tracing ต่างกันอย่างไร</a><a class="depth-3" href="#section-4">1:42–2:45 — ตั้งค่า Environment Variables</a><a class="depth-3" href="#section-5">2:46–4:48 — เพิ่มสิทธิ์เขียน Logs และ Traces</a><a class="depth-3" href="#section-6">4:49–5:22 — Deploy Agent พร้อมค่าตั้งค่าใหม่</a><a class="depth-3" href="#section-7">5:23–6:13 — สร้างคำขอทดสอบ</a><a class="depth-3" href="#section-8">6:14–7:01 — ดู Trace ระหว่างทำงานและเปิดเว็บไซต์</a><a class="depth-3" href="#section-9">7:02–7:33 — ดู Metrics บน Dashboard</a><a class="depth-3" href="#section-10">7:34–8:32 — เปิด Trace เพื่อดูลำดับการทำงาน</a><a class="depth-3" href="#section-11">8:33–9:17 — ตรวจรายละเอียดเพื่อหาคอขวด</a><a class="depth-3" href="#section-12">9:18–9:39 — จบบท</a><a class="depth-2" href="#summary">สรุปท้ายเรื่อง</a></nav></details></aside>
+    <main id="main" class="article"><div class="eyebrow">บทที่ 06 / 06 · คลิป 9:39 นาที</div>
+    <div class="reading-actions"><a href="#summary">ข้ามไปสรุปท้ายเรื่อง ↓</a><a href="06-observability.md" download>ดาวน์โหลด Markdown</a><button type="button" onclick="window.print()">พิมพ์ / บันทึก PDF</button></div>
+    <h1>บทที่ 6 — Observability และ Traces</h1>
+<p>บทนี้สอน <strong>เปิดการติดตามการทำงานของ Agent เพื่อดูว่าแต่ละคำขอผ่านขั้นตอนใด ใช้เวลาเท่าไร และควรปรับปรุงตรงไหน</strong> โดยใช้ Observability, OpenTelemetry และ Traces</p>
+<p>ต่อจากบทก่อนที่สร้าง Deploy และเพิ่มการตรวจความปลอดภัยแล้ว บทนี้เข้าสู่ส่วน <strong>Optimize — การปรับปรุงระบบจากข้อมูลการทำงานจริง</strong></p>
+<p>เนื้อหาเรียบเรียงแบบละเอียดตามเวลา จากข้อความถอดเสียง พร้อมสรุปท้ายเรื่อง โดยชื่อ Environment Variables บางตัวไม่มีอยู่ครบในข้อความ จึงยังไม่สามารถจัดเป็นชุดค่าที่คัดลอกไปรันได้ทันที</p>
+<h2 id="section-1">เนื้อหาแบบละเอียด</h2>
+<h3 id="section-2">0:00–0:56 — จากการสร้างระบบ สู่การปรับปรุงระบบ</h3>
+<p>ผู้บรรยายทบทวนสิ่งที่ทำมาแล้วในคอร์ส:</p>
+<ol>
+<li>ทำความเข้าใจแพลตฟอร์ม</li>
+<li>เตรียมสภาพแวดล้อม</li>
+<li>สร้าง Agent ด้วย ADK บนเครื่อง</li>
+<li>ปรับ Agent ให้สร้างเว็บไซต์ได้</li>
+<li>Deploy ตัว Agent ขึ้น Runtime</li>
+<li>ใช้ Console, Playground และ Sessions</li>
+<li>กำหนดตัวตนให้ Agent</li>
+<li>ตั้งค่า Model Armor</li>
+</ol>
+<p>ขั้นต่อไปคือเปิด <strong>Observability และ Traces</strong> เพื่อให้มีข้อมูลสำหรับตรวจสอบและปรับปรุง Agent</p>
+<p>ผู้บรรยายระบุว่าบทนี้เป็นช่วงท้ายของเนื้อหาหลัก และจะมีบทเสริมเกี่ยวกับประเด็นเฉพาะสำหรับสร้าง Agent ที่แข็งแรงขึ้น</p>
+<h3 id="section-3">0:57–1:41 — Observability, Telemetry และ Tracing ต่างกันอย่างไร</h3>
+<p>ผู้บรรยายอธิบายว่า Observability คือการใช้ข้อมูลที่ระบบส่งออกมา เพื่อทำความเข้าใจสุขภาพและพฤติกรรมของ Agent ที่ Deploy แล้ว</p>
+<div class="table-wrap" role="region" aria-label="ตารางประกอบบทเรียน" tabindex="0"><table><thead>
+<tr>
+  <th>คำ</th>
+  <th>ความหมายในบริบทนี้</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+  <td><strong>Telemetry</strong></td>
+  <td>ข้อมูลการทำงานที่ระบบเก็บและส่งออกมา</td>
+</tr>
+<tr>
+  <td><strong>Metrics</strong></td>
+  <td>ค่าตัวเลขสำหรับดูภาพรวม เช่น จำนวนการเรียกใช้และระยะเวลา</td>
+</tr>
+<tr>
+  <td><strong>Logs</strong></td>
+  <td>บันทึกเหตุการณ์หรือข้อความระหว่างทำงาน</td>
+</tr>
+<tr>
+  <td><strong>Traces</strong></td>
+  <td>ข้อมูลเชื่อมโยงขั้นตอนต่าง ๆ ของการประมวลผลคำขอ</td>
+</tr>
+<tr>
+  <td><strong>Observability</strong></td>
+  <td>การใช้ข้อมูลเหล่านี้ทำความเข้าใจและวิเคราะห์ระบบ</td>
+</tr>
+</tbody>
+</table></div>
+<p><strong>Trace ช่วยตอบคำถามอะไร</strong></p>
+<ul>
+<li>คำขอนี้เรียกโมเดลกี่ครั้ง</li>
+<li>เรียกเครื่องมือใดบ้าง</li>
+<li>ขั้นตอนไหนใช้เวลานาน</li>
+<li>ข้อผิดพลาดเกิดตรงไหน</li>
+<li>ลำดับการทำงานเป็นไปตามที่คาดหรือไม่</li>
+</ul>
+<p>ผู้บรรยายกล่าวถึงการแสดงผลเป็นกราฟแบบ <strong>DAG — Directed Acyclic Graph</strong> ซึ่งช่วยแสดงความสัมพันธ์และลำดับของขั้นตอน</p>
+<p>อย่างไรก็ตาม คำอธิบายในคลิปที่ว่าเห็น “Reasoning Loop” ควรเข้าใจว่า <strong>เห็นขั้นตอนและเหตุการณ์ที่ระบบบันทึกไว้</strong> เช่น การเรียกโมเดลและเครื่องมือ ไม่ใช่การเห็นกระบวนการคิดภายในทั้งหมดของโมเดล</p>
+<p>เพื่อเก็บข้อมูลเหล่านี้ ผู้บรรยายใช้ <strong>OpenTelemetry</strong> ซึ่งเป็นมาตรฐานและชุดเครื่องมือสำหรับสร้างและส่งข้อมูลติดตามระบบ</p>
+<h3 id="section-4">1:42–2:45 — ตั้งค่า Environment Variables</h3>
+<p>ผู้บรรยายกลับไปยังโปรเจกต์ Website Generator เวอร์ชันสอง แล้วเปิดใน IDE เช่น Antigravity หรือ VS Code การตั้งค่ามีสามส่วนหลัก:</p>
+<ol>
+<li>เปิด Telemetry ของ Runtime</li>
+<li>เปิดการเก็บข้อมูลที่เกี่ยวกับการเรียกโมเดล</li>
+<li>เปิดการเก็บเนื้อหาข้อความจริง</li>
+</ol>
+<p>จากเสียงที่ถอดมา ตัวแปรแรกน่าจะเป็น:</p>
+<pre><code class="language-dotenv">GOOGLE_CLOUD_AGENT_ENGINE_ENABLE_TELEMETRY=true
+</code></pre>
+<p>ส่วนตัวแปรอีกสองตัว <strong>ไม่มีชื่อเต็มอยู่ในข้อความที่ส่งมา</strong> โดยผู้บรรยายเน้นว่าต้องใส่ค่าตามรูปแบบที่กำหนด และหนึ่งในนั้นใช้ค่าประมาณ <code>event_only</code> แทนการตั้งทุกตัวเป็น <code>true</code></p>
+<p>ประเด็นสำคัญคือ Environment Variable แต่ละตัวอาจรับค่าคนละชนิด:</p>
+<div class="table-wrap" role="region" aria-label="ตารางประกอบบทเรียน" tabindex="0"><table><thead>
+<tr>
+  <th>รูปแบบค่า</th>
+  <th>ตัวอย่างความหมาย</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+  <td>Boolean</td>
+  <td>เปิดหรือปิด เช่น <code>true</code></td>
+</tr>
+<tr>
+  <td>ค่าตัวเลือกเฉพาะ</td>
+  <td>เลือกวิธีบันทึก เช่น บันทึกเป็น Event</td>
+</tr>
+</tbody>
+</table></div>
+<p>หากใส่ <code>true</code> ให้ตัวแปรที่ต้องการค่าตัวเลือกเฉพาะ อาจทำให้การตั้งค่าไม่ถูกต้อง จึงต้องดูชื่อและค่าจริงจากโค้ดหรือ README ประกอบ ไม่ควรเดาจากข้อความถอดเสียง</p>
+<p><strong>การเก็บเนื้อหาข้อความมีผลอย่างไร</strong></p>
+<p>นอกจากเวลาและจำนวน Token แล้ว ระบบอาจบันทึก Prompt หรือข้อความที่ใช้ในการทำงานด้วย ขึ้นกับการตั้งค่าและส่วนประกอบที่รองรับ</p>
+<p>ข้อมูลเหล่านั้นอาจมีข้อมูลผู้ใช้หรือเนื้อหาภายใน จึงต้องกำหนดสิทธิ์เข้าถึงบันทึกและเลือกเก็บให้เหมาะกับงาน ไม่จำเป็นต้องเปิดเก็บเนื้อหาทั้งหมดเพื่อดู Latency เสมอไป</p>
+<h3 id="section-5">2:46–4:48 — เพิ่มสิทธิ์เขียน Logs และ Traces</h3>
+<p>ผู้บรรยายใช้ Service Account ตัวเดิมที่ผูกกับ Agent แล้วเพิ่มบทบาทอีกสองรายการ:</p>
+<div class="table-wrap" role="region" aria-label="ตารางประกอบบทเรียน" tabindex="0"><table><thead>
+<tr>
+  <th>บทบาท</th>
+  <th>Role ID</th>
+  <th>หน้าที่</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+  <td><strong>Logs Writer</strong></td>
+  <td><code>roles/logging.logWriter</code></td>
+  <td>เขียนบันทึกลง Cloud Logging</td>
+</tr>
+<tr>
+  <td><strong>Cloud Trace Agent</strong></td>
+  <td><code>roles/cloudtrace.agent</code></td>
+  <td>ส่งข้อมูล Trace ไปยัง Cloud Trace</td>
+</tr>
+</tbody>
+</table></div>
+<p><strong>Logs Writer</strong></p>
+<p>ผู้บรรยายอธิบายถึงสิทธิ์:</p>
+<pre><code class="language-text">logging.logEntries.create
+</code></pre>
+<p>ช่วยให้แอปพลิเคชันที่รันด้วย Service Account นี้ส่งบันทึกระบบและแอปพลิเคชันไปยัง Cloud Logging ประเด็นคือให้สิทธิ์สำหรับเขียน โดยไม่จำเป็นต้องให้สิทธิ์อ่านหรือลบบันทึกทั้งหมด</p>
+<p><strong>Cloud Trace Agent</strong></p>
+<p>ใช้ส่งข้อมูล Trace เช่น ขั้นตอนที่คำขอผ่านและเวลาที่ใช้ในแต่ละส่วน ในคลิปกล่าวถึงสิทธิ์:</p>
+<pre><code class="language-text">cloudtrace.traces.patch
+</code></pre>
+<p>ผู้บรรยายกำหนด Project ID แล้วใช้คำสั่งเพิ่ม IAM Policy Binding ให้ Service Account ข้อความไม่ได้มีคำสั่งเต็ม แต่โครงสร้างงานคือ:</p>
+<p><strong>เลือก Project → ระบุ Service Account → เพิ่ม Logs Writer → เพิ่ม Cloud Trace Agent</strong></p>
+<p>เมื่อเสร็จแล้ว ระบบจะมีทั้งการตั้งค่าให้สร้างและส่ง Telemetry และสิทธิ์ให้ตัวตนของ Agent เขียนข้อมูลดังกล่าว</p>
+<p>สองส่วนนี้ต้องทำงานร่วมกัน การให้สิทธิ์อย่างเดียวไม่ได้สร้าง Trace ให้อัตโนมัติ และการเปิด Telemetry อย่างเดียวก็อาจส่งข้อมูลไม่สำเร็จหากไม่มีสิทธิ์</p>
+<h3 id="section-6">4:49–5:22 — Deploy Agent พร้อมค่าตั้งค่าใหม่</h3>
+<p>หลังเปลี่ยน Environment Variables และเพิ่มสิทธิ์แล้ว ผู้บรรยาย Deploy Agent อีกครั้งด้วยคำสั่งจาก README</p>
+<p>ใช้โหมด <strong>Interactive</strong> เพื่อให้ CLI แสดงคำถามและตรวจสอบ Project กับค่าที่เกี่ยวข้องก่อนดำเนินการ ผู้บรรยายระบุว่าอาจใช้เวลาประมาณห้านาที ซึ่งเป็นเวลาโดยประมาณของตัวอย่าง</p>
+<p>สิ่งสำคัญคือค่าที่แก้ต้องถูกส่งไปยัง <strong>สภาพแวดล้อมของ Agent บนคลาวด์จริง</strong> การแก้ไฟล์บนเครื่องเพียงอย่างเดียวไม่ได้ยืนยันว่า Runtime ที่ Deploy อยู่ได้รับค่าใหม่แล้ว</p>
+<h3 id="section-7">5:23–6:13 — สร้างคำขอทดสอบ</h3>
+<p>เมื่อ Deploy สำเร็จ ผู้บรรยายเปิดลิงก์ Console เลือก Website Generator แล้วเข้า Playground คำขอทดสอบมีใจความว่า:</p>
+<blockquote>
+<p>สร้าง Landing Page สำหรับบริษัทที่ขายเครื่องชงกาแฟคุณภาพสูง มีปุ่ม Call to Action ให้ผู้สนใจกรอกอีเมลและเข้าร่วมรายชื่อรอสำหรับเครื่องรุ่นใหม่ พร้อมเพิ่มรายละเอียดที่เหมาะสม</p>
+</blockquote>
+<p>เป้าหมายของการทดสอบครั้งนี้มีสองด้าน:</p>
+<ol>
+<li>ตรวจว่า Agent ยังสร้างและ Deploy เว็บไซต์ได้</li>
+<li>ตรวจว่าเกิดข้อมูล Events และ Traces ให้ดูหรือไม่</li>
+</ol>
+<p>การมีช่องกรอกอีเมลบนหน้าเว็บยังไม่ได้ยืนยันว่ามีระบบบันทึกอีเมลจริง เพราะคลิปไม่ได้สาธิต Backend หรือการจัดเก็บข้อมูลของ Waitlist</p>
+<h3 id="section-8">6:14–7:01 — ดู Trace ระหว่างทำงานและเปิดเว็บไซต์</h3>
+<p>ระหว่าง Agent ทำงาน ผู้บรรยายเปิดแท็บ Traces และเริ่มเห็นข้อมูลของคำขอปรากฏ</p>
+<p>Agent เรียกเครื่องมือ <strong>Unified Deploy Tool</strong> จากบทก่อน จากนั้นรายงานว่า Deploy เว็บไซต์สำเร็จและส่ง URL กลับมา</p>
+<p>ผู้บรรยายเปิดเว็บไซต์ตัวอย่าง ซึ่งมีชื่อแบรนด์ที่ Agent สร้างให้ ปุ่ม CTA สำหรับจองสิทธิ์หรือเข้าร่วมรายชื่อรอ ภาพกาแฟ และข้อมูลคุณสมบัติของสินค้า</p>
+<p>ในบริบทของบทนี้ เว็บไซต์ทำหน้าที่เป็นงานตัวอย่างที่ใช้สร้างข้อมูลติดตามการทำงาน ไม่ใช่เป้าหมายหลักของการสอน</p>
+<h3 id="section-9">7:02–7:33 — ดู Metrics บน Dashboard</h3>
+<p>ผู้บรรยายเปิด Dashboard และ Refresh เพื่อดูค่าจากการทดสอบ ค่าที่ปรากฏตามคลิปคือ:</p>
+<div class="table-wrap" role="region" aria-label="ตารางประกอบบทเรียน" tabindex="0"><table><thead>
+<tr>
+  <th>Metric</th>
+  <th>ค่าที่แสดง</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+  <td>Sessions</td>
+  <td>1</td>
+</tr>
+<tr>
+  <td>Average Turns per Session</td>
+  <td>1</td>
+</tr>
+<tr>
+  <td>Agent Invocations</td>
+  <td>3</td>
+</tr>
+</tbody>
+</table></div>
+<p>จุดที่น่าสนใจคือ <strong>ผู้ใช้ส่งคำขอหนึ่งครั้ง แต่จำนวน Agent Invocations อาจมากกว่าหนึ่ง</strong></p>
+<p>ไม่ควรตีความทันทีว่า Agent ทำงานซ้ำผิดพลาด เพราะตัวนับอาจรวมการเรียกภายในตามนิยามของแพลตฟอร์ม ต้องดูรายละเอียด Metric และ Trace ประกอบ</p>
+<p>ในทำนองเดียวกัน จำนวน Session จำนวน Turn จำนวน Agent Invocation และจำนวน Model Call เป็นคนละหน่วย และไม่จำเป็นต้องมีค่าเท่ากัน</p>
+<p>Dashboard เหมาะสำหรับดูภาพรวม ส่วนการหาว่าแต่ละคำขอเกิดอะไรขึ้นต้องลงไปดู Trace</p>
+<h3 id="section-10">7:34–8:32 — เปิด Trace เพื่อดูลำดับการทำงาน</h3>
+<p>หน้าที่ผู้บรรยายใช้มีทั้ง:</p>
+<ul>
+<li><strong>Session View</strong> — ดูการสนทนา</li>
+<li><strong>Trace View</strong> — ดูข้อมูลการประมวลผลที่เกี่ยวข้อง</li>
+</ul>
+<p>Session หนึ่งอาจมีหลาย Trace ได้ ขึ้นกับการแบ่งคำขอและการเก็บข้อมูลของระบบ เมื่อเปิด Trace จะเห็นกราฟขั้นตอนตั้งแต่เริ่มจนจบ เช่น:</p>
+<ol>
+<li>เริ่ม Workflow ของ Website Generator</li>
+<li>เรียกโมเดลภาษา</li>
+<li>โมเดลสร้างเนื้อหา</li>
+<li>เรียก Unified Deploy Tool</li>
+<li>ประมวลผลต่อจนได้ผลลัพธ์</li>
+</ol>
+<p>ชื่อเหตุการณ์ที่กล่าวถึงมีลักษณะเช่น:</p>
+<pre><code class="language-text">invoke_workflow
+call_llm
+generate_content
+execute_tool
+</code></pre>
+<p>ชื่อจริงขึ้นกับ Instrumentation และเวอร์ชันที่ใช้ ข้อความถอดเสียงมีชื่อโมเดลที่อาจคลาดเคลื่อน จึงควรดู Model ID จากข้อมูลจริงใน Trace หากต้องการตรวจว่า Agent ใช้โมเดลใด</p>
+<p>ขั้นตอนย่อยที่บันทึกใน Trace มักเรียกว่า <strong>Span</strong> แต่ละ Span สามารถมีเวลา สถานะ และ Attributes ของตนเองได้</p>
+<h3 id="section-11">8:33–9:17 — ตรวจรายละเอียดเพื่อหาคอขวด</h3>
+<p>ผู้บรรยายคลิกเหตุการณ์แต่ละรายการเพื่อดูข้อมูล เช่น:</p>
+<ul>
+<li>ระยะเวลาประมวลผล</li>
+<li>ชื่อ Operation</li>
+<li>Tool Call ID</li>
+<li>คำอธิบายเครื่องมือ</li>
+<li>Attributes ที่เกี่ยวข้อง</li>
+</ul>
+<p>มีตัวเลือกกรองแสดงเฉพาะ <strong>GenAI Attributes</strong> เพื่อช่วยดูข้อมูลด้านการเรียกโมเดลและ Agent ได้สะดวกขึ้น</p>
+<p>ในตัวอย่าง เหตุการณ์เรียกเครื่องมือแสดงว่าใช้เวลาประมาณ:</p>
+<blockquote>
+<p><strong>9.9 วินาที หรือ 4.7% ของเวลารวมตามที่หน้าจอคำนวณ</strong></p>
+</blockquote>
+<p>ข้อมูลนี้ช่วยให้ตั้งคำถามได้ว่า:</p>
+<ul>
+<li>เวลาส่วนใหญ่หมดกับการสร้างเนื้อหาหรือไม่</li>
+<li>การ Deploy เป็นคอขวดจริงหรือไม่</li>
+<li>มีการเรียกโมเดลหลายรอบเกินจำเป็นหรือไม่</li>
+<li>มีขั้นตอนใดผิดจากที่ออกแบบไว้หรือไม่</li>
+</ul>
+<p>แต่ต้องระวังการอ่านเวลา เพราะ Span อาจซ้อนกันหรือทำงานขนานกันได้ <strong>จึงไม่ควรนำระยะเวลาทุก Span มาบวกตรง ๆ แล้วถือเป็นเวลารวม</strong></p>
+<p>การเห็น Workflow ชื่อเดียวกันมากกว่าหนึ่งรายการก็ยังไม่ยืนยันว่ามีงานซ้ำ ต้องดูโครงสร้าง Parent–Child และรายละเอียดก่อน</p>
+<p>Trace ช่วยตรวจเส้นทางการทำงานได้ แต่การตัดสินว่าเนื้อหาหรือผลลัพธ์ “ถูกต้อง” ยังต้องใช้เกณฑ์ประเมินเพิ่มเติม</p>
+<h3 id="section-12">9:18–9:39 — จบบท</h3>
+<p>ผู้บรรยายสรุปว่า Traces ช่วยให้เห็นเหตุการณ์ที่เกิดขึ้นระหว่าง Agent ประมวลผลคำขอ และเป็นส่วนสำคัญของ Observability</p>
+<p>ข้อมูลเหล่านี้เป็นพื้นฐานสำหรับการปรับปรุง Agent เพราะทำให้เริ่มระบุได้ว่าปัญหาเกิดที่ขั้นตอนไหน แทนการดูเพียงคำตอบสุดท้าย</p>
+<h2 id="summary">สรุปท้ายเรื่อง</h2>
+<p>บทนี้เปิดความสามารถให้ <strong>มองเห็นการทำงานของ Agent ที่ Deploy แล้ว</strong> โดยทำสามส่วนหลัก:</p>
+<p><strong>ตั้งค่า Telemetry → เพิ่มสิทธิ์เขียน Logs และ Traces → Deploy แล้วส่งคำขอทดสอบ</strong></p>
+<p>จากนั้นใช้หน้าต่างต่าง ๆ ให้เหมาะกับคำถาม:</p>
+<div class="table-wrap" role="region" aria-label="ตารางประกอบบทเรียน" tabindex="0"><table><thead>
+<tr>
+  <th>ต้องการรู้อะไร</th>
+  <th>ดูจาก</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+  <td>มีการใช้งานมากน้อยแค่ไหน</td>
+  <td>Metrics และ Dashboard</td>
+</tr>
+<tr>
+  <td>ระบบบันทึกเหตุการณ์หรือข้อผิดพลาดอะไร</td>
+  <td>Logs</td>
+</tr>
+<tr>
+  <td>คำขอนี้ผ่านขั้นตอนใดและช้าตรงไหน</td>
+  <td>Traces</td>
+</tr>
+<tr>
+  <td>ผลลัพธ์ตอบโจทย์และถูกต้องหรือไม่</td>
+  <td>การประเมินผลเพิ่มเติม</td>
+</tr>
+</tbody>
+</table></div>
+<p>สิ่งที่ควรจำมากที่สุด:</p>
+<ol>
+<li><strong>Trace แสดงขั้นตอนที่บันทึกได้ ไม่ใช่ความคิดภายในทั้งหมดของโมเดล</strong></li>
+<li><strong>การตั้งค่าและสิทธิ์ต้องครบทั้งคู่</strong> จึงจะส่งข้อมูลติดตามได้</li>
+<li><strong>หนึ่งข้อความจากผู้ใช้อาจมีหลายการเรียกภายใน</strong> ต้องอ่าน Metric ตามนิยามของระบบ</li>
+<li><strong>เปิด Trace ยังไม่เท่ากับปรับปรุงสำเร็จ</strong> ต้องใช้ข้อมูลหาคอขวด แก้ไข แล้ววัดผลอีกครั้ง</li>
+</ol>
+<p>เมื่อเชื่อมทั้งคอร์ส ตอนนี้ระบบตัวอย่างมีครบตั้งแต่ <strong>สร้าง Agent → Deploy → กำหนดสิทธิ์และตรวจข้อความ → ติดตามการทำงาน</strong> ส่วนบทนี้ยังไม่ได้สาธิตการประเมินคุณภาพคำตอบแบบ Evaluation Set หรือ LLM as a Judge</p>
+<nav class="pager" aria-label="เปลี่ยนบท"><a href="05-security.html">← บทก่อนหน้า</a><a href="index.html">กลับสารบัญ →</a></nav></main></div><footer>เรียบเรียงภาษาไทยจากข้อความถอดเสียงที่ผู้ใช้ส่งมา · เนื้อหาสำหรับทบทวนและอ้างอิง</footer></body></html>

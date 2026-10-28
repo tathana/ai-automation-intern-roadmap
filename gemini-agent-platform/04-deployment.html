@@ -1,0 +1,364 @@
+<!doctype html>
+<html lang="th"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<meta name="description" content="บทที่ 4: Deploy ตัว Agent ขึ้นคลาวด์ — เนื้อหาละเอียดตามเวลาและสรุปท้ายเรื่อง"><title>Deploy ตัว Agent ขึ้นคลาวด์ | AI & Automation Knowledge</title>
+<link rel="stylesheet" href="style.css"></head><body>
+<a class="skip" href="#main">ข้ามไปเนื้อหา</a>
+<header class="topbar"><a href="../index.html">← คลังความรู้หลัก</a><a href="index.html">Gemini Agent Platform · 6 บท</a></header>
+<div class="reader-layout"><aside><details open><summary>บทเรียนทั้ง 6 คลิป</summary><nav aria-label="บทเรียน"><a href="01-overview.html" >01 · ภาพรวมแพลตฟอร์ม</a><a href="02-setup.html" >02 · เตรียมเครื่องและสร้าง Agent ตัวแรก</a><a href="03-website-agent.html" >03 · สร้างและ Deploy เว็บไซต์ด้วย Agent</a><a href="04-deployment.html" aria-current=page>04 · Deploy ตัว Agent ขึ้นคลาวด์</a><a href="05-security.html" >05 · เพิ่มความปลอดภัยด้วย Model Armor</a><a href="06-observability.html" >06 · Observability และ Traces</a></nav></details>
+    <details class="toc" open><summary>สารบัญบทนี้</summary><nav aria-label="หัวข้อในบท"><a class="depth-2" href="#section-1">เนื้อหาแบบละเอียด</a><a class="depth-3" href="#section-2">0:00–3:21 — ทางเลือกในการ Deploy Agent มีอะไรบ้าง</a><a class="depth-3" href="#section-3">3:22–4:21 — แผน Deploy สี่ขั้นตอน</a><a class="depth-3" href="#section-4">4:22–8:17 — ขั้นที่ 1: ทำความเข้าใจ Manifest</a><a class="depth-3" href="#section-5">8:18–11:09 — ขั้นที่ 2: สร้างตัวตนและกำหนดสิทธิ์</a><a class="depth-3" href="#section-6">11:10–12:47 — ขั้นที่ 3: Deploy ไปยัง Agent Runtime</a><a class="depth-3" href="#section-7">12:48–13:45 — ขั้นที่ 4: ตรวจสอบและทดสอบบนคลาวด์</a><a class="depth-3" href="#section-8">13:46–15:26 — ทำไมต้องเปลี่ยนเป็น Unified Deploy Tool</a><a class="depth-3" href="#section-9">15:27–16:31 — Unified Tool: ใช้ตัวตนของ Runtime เรียก API</a><a class="depth-3" href="#section-10">16:32–17:06 — เตรียมเนื้อหาและ Hash ก่อนอัปโหลด</a><a class="depth-3" href="#section-11">17:07–18:20 — ลำดับ Deploy ผ่าน Firebase Hosting REST API</a><a class="depth-3" href="#section-12">18:21–18:53 — ขอบเขตของตัวอย่างและจบบท</a><a class="depth-2" href="#summary">สรุปท้ายเรื่อง</a></nav></details></aside>
+    <main id="main" class="article"><div class="eyebrow">บทที่ 04 / 06 · คลิป 18:53 นาที</div>
+    <div class="reading-actions"><a href="#summary">ข้ามไปสรุปท้ายเรื่อง ↓</a><a href="04-deployment.md" download>ดาวน์โหลด Markdown</a><button type="button" onclick="window.print()">พิมพ์ / บันทึก PDF</button></div>
+    <h1>บทที่ 4 — Deploy ตัว Agent ขึ้นคลาวด์</h1>
+<p>บทนี้พาจาก <strong>Agent ที่รันบนเครื่อง ไปสู่ Agent ที่รันบนคลาวด์</strong> และปรับเครื่องมือสร้างเว็บไซต์ให้เหมาะกับสภาพแวดล้อมนั้น</p>
+<p>ต่างจากบทก่อนที่นำเฉพาะเว็บไซต์ขึ้น Firebase Hosting บทนี้ <strong>Deploy ตัว Agent ด้วย</strong> จากนั้นทดสอบสั่งให้ Agent บนคลาวด์สร้างและเผยแพร่เว็บไซต์อีกทอดหนึ่ง</p>
+<p>เนื้อหาอ้างอิงจากข้อความถอดเสียง ชื่อฟิลด์ คำสั่ง และพฤติกรรมบริการบางส่วนยังต้องตรวจเทียบกับโค้ดหรือเอกสารจริงก่อนนำไปใช้</p>
+<h2 id="section-1">เนื้อหาแบบละเอียด</h2>
+<h3 id="section-2">0:00–3:21 — ทางเลือกในการ Deploy Agent มีอะไรบ้าง</h3>
+<p>ผู้บรรยายเริ่มจากสถานการณ์ที่ Agent ทำงานบนเครื่องได้แล้ว เช่น สร้างเว็บไซต์ บันทึกไฟล์ และนำเว็บไซต์ขึ้น Hosting ได้ แต่หากต้องการให้คนอื่นเรียกใช้งานโดยไม่ต้องพึ่งเครื่องของผู้พัฒนา ก็ต้องนำตัว Agent ขึ้นคลาวด์</p>
+<p>ในคลิปแบ่งทางเลือกหลักเป็นสามกลุ่ม:</p>
+<div class="table-wrap" role="region" aria-label="ตารางประกอบบทเรียน" tabindex="0"><table><thead>
+<tr>
+  <th>ทางเลือก</th>
+  <th>แนวคิด</th>
+  <th>ตัวอย่างที่กล่าวถึง</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+  <td><strong>Compute</strong></td>
+  <td>เตรียมทรัพยากรประมวลผลและดูแลสภาพแวดล้อมเองมากขึ้น</td>
+  <td>เครื่องประมวลผลบนคลาวด์</td>
+</tr>
+<tr>
+  <td><strong>Serverless</strong></td>
+  <td>นำแอปไปรันบนบริการที่จัดการโครงสร้างพื้นฐานให้</td>
+  <td>Google Cloud Run</td>
+</tr>
+<tr>
+  <td><strong>Managed Agent Runtime</strong></td>
+  <td>ใช้บริการที่ออกแบบมารองรับการรัน Agent โดยเฉพาะ</td>
+  <td>Google Agent Runtime ตามชื่อในคลิป</td>
+</tr>
+</tbody>
+</table></div>
+<p>การแบ่งนี้เป็นกรอบอธิบายเพื่อให้เริ่มเข้าใจง่าย แต่กลุ่มต่าง ๆ อาจทับซ้อนกันได้ เช่น Managed Runtime อาจใช้โครงสร้างพื้นฐานแบบ Serverless อยู่เบื้องหลัง</p>
+<p>ผู้บรรยายเน้นว่า การเลือกวิธี Deploy ส่งผลต่อ:</p>
+<ul>
+<li><strong>Latency</strong> — ระยะเวลารอผลลัพธ์</li>
+<li><strong>Cost</strong> — ค่าใช้จ่าย</li>
+<li><strong>Security</strong> — การควบคุมสิทธิ์และความปลอดภัย</li>
+<li><strong>Scaling</strong> — การรองรับปริมาณงานที่เพิ่มขึ้น</li>
+</ul>
+<p>แม้ชื่อบทเปิดด้วยสามทางเลือก แต่เนื้อหาส่วนใหญ่จะสาธิต <strong>Managed Agent Runtime</strong> ไม่ได้เปรียบเทียบ Compute และ Cloud Run อย่างละเอียด ช่วงท้ายของส่วนนี้เป็นการแนะนำช่องและคอร์สประกอบ ไม่มีขั้นตอนทางเทคนิคเพิ่มเติม</p>
+<h3 id="section-3">3:22–4:21 — แผน Deploy สี่ขั้นตอน</h3>
+<p>ผู้บรรยายวางกระบวนการไว้ดังนี้:</p>
+<ol>
+<li><strong>ทำความเข้าใจ Manifest</strong> — ตรวจไฟล์ตั้งค่าที่ CLI ใช้อ่านข้อมูลโปรเจกต์และเป้าหมายการ Deploy</li>
+<li><strong>กำหนดตัวตนและสิทธิ์ของ Agent</strong> — สร้าง Service Account และให้สิทธิ์ที่จำเป็น</li>
+<li><strong>Deploy ไปยัง Agent Runtime</strong> — ใช้ Manifest ร่วมกับ Service Account</li>
+<li><strong>ทดสอบจาก Google Cloud Console</strong> — เปิด Playground ของ Agent ที่ Deploy แล้ว และสั่งงานจริง</li>
+</ol>
+<p>หัวใจคือ ต้องเตรียมให้ครบทั้ง <strong>โค้ด การตั้งค่า และสิทธิ์ของตัวตนที่ใช้รัน</strong></p>
+<h3 id="section-4">4:22–8:17 — ขั้นที่ 1: ทำความเข้าใจ Manifest</h3>
+<p>Manifest เป็นไฟล์ตั้งค่าที่ CLI สร้างไว้ตั้งแต่ตอนสร้างโครงโปรเจกต์ Website Generator ในบทก่อน</p>
+<p>ข้อความถอดเสียงสะกดชื่อไฟล์ไม่สม่ำเสมอ จึงควรดูชื่อจริงในโปรเจกต์ โดยเป็นไฟล์ Manifest รูปแบบ YAML ของ Agents CLI</p>
+<div class="table-wrap" role="region" aria-label="ตารางประกอบบทเรียน" tabindex="0"><table><thead>
+<tr>
+  <th>ฟิลด์หรือรายการ</th>
+  <th>ความหมายตามคลิป</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+  <td><strong>Name</strong></td>
+  <td>ชื่อโปรเจกต์ Agent เช่น Website Generator</td>
+</tr>
+<tr>
+  <td><strong>CLI Version</strong></td>
+  <td>เวอร์ชัน CLI ที่ใช้สร้างโครงโปรเจกต์</td>
+</tr>
+<tr>
+  <td><strong>Agent Directory</strong></td>
+  <td>ตำแหน่งโค้ด Agent เช่นโฟลเดอร์ <code>app</code></td>
+</tr>
+<tr>
+  <td><strong>Region</strong></td>
+  <td>ภูมิภาคที่จะนำระบบขึ้นใช้งาน</td>
+</tr>
+<tr>
+  <td><strong>Base Template</strong></td>
+  <td>แม่แบบเริ่มต้น เช่น ADK</td>
+</tr>
+<tr>
+  <td><strong>Generated At</strong></td>
+  <td>วันเวลาที่สร้างโปรเจกต์</td>
+</tr>
+<tr>
+  <td><strong>Language</strong></td>
+  <td>ภาษาหลักของโปรเจกต์ เช่น Python</td>
+</tr>
+<tr>
+  <td><strong>Create Params</strong></td>
+  <td>ตัวเลือกที่ใช้ตอนสร้างโครงโปรเจกต์</td>
+</tr>
+</tbody>
+</table></div>
+<p><strong>Name และ CLI Version</strong></p>
+<p>ชื่อโปรเจกต์ใช้เป็นตัวระบุเริ่มต้นในขั้นตอน Deploy หรือการลงทะเบียนบางส่วน ส่วนเวอร์ชัน CLI เป็นข้อมูลอ้างอิงว่าตอนสร้างโปรเจกต์ใช้เครื่องมือเวอร์ชันใด ช่วยในการตรวจสอบความเข้ากันได้ แต่ไม่ได้รับประกันว่า CLI ทุกเวอร์ชันในอนาคตจะทำงานร่วมกันได้เสมอ</p>
+<p><strong>Agent Directory</strong></p>
+<p>เป็นตำแหน่งโค้ดเมื่อเทียบจากโฟลเดอร์โปรเจกต์ ในตัวอย่างคือ <code>app</code> ซึ่งมีไฟล์นิยาม Agent อยู่ภายใน</p>
+<p><strong>Region</strong></p>
+<p>ในตัวอย่างเดิมมีค่า <code>us-east1</code> และผู้บรรยายเปลี่ยนเป็น <code>asia-south1</code> เพราะมีทรัพยากรอื่นอยู่ในภูมิภาคนั้นแล้ว แนวคิดคือเลือกตำแหน่งให้สอดคล้องกับระบบที่เกี่ยวข้อง แต่เมื่อใช้งานจริงยังต้องตรวจด้วยว่า Runtime และโมเดลที่ต้องการรองรับ Region นั้นหรือไม่</p>
+<p><strong>Base Template และ Language</strong></p>
+<p>ระบุว่าโปรเจกต์เริ่มจากแม่แบบ ADK และใช้ Python เป็นภาษาหลัก</p>
+<p><strong>Deployment Target</strong></p>
+<p>ในตัวอย่างเลือก Agent Runtime ผู้บรรยายกล่าวถึง Cloud Run และ GKE เป็นทางเลือกอื่นด้วย แต่ไม่ได้สาธิตในบทนี้</p>
+<p><strong>Session Type</strong></p>
+<p>ค่าเดิมเป็น <code>none</code> และผู้บรรยายเปลี่ยนเป็นค่าที่เรียกในเสียงประมาณ “in-core memory” ซึ่งอาจหมายถึงการเก็บ Session ในหน่วยความจำ ต้องตรวจชื่อค่าที่ CLI รองรับจริงจากไฟล์หรือเอกสารประกอบ</p>
+<p>สิ่งที่ควรเข้าใจคือ:</p>
+<ul>
+<li>การไม่ตั้งที่เก็บ Session ไม่ได้แปลว่าทุก Runtime จะจัดการประวัติเหมือนกัน</li>
+<li>การเก็บในหน่วยความจำไม่ใช่ความจำถาวร</li>
+<li>หากมีหลาย Instance แต่ละ Instance อาจไม่ได้ใช้ข้อมูลในหน่วยความจำร่วมกัน</li>
+</ul>
+<p>อีกทั้งในคลิปภายหลังมีหน้าประวัติ Sessions ของบริการ จึงต้องแยกการตั้งค่า Session ของแอปออกจากความสามารถที่ Runtime จัดการให้</p>
+<p><strong>CI/CD Runner</strong></p>
+<p>ตัวอย่างข้ามการตั้งค่าระบบ Deploy อัตโนมัติไว้ก่อน</p>
+<p><strong>A2A</strong></p>
+<p>ผู้บรรยายอธิบายว่าค่าเปิดใช้งานเกี่ยวข้องกับการเปิด Endpoint สำหรับการสื่อสารระหว่าง Agent ผ่านโปรโตคอล A2A อย่างไรก็ตาม รายละเอียดว่า Endpoint ใดถูกสร้างและเข้าถึงได้อย่างไรขึ้นกับแม่แบบและ Runtime ที่ใช้ ไม่ได้หมายความว่าจะเปิดสาธารณะโดยไม่มีการควบคุมสิทธิ์</p>
+<p><strong>Agent Gateway</strong></p>
+<p>ในตัวอย่างเป็น <code>false</code> ผู้บรรยายอธิบายว่าไม่ได้วาง Agent ไว้หลัง Gateway กลางสำหรับงานอย่างการส่งต่อคำขอหรือบังคับใช้นโยบาย</p>
+<p><strong>Agent Guidance File</strong></p>
+<p>กล่าวถึงไฟล์ Markdown สำหรับแนวทางการทำงาน โดยข้อความถอดเสียงมีชื่อคล้าย <code>GEMINI.md</code> ต้องตรวจการใช้งานจริงของ CLI ด้วย เพราะไฟล์แนวทางสำหรับเครื่องมือพัฒนาไม่ได้กลายเป็น Instructions ของ Agent ที่รันจริงโดยอัตโนมัติเสมอไป</p>
+<h3 id="section-5">8:18–11:09 — ขั้นที่ 2: สร้างตัวตนและกำหนดสิทธิ์</h3>
+<p>ผู้บรรยายใช้ <strong>Service Account</strong> เป็นตัวตนของ Agent ที่รันบนคลาวด์ เป็นบัญชีสำหรับโปรแกรมหรือระบบ เพื่อให้บริการรู้ว่าคำขอมาจากตัวตนใด และควรได้รับสิทธิ์อะไร</p>
+<p>ลำดับการเตรียมมีดังนี้:</p>
+<ol>
+<li>อ่าน Project ID ที่ตั้งไว้</li>
+<li>กำหนดชื่อ Service Account</li>
+<li>สร้าง Service Account</li>
+<li>เพิ่มบทบาทที่ Agent ต้องใช้</li>
+</ol>
+<p>อีเมลของ Service Account มีรูปแบบ:</p>
+<pre><code class="language-text">SERVICE_ACCOUNT_NAME@PROJECT_ID.iam.gserviceaccount.com
+</code></pre>
+<p>ผู้บรรยายสร้างบัญชีด้วยคำสั่งกลุ่ม:</p>
+<pre><code class="language-bash">gcloud iam service-accounts create ...
+</code></pre>
+<p>โดยใส่ชื่อ คำอธิบาย และชื่อที่แสดงในระบบ</p>
+<div class="table-wrap" role="region" aria-label="ตารางประกอบบทเรียน" tabindex="0"><table><thead>
+<tr>
+  <th>บทบาท</th>
+  <th>ใช้เพื่อ</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+  <td><strong>Vertex AI User — <code>roles/aiplatform.user</code></strong></td>
+  <td>เรียกใช้ความสามารถของ Vertex AI ตามสิทธิ์ของบทบาท</td>
+</tr>
+<tr>
+  <td><strong>Firebase Hosting Admin</strong></td>
+  <td>จัดการการนำเว็บไซต์ขึ้น Firebase Hosting</td>
+</tr>
+</tbody>
+</table></div>
+<p>การกำหนดบทบาททำผ่านคำสั่งกลุ่ม:</p>
+<pre><code class="language-bash">gcloud projects add-iam-policy-binding ...
+</code></pre>
+<p>เมื่อจบขั้นนี้ Agent จะมีตัวตนสำหรับเรียกโมเดลและใช้เครื่องมือ Deploy เว็บไซต์</p>
+<p><strong>ต้องแยกตัวตนสองฝ่าย</strong></p>
+<div class="table-wrap" role="region" aria-label="ตารางประกอบบทเรียน" tabindex="0"><table><thead>
+<tr>
+  <th>ฝ่าย</th>
+  <th>หน้าที่</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+  <td><strong>ผู้สั่ง Deploy</strong></td>
+  <td>สร้างหรืออัปเดตระบบบนคลาวด์</td>
+</tr>
+<tr>
+  <td><strong>Service Account ของ Agent</strong></td>
+  <td>ใช้สิทธิ์ระหว่าง Agent กำลังทำงาน</td>
+</tr>
+</tbody>
+</table></div>
+<p>บทบาทสองรายการข้างต้นเน้นสิทธิ์ระหว่างรัน ส่วนผู้สั่ง Deploy อาจต้องมีสิทธิ์เพิ่มเติม รวมถึงสิทธิ์ใช้ Service Account นั้นด้วย ข้อความไม่ได้แจกแจงสิทธิ์สำหรับกระบวนการ Deploy ครบทุกส่วน</p>
+<p>การสร้าง Service Account เพียงอย่างเดียวยังไม่ทำให้ Agent ใช้มันทันที ต้องระบุผูกกับ Runtime ในขั้นต่อไป</p>
+<h3 id="section-6">11:10–12:47 — ขั้นที่ 3: Deploy ไปยัง Agent Runtime</h3>
+<p>ผู้บรรยายใช้คำสั่ง Deploy ของ Agents CLI พร้อมระบุ Service Account ที่จะใช้เป็นตัวตนของ Agent, Google Cloud Project เป้าหมาย และโหมด Interactive</p>
+<p>ข้อความไม่ได้แสดงชื่อคำสั่งและแฟล็กทั้งหมดชัดเจน จึงยังเขียนคำสั่งพร้อมรันให้ตรงกับ CLI นี้ไม่ได้</p>
+<p><strong>โหมด Interactive ทำอะไร</strong></p>
+<p>CLI จะถามข้อมูลหรือขอให้ตรวจสอบก่อนดำเนินการ เช่น ยืนยันว่าจะ Deploy ไปยัง Project ที่แสดงหรือไม่ หน้าจอแสดงข้อมูลประกอบ ได้แก่:</p>
+<ul>
+<li>Project</li>
+<li>Location หรือ Region</li>
+<li>จำนวน Instance ต่ำสุดและสูงสุด</li>
+<li>Environment Variables</li>
+<li>สถานะการสร้าง Agent</li>
+</ul>
+<p>ผู้บรรยายระบุว่าในประสบการณ์ของตน ใช้เวลาประมาณ <strong>5–10 นาที</strong> ซึ่งเป็นเวลาของตัวอย่าง ไม่ใช่เวลาที่รับประกันสำหรับทุกครั้ง</p>
+<p>หาก Terminal ถูกยกเลิกหรือหลุดระหว่างทาง สามารถใช้คำสั่งตรวจสถานะที่ CLI แสดงไว้ได้ การหยุดรอใน Terminal ไม่ได้แปลว่างานฝั่งคลาวด์ถูกยกเลิกเสมอไป</p>
+<h3 id="section-7">12:48–13:45 — ขั้นที่ 4: ตรวจสอบและทดสอบบนคลาวด์</h3>
+<p>เมื่อ Deploy สำเร็จ CLI แสดงลิงก์ไปยัง Google Cloud Console ผู้บรรยายเปิดหน้ารายการ Deployments แล้วเลือก Website Generator ที่เพิ่งสร้าง จากนั้นตรวจสอบ:</p>
+<ul>
+<li><strong>Identity</strong> — ตัวตนที่ Runtime ใช้</li>
+<li><strong>Resource</strong> — ข้อมูลระบุทรัพยากร</li>
+<li><strong>Agent Runtime ID</strong> — ตัวระบุ Agent สำหรับใช้อ้างอิงกับระบบอื่น</li>
+</ul>
+<p>ตัวระบุแบบเต็มเริ่มด้วยเส้นทางลักษณะ <code>projects/...</code> แต่ข้อความไม่ได้ให้รูปแบบทั้งหมด จึงไม่ควรเดาต่อจากส่วนที่ขาด</p>
+<p>จากนั้นเปิด Playground บนคลาวด์ แล้วส่งคำขอประมาณว่า:</p>
+<blockquote>
+<p>สร้างหน้า Hello World แบบง่าย และ Deploy ด้วย Unified Deploy Tool</p>
+</blockquote>
+<p>จุดนี้เป็นการทดสอบ <strong>Agent ที่รันอยู่บนคลาวด์แล้ว</strong> ต่างจาก Playground บนเครื่องในบทก่อน</p>
+<h3 id="section-8">13:46–15:26 — ทำไมต้องเปลี่ยนเป็น Unified Deploy Tool</h3>
+<p>บทก่อนแยกเครื่องมือเป็นสองขั้น คือบันทึกไฟล์เว็บไซต์ แล้วอ่านไฟล์นั้นเพื่อ Deploy</p>
+<p>เมื่อย้ายขึ้นสภาพแวดล้อมที่อาจมีหลาย Instance การอาศัยไฟล์ชั่วคราวร่วมกันระหว่างสอง Tool Calls อาจมีปัญหา เช่น:</p>
+<ul>
+<li>การเรียกครั้งถัดไปไปรันคนละ Instance</li>
+<li>Instance เดิมถูกรีสตาร์ต</li>
+<li>ไฟล์ชั่วคราวไม่พร้อมใช้งานแล้ว</li>
+</ul>
+<p>ไม่ได้หมายความว่าไฟล์จะหายทุกครั้ง แต่หมายถึง <strong>ไม่ควรสมมติว่าไฟล์ในเครื่องจะพร้อมให้ Tool Call ถัดไปเสมอ</strong></p>
+<p>ผู้บรรยายจึงรวมงานเป็นเครื่องมือเดียว:</p>
+<p><strong>รับ HTML → เตรียมข้อมูลหรือไฟล์ → Deploy → คืน URL</strong></p>
+<p>การทำให้อยู่ภายในการเรียกฟังก์ชันเดียวช่วยลดการพึ่งพาสถานะข้าม Tool Calls แต่ไม่ได้ทำให้กระบวนการทั้งหมดกลายเป็นธุรกรรมที่สำเร็จหรือยกเลิกพร้อมกัน หากล้มเหลวกลางทางก็ยังต้องจัดการข้อผิดพลาด</p>
+<p>ในตัวอย่าง Agent สร้างหน้า Hello World และส่ง URL ของ Firebase Hosting Preview Channel กลับมาได้ ผู้บรรยายเปิดดูหน้าเว็บซึ่งมีปุ่มแสดงเอฟเฟกต์และตัวเลือกภาษา นอกจากนี้ยังแสดงหน้าประวัติ Sessions ของ Agent ที่ Deploy แล้ว</p>
+<h3 id="section-9">15:27–16:31 — Unified Tool: ใช้ตัวตนของ Runtime เรียก API</h3>
+<p>การเปลี่ยนแปลงสำคัญอีกอย่างคือ จากเดิมที่ใช้ Firebase CLI มาเป็นการเรียก <strong>Firebase Hosting REST API โดยตรง</strong></p>
+<p>ผู้บรรยายระบุว่า แนวทางนี้ช่วยหลีกเลี่ยงความยุ่งยากในการ Login แบบเปิดเบราว์เซอร์บนสภาพแวดล้อมที่ไม่มีหน้าจอให้ผู้ใช้โต้ตอบ ขั้นตอนโดยแนวคิดคือ:</p>
+<ol>
+<li>อ่าน Project ID จาก Environment Variable</li>
+<li>ขอข้อมูลรับรองของ Service Account ที่ผูกกับ Runtime</li>
+<li>ขอ OAuth Access Token</li>
+<li>แนบ Token ใน Authorization Header เพื่อเรียก API</li>
+</ol>
+<pre><code class="language-http">Authorization: Bearer ACCESS_TOKEN
+</code></pre>
+<p>ในสภาพแวดล้อม Google Cloud ที่รองรับ ตัวไลบรารีสามารถรับข้อมูลรับรองผ่าน Metadata Server ของระบบได้ จึงไม่จำเป็นต้องนำไฟล์กุญแจ Service Account มาใส่ในโค้ด</p>
+<p>สิทธิ์ที่ Token ใช้งานได้ยังขึ้นกับ Service Account และนโยบายที่กำหนดไว้ การมี Token ไม่ได้ทำให้ข้ามข้อจำกัด IAM ได้</p>
+<p>ทั้งนี้ Firebase CLI สามารถทำงานแบบไม่โต้ตอบได้ในบางการตั้งค่าเช่นกัน การใช้ REST API เป็นทางเลือกที่ผู้บรรยายเลือกสำหรับตัวอย่างนี้</p>
+<h3 id="section-10">16:32–17:06 — เตรียมเนื้อหาและ Hash ก่อนอัปโหลด</h3>
+<p>ก่อนส่งเว็บไซต์ขึ้น Firebase Hosting เครื่องมือต้องเตรียม:</p>
+<ul>
+<li>เนื้อหา HTML ในรูป Bytes</li>
+<li>ข้อมูลที่บีบอัดด้วย gzip</li>
+<li>ค่า <strong>SHA-256 Hash</strong> ตามข้อกำหนด API</li>
+</ul>
+<p>Hash ทำหน้าที่เป็นลายนิ้วมือของเนื้อหา เพื่อให้ Firebase ตรวจได้ว่ามีข้อมูลชุดนั้นอยู่แล้วหรือจำเป็นต้องอัปโหลดใหม่</p>
+<p>รายละเอียดว่าคำนวณ Hash จากข้อมูลขั้นใดและอัปโหลดในรูปแบบใดต้องทำตามข้อกำหนดของ Hosting API ให้ตรงกัน ข้อความนี้ยังไม่มีโค้ดครบสำหรับตรวจสอบ ประโยชน์คือระบบสามารถหลีกเลี่ยงการอัปโหลดเนื้อหาที่มีอยู่แล้วได้</p>
+<h3 id="section-11">17:07–18:20 — ลำดับ Deploy ผ่าน Firebase Hosting REST API</h3>
+<div class="table-wrap" role="region" aria-label="ตารางประกอบบทเรียน" tabindex="0"><table><thead>
+<tr>
+  <th>ขั้น</th>
+  <th>การทำงาน</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+  <td><strong>1. สร้าง Version</strong></td>
+  <td>สร้างชุดข้อมูลเว็บไซต์ที่จะเผยแพร่</td>
+</tr>
+<tr>
+  <td><strong>2. แจ้งรายการไฟล์และ Hash</strong></td>
+  <td>บอกว่า Version นี้ประกอบด้วยไฟล์อะไรบ้าง</td>
+</tr>
+<tr>
+  <td><strong>3. ตรวจไฟล์ที่ขาด</strong></td>
+  <td>Firebase ส่งกลับว่าต้องอัปโหลดเนื้อหาใด</td>
+</tr>
+<tr>
+  <td><strong>4. อัปโหลด</strong></td>
+  <td>ส่งข้อมูลที่ระบบยังไม่มีไปยัง Upload Endpoint</td>
+</tr>
+<tr>
+  <td><strong>5. Finalize Version</strong></td>
+  <td>ปิดการเตรียม Version ให้พร้อมนำไปเผยแพร่</td>
+</tr>
+<tr>
+  <td><strong>6. เตรียม Preview Channel</strong></td>
+  <td>สร้างหรืออัปเดตช่องทางดูตัวอย่าง</td>
+</tr>
+<tr>
+  <td><strong>7. Release</strong></td>
+  <td>ทำให้ Preview Channel ชี้ไปยัง Version ใหม่</td>
+</tr>
+</tbody>
+</table></div>
+<p><strong>Version กับ Release ต่างกันอย่างไร</strong></p>
+<ul>
+<li><strong>Version</strong> คือชุดเนื้อหาเว็บไซต์ที่เตรียมไว้</li>
+<li><strong>Release</strong> คือการนำ Version นั้นไปใช้กับช่องทางเผยแพร่</li>
+</ul>
+<p>จึงต้องเตรียมและ Finalize เนื้อหา ก่อนนำไป Release</p>
+<p><strong>การตั้งค่า Cache</strong></p>
+<p>ผู้บรรยายกล่าวถึงการตั้ง Cache-Control เป็นศูนย์เพื่อให้เห็นการเปลี่ยนแปลงได้เร็วขึ้น แต่การตั้งค่าอย่าง <code>max-age=0</code> ไม่ได้แปลว่าไม่มีการเก็บ Cache เลย โดยทั่วไปเกี่ยวข้องกับการทำให้ข้อมูลหมดความสดทันทีและต้องตรวจสอบใหม่ รายละเอียดจริงขึ้นกับ Header และพฤติกรรมของ Hosting</p>
+<p><strong>อายุ Preview Channel</strong></p>
+<p>ตัวอย่างระบุ <strong>1,800 วินาที หรือ 30 นาที</strong> และกล่าวถึงการใช้คำขอ <code>PATCH</code> เพื่อปรับ TTL อย่างไรก็ตาม ต้องตรวจสอบข้อกำหนด API ปัจจุบัน ทั้งชื่อฟิลด์ ระยะเวลาที่รองรับ และวิธีสร้าง Channel หากยังไม่มี เพราะคำขออัปเดตไม่ได้สร้างทรัพยากรใหม่ให้อัตโนมัติในทุก API</p>
+<p>หากใช้ชื่อ Channel เดิมซ้ำ การ Release ครั้งใหม่ก็อาจเปลี่ยนเว็บไซต์ที่ URL เดิมกำลังแสดงอยู่</p>
+<h3 id="section-12">18:21–18:53 — ขอบเขตของตัวอย่างและจบบท</h3>
+<p>ผู้บรรยายระบุว่า เป้าหมายของคอร์สคือการเรียนรู้แพลตฟอร์ม Agent ไม่ใช่การสอน Firebase Hosting API แบบครบถ้วน</p>
+<p>โค้ดเครื่องมือ Deploy เป็นตัวอย่างเฉพาะแอปพลิเคชันนี้ และผู้บรรยายใช้ Gemini ช่วยสร้างและทำความเข้าใจโค้ดด้วย</p>
+<p>สิ่งที่ต้องนำไปประยุกต์คือ:</p>
+<ul>
+<li>Agent ต้องมีเครื่องมือที่ตรงกับงาน</li>
+<li>เครื่องมือต้องทำงานได้ในสภาพแวดล้อมที่ Deploy จริง</li>
+<li>ตัวตนของ Agent ต้องมีสิทธิ์เรียกบริการนั้น</li>
+<li>การย้ายจากเครื่องส่วนตัวขึ้นคลาวด์อาจต้องปรับวิธีเก็บสถานะและยืนยันตัวตน</li>
+</ul>
+<h2 id="summary">สรุปท้ายเรื่อง</h2>
+<p>บทนี้ทำให้เกิดการ Deploy สองชั้น:</p>
+<pre><code class="language-text">ผู้ใช้
+  ↓
+Agent ที่รันบน Managed Runtime
+  ↓ เรียกเครื่องมือสร้างและ Deploy
+เว็บไซต์บน Firebase Hosting
+</code></pre>
+<p>ขั้นตอนหลักสำหรับนำตัว Agent ขึ้นคลาวด์คือ:</p>
+<p><strong>ตรวจ Manifest → สร้าง Service Account และให้สิทธิ์ → Deploy ผ่าน CLI → ทดสอบใน Cloud Playground</strong></p>
+<div class="table-wrap" role="region" aria-label="ตารางประกอบบทเรียน" tabindex="0"><table><thead>
+<tr>
+  <th>เรื่อง</th>
+  <th>บทก่อน</th>
+  <th>บทนี้</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+  <td>ตำแหน่งรัน Agent</td>
+  <td>เครื่องผู้พัฒนา</td>
+  <td>Managed Agent Runtime</td>
+</tr>
+<tr>
+  <td>ตัวตนระหว่างรัน</td>
+  <td>ข้อมูลรับรองบนเครื่อง</td>
+  <td>Service Account ที่ผูกกับ Runtime</td>
+</tr>
+<tr>
+  <td>เครื่องมือเว็บไซต์</td>
+  <td>แยกบันทึกและ Deploy</td>
+  <td>รวมเป็น Unified Deploy Tool</td>
+</tr>
+<tr>
+  <td>วิธีนำเว็บไซต์ขึ้น</td>
+  <td>Firebase CLI</td>
+  <td>Firebase Hosting REST API</td>
+</tr>
+<tr>
+  <td>จุดทดสอบ</td>
+  <td>Local Playground</td>
+  <td>Playground ใน Cloud Console</td>
+</tr>
+</tbody>
+</table></div>
+<p>สิ่งที่ควรจำมากที่สุดมีสามข้อ:</p>
+<ol>
+<li><strong>สิทธิ์ของผู้ Deploy กับสิทธิ์ของ Agent เป็นคนละส่วน</strong> ต้องเตรียมให้ถูกทั้งสองฝ่าย</li>
+<li><strong>อย่าพึ่งไฟล์ชั่วคราวข้าม Tool Calls โดยไม่มีหลักประกัน</strong> การทำงานบนคลาวด์อาจเปลี่ยน Instance ได้</li>
+<li><strong>Deploy สำเร็จต้องทดสอบเครื่องมือจริงด้วย</strong> การที่ Agent ตอบข้อความได้ยังไม่ยืนยันว่ามีสิทธิ์เรียกโมเดลและเผยแพร่เว็บไซต์ครบทุกขั้น</li>
+</ol>
+<p>เมื่อจบบทตามการสาธิต ผู้บรรยายมี Agent บนคลาวด์ที่รับคำขอ สร้างหน้าเว็บ และส่ง URL เว็บไซต์ที่เผยแพร่แล้วกลับมาได้</p>
+<nav class="pager" aria-label="เปลี่ยนบท"><a href="03-website-agent.html">← บทก่อนหน้า</a><a href="05-security.html">บทถัดไป →</a></nav></main></div><footer>เรียบเรียงภาษาไทยจากข้อความถอดเสียงที่ผู้ใช้ส่งมา · เนื้อหาสำหรับทบทวนและอ้างอิง</footer></body></html>

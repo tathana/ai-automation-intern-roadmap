@@ -1,0 +1,354 @@
+<!doctype html>
+<html lang="th"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<meta name="description" content="บทที่ 2: เตรียมเครื่องและสร้าง Agent ตัวแรก — เนื้อหาละเอียดตามเวลาและสรุปท้ายเรื่อง"><title>เตรียมเครื่องและสร้าง Agent ตัวแรก | AI & Automation Knowledge</title>
+<link rel="stylesheet" href="style.css"></head><body>
+<a class="skip" href="#main">ข้ามไปเนื้อหา</a>
+<header class="topbar"><a href="../index.html">← คลังความรู้หลัก</a><a href="index.html">Gemini Agent Platform · 6 บท</a></header>
+<div class="reader-layout"><aside><details open><summary>บทเรียนทั้ง 6 คลิป</summary><nav aria-label="บทเรียน"><a href="01-overview.html" >01 · ภาพรวมแพลตฟอร์ม</a><a href="02-setup.html" aria-current=page>02 · เตรียมเครื่องและสร้าง Agent ตัวแรก</a><a href="03-website-agent.html" >03 · สร้างและ Deploy เว็บไซต์ด้วย Agent</a><a href="04-deployment.html" >04 · Deploy ตัว Agent ขึ้นคลาวด์</a><a href="05-security.html" >05 · เพิ่มความปลอดภัยด้วย Model Armor</a><a href="06-observability.html" >06 · Observability และ Traces</a></nav></details>
+    <details class="toc" open><summary>สารบัญบทนี้</summary><nav aria-label="หัวข้อในบท"><a class="depth-2" href="#section-1">เนื้อหาแบบละเอียด</a><a class="depth-3" href="#section-2">0:00–3:52 — ภาพรวมการตั้งค่า 6 ขั้นตอน</a><a class="depth-3" href="#section-3">3:53–4:59 — ติดตั้งเครื่องมือพื้นฐาน</a><a class="depth-3" href="#section-4">5:00–5:47 — สร้าง Google Cloud Project</a><a class="depth-3" href="#section-5">5:48–7:58 — ติดตั้ง Agents CLI</a><a class="depth-3" href="#section-6">7:59–10:09 — สร้าง Agent ตัวแรก</a><a class="depth-3" href="#section-7">10:10–12:17 — ทำความเข้าใจ <code>app/agent.py</code></a><a class="depth-3" href="#section-8">12:18–14:55 — Root Agent ประกอบด้วยอะไรบ้าง</a><a class="depth-3" href="#section-9">14:56–16:45 — ทำไมคำอธิบายฟังก์ชันและ Type Hints จึงสำคัญ</a><a class="depth-3" href="#section-10">16:46–17:35 — ห่อ Agent เป็น Application</a><a class="depth-3" href="#section-11">17:36–19:22 — ยืนยันตัวตนด้วย Application Default Credentials</a><a class="depth-3" href="#section-12">19:23–20:51 — เลือก Project สำหรับโควตาและทำความเข้าใจค่าใช้จ่าย</a><a class="depth-3" href="#section-13">20:52–21:48 — เลือก Project ใน CLI และเปิด API</a><a class="depth-3" href="#section-14">21:49–23:03 — ตั้งค่าไฟล์ <code>.env</code></a><a class="depth-3" href="#section-15">23:04–24:09 — เปิด Playground และทดสอบ</a><a class="depth-3" href="#section-16">24:10–25:03 — ทบทวนสิ่งที่ทำสำเร็จ</a><a class="depth-2" href="#summary">สรุปท้ายเรื่อง</a></nav></details></aside>
+    <main id="main" class="article"><div class="eyebrow">บทที่ 02 / 06 · คลิป 25:03 นาที</div>
+    <div class="reading-actions"><a href="#summary">ข้ามไปสรุปท้ายเรื่อง ↓</a><a href="02-setup.md" download>ดาวน์โหลด Markdown</a><button type="button" onclick="window.print()">พิมพ์ / บันทึก PDF</button></div>
+    <h1>บทที่ 2 — เตรียมเครื่องและสร้าง Agent ตัวแรก</h1>
+<p>บทนี้เป็น <strong>การเตรียมเครื่องและ Google Cloud จนสามารถรัน Agent ตัวแรกผ่านหน้าเว็บบนเครื่องของตนเองได้</strong> ความยาวประมาณ 25 นาที</p>
+<p>เนื้อหาด้านล่างเรียงตามเวลา ตัดคำซ้ำและอธิบายศัพท์ที่จำเป็น พร้อมสรุปท้ายเรื่อง ข้อความถอดเสียงมีชื่อคำสั่งและชื่อโมเดลบางจุดที่อาจคลาดเคลื่อน จึงแยกจุดเหล่านั้นไว้เพื่อไม่ให้นำไปใช้ผิด</p>
+<h2 id="section-1">เนื้อหาแบบละเอียด</h2>
+<h3 id="section-2">0:00–3:52 — ภาพรวมการตั้งค่า 6 ขั้นตอน</h3>
+<p>ต่อจากบทก่อนที่แนะนำแพลตฟอร์ม บทนี้จะลงมือเตรียมสภาพแวดล้อมสำหรับสร้าง Agent ผู้บรรยายเสนอให้ทำตามลำดับหกขั้นตอน เพื่อลดปัญหาจากการตั้งค่าไม่ครบและการต้องย้อนกลับมาแก้หลายรอบ</p>
+<div class="table-wrap" role="region" aria-label="ตารางประกอบบทเรียน" tabindex="0"><table><thead>
+<tr>
+  <th>ขั้นตอน</th>
+  <th>สิ่งที่จะทำ</th>
+  <th>ผลลัพธ์ที่ต้องการ</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+  <td>1. เตรียมเครื่องพัฒนา</td>
+  <td>ติดตั้ง Python, Git, VS Code, uv, Node.js และ Agents CLI</td>
+  <td>เครื่องพร้อมสร้างและรันโปรเจกต์</td>
+</tr>
+<tr>
+  <td>2. เตรียม Google Cloud</td>
+  <td>สร้างบัญชีและ Project พร้อมเปิด API ที่จำเป็น</td>
+  <td>มี Project ID สำหรับใช้งาน</td>
+</tr>
+<tr>
+  <td>3. สร้าง Agent</td>
+  <td>ใช้ CLI สร้างโครงโปรเจกต์</td>
+  <td>ได้ไฟล์ Agent และไฟล์ตั้งค่า</td>
+</tr>
+<tr>
+  <td>4. ยืนยันตัวตน</td>
+  <td>ตั้งค่า Application Default Credentials</td>
+  <td>โปรแกรมบนเครื่องเรียก Google Cloud ได้ตามสิทธิ์</td>
+</tr>
+<tr>
+  <td>5. ตั้งค่า Agent</td>
+  <td>ใส่ Project ID และค่าการเชื่อมต่อใน <code>.env</code></td>
+  <td>Agent รู้ว่าจะใช้บริการผ่านโปรเจกต์ใด</td>
+</tr>
+<tr>
+  <td>6. รันและทดสอบ</td>
+  <td>เปิด Playground แล้วส่งข้อความ</td>
+  <td>ทดสอบการตอบและการเรียกเครื่องมือได้</td>
+</tr>
+</tbody>
+</table></div>
+<p>ไฟล์ที่ผู้บรรยายให้ความสำคัญในช่วงเริ่มต้นมีสองไฟล์:</p>
+<ul>
+<li><strong><code>agent.py</code></strong> — นิยาม Agent โมเดล คำสั่ง และเครื่องมือ</li>
+<li><strong><code>.env</code></strong> — เก็บค่าตั้งค่าสภาพแวดล้อม เช่น Google Cloud Project ID</li>
+</ul>
+<p>Agent ที่สร้างจะใช้ <strong>ADK หรือ Agent Development Kit</strong> ซึ่งเป็นเฟรมเวิร์กโอเพนซอร์สของ Google สำหรับพัฒนา Agent</p>
+<p>ภาพการทำงานเมื่อทดสอบสำเร็จคือ:</p>
+<p><strong>ผู้ใช้ส่งข้อความในหน้าเว็บ → Root Agent รับข้อความ → เรียกโมเดล Gemini → เรียกเครื่องมือเมื่อจำเป็น → ส่งคำตอบกลับ</strong></p>
+<p>ผู้บรรยายเชื่อมโยงว่า การเริ่มด้วยโครงสร้างนี้จะช่วยให้ต่อยอดไปสู่การ Deploy การกำกับดูแล และการติดตามประสิทธิภาพในบทถัดไปได้</p>
+<h3 id="section-3">3:53–4:59 — ติดตั้งเครื่องมือพื้นฐาน</h3>
+<p>ผู้บรรยายแนะนำให้ติดตั้งเครื่องมือดังต่อไปนี้</p>
+<div class="table-wrap" role="region" aria-label="ตารางประกอบบทเรียน" tabindex="0"><table><thead>
+<tr>
+  <th>เครื่องมือ</th>
+  <th>หน้าที่</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+  <td><strong>Python</strong></td>
+  <td>ภาษาที่ใช้เขียนและรัน Agent ในคอร์ส</td>
+</tr>
+<tr>
+  <td><strong>Git</strong></td>
+  <td>จัดการเวอร์ชันของโค้ดและทำงานกับ Repository</td>
+</tr>
+<tr>
+  <td><strong>Visual Studio Code</strong></td>
+  <td>โปรแกรมสำหรับเปิดและแก้ไขโปรเจกต์</td>
+</tr>
+<tr>
+  <td><strong>uv</strong></td>
+  <td>เครื่องมือจัดการแพ็กเกจและสภาพแวดล้อม Python</td>
+</tr>
+</tbody>
+</table></div>
+<p>ผู้บรรยายเลือกใช้ uv เพราะทำงานรวดเร็ว และพบว่ามีการใช้ในโปรเจกต์ AI หลายแห่ง</p>
+<p>ขั้นตอนติดตั้งแยกตาม Windows, macOS และ Ubuntu จะอยู่ในบทประกอบ หากติดตั้งอยู่แล้วสามารถข้ามบทติดตั้งเหล่านั้นได้</p>
+<p>ต่อมาในคลิปยังระบุว่าต้องมี <strong>Node.js</strong> และ <strong>Google Cloud CLI</strong> ด้วย จึงควรมองรายการเครื่องมือทั้งบท ไม่ใช่เฉพาะสี่รายการแรก</p>
+<h3 id="section-4">5:00–5:47 — สร้าง Google Cloud Project</h3>
+<p>เริ่มจากใช้บัญชี Google เข้า Google Cloud Console แล้วสร้างโปรเจกต์สำหรับงานนี้</p>
+<p>ค่าที่ต้องเก็บไว้คือ <strong>Project ID</strong> เพราะจะใช้ทั้งในคำสั่งของ Google Cloud และไฟล์ตั้งค่าของ Agent ต้องแยกให้ชัดว่า:</p>
+<ul>
+<li><strong>Project name</strong> คือชื่อที่แสดงให้คนอ่าน</li>
+<li><strong>Project ID</strong> คือรหัสโปรเจกต์ที่ใช้ในการตั้งค่าและคำสั่งต่าง ๆ</li>
+<li><strong>Project number</strong> คือหมายเลขอีกชนิดหนึ่งของโปรเจกต์</li>
+</ul>
+<p>ในบทนี้ ผู้บรรยายต้องการให้ใช้ <strong>Project ID</strong></p>
+<p>ผู้บรรยายกล่าวถึงเครดิตฟรีเริ่มต้นจำนวน 300 ดอลลาร์สำหรับผู้ใช้ใหม่ แต่สิทธิ์จริงและเงื่อนไขการใช้ต้องตรวจสอบจากบัญชีและข้อเสนอของ Google ในขณะสมัคร ไม่ควรถือว่าทุกบัญชีจะได้รับเหมือนกัน</p>
+<h3 id="section-5">5:48–7:58 — ติดตั้ง Agents CLI</h3>
+<p>ผู้บรรยายเปิดหน้า GitHub ของเครื่องมือที่เรียกว่า <strong>Agents CLI</strong> และอธิบายว่าเป็นเครื่องมือบรรทัดคำสั่งสำหรับสร้างและ Deploy Agent บนแพลตฟอร์ม</p>
+<p>สิ่งที่ต้องเตรียมก่อนติดตั้งตามคลิป ได้แก่ Python, uv และ Node.js</p>
+<p>จากนั้นคัดลอกคำสั่งที่ใช้ <code>uvx</code> จากหน้า Repository มารันใน Terminal ระบบจะเตรียมส่วนประกอบที่เครื่องมือต้องใช้ และรายงานผลการติดตั้ง CLI กับ Skills</p>
+<p><strong>ในข้อความถอดเสียงไม่มีคำสั่งติดตั้งแบบเต็มหรือ URL ของ Repository</strong> จึงยังไม่สามารถนำส่วนนี้ไปเขียนเป็นคำสั่งติดตั้งที่ยืนยันความถูกต้องได้</p>
+<p>ช่วงท้าย ผู้บรรยายทบทวนว่าเตรียมเครื่องมือพัฒนาบนเครื่อง Google Cloud Project, Google Cloud CLI หรือ <code>gcloud</code> และ Agents CLI แล้ว</p>
+<p>เครื่องมือ CLI สองตัวนี้มีบทบาทต่างกัน:</p>
+<div class="table-wrap" role="region" aria-label="ตารางประกอบบทเรียน" tabindex="0"><table><thead>
+<tr>
+  <th>เครื่องมือ</th>
+  <th>ใช้ทำอะไรในบทนี้</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+  <td><strong>Google Cloud CLI — <code>gcloud</code></strong></td>
+  <td>ยืนยันตัวตน เลือก Project และเปิด API</td>
+</tr>
+<tr>
+  <td><strong>Agents CLI</strong></td>
+  <td>สร้างโครง Agent และเปิด Playground</td>
+</tr>
+</tbody>
+</table></div>
+<p>ผู้บรรยายระบุว่าจะเปิด API เพิ่มเติมเมื่อจำเป็นระหว่างทำโปรเจกต์ อย่างไรก็ตาม หากเกิดข้อผิดพลาด สาเหตุอาจมาจากเรื่องอื่นด้วย เช่น สิทธิ์ บัญชี การตั้งค่า Project หรือ Billing จึงต้องอ่านรายละเอียดข้อผิดพลาดประกอบ</p>
+<h3 id="section-6">7:59–10:09 — สร้าง Agent ตัวแรก</h3>
+<p>ผู้บรรยายเริ่มจากสร้างโฟลเดอร์สำหรับงานพัฒนา แล้วสร้างโฟลเดอร์โปรเจกต์ชื่อประมาณ <code>GAP_v1</code></p>
+<p>จากนั้นใช้ Agents CLI ตรวจสอบเวอร์ชัน และเรียกคำสั่งสร้างโปรเจกต์ โดยตั้งชื่อ Agent ว่า <strong>Website Generator</strong></p>
+<p>สิ่งที่ CLI สร้างให้เรียกว่า <strong>Scaffold</strong> หมายถึงโครงโปรเจกต์เริ่มต้น ซึ่งมีไฟล์และโฟลเดอร์พื้นฐานพร้อมให้แก้ไขต่อ</p>
+<p>ในการสาธิต คำสั่งครั้งแรกพบปัญหา ผู้บรรยายจึงเพิ่มแฟล็ก <strong><code>-y</code></strong> เพื่อให้ทำงานแบบไม่ถามตอบและใช้ค่าเริ่มต้น ตามพฤติกรรมของ CLI ที่แสดงในคลิป</p>
+<p>ค่าที่เลือกในตัวอย่าง ได้แก่:</p>
+<ul>
+<li>ใช้ <strong>ADK</strong> เป็นเฟรมเวิร์ก</li>
+<li>ใช้ <strong>Agent Runtime</strong> เป็นเป้าหมายการ Deploy</li>
+<li>ข้ามการตั้งค่า <strong>CI/CD Runner</strong> ในตอนนี้</li>
+</ul>
+<p>ระบบยังตรวจข้อมูลรับรองของ Google Cloud และพบข้อผิดพลาดลักษณะ:</p>
+<blockquote>
+<p>Permission denied … project none</p>
+</blockquote>
+<p>ในบริบทของตัวอย่าง ผู้บรรยายอธิบายว่า ยังไม่ได้ตั้งค่าโปรเจกต์และข้อมูลรับรองให้ครบ</p>
+<p>จากนั้นเปิดโฟลเดอร์ปัจจุบันใน VS Code ด้วย:</p>
+<pre><code class="language-bash">code .
+</code></pre>
+<p><strong>แม้ตั้งชื่อว่า Website Generator แต่ในบทนี้ Agent ยังใช้พฤติกรรมและเครื่องมือเริ่มต้น ไม่ได้สร้างเว็บไซต์จริงแล้ว</strong></p>
+<h3 id="section-7">10:10–12:17 — ทำความเข้าใจ <code>app/agent.py</code></h3>
+<p>ภายในโปรเจกต์ที่สร้าง มีโฟลเดอร์ <code>app</code> และไฟล์สำคัญคือ:</p>
+<pre><code class="language-text">app/agent.py
+</code></pre>
+<p>ผู้บรรยายเรียกไฟล์นี้ว่า <strong>Agent Definition Module</strong> หรือไฟล์นิยาม Agent องค์ประกอบสำคัญของไฟล์ ได้แก่:</p>
+<ol>
+<li>การ Import ส่วนประกอบที่ใช้</li>
+<li>การระบุโมเดล</li>
+<li>ฟังก์ชันเครื่องมือ</li>
+<li>การสร้าง Root Agent</li>
+<li>การห่อ Agent ไว้ใน Application</li>
+</ol>
+<p>ผู้บรรยายอธิบายว่า การมีโมเดลภาษาอย่างเดียวไม่ได้ทำให้โปรแกรมเชื่อมข้อมูลสด มีความจำระยะยาว หรือดำเนินการภายนอกได้โดยอัตโนมัติ ต้องมีการเชื่อมส่วนประกอบเหล่านั้นผ่านระบบ Agent</p>
+<p>ในข้อความถอดเสียงมีการยกชื่อโมเดลหลายชื่อ แต่ยังยืนยันไม่ได้ว่าเป็นชื่อจริงตามหน้าจอหรือเป็นความคลาดเคลื่อนของการถอดเสียง หากจะลงมือทำ ต้องใช้ <strong>Model ID ที่รองรับจริงในบริการและตำแหน่งที่เลือก</strong></p>
+<h3 id="section-8">12:18–14:55 — Root Agent ประกอบด้วยอะไรบ้าง</h3>
+<p>ผู้บรรยายใช้คลาส <code>Agent</code> จาก ADK เพื่อสร้าง Agent หลัก โดยอ้างถึงตัวแปร <strong><code>root_agent</code></strong> เป็นจุดเริ่มต้นที่รับข้อความจากผู้ใช้ แล้วเริ่มกระบวนการทำงาน</p>
+<p><strong>1. Name — ชื่อ Agent</strong></p>
+<p>ใช้ระบุ Agent ในระบบและข้อมูลติดตามการทำงาน ผู้บรรยายกล่าวถึงการใช้งานชื่อใน Logs, Telemetry และบริบทการสื่อสารระหว่าง Agent</p>
+<p>คำว่า <strong>A2A — Agent-to-Agent</strong> หมายถึงโปรโตคอลสำหรับการสื่อสารระหว่าง Agent แต่บทนี้ยังไม่ได้สาธิตการใช้งานจริง</p>
+<p><strong>2. Model — โมเดลที่ใช้</strong></p>
+<p>กำหนดว่า Agent จะใช้โมเดลใดในการประมวลผล ตัวอย่างยังมีการกำหนดตัวเลือก Retry โดยตั้งค่าจำนวน Attempts เป็น 3 เพื่อรองรับกรณีอย่างปัญหาเครือข่ายหรือ Rate Limit ทั้งนี้ ความหมายว่าจำนวนนี้นับรวมครั้งแรกหรือไม่ต้องดูข้อกำหนดของไลบรารีที่ใช้</p>
+<p><strong>3. Instructions — คำสั่งหลัก</strong></p>
+<p>เป็นคำสั่งสำหรับกำหนดบทบาทและพฤติกรรม เช่น Agent ทำหน้าที่อะไร ควรตอบด้วยน้ำเสียงแบบใด และมีขอบเขตการทำงานอย่างไร</p>
+<p>คำสั่งเริ่มต้นในตัวอย่างมีสาระประมาณว่า:</p>
+<blockquote>
+<p>คุณเป็นผู้ช่วย AI ที่ให้ข้อมูลถูกต้องและเป็นประโยชน์</p>
+</blockquote>
+<p>ในขั้นนี้ยังไม่ได้ปรับคำสั่งให้ทำหน้าที่สร้างเว็บไซต์โดยเฉพาะ</p>
+<p><strong>4. Tools — เครื่องมือที่ Agent เรียกได้</strong></p>
+<p>เป็นรายการฟังก์ชัน Python ที่อนุญาตให้ Agent ใช้งาน ตัวอย่างมีเครื่องมือดูสภาพอากาศและเครื่องมือดูเวลาปัจจุบัน</p>
+<p>ADK จะใช้ข้อมูลเกี่ยวกับฟังก์ชันเพื่ออธิบายให้โมเดลทราบว่าเครื่องมือทำอะไรและควรเรียกอย่างไร</p>
+<h3 id="section-9">14:56–16:45 — ทำไมคำอธิบายฟังก์ชันและ Type Hints จึงสำคัญ</h3>
+<p>ผู้บรรยายเน้นว่า <strong>Docstring และ Type Hints มีผลต่อการใช้เครื่องมือของ Agent</strong></p>
+<ul>
+<li><strong>Docstring</strong> คือข้อความอธิบายว่าฟังก์ชันทำอะไร รับค่าอะไร และคืนค่าอะไร</li>
+<li><strong>Type Hints</strong> คือการระบุชนิดข้อมูล เช่น พารามิเตอร์เป็นข้อความ</li>
+</ul>
+<p>ADK ใช้ข้อมูลเหล่านี้ในการสร้างคำอธิบายหรือ Schema ของเครื่องมือให้โมเดลเข้าใจ โมเดลจึงใช้ข้อมูลดังกล่าวช่วยตัดสินใจว่า:</p>
+<ol>
+<li>เมื่อใดควรเรียกเครื่องมือนี้</li>
+<li>ต้องส่งอาร์กิวเมนต์อะไร</li>
+<li>จะได้รับข้อมูลประเภทใดกลับมา</li>
+</ol>
+<p>ผลในทางปฏิบัติคือ ถ้าอธิบายเครื่องมือไม่ชัด Agent ก็อาจเลือกใช้ผิดหรือส่งข้อมูลไม่ตรงกับที่ฟังก์ชันต้องการ</p>
+<p><strong>เครื่องมือสภาพอากาศในตัวอย่างเป็นข้อมูลจำลอง</strong></p>
+<p>ฟังก์ชันตรวจว่าข้อความมีคำว่า <code>SF</code> หรือ <code>San Francisco</code> หรือไม่ หากพบ จะคืนข้อมูลที่กำหนดไว้ล่วงหน้าว่าอุณหภูมิ 60 องศาฟาเรนไฮต์ และมีหมอก หากเป็นสถานที่อื่น จะคืนคำตอบจำลองอีกแบบหนึ่ง</p>
+<p>ดังนั้น ตัวอย่างนี้ใช้สาธิตว่า Agent เรียกเครื่องมือได้ ไม่ได้ยืนยันว่ามันเชื่อมบริการพยากรณ์อากาศจริง</p>
+<p>ส่วนเครื่องมือดูเวลาปัจจุบัน ผู้บรรยายให้ผู้เรียนศึกษาจากโค้ดและคำอธิบายเพิ่มเติมด้วยตนเอง ผู้บรรยายยังบอกว่า คอมเมนต์ละเอียดในไฟล์เป็นสิ่งที่เพิ่มภายหลังโดยใช้ Gemini ช่วยอธิบาย ไม่ใช่ทั้งหมดที่ CLI สร้างให้อัตโนมัติ</p>
+<h3 id="section-10">16:46–17:35 — ห่อ Agent เป็น Application</h3>
+<p>องค์ประกอบสุดท้ายคือ <strong>Application ระดับบนของ ADK</strong> หน้าที่คือรวมการตั้งค่า Agent ไว้ในโครงสร้างแอปพลิเคชันที่ระบบนำไปใช้งานต่อได้ และเชื่อม Root Agent เข้ากับชื่อแอป</p>
+<p>ในตัวอย่างใช้ชื่อแอปว่า <strong><code>app</code></strong> ซึ่งจะปรากฏในส่วนต่าง ๆ ของระบบ เช่น หน้า Playground หรือเส้นทาง API ตามโครงสร้างที่ใช้งาน</p>
+<pre><code class="language-text">Application
+└── Root Agent
+    ├── Model
+    ├── Instructions
+    └── Tools
+</code></pre>
+<p>จุดนี้เป็นการเตรียมโครงสร้างแอป ยังไม่ได้แสดงว่า Deploy ขึ้นคลาวด์สำเร็จแล้ว</p>
+<h3 id="section-11">17:36–19:22 — ยืนยันตัวตนด้วย Application Default Credentials</h3>
+<p>ก่อนเรียกโมเดลผ่าน Google Cloud ต้องให้โปรแกรมบนเครื่องมีข้อมูลรับรองสำหรับเข้าถึงบริการ ผู้บรรยายใช้ <strong>Application Default Credentials หรือ ADC</strong> ด้วยคำสั่ง:</p>
+<pre><code class="language-bash">gcloud auth application-default login
+</code></pre>
+<p>คำสั่งนี้จะเปิดเบราว์เซอร์ให้เลือกบัญชี Google และทำขั้นตอนอนุญาตการเข้าถึง ควรเลือกบัญชีที่มีสิทธิ์ใช้งาน Google Cloud Project ที่เตรียมไว้ เมื่อทำเสร็จ ไลบรารีที่รองรับ ADC จะสามารถใช้ข้อมูลรับรองนี้เรียกบริการตามสิทธิ์ของบัญชีได้</p>
+<p>สิ่งที่ต้องแยกให้ชัดคือ:</p>
+<ul>
+<li><strong>การยืนยันตัวตน</strong> บอกว่าโปรแกรมทำงานในนามใคร</li>
+<li><strong>สิทธิ์ IAM</strong> บอกว่าตัวตนนั้นทำอะไรได้</li>
+<li><strong>Project และ Billing</strong> กำหนดบริบททรัพยากร โควตา และค่าใช้จ่ายตามบริการ</li>
+</ul>
+<p>การ Login เพียงอย่างเดียวจึงไม่ได้ทำให้มีสิทธิ์ใช้ทุกบริการโดยอัตโนมัติ</p>
+<p>นอกจากนี้ ADC กับการ Login สำหรับตัว <code>gcloud</code> เป็นการตั้งค่าที่แยกกันได้ หากคำสั่ง CLI ยังแจ้งว่าไม่ได้ Login ก็ต้องตรวจบัญชีของ CLI เพิ่มเติม</p>
+<h3 id="section-12">19:23–20:51 — เลือก Project สำหรับโควตาและทำความเข้าใจค่าใช้จ่าย</h3>
+<p>หากยังไม่ทราบ Project ID ผู้บรรยายใช้:</p>
+<pre><code class="language-bash">gcloud projects list
+</code></pre>
+<p>ผลลัพธ์จะแสดงข้อมูลของโปรเจกต์ เช่น Project ID ชื่อ และ Project number โดยต้องนำ <strong>Project ID</strong> มาใช้ จากนั้นตั้งค่า Quota Project สำหรับ ADC:</p>
+<pre><code class="language-bash">gcloud auth application-default set-quota-project YOUR_PROJECT_ID
+</code></pre>
+<p>แทน <code>YOUR_PROJECT_ID</code> ด้วยรหัสโปรเจกต์จริง</p>
+<p><strong>Quota Project</strong> เป็นโปรเจกต์ที่ใช้ประกอบการคิดโควตาและค่าใช้จ่ายสำหรับคำขอบางประเภทที่ใช้ข้อมูลรับรองนั้น โดยรายละเอียดขึ้นกับบริการ ไม่ได้ย้ายค่าใช้จ่ายของทรัพยากรทุกชนิดไปโปรเจกต์นี้ทั้งหมด</p>
+<p>ผู้บรรยายย้ำว่า การเรียกโมเดลและ API อาจมีค่าใช้จ่าย และเครดิตฟรีบางประเภทอาจมีข้อจำกัดด้านบริการที่ใช้ได้ ข้อแนะนำคือทดลองเรียก Agent จำนวนเล็กน้อย แล้วตรวจสอบ Billing ว่ามีค่าใช้จ่ายรายการใดเกิดขึ้น และเครดิตถูกนำมาหักกับรายการนั้นหรือไม่</p>
+<h3 id="section-13">20:52–21:48 — เลือก Project ใน CLI และเปิด API</h3>
+<p>ตั้งค่า Project เริ่มต้นของ <code>gcloud</code>:</p>
+<pre><code class="language-bash">gcloud config set project YOUR_PROJECT_ID
+</code></pre>
+<p>คำสั่งนี้กับการตั้ง Quota Project ก่อนหน้ามีหน้าที่ต่างกัน:</p>
+<div class="table-wrap" role="region" aria-label="ตารางประกอบบทเรียน" tabindex="0"><table><thead>
+<tr>
+  <th>คำสั่ง</th>
+  <th>หน้าที่</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+  <td><code>gcloud config set project ...</code></td>
+  <td>กำหนด Project เริ่มต้นสำหรับคำสั่ง <code>gcloud</code></td>
+</tr>
+<tr>
+  <td><code>gcloud auth application-default set-quota-project ...</code></td>
+  <td>กำหนด Quota Project สำหรับ ADC</td>
+</tr>
+</tbody>
+</table></div>
+<p>จากนั้นผู้บรรยายเปิด API ที่เรียกว่า <strong>Agent Platform API</strong> และระบุว่าอาจใช้เวลาสักครู่ก่อนพร้อมใช้งาน</p>
+<p><strong>จุดที่ต้องตรวจสอบก่อนทำตาม:</strong> ข้อความถอดเสียงระบุชื่อบริการว่า <code>platform.googleapis.com</code> แต่ไม่มีภาพหน้าจอหรือเอกสารประกอบมายืนยัน จึงไม่ควรถือว่าชื่อนี้ถูกต้องแน่นอน</p>
+<p>รูปแบบคำสั่งทั่วไปคือ:</p>
+<pre><code class="language-bash">gcloud services enable SERVICE_NAME
+</code></pre>
+<p>ต้องแทน <code>SERVICE_NAME</code> ด้วยชื่อบริการจริงตามเอกสารของแพลตฟอร์มที่ใช้งาน และอาจต้องเปิด API อื่นเพิ่มเติมตามงานด้วย</p>
+<h3 id="section-14">21:49–23:03 — ตั้งค่าไฟล์ <code>.env</code></h3>
+<p>ในโฟลเดอร์โปรเจกต์มีไฟล์สองชนิด:</p>
+<div class="table-wrap" role="region" aria-label="ตารางประกอบบทเรียน" tabindex="0"><table><thead>
+<tr>
+  <th>ไฟล์</th>
+  <th>หน้าที่</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+  <td><code>.env.example</code></td>
+  <td>แสดงตัวอย่างตัวแปรที่ต้องตั้งค่า</td>
+</tr>
+<tr>
+  <td><code>.env</code></td>
+  <td>เก็บค่าที่จะใช้จริงในการรันโปรเจกต์</td>
+</tr>
+</tbody>
+</table></div>
+<p>ผู้บรรยายเลือกเชื่อมต่อผ่าน <strong>Vertex AI</strong> และใส่ Project ID ลงในไฟล์ <code>.env</code> อีกทางเลือกที่กล่าวถึงคือใช้ <strong>Gemini API Key</strong> จาก Google AI Studio</p>
+<p>สองแนวทางนี้ใช้วิธียืนยันตัวตนและบริบทการคิดค่าบริการต่างกัน จึงต้องตั้งค่าให้ตรงกับแนวทางที่เลือก</p>
+<p>ผู้บรรยายมีข้อกล่าวถึงการเติมเครดิตล่วงหน้าของ AI Studio แต่เงื่อนไขนี้อาจขึ้นกับบัญชีและช่วงเวลา จึงควรตรวจสอบเงื่อนไขปัจจุบันก่อนใช้งาน</p>
+<p>ในข้อความที่ส่งมา <strong>ไม่มีชื่อตัวแปรและค่าตั้งค่าทั้งหมดของ <code>.env</code></strong> จึงยังสร้างไฟล์ที่พร้อมคัดลอกไปใช้ให้ตรงกับโปรเจกต์นี้ไม่ได้ ต้องดู <code>.env.example</code> ที่ CLI สร้างมาประกอบ</p>
+<h3 id="section-15">23:04–24:09 — เปิด Playground และทดสอบ</h3>
+<p>ผู้บรรยายกลับไปที่ Terminal แล้วเปลี่ยนเข้าโฟลเดอร์ Agent จากนั้นเรียกคำสั่ง <strong>Playground</strong> ผ่าน Agents CLI</p>
+<p>เครื่องมือเปิดหน้าเว็บทดสอบลักษณะ ADK Web โดยมีเซิร์ฟเวอร์ทำงานบน <strong>localhost</strong> หรือเครื่องของผู้พัฒนาเอง หน้าเว็บแสดงแอปชื่อ <code>app</code> ตามชื่อที่กำหนดไว้ก่อนหน้า</p>
+<p>ข้อความทดสอบคือ:</p>
+<blockquote>
+<p>Hi, what's the weather like in San Francisco?</p>
+</blockquote>
+<p>ลำดับการทำงานที่สาธิตคือ:</p>
+<ol>
+<li>Agent รับคำถาม</li>
+<li>โมเดลเลือกเรียกเครื่องมือสภาพอากาศ</li>
+<li>เครื่องมือพบชื่อ San Francisco</li>
+<li>เครื่องมือคืนค่าจำลอง 60°F และมีหมอก</li>
+<li>Agent นำผลนั้นมาตอบผู้ใช้</li>
+</ol>
+<p>การทดสอบนี้แสดงให้เห็นว่าเส้นทางพื้นฐานทำงานร่วมกันได้ ทั้งหน้าเว็บ Agent การเรียกโมเดล และการเรียกเครื่องมือ</p>
+<p><strong>แม้หน้าเว็บและโค้ด Agent รันบนเครื่อง แต่การเรียกโมเดลยังเกิดผ่านบริการคลาวด์</strong> จึงยังต้องมีอินเทอร์เน็ต ข้อมูลรับรอง และการตั้งค่าโครงการที่เหมาะสม</p>
+<h3 id="section-16">24:10–25:03 — ทบทวนสิ่งที่ทำสำเร็จ</h3>
+<p>เมื่อจบบท ผู้บรรยายมีระบบที่:</p>
+<ul>
+<li>เตรียมเครื่องมือพัฒนาพื้นฐานแล้ว</li>
+<li>มี Google Cloud Project และ Project ID</li>
+<li>ตั้งค่าการยืนยันตัวตนสำหรับแอปพลิเคชันแล้ว</li>
+<li>ตั้งค่า Project ใน CLI และในโปรเจกต์ Agent</li>
+<li>เปิด API ที่ใช้ในตัวอย่างแล้ว</li>
+<li>สร้างโครง Agent ผ่าน CLI</li>
+<li>เปิด Playground และทดสอบเรียกเครื่องมือได้</li>
+</ul>
+<p>ผลลัพธ์ของบทนี้จึงเป็น <strong>Agent เริ่มต้นที่รันและทดสอบบนเครื่องได้ โดยเชื่อมโมเดลผ่าน Google Cloud</strong> ส่วนการ Deploy ขึ้นระบบจริงยังเป็นงานถัดไป</p>
+<h2 id="summary">สรุปท้ายเรื่อง</h2>
+<p>บทนี้พาจากการเตรียมเครื่องไปจนถึงการทดสอบ Agent ตัวแรก โดยมีลำดับหลักคือ:</p>
+<p><strong>ติดตั้งเครื่องมือ → สร้าง Cloud Project → สร้างโครง Agent → ตั้งค่า ADC → ตั้งค่า <code>.env</code> และ API → เปิด Playground ทดสอบ</strong></p>
+<div class="table-wrap" role="region" aria-label="ตารางประกอบบทเรียน" tabindex="0"><table><thead>
+<tr>
+  <th>ประเด็น</th>
+  <th>ใจความ</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+  <td><strong><code>agent.py</code></strong></td>
+  <td>นิยามโมเดล คำสั่ง เครื่องมือ และ Root Agent</td>
+</tr>
+<tr>
+  <td><strong><code>.env</code></strong></td>
+  <td>เก็บค่าการเชื่อมต่อและสภาพแวดล้อม</td>
+</tr>
+<tr>
+  <td><strong>Root Agent</strong></td>
+  <td>จุดเริ่มต้นที่รับคำถามและเริ่มการทำงาน</td>
+</tr>
+<tr>
+  <td><strong>Docstring และ Type Hints</strong></td>
+  <td>ช่วยให้โมเดลเข้าใจวิธีเรียกเครื่องมือ</td>
+</tr>
+<tr>
+  <td><strong>ADC</strong></td>
+  <td>ข้อมูลรับรองให้โปรแกรมเรียก Google Cloud</td>
+</tr>
+<tr>
+  <td><strong>Project ID</strong></td>
+  <td>ต้องตั้งค่าให้สอดคล้องกันในส่วนที่เกี่ยวข้อง</td>
+</tr>
+<tr>
+  <td><strong>Playground</strong></td>
+  <td>หน้าเว็บสำหรับทดสอบ Agent บนเครื่อง</td>
+</tr>
+</tbody>
+</table></div>
+<p>ข้อจำกัดของตัวอย่างนี้คือ <strong>Website Generator ยังเป็นเพียงชื่อโปรเจกต์</strong> เครื่องมือสภาพอากาศใช้ข้อมูลจำลอง และยังไม่ได้ Deploy Agent ขึ้นคลาวด์</p>
+<p>หากจะทำตามจริง จุดที่ต้องดูจากต้นฉบับหรือเอกสารเพิ่มคือ <strong>Repository และคำสั่งติดตั้ง Agents CLI, Model ID, ชื่อ API ที่ต้องเปิด และตัวแปรใน <code>.env.example</code></strong> เพราะข้อความถอดเสียงยังให้รายละเอียดส่วนเหล่านี้ไม่ครบ</p>
+<nav class="pager" aria-label="เปลี่ยนบท"><a href="01-overview.html">← บทก่อนหน้า</a><a href="03-website-agent.html">บทถัดไป →</a></nav></main></div><footer>เรียบเรียงภาษาไทยจากข้อความถอดเสียงที่ผู้ใช้ส่งมา · เนื้อหาสำหรับทบทวนและอ้างอิง</footer></body></html>

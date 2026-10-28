@@ -5,6 +5,7 @@ Static portal containing the Book 00–08 textbook collection, the original five
 ## Files
 
 - `index.html` — landing page
+- `gemini-agent-platform/` — six detailed Thai video study notes, timestamps, tables, code examples, chapter summaries, full-text search, print styles and downloadable Markdown. Content follows the user's supplied transcripts; uncertain product names and settings retain their caveats. Static pages do not call Google Cloud. Rebuild with `python -m pip install mistune==3.1.3`, then `python tools/build-gemini-guide.py`.
 - `genai-essentials/` — Thai preparation guide for the 2026 Generative AI Essentials on AWS classroom course: nine-module reading with worked examples, three local browser lab simulations, copyable English prompts, an interactive English-interface rehearsal, myClass/AWS navigation, glossary, and self-check. Simulations do not invoke AWS or grade the real class.
 - `devops/` — DevOps & Environment Strategy study guide, deeper reference, 15-minute presentation and separate speaker script
 - `book-00.html` / `book-00-materials.zip` — Developer Toolkit and command-line foundation
